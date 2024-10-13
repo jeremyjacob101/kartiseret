@@ -22,6 +22,7 @@ const groupShowtimesByTitle = (movies) => {
     });
   });
 
+  // Order movie times chronologically (includes midnight showings)
   Object.keys(groupedMovies).forEach((title) => {
     groupedMovies[title].sort((a, b) => {
       const getMinutes = (time) => {
