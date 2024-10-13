@@ -72,7 +72,7 @@ const MovieCarousel = ({ selectedSnifs }) => {
               popularity: movie.popularity,
               imdbScore: movie.imdbScore,
               imdbVotes: movie.imdbVotes,
-              rtScore: movie.rtScore
+              rtScore: movie.rtScore,
             };
           });
         },
