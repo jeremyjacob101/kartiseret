@@ -126,6 +126,7 @@
 
 .movie-poster-sub-block {
     width: 120px;
+    height: 180px;
     padding: 10px;
     flex-shrink: 0;
 }
