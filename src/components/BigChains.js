@@ -21,18 +21,19 @@ const groupShowtimesByTitle = (movies) => {
 
   Object.keys(groupedMovies).forEach((title) => {
     groupedMovies[title].sort((a, b) => {
-      const timeA = parseTime(a.time);
-      const timeB = parseTime(b.time);
-      return timeA - timeB; // Sort in ascending order by time
+      const getMinutes = (time) => {
+        const [hours, minutes] = time.split(":").map(Number);
+        return hours * 60 + minutes;
+      };
+
+      return (
+        (getMinutes(a.time) <= 60) - (getMinutes(b.time) <= 60) ||
+        getMinutes(a.time) - getMinutes(b.time)
+      );
     });
   });
 
   return groupedMovies;
-};
-
-const parseTime = (timeString) => {
-  const [hours, minutes] = timeString.split(":").map(Number);
-  return hours * 60 + minutes; // Return time in minutes since midnight
 };
 
 const getCinemaClass = (cinema) => {

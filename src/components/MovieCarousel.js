@@ -14,20 +14,20 @@ const getFormattedDate = (dayOffset) => {
   ).padStart(2, "0")}/${today.getFullYear()}`;
 };
 
-const parseTime = (timeString) => {
-  const [hours, minutes] = timeString.split(":").map(Number);
-  return hours * 60 + minutes; // Return time in minutes since midnight
-};
-
 const isValidShowtime = (
   showtime,
   showtimeDate,
   today,
   currentMinutesSinceMidnight
 ) => {
-  return showtimeDate === today
-    ? parseTime(showtime) >= currentMinutesSinceMidnight - 30
-    : true;
+  const [hours, minutes] = showtime.split(":").map(Number);
+  const showtimeMinutes = hours * 60 + minutes;
+
+  return (
+    showtimeDate !== today ||
+    showtimeMinutes <= 60 ||
+    showtimeMinutes >= currentMinutesSinceMidnight - 30
+  );
 };
 
 const MovieCarousel = ({ selectedSnifs }) => {
