@@ -16,6 +16,10 @@ const CinemaColorKey = () => {
         <div className="showtime-time lev-cinema"></div>
         <span>Lev Cinema</span>
       </div>
+      <div className="key-item">
+        <div className="showtime-time rav-hen-cinema"></div>
+        <span>Rav Hen</span>
+      </div>
     </div>
   );
 };
