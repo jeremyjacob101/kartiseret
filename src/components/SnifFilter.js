@@ -15,7 +15,9 @@ const snifs = [
   "Herziliya",
   "Raanana",
   "Ramat Hasharon",
-  "Shoham"
+  "Shoham",
+  "Givataim",
+  "Kiryat Ono"
 ];
 
 const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
