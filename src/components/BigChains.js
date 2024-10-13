@@ -79,13 +79,13 @@ const BigChains = ({ movies }) => {
               <div className="movie-ratings-sub-block-imdb">
                 <img src="/images/imdbLogo.png" />
                 <>
-                  {groupedMovies[title][0].imdbScore} (
+                  {groupedMovies[title][0].imdbScore}/10 (
                   {groupedMovies[title][0].imdbVotes})
                 </>
               </div>
               <div className="movie-ratings-sub-block-rt">
                 <img src="/images/rtLogo.png" />
-                <>{groupedMovies[title][0].rtScore}</>
+                <>{groupedMovies[title][0].rtScore}%</>
               </div>
             </div>
           </div>
