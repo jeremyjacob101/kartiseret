@@ -15,7 +15,7 @@ const groupShowtimesByTitle = (movies) => {
       type: movie.type,
       poster: movie.poster,
       runtime: movie.runtime,
-      popularity: movie.popularity, // Ensure popularity is a number
+      popularity: movie.popularity,
     });
   });
 
