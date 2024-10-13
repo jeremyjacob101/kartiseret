@@ -20,59 +20,38 @@
 .rav-hen-cinema {
     background: linear-gradient(to right,
             #074fa1 0%,
-            /* Blue */
             #074fa1 10%,
-            /* First tenth */
             #c86309 10%,
-            /* Orange */
             #c86309 20%,
-            /* Second tenth */
             #074fa1 20%,
-            /* Blue */
             #074fa1 30%,
-            /* Third tenth */
             #c86309 30%,
-            /* Orange */
             #c86309 40%,
-            /* Fourth tenth */
             #074fa1 40%,
-            /* Blue */
             #074fa1 50%,
-            /* Fifth tenth */
             #c86309 50%,
-            /* Orange */
             #c86309 60%,
-            /* Sixth tenth */
             #074fa1 60%,
-            /* Blue */
             #074fa1 70%,
-            /* Seventh tenth */
             #c86309 70%,
-            /* Orange */
             #c86309 80%,
-            /* Eighth tenth */
             #074fa1 80%,
-            /* Blue */
             #074fa1 90%,
-            /* Ninth tenth */
             #c86309 90%,
-            /* Orange */
-            #c86309 100%
-            /* Tenth tenth */
-        );
+            #c86309 100%);
     border: 2px solid black;
     color: #d8d8d8;
     text-align: center;
     padding: 10px;
     border-radius: 5px;
     text-shadow:
-            -1px -1px 0 black,
-            /* Top-left shadow */
-            1px -1px 0 black,
-            /* Top-right shadow */
-            -1px 1px 0 black,
-            /* Bottom-left shadow */
-            1px 1px 0 black;
+        -1px -1px 0 black,
+        /* Top-left shadow */
+        1px -1px 0 black,
+        /* Top-right shadow */
+        -1px 1px 0 black,
+        /* Bottom-left shadow */
+        1px 1px 0 black;
 }
 
 .movie-list {
@@ -155,6 +134,29 @@
     width: 250px;
     padding: 10px;
     flex-shrink: 0;
+}
+
+.movie-ratings-block {
+    width: 100%;
+    padding-top: 90px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.movie-ratings-sub-block-imdb,
+.movie-ratings-sub-block-rt {
+    font-size: 18px;
+}
+.movie-ratings-sub-block-imdb>img {
+    width: 30px;
+    height: 15px;
+    padding-right: 10px;
+}
+
+.movie-ratings-sub-block-rt>img {
+    width: 20px;
+    height: 15px;
+    padding-right: 10px;
 }
 
 .movie-title {

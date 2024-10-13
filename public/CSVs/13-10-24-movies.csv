@@ -1,4 +1,4 @@
-title,poster,year,valid,runtime,imdbID,imdbRating,imdbVotes,rtRating,popularity
+title,poster,year,valid,runtime,imdbID,imdbScore,imdbVotes,rtScore,popularity
 A World Apart,https://m.media-amazon.com/images/M/MV5BNTA2NGNlNGMtOGFmOC00ODk2LTgxMGMtMjMzMTI4YjIyZDliXkEyXkFqcGc@._V1_SX300.jpg,1988,yes,113,tt0096464,7.0,1863,91,51.56
 Adios Buenos Aires,https://m.media-amazon.com/images/M/MV5BMWU3YTU0OTAtYWRlNS00MjAyLThiOTYtNTYyMzQzOTE0YzViXkEyXkFqcGdeQXVyNTI1MzQyMzE@._V1_SX300.jpg,2023,yes,93,tt27042638,6.4,92,86,63.94
 Anselm,https://m.media-amazon.com/images/M/MV5BYTJhYTUzZTYtMTVhZS00MmZjLWI0MjUtZDk5YTJlYWFjYzdjXkEyXkFqcGc@._V1_SX300.jpg,2023,yes,93,tt27502250,7.2,1732,98,73.68
