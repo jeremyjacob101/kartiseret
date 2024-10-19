@@ -48,6 +48,10 @@ const getCinemaClass = (cinema) => {
       return "cinema-city";
     case "Lev Cinema":
       return "lev-cinema";
+    case "Hot Cinema":
+      return "hot-cinema";
+    case "MovieLand":
+      return "movieland-cinema";
     case "Rav Hen":
       return "rav-hen-cinema";
     default:

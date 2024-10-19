@@ -1,53 +1,47 @@
 .yes-planet {
-    background-color: #c86309;
+    background: linear-gradient(to left, #d9710f, #b05806);
     border: 2px solid black;
     color: #d8d8d8;
 }
 
 .cinema-city {
-    background-color: #074fa1;
+    background: linear-gradient(to right, #186bdf, #084cab);
     border: 2px solid black;
     color: #d8d8d8;
 }
 
 .lev-cinema {
-    background-color: #b50519;
+    background: linear-gradient(to right, #b50519, #5e030d);
     border: 2px solid black;
     color: #d8d8d8;
 }
 
 .rav-hen-cinema {
-    background: linear-gradient(to right,
-            #074fa1 0%,
-            #074fa1 10%,
-            #c86309 10%,
-            #c86309 20%,
-            #074fa1 20%,
-            #074fa1 30%,
-            #c86309 30%,
-            #c86309 40%,
-            #074fa1 40%,
-            #074fa1 50%,
-            #c86309 50%,
-            #c86309 60%,
-            #074fa1 60%,
-            #074fa1 70%,
-            #c86309 70%,
-            #c86309 80%,
-            #074fa1 80%,
-            #074fa1 90%,
-            #c86309 90%,
-            #c86309 100%);
+    background: linear-gradient(to right, #0d06da, #ab5306);
+    /*main #074fa1*/
+    /*main #c86309*/
     border: 2px solid black;
     color: #d8d8d8;
-    text-align: center;
+    /* text-align: center;
     padding: 10px;
     border-radius: 5px;
     text-shadow:
         -1px -1px 0 black,
         1px -1px 0 black,
         -1px 1px 0 black,
-        1px 1px 0 black;
+        1px 1px 0 black; */
+}
+
+.hot-cinema {
+    background: linear-gradient(to left, #f06a87, #c13043);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.movieland-cinema {
+    background: linear-gradient(to right, #58003a, #a80371);
+    border: 2px solid black;
+    color: #d8d8d8;
 }
 
 .movie-list {
@@ -140,10 +134,12 @@
     flex-direction: row;
     gap: 10px;
 }
+
 .movie-ratings-sub-block-imdb,
 .movie-ratings-sub-block-rt {
     font-size: 18px;
 }
+
 .movie-ratings-sub-block-imdb>img {
     width: 30px;
     height: 15px;
