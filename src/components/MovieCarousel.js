@@ -44,16 +44,8 @@ const MovieCarousel = ({ selectedSnifs }) => {
       const today = getFormattedDate(0); // Today's date in the same format as showtimes
 
       // Load CSVs
-      const showtimes_result = await (await fetch(showtimes_csv)).body
-        .getReader()
-        .read();
-      const showtimesData = new TextDecoder("utf-8").decode(
-        showtimes_result.value
-      );
-      const movies_result = await (await fetch(movies_csv)).body
-        .getReader()
-        .read();
-      const moviesData = new TextDecoder("utf-8").decode(movies_result.value);
+      const showtimesData = await (await fetch(showtimes_csv)).text();
+      const moviesData = await (await fetch(movies_csv)).text();
 
       // Parse the movies CSV to create a set of valid movie titles and poster/runtimes/popularity
       let validMovieTitles = new Set();
