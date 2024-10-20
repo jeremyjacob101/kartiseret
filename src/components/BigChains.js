@@ -42,17 +42,17 @@ const groupShowtimesByTitle = (movies) => {
 
 const getCinemaClass = (cinema) => {
   switch (cinema) {
-    case "Yes Planet":
+    case "YP":
       return "yes-planet";
-    case "Cinema City":
+    case "CC":
       return "cinema-city";
-    case "Lev Cinema":
+    case "LC":
       return "lev-cinema";
-    case "Hot Cinema":
+    case "HC":
       return "hot-cinema";
-    case "MovieLand":
+    case "ML":
       return "movieland-cinema";
-    case "Rav Hen":
+    case "RH":
       return "rav-hen-cinema";
     default:
       return "";
@@ -60,7 +60,7 @@ const getCinemaClass = (cinema) => {
 };
 
 const areFirstFiveShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 5).every((showtime) => showtime.type === "Regular");
+  showtimes.slice(0, 5).every((showtime) => showtime.type === "R");
 
 const BigChains = ({ movies }) => {
   const groupedMovies = groupShowtimesByTitle(movies);
@@ -113,7 +113,7 @@ const BigChains = ({ movies }) => {
               >
                 <div className="showtime-background">
                   {/* Display the type if it's not "Regular" */}
-                  {showtime.type !== "Regular" && (
+                  {showtime.type !== "R" && (
                     <div className="showtime-type">{showtime.type}</div>
                   )}
                   {/* Display the showtime with cinema-specific styling */}
