@@ -76,6 +76,10 @@
     height: 57px;
     justify-content: flex-end;
 }
+.smaller-showtime {
+    height: 39px;
+    /* reduced height when all first 5 are Regular */
+}
 
 .showtime-background {
     background-color: rgb(101, 94, 94);

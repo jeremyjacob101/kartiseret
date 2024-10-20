@@ -4,6 +4,7 @@ import "../componentsCSS/CinemaColorKey.css"; // Optional CSS file for styling
 const CinemaColorKey = () => {
   return (
     <div className="cinema-key">
+      <div className="cinema-key-heading">Legend</div>
       <div className="key-item">
         <div className="showtime-time yes-planet">19:30</div>
         <span>Yes Planet</span>

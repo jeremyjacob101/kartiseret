@@ -11,9 +11,9 @@ const groupShowtimesByTitle = (movies) => {
     groupedMovies[movie.title].push({
       time: movie.time,
       cinema: movie.cinema,
-      // snif: movie.snif,
       type: movie.type,
       poster: movie.poster,
+      // snif: movie.snif,
       runtime: movie.runtime,
       popularity: movie.popularity,
       imdbScore: movie.imdbScore,
@@ -59,14 +59,14 @@ const getCinemaClass = (cinema) => {
   }
 };
 
+const areFirstFiveShowtimesRegular = (showtimes) =>
+  showtimes.slice(0, 5).every((showtime) => showtime.type === "Regular");
+
 const BigChains = ({ movies }) => {
   const groupedMovies = groupShowtimesByTitle(movies);
-
-  const sortedTitles = Object.keys(groupedMovies).sort((a, b) => {
-    const popularityA = groupedMovies[a][0].popularity;
-    const popularityB = groupedMovies[b][0].popularity;
-    return popularityB - popularityA; // Sort in descending order of popularity
-  });
+  const sortedTitles = Object.keys(groupedMovies).sort(
+    (a, b) => groupedMovies[b][0].popularity - groupedMovies[a][0].popularity
+  );
 
   return (
     <div className="movie-list">
@@ -82,21 +82,27 @@ const BigChains = ({ movies }) => {
             </div>
             <div className="movie-ratings-block">
               <div className="movie-ratings-sub-block-imdb">
-                <img src="/images/imdbLogo.png" alt="" />
-                <>
-                  {groupedMovies[title][0].imdbScore}/10 (
-                  {groupedMovies[title][0].imdbVotes})
-                </>
+                <img src="/images/imdbLogo.png" alt="IMDB logo" />
+                {groupedMovies[title][0].imdbScore}/10 (
+                {groupedMovies[title][0].imdbVotes})
               </div>
               <div className="movie-ratings-sub-block-rt">
-                <img src="/images/rtLogo.png" alt="" />
-                <>{groupedMovies[title][0].rtScore}%</>
+                <img src="/images/rtLogo.png" alt="Rotten Tomatoes logo" />
+                {groupedMovies[title][0].rtScore}%
               </div>
             </div>
           </div>
           <div className="movie-times-sub-block">
             {groupedMovies[title].map((showtime, index) => (
-              <div className="each-showtime" key={index}>
+              <div
+                className={`each-showtime ${
+                  areFirstFiveShowtimesRegular(groupedMovies[title]) &&
+                  index < 5
+                    ? "smaller-showtime"
+                    : ""
+                }`}
+                key={index}
+              >
                 <div className="showtime-background">
                   {showtime.type !== "Regular" && (
                     <div className="showtime-type">{showtime.type}</div>

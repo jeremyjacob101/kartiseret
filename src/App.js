@@ -10,12 +10,11 @@ const App = () => {
     <>
       <div className="main-carousel-holder">
         <div className="pre-carousel">
-          {" "}
-          <CinemaColorKey />
           <SnifFilter
             selectedSnifs={selectedSnifs}
             setSelectedSnifs={setSelectedSnifs}
-          />{" "}
+          />
+          <CinemaColorKey />
         </div>
         <MovieCarousel selectedSnifs={selectedSnifs} />{" "}
       </div>

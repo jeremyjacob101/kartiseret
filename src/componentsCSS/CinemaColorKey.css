@@ -4,6 +4,16 @@
     margin-bottom: 20px;
     margin-top: 20px;
 }
+.cinema-key-heading {
+    padding: 12px;
+    padding-left: 50px;
+    padding-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    width: min-content;
+}
 
 .key-item {
     display: flex;

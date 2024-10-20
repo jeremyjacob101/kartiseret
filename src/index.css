@@ -28,8 +28,14 @@ h6 {
 }
 
 .pre-carousel {
-  width: 50%;
+  width: 90%;
   display: flex;
+  position: fixed;
   flex-direction: row;
   justify-content: space-between;
+  z-index: 1;
+}
+
+.main-carousel {
+  z-index: 2;
 }

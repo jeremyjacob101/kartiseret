@@ -2,31 +2,45 @@ import React from "react";
 import "../componentsCSS/SnifFilter.css"; // Optional CSS file for styling
 
 const snifs = [
-  "Rishon Letzion",
-  "Jerusalem",
-  "Haifa",
-  "Ashdod",
+  /* TLV */
   "Tel Aviv",
-  "Zichron Yaakov",
-  "Beer Sheva",
-  "Chadera",
-  "Kfar Saba",
-  "Netanya",
+  /* North of TLV */
   "Herziliya",
   "Raanana",
   "Ramat Hasharon",
-  "Shoham",
+  "Kfar Saba",
+  "Glilot",
+  /* East of TLV */
+  "Petach Tikvah",
+  "Ayalon",
   "Givataim",
   "Kiryat Ono",
-  "Ayalon",
-  "Even Yehuda",
-  "Nahariya",
-  "Kiryat Bialik",
-  "Petach Tikvah",
-  "Modiin",
+  /* South of TLV */
+  "Rishon Letzion",
   "Rehovot",
+
+  /* South of Rishon */
   "Ashkelon",
-  "Carmiel"
+  "Ashdod",
+  /* Netanya */
+  "Netanya",
+  "Even Yehuda",
+  /* Between Netanya and Haifa */
+  "Zichron Yaakov",
+  "Chadera",
+  /* Haifa */
+  "Haifa",
+  "Kiryat Bialik",
+  /* Modiin */
+  "Modiin",
+  "Shoham",
+  /* JLEM */
+  "Jerusalem",
+  /* North */
+  "Nahariya",
+  "Carmiel",
+  /* South */
+  "Beer Sheva",
 ];
 
 const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
