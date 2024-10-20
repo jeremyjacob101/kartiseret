@@ -4,7 +4,7 @@ import "../componentsCSS/MovieCarousel.css";
 import BigChains from "./BigChains.js";
 
 const showtimes_csv = "/CSVs/21-10-24-showtimes.csv";
-const movies_csv = "/CSVs/21-10-24-movies.csv"; // The new CSV file for posters, titles, and popularity
+const movies_csv = "/CSVs/21-10-24-movies.csv";
 
 const getFormattedDate = (dayOffset) => {
   const today = new Date();
@@ -38,14 +38,14 @@ const MovieCarousel = ({ selectedSnifs }) => {
 
   useEffect(() => {
     const loadMovieData = async () => {
+      // Load CSVs
+      const showtimesData = await (await fetch(showtimes_csv)).text();
+      const moviesData = await (await fetch(movies_csv)).text();
+      
       const currentTime = new Date();
       const currentMinutesSinceMidnight =
         currentTime.getHours() * 60 + currentTime.getMinutes();
       const today = getFormattedDate(0); // Today's date in the same format as showtimes
-
-      // Load CSVs
-      const showtimesData = await (await fetch(showtimes_csv)).text();
-      const moviesData = await (await fetch(movies_csv)).text();
 
       // Parse the movies CSV to create a set of valid movie titles and poster/runtimes/popularity
       let validMovieTitles = new Set();
