@@ -1,10 +1,10 @@
 cinema,date,time,title,snif,type
+ML,21/10/2024,22:00,1 Million Followers,Netanya,R
 CC,21/10/2024,22:10,1 Million Followers,Glilot,R
 CC,21/10/2024,00:30,1 Million Followers,Glilot,R
 CC,21/10/2024,23:15,1 Million Followers,Rishon Letzion,R
 CC,21/10/2024,00:00,1 Million Followers,Rishon Letzion,R
 CC,21/10/2024,19:40,1 Million Followers,Jerusalem,R
-CC,21/10/2024,21:50,1 Million Followers,Chadera,R
 CC,21/10/2024,22:15,1 Million Followers,Ashdod,R
 YP,21/10/2024,15:45,1 Million Followers,Rishon Letzion,R
 YP,21/10/2024,18:00,1 Million Followers,Rishon Letzion,R
@@ -18,11 +18,9 @@ YP,21/10/2024,00:30,1 Million Followers,Ayalon,R
 YP,21/10/2024,17:40,1 Million Followers,Beer Sheva,R
 YP,21/10/2024,20:00,1 Million Followers,Beer Sheva,R
 YP,21/10/2024,22:10,1 Million Followers,Beer Sheva,R
-YP,21/10/2024,00:20,1 Million Followers,Beer Sheva,R
 YP,21/10/2024,16:30,1 Million Followers,Zichron Yaakov,VIP
 YP,21/10/2024,20:10,1 Million Followers,Zichron Yaakov,R
 YP,21/10/2024,22:20,1 Million Followers,Zichron Yaakov,R
-YP,21/10/2024,00:30,1 Million Followers,Zichron Yaakov,R
 YP,21/10/2024,19:45,1 Million Followers,Haifa,R
 YP,21/10/2024,22:00,1 Million Followers,Haifa,R
 YP,21/10/2024,20:10,1 Million Followers,Jerusalem,R
@@ -37,15 +35,14 @@ YP,21/10/2024,13:15,Adios Buenos Aires,Rishon Letzion,R
 LC,21/10/2024,16:00,Anselm,Herziliya,R
 HC,21/10/2024,22:30,Bad Boys: Ride or Die,Kfar Saba,R
 CC,21/10/2024,23:15,Bad Boys: Ride or Die,Glilot,R
-YP,21/10/2024,00:00,Bad Boys: Ride or Die,Haifa,R
 YP,21/10/2024,21:45,Bad Genius,Rishon Letzion,R
 YP,21/10/2024,00:00,Bad Genius,Rishon Letzion,R
 YP,21/10/2024,00:30,Bad Genius,Ayalon,R
-YP,21/10/2024,00:10,Bad Genius,Haifa,R
-YP,21/10/2024,23:15,Bad Genius,Jerusalem,R
+ML,21/10/2024,13:15,Beetlejuice Beetlejuice,Netanya,R
 HC,21/10/2024,17:20,Beetlejuice Beetlejuice,Kiryat Bialik,R
 HC,21/10/2024,19:35,Beetlejuice Beetlejuice,Kiryat Bialik,R
 HC,21/10/2024,21:50,Beetlejuice Beetlejuice,Kiryat Bialik,R
+HC,21/10/2024,15:15,Beetlejuice Beetlejuice,Haifa,R
 HC,21/10/2024,17:30,Beetlejuice Beetlejuice,Haifa,R
 HC,21/10/2024,19:45,Beetlejuice Beetlejuice,Haifa,R
 HC,21/10/2024,22:00,Beetlejuice Beetlejuice,Haifa,R
@@ -62,13 +59,10 @@ CC,21/10/2024,18:50,Beetlejuice Beetlejuice,Ashdod,R
 YP,21/10/2024,19:30,Beetlejuice Beetlejuice,Rishon Letzion,R
 YP,21/10/2024,17:40,Beetlejuice Beetlejuice,Ayalon,R
 YP,21/10/2024,21:30,Beetlejuice Beetlejuice,Beer Sheva,R
-YP,21/10/2024,00:15,Beetlejuice Beetlejuice,Haifa,R
-YP,21/10/2024,00:10,Beetlejuice Beetlejuice,Jerusalem,R
 CC,21/10/2024,20:30,Blink Twice,Glilot,R
 CC,21/10/2024,23:00,Blink Twice,Glilot,R
 CC,21/10/2024,00:00,Blink Twice,Jerusalem,R
 CC,21/10/2024,21:10,Blink Twice,Ashdod,R
-YP,21/10/2024,00:00,Blink Twice,Beer Sheva,R
 YP,21/10/2024,21:40,Bonnard: Pierre & Marthe,Rishon Letzion,R
 CC,21/10/2024,22:50,Cash Out,Rishon Letzion,R
 CC,21/10/2024,22:10,Cash Out,Beer Sheva,R
@@ -98,7 +92,6 @@ CC,21/10/2024,19:20,Come Closer,Kfar Saba,R
 CC,21/10/2024,20:30,Come Closer,Netanya,R
 CC,21/10/2024,22:50,Come Closer,Netanya,R
 CC,21/10/2024,19:15,Come Closer,Beer Sheva,R
-CC,21/10/2024,18:50,Come Closer,Chadera,Prime
 CC,21/10/2024,19:45,Come Closer,Ashdod,R
 YP,21/10/2024,19:50,Come Closer,Rishon Letzion,R
 YP,21/10/2024,22:15,Come Closer,Rishon Letzion,R
@@ -109,6 +102,7 @@ YP,21/10/2024,17:45,Come Closer,Haifa,R
 YP,21/10/2024,22:00,Come Closer,Haifa,R
 YP,21/10/2024,19:00,Come Closer,Jerusalem,R
 RH,21/10/2024,19:30,Come Closer,Givataim,R
+ML,21/10/2024,15:45,Deadpool & Wolverine,Netanya,R
 HC,21/10/2024,16:50,Deadpool & Wolverine,Kiryat Bialik,R
 HC,21/10/2024,19:30,Deadpool & Wolverine,Kiryat Bialik,R
 HC,21/10/2024,22:10,Deadpool & Wolverine,Kiryat Bialik,R
@@ -123,19 +117,22 @@ CC,21/10/2024,19:30,Deadpool & Wolverine,Rishon Letzion,R
 CC,21/10/2024,22:00,Deadpool & Wolverine,Beer Sheva,R
 CC,21/10/2024,19:00,Deadpool & Wolverine,Chadera,R
 CC,21/10/2024,20:40,Deadpool & Wolverine,Ashdod,R
-YP,21/10/2024,19:20,Deadpool & Wolverine,Rishon Letzion,R
-YP,21/10/2024,21:55,Deadpool & Wolverine,Rishon Letzion,R
-YP,21/10/2024,00:30,Deadpool & Wolverine,Rishon Letzion,R
-YP,21/10/2024,21:50,Deadpool & Wolverine,Ayalon,R
-YP,21/10/2024,15:00,Deadpool & Wolverine,Haifa,R
+YP,21/10/2024,19:20,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,21/10/2024,21:55,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,21/10/2024,00:30,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,21/10/2024,21:50,Deadpool and Wolverine (2024),Ayalon,R
+YP,21/10/2024,15:00,Deadpool and Wolverine (2024),Haifa,R
 LC,21/10/2024,13:15,Fallen Leaves,Tel Aviv,R
+ML,21/10/2024,22:00,Hellboy: The Crooked Man,Haifa,R
+ML,21/10/2024,19:55,Hellboy: The Crooked Man,Netanya,R
+ML,21/10/2024,22:15,Hellboy: The Crooked Man,Netanya,R
 CC,21/10/2024,23:15,Hellboy: The Crooked Man,Glilot,R
 CC,21/10/2024,21:30,Hellboy: The Crooked Man,Rishon Letzion,R
 CC,21/10/2024,00:30,Hellboy: The Crooked Man,Jerusalem,R
 CC,21/10/2024,21:50,Hellboy: The Crooked Man,Kfar Saba,R
 CC,21/10/2024,20:00,Hellboy: The Crooked Man,Netanya,R
 CC,21/10/2024,19:10,Hellboy: The Crooked Man,Beer Sheva,R
-CC,21/10/2024,21:50,Hellboy: The Crooked Man,Chadera,R
+CC,21/10/2024,22:00,Hellboy: The Crooked Man,Chadera,R
 CC,21/10/2024,23:40,Hellboy: The Crooked Man,Ashdod,R
 YP,21/10/2024,21:45,Hellboy: The Crooked Man,Rishon Letzion,R
 YP,21/10/2024,17:15,Hellboy: The Crooked Man,Ayalon,R
@@ -145,11 +142,9 @@ YP,21/10/2024,19:30,Hellboy: The Crooked Man,Beer Sheva,R
 YP,21/10/2024,21:45,Hellboy: The Crooked Man,Beer Sheva,R
 YP,21/10/2024,19:40,Hellboy: The Crooked Man,Zichron Yaakov,R
 YP,21/10/2024,21:40,Hellboy: The Crooked Man,Haifa,R
-YP,21/10/2024,00:00,Hellboy: The Crooked Man,Haifa,R
 YP,21/10/2024,17:30,Hellboy: The Crooked Man,Jerusalem,R
 YP,21/10/2024,19:45,Hellboy: The Crooked Man,Jerusalem,R
 YP,21/10/2024,22:00,Hellboy: The Crooked Man,Jerusalem,R
-YP,21/10/2024,00:10,Hellboy: The Crooked Man,Jerusalem,R
 HC,21/10/2024,21:50,Hellboy: The Crooked Man,Haifa,R
 HC,21/10/2024,22:30,Hellboy: The Crooked Man,Kfar Saba,R
 HC,21/10/2024,12:30,Inside Out 2,Kiryat Bialik,R
@@ -160,7 +155,6 @@ HC,21/10/2024,19:00,It Ends with Us,Haifa,R
 HC,21/10/2024,21:40,It Ends with Us,Haifa,R
 HC,21/10/2024,19:10,It Ends with Us,Kfar Saba,R
 HC,21/10/2024,21:30,It Ends with Us,Modiin,R
-HC,21/10/2024,22:00,It Ends with Us,Modiin,R
 HC,21/10/2024,22:00,It Ends with Us,Rehovot,R
 HC,21/10/2024,18:30,It Ends with Us,Ashdod,R
 HC,21/10/2024,18:00,It Ends with Us,Ashkelon,R
@@ -174,8 +168,10 @@ CC,21/10/2024,19:00,It Ends with Us,Chadera,R
 CC,21/10/2024,20:40,It Ends with Us,Ashdod,R
 YP,21/10/2024,15:15,It Ends with Us,Ayalon,R
 YP,21/10/2024,19:00,It Ends with Us,Zichron Yaakov,R
-YP,21/10/2024,23:50,It Ends with Us,Haifa,R
 RH,21/10/2024,19:15,It Ends with Us,Givataim,R
+ML,21/10/2024,19:50,Jigra,Carmiel,R
+ML,21/10/2024,20:00,Jigra,Haifa,R
+ML,21/10/2024,19:10,Jigra,Netanya,R
 HC,21/10/2024,21:30,Jigra,Kiryat Bialik,R
 HC,21/10/2024,19:25,Jigra,Petach Tikvah,R
 HC,21/10/2024,19:15,Jigra,Modiin,R
@@ -183,6 +179,15 @@ HC,21/10/2024,19:25,Jigra,Rehovot,R
 HC,21/10/2024,19:00,Jigra,Ashdod,R
 HC,21/10/2024,20:40,Jigra,Ashkelon,R
 CC,21/10/2024,18:40,Jigra,Beer Sheva,R
+ML,21/10/2024,18:35,Joker: Folie à Deux,Carmiel,Upgrade
+ML,21/10/2024,21:20,Joker: Folie à Deux,Carmiel,Upgrade
+ML,21/10/2024,15:40,Joker: Folie à Deux,Haifa,Upgrade
+ML,21/10/2024,18:35,Joker: Folie à Deux,Haifa,Upgrade
+ML,21/10/2024,21:30,Joker: Folie à Deux,Haifa,Upgrade
+ML,21/10/2024,15:55,Joker: Folie à Deux,Netanya,Upgrade
+ML,21/10/2024,18:55,Joker: Folie à Deux,Netanya,Upgrade
+ML,21/10/2024,21:00,Joker: Folie à Deux,Netanya,R
+ML,21/10/2024,21:55,Joker: Folie à Deux,Netanya,Upgrade
 HC,21/10/2024,19:30,Joker: Folie à Deux,Carmiel,R
 HC,21/10/2024,22:20,Joker: Folie à Deux,Carmiel,R
 HC,21/10/2024,18:25,Joker: Folie à Deux,Nahariya,R
@@ -200,8 +205,7 @@ HC,21/10/2024,17:50,Joker: Folie à Deux,Kfar Saba,R
 HC,21/10/2024,19:15,Joker: Folie à Deux,Kfar Saba,R
 HC,21/10/2024,22:10,Joker: Folie à Deux,Kfar Saba,R
 HC,21/10/2024,21:20,Joker: Folie à Deux,Petach Tikvah,R
-HC,21/10/2024,21:15,Joker: Folie à Deux,Modiin,R
-HC,21/10/2024,22:15,Joker: Folie à Deux,Modiin,R
+HC,21/10/2024,22:00,Joker: Folie à Deux,Modiin,R
 HC,21/10/2024,22:30,Joker: Folie à Deux,Rehovot,R
 HC,21/10/2024,22:00,Joker: Folie à Deux,Ashdod,R
 HC,21/10/2024,19:30,Joker: Folie à Deux,Ashkelon,R
@@ -221,7 +225,6 @@ YP,21/10/2024,17:50,Joker: Folie à Deux,Rishon Letzion,R
 YP,21/10/2024,20:45,Joker: Folie à Deux,Rishon Letzion,R
 YP,21/10/2024,23:40,Joker: Folie à Deux,Rishon Letzion,R
 YP,21/10/2024,20:30,Joker: Folie à Deux,Rishon Letzion,VIP
-YP,21/10/2024,23:30,Joker: Folie à Deux,Rishon Letzion,VIP
 YP,21/10/2024,13:30,Joker: Folie à Deux,Ayalon,R
 YP,21/10/2024,16:15,Joker: Folie à Deux,Ayalon,R
 YP,21/10/2024,17:45,Joker: Folie à Deux,Ayalon,R
@@ -237,25 +240,20 @@ YP,21/10/2024,11:30,Joker: Folie à Deux,Beer Sheva,R
 YP,21/10/2024,14:30,Joker: Folie à Deux,Beer Sheva,R
 YP,21/10/2024,17:30,Joker: Folie à Deux,Beer Sheva,R
 YP,21/10/2024,20:30,Joker: Folie à Deux,Beer Sheva,R
-YP,21/10/2024,23:25,Joker: Folie à Deux,Beer Sheva,R
 YP,21/10/2024,12:10,Joker: Folie à Deux,Beer Sheva,IMAX
 YP,21/10/2024,15:00,Joker: Folie à Deux,Beer Sheva,IMAX
 YP,21/10/2024,17:50,Joker: Folie à Deux,Beer Sheva,IMAX
 YP,21/10/2024,20:40,Joker: Folie à Deux,Beer Sheva,IMAX
-YP,21/10/2024,23:30,Joker: Folie à Deux,Beer Sheva,IMAX
 YP,21/10/2024,12:30,Joker: Folie à Deux,Beer Sheva,VIP
 YP,21/10/2024,15:25,Joker: Folie à Deux,Beer Sheva,VIP
 YP,21/10/2024,16:15,Joker: Folie à Deux,Zichron Yaakov,R
 YP,21/10/2024,18:40,Joker: Folie à Deux,Zichron Yaakov,R
 YP,21/10/2024,20:00,Joker: Folie à Deux,Zichron Yaakov,R
 YP,21/10/2024,21:30,Joker: Folie à Deux,Zichron Yaakov,R
-YP,21/10/2024,23:00,Joker: Folie à Deux,Zichron Yaakov,R
-YP,21/10/2024,00:15,Joker: Folie à Deux,Zichron Yaakov,R
 YP,21/10/2024,11:15,Joker: Folie à Deux,Haifa,SCREENX
 YP,21/10/2024,14:20,Joker: Folie à Deux,Haifa,SCREENX
 YP,21/10/2024,17:10,Joker: Folie à Deux,Haifa,SCREENX
 YP,21/10/2024,20:20,Joker: Folie à Deux,Haifa,SCREENX
-YP,21/10/2024,23:15,Joker: Folie à Deux,Haifa,SCREENX
 YP,21/10/2024,11:30,Joker: Folie à Deux,Haifa,R
 YP,21/10/2024,12:15,Joker: Folie à Deux,Haifa,R
 YP,21/10/2024,14:20,Joker: Folie à Deux,Haifa,R
@@ -267,23 +265,16 @@ YP,21/10/2024,18:50,Joker: Folie à Deux,Haifa,R
 YP,21/10/2024,20:40,Joker: Folie à Deux,Haifa,R
 YP,21/10/2024,20:50,Joker: Folie à Deux,Haifa,R
 YP,21/10/2024,21:40,Joker: Folie à Deux,Haifa,R
-YP,21/10/2024,23:30,Joker: Folie à Deux,Haifa,R
-YP,21/10/2024,00:10,Joker: Folie à Deux,Haifa,R
-YP,21/10/2024,17:15,Joker: Folie à Deux,Haifa,VIP
 YP,21/10/2024,18:00,Joker: Folie à Deux,Haifa,VIP
-YP,21/10/2024,20:00,Joker: Folie à Deux,Haifa,VIP
 YP,21/10/2024,21:00,Joker: Folie à Deux,Haifa,VIP
-YP,21/10/2024,23:00,Joker: Folie à Deux,Haifa,VIP
 YP,21/10/2024,11:30,Joker: Folie à Deux,Jerusalem,R
 YP,21/10/2024,14:30,Joker: Folie à Deux,Jerusalem,R
 YP,21/10/2024,17:30,Joker: Folie à Deux,Jerusalem,R
 YP,21/10/2024,20:30,Joker: Folie à Deux,Jerusalem,R
-YP,21/10/2024,23:20,Joker: Folie à Deux,Jerusalem,R
 YP,21/10/2024,12:00,Joker: Folie à Deux,Jerusalem,IMAX
 YP,21/10/2024,15:00,Joker: Folie à Deux,Jerusalem,IMAX
 YP,21/10/2024,18:00,Joker: Folie à Deux,Jerusalem,IMAX
 YP,21/10/2024,21:00,Joker: Folie à Deux,Jerusalem,IMAX
-YP,21/10/2024,00:00,Joker: Folie à Deux,Jerusalem,IMAX
 CC,21/10/2024,16:10,Joker: Folie à Deux,Glilot,R
 CC,21/10/2024,19:15,Joker: Folie à Deux,Glilot,R
 CC,21/10/2024,22:20,Joker: Folie à Deux,Glilot,R
@@ -300,8 +291,7 @@ CC,21/10/2024,19:20,Joker: Folie à Deux,Netanya,R
 CC,21/10/2024,20:20,Joker: Folie à Deux,Netanya,Prime
 CC,21/10/2024,19:10,Joker: Folie à Deux,Beer Sheva,R
 CC,21/10/2024,21:40,Joker: Folie à Deux,Beer Sheva,R
-CC,21/10/2024,21:10,Joker: Folie à Deux,Chadera,Prime
-CC,21/10/2024,00:10,Joker: Folie à Deux,Chadera,Prime
+CC,21/10/2024,00:20,Joker: Folie à Deux,Chadera,Prime
 CC,21/10/2024,21:30,Joker: Folie à Deux,Ashdod,R
 CC,21/10/2024,23:40,Joker: Folie à Deux,Ashdod,R
 RH,21/10/2024,21:50,Joker: Folie à Deux,Givataim,R
@@ -315,7 +305,6 @@ HC,21/10/2024,19:30,My Hero Academia: You're Next,Kiryat Bialik,R
 HC,21/10/2024,17:10,My Hero Academia: You're Next,Haifa,R
 HC,21/10/2024,19:30,My Hero Academia: You're Next,Haifa,R
 HC,21/10/2024,17:50,My Hero Academia: You're Next,Kfar Saba,R
-HC,21/10/2024,20:10,My Hero Academia: You're Next,Kfar Saba,R
 CC,21/10/2024,19:00,My Hero Academia: You're Next,Glilot,R
 CC,21/10/2024,21:35,My Hero Academia: You're Next,Glilot,R
 CC,21/10/2024,19:50,My Hero Academia: You're Next,Rishon Letzion,R
@@ -327,10 +316,12 @@ LC,21/10/2024,13:00,My Old Ass,Tel Aviv,R
 LC,21/10/2024,17:00,My Old Ass,Tel Aviv,R
 LC,21/10/2024,19:30,My Old Ass,Tel Aviv,R
 LC,21/10/2024,21:40,My Old Ass,Tel Aviv,R
-LC,21/10/2024,18:30,My Old Ass,Even Yehuda,R
 LC,21/10/2024,16:10,My Old Ass,Ramat Hasharon,R
+LC,21/10/2024,18:30,My Old Ass,Even Yehuda,R
 LC,21/10/2024,20:30,My Old Ass,Herziliya,R
 LC,21/10/2024,21:30,My Old Ass,Shoham,R
+ML,21/10/2024,20:00,My Old Ass,Haifa,R
+ML,21/10/2024,18:35,My Old Ass,Netanya,R
 CC,21/10/2024,21:00,My Old Ass,Glilot,R
 CC,21/10/2024,18:30,My Old Ass,Rishon Letzion,R
 CC,21/10/2024,19:30,My Old Ass,Rishon Letzion,R
@@ -347,7 +338,7 @@ HC,21/10/2024,21:20,My Old Ass,Ashkelon,R
 CC,21/10/2024,00:30,Nefarious,Glilot,R
 CC,21/10/2024,23:10,Nefarious,Rishon Letzion,R
 CC,21/10/2024,22:20,Nefarious,Netanya,R
-CC,21/10/2024,00:10,Nefarious,Chadera,R
+CC,21/10/2024,00:30,Nefarious,Chadera,R
 CC,21/10/2024,22:20,Nefarious,Ashdod,R
 YP,21/10/2024,00:00,Nefarious,Ayalon,R
 YP,21/10/2024,17:15,Nefarious,Jerusalem,R
@@ -366,19 +357,18 @@ YP,21/10/2024,22:10,Red Flower,Rishon Letzion,R
 YP,21/10/2024,17:30,Red Flower,Beer Sheva,R
 YP,21/10/2024,19:45,Red Flower,Beer Sheva,R
 YP,21/10/2024,21:45,Red Flower,Beer Sheva,R
-YP,21/10/2024,23:45,Red Flower,Beer Sheva,R
 YP,21/10/2024,17:00,Red Flower,Haifa,R
 YP,21/10/2024,19:00,Red Flower,Haifa,R
 YP,21/10/2024,20:45,Red Flower,Haifa,R
 YP,21/10/2024,22:30,Red Flower,Haifa,R
-YP,21/10/2024,00:15,Red Flower,Haifa,R
 CC,21/10/2024,20:50,Sleeping Dogs,Glilot,R
 CC,21/10/2024,23:20,Sleeping Dogs,Glilot,R
 CC,21/10/2024,22:00,Sleeping Dogs,Rishon Letzion,R
-CC,21/10/2024,00:10,Sleeping Dogs,Chadera,R
+CC,21/10/2024,00:30,Sleeping Dogs,Chadera,R
 YP,21/10/2024,19:15,Sleeping Dogs,Rishon Letzion,R
-YP,21/10/2024,23:45,Sleeping Dogs,Beer Sheva,R
+HC,21/10/2024,16:20,Smile 2,Carmiel,R
 HC,21/10/2024,17:00,Smile 2,Carmiel,R
+HC,21/10/2024,18:50,Smile 2,Carmiel,R
 HC,21/10/2024,19:40,Smile 2,Carmiel,R
 HC,21/10/2024,21:30,Smile 2,Carmiel,R
 HC,21/10/2024,22:20,Smile 2,Carmiel,R
@@ -393,7 +383,6 @@ HC,21/10/2024,21:30,Smile 2,Kiryat Bialik,R
 HC,21/10/2024,22:20,Smile 2,Kiryat Bialik,R
 HC,21/10/2024,23:00,Smile 2,Kiryat Bialik,R
 HC,21/10/2024,15:05,Smile 2,Haifa,R
-HC,21/10/2024,17:40,Smile 2,Haifa,R
 HC,21/10/2024,19:20,Smile 2,Haifa,R
 HC,21/10/2024,20:15,Smile 2,Haifa,R
 HC,21/10/2024,21:20,Smile 2,Haifa,R
@@ -409,11 +398,9 @@ HC,21/10/2024,17:50,Smile 2,Petach Tikvah,R
 HC,21/10/2024,19:40,Smile 2,Petach Tikvah,R
 HC,21/10/2024,21:45,Smile 2,Petach Tikvah,R
 HC,21/10/2024,22:20,Smile 2,Petach Tikvah,R
-HC,21/10/2024,15:40,Smile 2,Modiin,R
-HC,21/10/2024,18:15,Smile 2,Modiin,R
-HC,21/10/2024,19:30,Smile 2,Modiin,R
 HC,21/10/2024,20:50,Smile 2,Modiin,R
-HC,21/10/2024,22:10,Smile 2,Modiin,R
+HC,21/10/2024,21:30,Smile 2,Modiin,R
+HC,21/10/2024,22:15,Smile 2,Modiin,R
 HC,21/10/2024,15:10,Smile 2,Rehovot,R
 HC,21/10/2024,17:50,Smile 2,Rehovot,R
 HC,21/10/2024,19:45,Smile 2,Rehovot,R
@@ -427,7 +414,14 @@ HC,21/10/2024,17:40,Smile 2,Ashkelon,R
 HC,21/10/2024,19:30,Smile 2,Ashkelon,R
 HC,21/10/2024,20:15,Smile 2,Ashkelon,R
 HC,21/10/2024,22:10,Smile 2,Ashkelon,R
+ML,21/10/2024,19:00,Smile 2,Carmiel,Upgrade
+ML,21/10/2024,21:45,Smile 2,Carmiel,Upgrade
+ML,21/10/2024,19:20,Smile 2,Haifa,Upgrade
+ML,21/10/2024,22:05,Smile 2,Haifa,Upgrade
+ML,21/10/2024,19:30,Smile 2,Netanya,R
+ML,21/10/2024,22:25,Smile 2,Netanya,R
 CC,21/10/2024,14:50,Smile 2,Glilot,R
+CC,21/10/2024,15:00,Smile 2,Glilot,R
 CC,21/10/2024,17:50,Smile 2,Glilot,R
 CC,21/10/2024,19:00,Smile 2,Glilot,R
 CC,21/10/2024,20:00,Smile 2,Glilot,R
@@ -437,35 +431,39 @@ CC,21/10/2024,23:10,Smile 2,Glilot,R
 CC,21/10/2024,00:15,Smile 2,Glilot,R
 CC,21/10/2024,21:00,Smile 2,Glilot,4DX
 CC,21/10/2024,00:15,Smile 2,Glilot,4DX
+CC,21/10/2024,18:20,Smile 2,Rishon Letzion,R
+CC,21/10/2024,19:00,Smile 2,Rishon Letzion,R
+CC,21/10/2024,20:40,Smile 2,Rishon Letzion,R
+CC,21/10/2024,21:00,Smile 2,Rishon Letzion,R
+CC,21/10/2024,21:35,Smile 2,Rishon Letzion,R
+CC,21/10/2024,22:30,Smile 2,Rishon Letzion,R
+CC,21/10/2024,23:10,Smile 2,Rishon Letzion,R
+CC,21/10/2024,23:50,Smile 2,Rishon Letzion,R
 YP,21/10/2024,11:00,Smile 2,Rishon Letzion,R
 YP,21/10/2024,14:40,Smile 2,Rishon Letzion,R
 YP,21/10/2024,17:00,Smile 2,Rishon Letzion,R
+CC,21/10/2024,16:45,Smile 2,Jerusalem,R
 YP,21/10/2024,19:40,Smile 2,Rishon Letzion,R
+CC,21/10/2024,19:15,Smile 2,Jerusalem,R
+CC,21/10/2024,19:55,Smile 2,Jerusalem,R
 YP,21/10/2024,20:45,Smile 2,Rishon Letzion,R
+CC,21/10/2024,22:15,Smile 2,Jerusalem,R
 YP,21/10/2024,22:20,Smile 2,Rishon Letzion,R
+CC,21/10/2024,23:00,Smile 2,Jerusalem,R
+CC,21/10/2024,00:00,Smile 2,Jerusalem,R
 YP,21/10/2024,22:45,Smile 2,Rishon Letzion,R
 YP,21/10/2024,23:30,Smile 2,Rishon Letzion,R
 YP,21/10/2024,00:00,Smile 2,Rishon Letzion,R
 YP,21/10/2024,00:30,Smile 2,Rishon Letzion,R
 YP,21/10/2024,18:00,Smile 2,Rishon Letzion,VIP
 YP,21/10/2024,21:00,Smile 2,Rishon Letzion,VIP
+YP,21/10/2024,23:30,Smile 2,Rishon Letzion,VIP
 YP,21/10/2024,00:00,Smile 2,Rishon Letzion,VIP
 YP,21/10/2024,21:00,Smile 2,Rishon Letzion,4DX
 YP,21/10/2024,23:50,Smile 2,Rishon Letzion,4DX
-CC,21/10/2024,18:20,Smile 2,Rishon Letzion,R
-CC,21/10/2024,19:00,Smile 2,Rishon Letzion,R
-CC,21/10/2024,20:40,Smile 2,Rishon Letzion,R
-CC,21/10/2024,21:00,Smile 2,Rishon Letzion,R
-CC,21/10/2024,21:10,Smile 2,Rishon Letzion,R
-CC,21/10/2024,22:30,Smile 2,Rishon Letzion,R
-CC,21/10/2024,23:10,Smile 2,Rishon Letzion,R
-CC,21/10/2024,23:50,Smile 2,Rishon Letzion,R
-CC,21/10/2024,16:45,Smile 2,Jerusalem,R
-CC,21/10/2024,19:15,Smile 2,Jerusalem,R
-CC,21/10/2024,19:55,Smile 2,Jerusalem,R
-CC,21/10/2024,22:15,Smile 2,Jerusalem,R
-CC,21/10/2024,23:00,Smile 2,Jerusalem,R
-CC,21/10/2024,00:00,Smile 2,Jerusalem,R
+CC,21/10/2024,22:00,Smile 2,Jerusalem,VIP
+CC,21/10/2024,19:00,Smile 2,Kfar Saba,R
+CC,21/10/2024,22:10,Smile 2,Kfar Saba,R
 YP,21/10/2024,15:00,Smile 2,Ayalon,R
 YP,21/10/2024,17:20,Smile 2,Ayalon,R
 YP,21/10/2024,18:50,Smile 2,Ayalon,R
@@ -474,72 +472,56 @@ YP,21/10/2024,21:30,Smile 2,Ayalon,R
 YP,21/10/2024,22:45,Smile 2,Ayalon,R
 YP,21/10/2024,23:40,Smile 2,Ayalon,R
 YP,21/10/2024,00:15,Smile 2,Ayalon,R
-CC,21/10/2024,22:00,Smile 2,Jerusalem,VIP
-CC,21/10/2024,19:00,Smile 2,Kfar Saba,R
-CC,21/10/2024,22:10,Smile 2,Kfar Saba,R
-YP,21/10/2024,12:00,Smile 2,Beer Sheva,R
-YP,21/10/2024,16:40,Smile 2,Beer Sheva,R
-YP,21/10/2024,19:00,Smile 2,Beer Sheva,R
-YP,21/10/2024,21:40,Smile 2,Beer Sheva,R
-YP,21/10/2024,00:15,Smile 2,Beer Sheva,R
-YP,21/10/2024,00:20,Smile 2,Beer Sheva,R
-YP,21/10/2024,19:30,Smile 2,Beer Sheva,VIP
-YP,21/10/2024,20:50,Smile 2,Beer Sheva,VIP
-YP,21/10/2024,23:30,Smile 2,Beer Sheva,VIP
-YP,21/10/2024,00:30,Smile 2,Beer Sheva,4DX
 CC,21/10/2024,17:50,Smile 2,Kfar Saba,Prime
 CC,21/10/2024,21:20,Smile 2,Kfar Saba,Prime
 CC,21/10/2024,19:30,Smile 2,Netanya,R
 CC,21/10/2024,22:40,Smile 2,Netanya,R
+YP,21/10/2024,12:00,Smile 2,Beer Sheva,R
+YP,21/10/2024,16:40,Smile 2,Beer Sheva,R
+YP,21/10/2024,19:00,Smile 2,Beer Sheva,R
+YP,21/10/2024,21:40,Smile 2,Beer Sheva,R
+YP,21/10/2024,19:30,Smile 2,Beer Sheva,VIP
+YP,21/10/2024,20:50,Smile 2,Beer Sheva,VIP
+CC,21/10/2024,17:20,Smile 2,Netanya,Prime
+CC,21/10/2024,23:20,Smile 2,Netanya,Prime
+CC,21/10/2024,18:40,Smile 2,Beer Sheva,R
+CC,21/10/2024,20:30,Smile 2,Beer Sheva,R
+CC,21/10/2024,22:00,Smile 2,Beer Sheva,R
 YP,21/10/2024,16:50,Smile 2,Zichron Yaakov,R
 YP,21/10/2024,19:20,Smile 2,Zichron Yaakov,R
 YP,21/10/2024,21:00,Smile 2,Zichron Yaakov,R
 YP,21/10/2024,21:50,Smile 2,Zichron Yaakov,R
-YP,21/10/2024,23:40,Smile 2,Zichron Yaakov,R
-YP,21/10/2024,23:50,Smile 2,Zichron Yaakov,R
-YP,21/10/2024,00:30,Smile 2,Zichron Yaakov,R
 YP,21/10/2024,20:00,Smile 2,Zichron Yaakov,VIP
-YP,21/10/2024,22:45,Smile 2,Zichron Yaakov,VIP
-YP,21/10/2024,23:30,Smile 2,Zichron Yaakov,VIP
-CC,21/10/2024,17:20,Smile 2,Netanya,Prime
-CC,21/10/2024,23:20,Smile 2,Netanya,Prime
-CC,21/10/2024,18:40,Smile 2,Beer Sheva,R
-YP,21/10/2024,15:50,Smile 2,Haifa,R
-CC,21/10/2024,20:30,Smile 2,Beer Sheva,R
-YP,21/10/2024,18:45,Smile 2,Haifa,R
-CC,21/10/2024,22:00,Smile 2,Beer Sheva,R
-YP,21/10/2024,20:00,Smile 2,Haifa,R
-YP,21/10/2024,21:30,Smile 2,Haifa,R
-YP,21/10/2024,23:00,Smile 2,Haifa,R
-YP,21/10/2024,00:10,Smile 2,Haifa,R
-YP,21/10/2024,00:15,Smile 2,Haifa,R
-YP,21/10/2024,19:00,Smile 2,Haifa,VIP
-YP,21/10/2024,22:00,Smile 2,Haifa,VIP
-YP,21/10/2024,00:00,Smile 2,Haifa,VIP
-YP,21/10/2024,21:30,Smile 2,Haifa,4DX
-YP,21/10/2024,00:15,Smile 2,Haifa,4DX
 CC,21/10/2024,16:10,Smile 2,Chadera,R
 CC,21/10/2024,18:15,Smile 2,Chadera,R
 CC,21/10/2024,19:15,Smile 2,Chadera,R
 CC,21/10/2024,21:10,Smile 2,Chadera,R
+CC,21/10/2024,21:50,Smile 2,Chadera,R
 CC,21/10/2024,22:20,Smile 2,Chadera,R
 CC,21/10/2024,23:50,Smile 2,Chadera,R
 CC,21/10/2024,00:10,Smile 2,Chadera,R
-YP,21/10/2024,15:10,Smile 2,Jerusalem,R
-YP,21/10/2024,17:00,Smile 2,Jerusalem,R
-YP,21/10/2024,19:40,Smile 2,Jerusalem,R
-YP,21/10/2024,20:30,Smile 2,Jerusalem,R
-YP,21/10/2024,22:20,Smile 2,Jerusalem,R
-YP,21/10/2024,23:50,Smile 2,Jerusalem,R
-YP,21/10/2024,00:20,Smile 2,Jerusalem,R
-YP,21/10/2024,21:00,Smile 2,Jerusalem,4DX
-YP,21/10/2024,00:00,Smile 2,Jerusalem,4DX
+CC,21/10/2024,00:30,Smile 2,Chadera,R
+YP,21/10/2024,15:50,Smile 2,Haifa,R
+YP,21/10/2024,18:45,Smile 2,Haifa,R
+YP,21/10/2024,20:00,Smile 2,Haifa,R
+YP,21/10/2024,21:30,Smile 2,Haifa,R
+YP,21/10/2024,17:15,Smile 2,Haifa,VIP
+YP,21/10/2024,19:00,Smile 2,Haifa,VIP
+YP,21/10/2024,20:00,Smile 2,Haifa,VIP
+YP,21/10/2024,22:00,Smile 2,Haifa,VIP
+YP,21/10/2024,21:30,Smile 2,Haifa,4DX
 CC,21/10/2024,14:15,Smile 2,Ashdod,R
 CC,21/10/2024,17:30,Smile 2,Ashdod,R
 CC,21/10/2024,19:00,Smile 2,Ashdod,R
 CC,21/10/2024,20:40,Smile 2,Ashdod,R
 CC,21/10/2024,22:15,Smile 2,Ashdod,R
 CC,21/10/2024,23:50,Smile 2,Ashdod,R
+YP,21/10/2024,15:10,Smile 2,Jerusalem,R
+YP,21/10/2024,17:00,Smile 2,Jerusalem,R
+YP,21/10/2024,19:40,Smile 2,Jerusalem,R
+YP,21/10/2024,20:30,Smile 2,Jerusalem,R
+YP,21/10/2024,22:20,Smile 2,Jerusalem,R
+YP,21/10/2024,21:00,Smile 2,Jerusalem,4DX
 RH,21/10/2024,17:00,Smile 2,Givataim,R
 RH,21/10/2024,19:00,Smile 2,Givataim,R
 RH,21/10/2024,21:50,Smile 2,Givataim,R
@@ -549,6 +531,7 @@ RH,21/10/2024,21:50,Smile 2,Tel Aviv,R
 RH,21/10/2024,17:00,Smile 2,Kiryat Ono,R
 RH,21/10/2024,19:00,Smile 2,Kiryat Ono,R
 RH,21/10/2024,21:50,Smile 2,Kiryat Ono,R
+ML,21/10/2024,22:25,Speak No Evil,Netanya,R
 CC,21/10/2024,22:00,Speak No Evil,Glilot,R
 CC,21/10/2024,00:10,Speak No Evil,Glilot,R
 CC,21/10/2024,22:20,Speak No Evil,Rishon Letzion,R
@@ -556,15 +539,10 @@ CC,21/10/2024,22:50,Speak No Evil,Chadera,R
 YP,21/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,21/10/2024,00:30,Speak No Evil,Rishon Letzion,R
 YP,21/10/2024,19:00,Speak No Evil,Beer Sheva,R
-YP,21/10/2024,00:00,Speak No Evil,Beer Sheva,R
 YP,21/10/2024,21:45,Speak No Evil,Zichron Yaakov,R
-YP,21/10/2024,00:15,Speak No Evil,Zichron Yaakov,R
-YP,21/10/2024,00:10,Speak No Evil,Haifa,R
-YP,21/10/2024,00:20,Speak No Evil,Jerusalem,R
 CC,21/10/2024,00:10,Strange Darling,Glilot,R
 CC,21/10/2024,23:30,Strange Darling,Rishon Letzion,R
 YP,21/10/2024,19:30,Strange Darling,Ayalon,R
-HC,21/10/2024,19:00,The Apprentice,Carmiel,R
 HC,21/10/2024,19:00,The Apprentice,Kiryat Bialik,R
 HC,21/10/2024,17:10,The Apprentice,Haifa,R
 HC,21/10/2024,19:00,The Apprentice,Haifa,R
@@ -587,10 +565,12 @@ YP,21/10/2024,22:00,The Apprentice,Beer Sheva,R
 YP,21/10/2024,16:55,The Apprentice,Haifa,R
 YP,21/10/2024,19:15,The Apprentice,Haifa,R
 YP,21/10/2024,21:45,The Apprentice,Haifa,R
-YP,21/10/2024,00:15,The Apprentice,Haifa,R
 YP,21/10/2024,17:30,The Apprentice,Jerusalem,R
 YP,21/10/2024,19:20,The Apprentice,Jerusalem,R
 YP,21/10/2024,21:50,The Apprentice,Jerusalem,R
+ML,21/10/2024,12:50,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
+ML,21/10/2024,11:35,The Day the Earth Blew Up: A Looney Tunes Movie,Netanya,R
+ML,21/10/2024,17:40,The Day the Earth Blew Up: A Looney Tunes Movie,Netanya,R
 HC,21/10/2024,13:10,The Day the Earth Blew Up: A Looney Tunes Movie,Carmiel,R
 HC,21/10/2024,18:50,The Day the Earth Blew Up: A Looney Tunes Movie,Kiryat Bialik,R
 HC,21/10/2024,19:15,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
@@ -608,19 +588,18 @@ YP,21/10/2024,19:30,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
 YP,21/10/2024,15:20,The Day the Earth Blew Up: A Looney Tunes Movie,Jerusalem,R
 YP,21/10/2024,19:50,The Day the Earth Blew Up: A Looney Tunes Movie,Jerusalem,R
 YP,21/10/2024,21:40,The Engineer,Ayalon,R
-YP,21/10/2024,00:30,The Engineer,Beer Sheva,R
 YP,21/10/2024,22:00,The Engineer,Haifa,R
-YP,21/10/2024,00:40,The Engineer,Jerusalem,R
 LC,21/10/2024,12:45,The Second Act,Tel Aviv,R
 LC,21/10/2024,13:30,The Second Act,Even Yehuda,R
-LC,21/10/2024,19:10,The Second Act,Raanana,R
 LC,21/10/2024,16:00,The Second Act,Beer Sheva,R
 LC,21/10/2024,18:10,The Second Act,Ramat Hasharon,R
+LC,21/10/2024,19:10,The Second Act,Raanana,R
 YP,21/10/2024,19:30,The Second Act,Rishon Letzion,R
 YP,21/10/2024,21:15,The Second Act,Beer Sheva,R
 YP,21/10/2024,13:00,The Second Act,Haifa,R
 YP,21/10/2024,19:40,The Second Act,Haifa,R
 YP,21/10/2024,21:20,The Second Act,Jerusalem,R
+ML,21/10/2024,22:25,The Silent Hour,Netanya,R
 CC,21/10/2024,22:10,The Silent Hour,Glilot,R
 CC,21/10/2024,00:30,The Silent Hour,Glilot,R
 CC,21/10/2024,20:50,The Silent Hour,Rishon Letzion,R
@@ -628,7 +607,6 @@ CC,21/10/2024,21:40,The Silent Hour,Jerusalem,R
 CC,21/10/2024,20:30,The Silent Hour,Jerusalem,VIP
 CC,21/10/2024,22:20,The Silent Hour,Netanya,R
 CC,21/10/2024,21:40,The Silent Hour,Chadera,R
-CC,21/10/2024,23:50,The Silent Hour,Chadera,R
 CC,21/10/2024,19:40,The Silent Hour,Ashdod,R
 CC,21/10/2024,22:10,The Silent Hour,Ashdod,R
 CC,21/10/2024,23:40,The Silent Hour,Ashdod,R
@@ -641,11 +619,9 @@ YP,21/10/2024,17:30,The Silent Hour,Ayalon,R
 YP,21/10/2024,19:45,The Silent Hour,Ayalon,R
 YP,21/10/2024,22:00,The Silent Hour,Ayalon,R
 YP,21/10/2024,00:10,The Silent Hour,Ayalon,R
-YP,21/10/2024,00:30,The Silent Hour,Beer Sheva,R
 YP,21/10/2024,17:15,The Silent Hour,Haifa,R
 YP,21/10/2024,19:45,The Silent Hour,Jerusalem,R
 YP,21/10/2024,21:55,The Silent Hour,Jerusalem,R
-YP,21/10/2024,00:10,The Silent Hour,Jerusalem,R
 CC,21/10/2024,18:30,The Tasting,Glilot,R
 CC,21/10/2024,20:50,The Tasting,Glilot,R
 CC,21/10/2024,16:30,The Tasting,Rishon Letzion,R
@@ -660,22 +636,22 @@ LC,21/10/2024,11:00,The Tiger's Apprentice,Raanana,R
 LC,21/10/2024,16:00,The Tiger's Apprentice,Raanana,R
 LC,21/10/2024,18:30,The Tiger's Apprentice,Raanana,R
 LC,21/10/2024,21:00,The Tiger's Apprentice,Raanana,R
-LC,21/10/2024,11:10,The Tiger's Apprentice,Tel Aviv,R
-LC,21/10/2024,13:40,The Tiger's Apprentice,Tel Aviv,R
-LC,21/10/2024,16:10,The Tiger's Apprentice,Tel Aviv,R
-LC,21/10/2024,19:00,The Tiger's Apprentice,Tel Aviv,R
-LC,21/10/2024,21:30,The Tiger's Apprentice,Tel Aviv,R
 LC,21/10/2024,11:00,The Tiger's Apprentice,Even Yehuda,R
 LC,21/10/2024,13:30,The Tiger's Apprentice,Even Yehuda,R
 LC,21/10/2024,16:00,The Tiger's Apprentice,Even Yehuda,R
 LC,21/10/2024,18:30,The Tiger's Apprentice,Even Yehuda,R
 LC,21/10/2024,20:45,The Tiger's Apprentice,Even Yehuda,R
+LC,21/10/2024,11:10,The Tiger's Apprentice,Tel Aviv,R
+LC,21/10/2024,13:40,The Tiger's Apprentice,Tel Aviv,R
+LC,21/10/2024,16:10,The Tiger's Apprentice,Tel Aviv,R
+LC,21/10/2024,19:00,The Tiger's Apprentice,Tel Aviv,R
+LC,21/10/2024,21:30,The Tiger's Apprentice,Tel Aviv,R
 LC,21/10/2024,15:40,The Tiger's Apprentice,Shoham,R
 LC,21/10/2024,18:10,The Tiger's Apprentice,Shoham,R
 LC,21/10/2024,20:45,The Tiger's Apprentice,Shoham,R
-LC,21/10/2024,20:40,The Tiger's Apprentice,Beer Sheva,R
-LC,21/10/2024,20:30,The Tiger's Apprentice,Ramat Hasharon,R
 LC,21/10/2024,18:00,The Tiger's Apprentice,Herziliya,R
+LC,21/10/2024,20:30,The Tiger's Apprentice,Ramat Hasharon,R
+LC,21/10/2024,20:40,The Tiger's Apprentice,Beer Sheva,R
 CC,21/10/2024,13:50,The Tiger's Apprentice,Glilot,R
 CC,21/10/2024,17:15,The Tiger's Apprentice,Glilot,R
 CC,21/10/2024,19:00,The Tiger's Apprentice,Glilot,R
@@ -692,7 +668,7 @@ CC,21/10/2024,18:20,The Tiger's Apprentice,Beer Sheva,R
 CC,21/10/2024,21:20,The Tiger's Apprentice,Beer Sheva,R
 CC,21/10/2024,19:20,The Tiger's Apprentice,Chadera,R
 CC,21/10/2024,21:55,The Tiger's Apprentice,Chadera,R
-CC,21/10/2024,16:15,The Tiger's Apprentice,Chadera,Prime
+CC,21/10/2024,16:20,The Tiger's Apprentice,Chadera,Prime
 CC,21/10/2024,16:15,The Tiger's Apprentice,Ashdod,R
 CC,21/10/2024,19:00,The Tiger's Apprentice,Ashdod,R
 CC,21/10/2024,22:00,The Tiger's Apprentice,Ashdod,R
@@ -703,7 +679,12 @@ YP,21/10/2024,18:00,The Wild Robot,Rishon Letzion,R
 YP,21/10/2024,13:10,The Wild Robot,Ayalon,R
 YP,21/10/2024,19:45,The Wild Robot,Beer Sheva,R
 YP,21/10/2024,22:00,The Wild Robot,Beer Sheva,R
-HC,21/10/2024,15:10,The Wild Robot,Carmiel,R
+YP,21/10/2024,13:30,The Wild Robot,Haifa,R
+YP,21/10/2024,15:20,The Wild Robot,Jerusalem,R
+ML,21/10/2024,17:40,The Wild Robot,Haifa,R
+ML,21/10/2024,11:25,The Wild Robot,Netanya,R
+ML,21/10/2024,17:00,The Wild Robot,Netanya,R
+HC,21/10/2024,10:40,The Wild Robot,Kiryat Bialik,R
 HC,21/10/2024,12:55,The Wild Robot,Kiryat Bialik,R
 HC,21/10/2024,12:50,The Wild Robot,Haifa,R
 HC,21/10/2024,19:30,The Wild Robot,Haifa,R
@@ -725,7 +706,12 @@ LC,21/10/2024,13:10,There's Still Tomorrow,Even Yehuda,R
 LC,21/10/2024,16:40,There's Still Tomorrow,Raanana,R
 LC,21/10/2024,19:10,There's Still Tomorrow,Tel Aviv,R
 YP,21/10/2024,21:50,This Time Next Year,Jerusalem,R
-HC,21/10/2024,15:00,Transformers One,Carmiel,R
+ML,21/10/2024,14:50,Transformers One,Carmiel,R
+ML,21/10/2024,16:55,Transformers One,Carmiel,R
+ML,21/10/2024,15:30,Transformers One,Haifa,R
+ML,21/10/2024,17:45,Transformers One,Haifa,R
+ML,21/10/2024,16:15,Transformers One,Netanya,R
+ML,21/10/2024,18:35,Transformers One,Netanya,R
 HC,21/10/2024,13:05,Transformers One,Nahariya,R
 HC,21/10/2024,12:45,Transformers One,Kiryat Bialik,R
 HC,21/10/2024,15:00,Transformers One,Kiryat Bialik,R
@@ -734,8 +720,9 @@ HC,21/10/2024,19:45,Transformers One,Kiryat Bialik,R
 HC,21/10/2024,15:00,Transformers One,Haifa,R
 HC,21/10/2024,15:00,Transformers One,Kfar Saba,R
 HC,21/10/2024,17:35,Transformers One,Kfar Saba,R
-HC,21/10/2024,19:00,Transformers One,Kfar Saba,Premium
+HC,21/10/2024,20:10,Transformers One,Kfar Saba,R
 HC,21/10/2024,14:40,Transformers One,Petach Tikvah,R
+HC,21/10/2024,15:40,Transformers One,Modiin,R
 HC,21/10/2024,17:00,Transformers One,Modiin,R
 HC,21/10/2024,19:15,Transformers One,Modiin,R
 HC,21/10/2024,17:30,Transformers One,Rehovot,R
@@ -758,38 +745,34 @@ YP,21/10/2024,22:10,Transformers One,Beer Sheva,4DX
 YP,21/10/2024,15:00,Transformers One,Beer Sheva,R
 YP,21/10/2024,20:10,Transformers One,Beer Sheva,R
 YP,21/10/2024,22:20,Transformers One,Beer Sheva,R
-YP,21/10/2024,00:30,Transformers One,Beer Sheva,R
 YP,21/10/2024,13:30,Transformers One,Zichron Yaakov,R
 YP,21/10/2024,20:00,Transformers One,Zichron Yaakov,R
 YP,21/10/2024,22:15,Transformers One,Zichron Yaakov,R
-YP,21/10/2024,00:30,Transformers One,Zichron Yaakov,R
 YP,21/10/2024,17:45,Transformers One,Zichron Yaakov,VIP
-YP,21/10/2024,14:20,Transformers One,Haifa,4DX
-YP,21/10/2024,19:10,Transformers One,Haifa,4DX
-YP,21/10/2024,19:20,Transformers One,Haifa,R
-YP,21/10/2024,21:50,Transformers One,Haifa,R
-YP,21/10/2024,00:10,Transformers One,Haifa,R
-YP,21/10/2024,13:00,Transformers One,Jerusalem,R
-YP,21/10/2024,20:00,Transformers One,Jerusalem,R
-YP,21/10/2024,22:10,Transformers One,Jerusalem,R
-YP,21/10/2024,00:20,Transformers One,Jerusalem,R
-YP,21/10/2024,13:40,Transformers One,Jerusalem,4DX
-YP,21/10/2024,18:20,Transformers One,Jerusalem,4DX
 CC,21/10/2024,10:40,Transformers One,Glilot,R
 CC,21/10/2024,13:20,Transformers One,Glilot,R
 CC,21/10/2024,17:00,Transformers One,Glilot,R
 CC,21/10/2024,19:20,Transformers One,Glilot,R
+YP,21/10/2024,14:20,Transformers One,Haifa,4DX
+YP,21/10/2024,19:10,Transformers One,Haifa,4DX
+YP,21/10/2024,19:20,Transformers One,Haifa,R
+YP,21/10/2024,21:50,Transformers One,Haifa,R
 CC,21/10/2024,12:20,Transformers One,Rishon Letzion,R
 CC,21/10/2024,15:00,Transformers One,Rishon Letzion,R
 CC,21/10/2024,17:40,Transformers One,Rishon Letzion,R
 CC,21/10/2024,20:20,Transformers One,Rishon Letzion,R
 CC,21/10/2024,17:20,Transformers One,Jerusalem,R
 CC,21/10/2024,19:50,Transformers One,Jerusalem,R
+YP,21/10/2024,13:00,Transformers One,Jerusalem,R
+YP,21/10/2024,20:00,Transformers One,Jerusalem,R
+YP,21/10/2024,22:10,Transformers One,Jerusalem,R
+YP,21/10/2024,13:40,Transformers One,Jerusalem,4DX
+YP,21/10/2024,18:20,Transformers One,Jerusalem,4DX
 CC,21/10/2024,19:10,Transformers One,Kfar Saba,R
 CC,21/10/2024,21:50,Transformers One,Kfar Saba,R
 CC,21/10/2024,18:00,Transformers One,Netanya,R
-CC,21/10/2024,21:50,Transformers One,Beer Sheva,R
-CC,21/10/2024,19:20,Transformers One,Chadera,R
+CC,21/10/2024,22:10,Transformers One,Beer Sheva,R
+CC,21/10/2024,19:30,Transformers One,Chadera,R
 CC,21/10/2024,18:30,Transformers One,Ashdod,R
 RH,21/10/2024,19:30,Transformers One,Givataim,R
 RH,21/10/2024,21:50,Transformers One,Givataim,R
@@ -801,15 +784,22 @@ LC,21/10/2024,11:00,We Live in Time,Tel Aviv,R
 LC,21/10/2024,17:10,We Live in Time,Tel Aviv,R
 LC,21/10/2024,18:50,We Live in Time,Tel Aviv,R
 LC,21/10/2024,21:20,We Live in Time,Tel Aviv,R
-LC,21/10/2024,15:50,We Live in Time,Even Yehuda,R
-LC,21/10/2024,18:20,We Live in Time,Even Yehuda,R
-LC,21/10/2024,20:40,We Live in Time,Even Yehuda,R
 LC,21/10/2024,14:40,We Live in Time,Raanana,R
 LC,21/10/2024,19:15,We Live in Time,Raanana,R
 LC,21/10/2024,21:30,We Live in Time,Raanana,R
 LC,21/10/2024,15:00,We Live in Time,Shoham,R
 LC,21/10/2024,19:15,We Live in Time,Shoham,R
 LC,21/10/2024,21:30,We Live in Time,Shoham,R
+LC,21/10/2024,15:50,We Live in Time,Even Yehuda,R
+LC,21/10/2024,18:20,We Live in Time,Even Yehuda,R
+LC,21/10/2024,20:40,We Live in Time,Even Yehuda,R
+ML,21/10/2024,19:00,We Live in Time,Carmiel,R
+ML,21/10/2024,22:00,We Live in Time,Carmiel,R
+ML,21/10/2024,18:55,We Live in Time,Haifa,R
+ML,21/10/2024,21:55,We Live in Time,Haifa,R
+ML,21/10/2024,13:50,We Live in Time,Netanya,R
+ML,21/10/2024,19:20,We Live in Time,Netanya,R
+ML,21/10/2024,22:30,We Live in Time,Netanya,R
 CC,21/10/2024,11:30,We Live in Time,Glilot,R
 CC,21/10/2024,14:00,We Live in Time,Glilot,R
 CC,21/10/2024,16:30,We Live in Time,Glilot,R
@@ -834,7 +824,6 @@ CC,21/10/2024,21:40,We Live in Time,Beer Sheva,R
 CC,21/10/2024,16:50,We Live in Time,Chadera,R
 CC,21/10/2024,19:20,We Live in Time,Chadera,R
 CC,21/10/2024,21:50,We Live in Time,Chadera,R
-CC,21/10/2024,00:20,We Live in Time,Chadera,R
 CC,21/10/2024,16:00,We Live in Time,Ashdod,R
 CC,21/10/2024,18:45,We Live in Time,Ashdod,R
 CC,21/10/2024,21:30,We Live in Time,Ashdod,R
@@ -863,9 +852,13 @@ HC,21/10/2024,19:00,We Live in Time,Rehovot,R
 HC,21/10/2024,17:10,We Live in Time,Ashdod,R
 HC,21/10/2024,19:25,We Live in Time,Ashdod,R
 HC,21/10/2024,21:40,We Live in Time,Ashdod,R
-HC,21/10/2024,16:30,We Live in Time,Ashkelon,R
 HC,21/10/2024,18:50,We Live in Time,Ashkelon,R
 HC,21/10/2024,21:10,We Live in Time,Ashkelon,R
+YP,21/10/2024,18:45,We Live in Time,Rishon Letzion,VIP
+YP,21/10/2024,22:45,We Live in Time,Rishon Letzion,VIP
+YP,21/10/2024,19:45,We Live in Time,Rishon Letzion,R
+YP,21/10/2024,22:10,We Live in Time,Rishon Letzion,R
+YP,21/10/2024,00:35,We Live in Time,Rishon Letzion,R
 YP,21/10/2024,17:45,We Live in Time,Ayalon,R
 YP,21/10/2024,20:00,We Live in Time,Ayalon,R
 YP,21/10/2024,22:15,We Live in Time,Ayalon,R
@@ -873,18 +866,15 @@ YP,21/10/2024,00:30,We Live in Time,Ayalon,R
 YP,21/10/2024,17:00,We Live in Time,Beer Sheva,R
 YP,21/10/2024,19:30,We Live in Time,Beer Sheva,R
 YP,21/10/2024,21:50,We Live in Time,Beer Sheva,R
-YP,21/10/2024,00:10,We Live in Time,Beer Sheva,R
 YP,21/10/2024,15:35,We Live in Time,Zichron Yaakov,R
 YP,21/10/2024,19:00,We Live in Time,Zichron Yaakov,R
 YP,21/10/2024,21:30,We Live in Time,Zichron Yaakov,R
 YP,21/10/2024,17:40,We Live in Time,Haifa,R
 YP,21/10/2024,20:00,We Live in Time,Haifa,R
 YP,21/10/2024,22:15,We Live in Time,Haifa,R
-YP,21/10/2024,00:20,We Live in Time,Haifa,R
 YP,21/10/2024,17:30,We Live in Time,Jerusalem,R
 YP,21/10/2024,19:45,We Live in Time,Jerusalem,R
 YP,21/10/2024,22:00,We Live in Time,Jerusalem,R
-YP,21/10/2024,00:20,We Live in Time,Jerusalem,R
 RH,21/10/2024,17:10,We Live in Time,Givataim,R
 RH,21/10/2024,19:30,We Live in Time,Givataim,R
 RH,21/10/2024,21:50,We Live in Time,Givataim,R
@@ -908,8 +898,7 @@ RH,21/10/2024,21:50,Woman of the Hour,Givataim,R
 CC,22/10/2024,21:45,1 Million Followers,Glilot,R
 CC,22/10/2024,00:10,1 Million Followers,Glilot,R
 CC,22/10/2024,22:50,1 Million Followers,Rishon Letzion,R
-CC,22/10/2024,23:40,1 Million Followers,Kfar Saba,R
-CC,22/10/2024,21:50,1 Million Followers,Chadera,R
+CC,22/10/2024,23:50,1 Million Followers,Kfar Saba,R
 CC,22/10/2024,22:10,1 Million Followers,Ashdod,R
 YP,22/10/2024,15:45,1 Million Followers,Rishon Letzion,R
 YP,22/10/2024,18:00,1 Million Followers,Rishon Letzion,R
@@ -938,13 +927,17 @@ CC,22/10/2024,15:15,A World Apart,Glilot,R
 HC,22/10/2024,21:50,A World Apart,Modiin,R
 LC,22/10/2024,12:40,Adios Buenos Aires,Raanana,R
 LC,22/10/2024,15:00,Adios Buenos Aires,Tel Aviv,R
+ML,22/10/2024,19:05,Adios Buenos Aires,Carmiel,Upgrade
+ML,22/10/2024,19:35,Adios Buenos Aires,Netanya,R
+ML,22/10/2024,21:50,Adios Buenos Aires,Netanya,R
 CC,22/10/2024,12:50,Adios Buenos Aires,Glilot,R
 CC,22/10/2024,15:00,Adios Buenos Aires,Glilot,R
 CC,22/10/2024,17:10,Adios Buenos Aires,Glilot,R
 CC,22/10/2024,19:45,Adios Buenos Aires,Glilot,R
 CC,22/10/2024,18:45,Adios Buenos Aires,Jerusalem,R
 CC,22/10/2024,19:00,Adios Buenos Aires,Chadera,R
-HC,22/10/2024,19:15,Adios Buenos Aires,Carmiel,R
+YP,22/10/2024,13:15,Adios Buenos Aires,Rishon Letzion,R
+HC,22/10/2024,19:40,Adios Buenos Aires,Carmiel,R
 HC,22/10/2024,11:00,Adios Buenos Aires,Kiryat Bialik,R
 HC,22/10/2024,15:15,Adios Buenos Aires,Kiryat Bialik,R
 HC,22/10/2024,20:00,Adios Buenos Aires,Kiryat Bialik,R
@@ -953,14 +946,12 @@ HC,22/10/2024,13:00,Adios Buenos Aires,Haifa,R
 HC,22/10/2024,19:45,Adios Buenos Aires,Haifa,R
 HC,22/10/2024,20:00,Adios Buenos Aires,Kfar Saba,R
 HC,22/10/2024,19:00,Adios Buenos Aires,Petach Tikvah,R
-HC,22/10/2024,15:30,Adios Buenos Aires,Modiin,R
 HC,22/10/2024,20:10,Adios Buenos Aires,Modiin,R
 HC,22/10/2024,13:30,Adios Buenos Aires,Rehovot,R
 HC,22/10/2024,20:10,Adios Buenos Aires,Rehovot,R
 HC,22/10/2024,10:45,Adios Buenos Aires,Ashkelon,R
 HC,22/10/2024,14:50,Adios Buenos Aires,Ashkelon,R
 HC,22/10/2024,19:00,Adios Buenos Aires,Ashkelon,R
-YP,22/10/2024,13:15,Adios Buenos Aires,Rishon Letzion,R
 LC,22/10/2024,13:15,Anselm,Even Yehuda,R
 LC,22/10/2024,15:10,Anselm,Raanana,R
 HC,22/10/2024,22:10,Bad Boys: Ride or Die,Kiryat Bialik,R
@@ -992,6 +983,9 @@ CC,22/10/2024,21:45,Blink Twice,Glilot,R
 CC,22/10/2024,23:00,Blink Twice,Glilot,R
 CC,22/10/2024,21:10,Blink Twice,Ashdod,R
 CC,22/10/2024,23:40,Blink Twice,Ashdod,R
+ML,22/10/2024,17:10,Bonnard: Pierre & Marthe,Carmiel,Upgrade
+ML,22/10/2024,15:30,Bonnard: Pierre & Marthe,Netanya,R
+ML,22/10/2024,20:30,Bonnard: Pierre & Marthe,Netanya,R
 CC,22/10/2024,11:10,Bonnard: Pierre & Marthe,Glilot,R
 YP,22/10/2024,21:40,Bonnard: Pierre & Marthe,Rishon Letzion,R
 HC,22/10/2024,12:45,Bonnard: Pierre & Marthe,Carmiel,R
@@ -1003,9 +997,9 @@ CC,22/10/2024,22:10,Cash Out,Beer Sheva,R
 LC,22/10/2024,19:20,Come Closer,Tel Aviv,R
 LC,22/10/2024,21:50,Come Closer,Tel Aviv,R
 LC,22/10/2024,17:10,Come Closer,Even Yehuda,R
-LC,22/10/2024,17:50,Come Closer,Ramat Hasharon,R
 LC,22/10/2024,17:10,Come Closer,Raanana,R
 LC,22/10/2024,21:40,Come Closer,Raanana,R
+LC,22/10/2024,17:50,Come Closer,Ramat Hasharon,R
 HC,22/10/2024,14:40,Come Closer,Kiryat Bialik,R
 HC,22/10/2024,17:00,Come Closer,Kiryat Bialik,R
 HC,22/10/2024,18:50,Come Closer,Kiryat Bialik,R
@@ -1036,7 +1030,6 @@ CC,22/10/2024,21:00,Come Closer,Jerusalem,R
 CC,22/10/2024,20:20,Come Closer,Kfar Saba,R
 CC,22/10/2024,21:40,Come Closer,Netanya,R
 CC,22/10/2024,19:15,Come Closer,Beer Sheva,R
-CC,22/10/2024,18:50,Come Closer,Chadera,Prime
 CC,22/10/2024,19:50,Come Closer,Ashdod,R
 YP,22/10/2024,19:50,Come Closer,Rishon Letzion,R
 YP,22/10/2024,22:15,Come Closer,Rishon Letzion,R
@@ -1047,20 +1040,21 @@ YP,22/10/2024,17:50,Come Closer,Haifa,R
 YP,22/10/2024,22:00,Come Closer,Haifa,R
 YP,22/10/2024,19:00,Come Closer,Jerusalem,R
 RH,22/10/2024,19:30,Come Closer,Givataim,R
+ML,22/10/2024,12:50,Daddio,Netanya,R
 HC,22/10/2024,22:10,Deadpool & Wolverine,Kiryat Bialik,R
 HC,22/10/2024,22:10,Deadpool & Wolverine,Haifa,R
 HC,22/10/2024,22:15,Deadpool & Wolverine,Kfar Saba,R
 CC,22/10/2024,19:15,Deadpool & Wolverine,Glilot,R
 CC,22/10/2024,19:50,Deadpool & Wolverine,Rishon Letzion,R
 CC,22/10/2024,21:50,Deadpool & Wolverine,Beer Sheva,R
-CC,22/10/2024,13:50,Deadpool & Wolverine,Chadera,Prime
 CC,22/10/2024,20:40,Deadpool & Wolverine,Ashdod,R
-YP,22/10/2024,19:20,Deadpool & Wolverine,Rishon Letzion,R
-YP,22/10/2024,21:55,Deadpool & Wolverine,Rishon Letzion,R
-YP,22/10/2024,00:30,Deadpool & Wolverine,Rishon Letzion,R
-YP,22/10/2024,21:50,Deadpool & Wolverine,Ayalon,R
-YP,22/10/2024,15:00,Deadpool & Wolverine,Haifa,R
+YP,22/10/2024,19:20,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,22/10/2024,21:55,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,22/10/2024,00:30,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,22/10/2024,21:50,Deadpool and Wolverine (2024),Ayalon,R
+YP,22/10/2024,15:00,Deadpool and Wolverine (2024),Haifa,R
 LC,22/10/2024,13:00,Fallen Leaves,Tel Aviv,R
+ML,22/10/2024,22:45,Hellboy: The Crooked Man,Netanya,R
 CC,22/10/2024,23:15,Hellboy: The Crooked Man,Glilot,R
 CC,22/10/2024,20:10,Hellboy: The Crooked Man,Rishon Letzion,R
 CC,22/10/2024,22:40,Hellboy: The Crooked Man,Rishon Letzion,R
@@ -1082,6 +1076,8 @@ YP,22/10/2024,00:10,Hellboy: The Crooked Man,Jerusalem,R
 HC,22/10/2024,22:30,Hellboy: The Crooked Man,Kiryat Bialik,R
 HC,22/10/2024,22:30,Hellboy: The Crooked Man,Kfar Saba,R
 HC,22/10/2024,12:30,Inside Out 2,Kiryat Bialik,R
+ML,22/10/2024,21:55,It Ends with Us,Haifa,R
+ML,22/10/2024,22:25,It Ends with Us,Netanya,R
 HC,22/10/2024,19:00,It Ends with Us,Kiryat Bialik,R
 HC,22/10/2024,19:00,It Ends with Us,Haifa,R
 HC,22/10/2024,21:40,It Ends with Us,Haifa,R
@@ -1101,6 +1097,14 @@ CC,22/10/2024,20:40,It Ends with Us,Ashdod,R
 YP,22/10/2024,15:15,It Ends with Us,Ayalon,R
 YP,22/10/2024,19:00,It Ends with Us,Zichron Yaakov,R
 RH,22/10/2024,19:15,It Ends with Us,Givataim,R
+ML,22/10/2024,18:45,Joker: Folie à Deux,Carmiel,Upgrade
+ML,22/10/2024,21:25,Joker: Folie à Deux,Carmiel,Upgrade
+ML,22/10/2024,15:40,Joker: Folie à Deux,Haifa,Upgrade
+ML,22/10/2024,18:35,Joker: Folie à Deux,Haifa,Upgrade
+ML,22/10/2024,21:30,Joker: Folie à Deux,Haifa,Upgrade
+ML,22/10/2024,15:25,Joker: Folie à Deux,Netanya,Upgrade
+ML,22/10/2024,18:25,Joker: Folie à Deux,Netanya,Upgrade
+ML,22/10/2024,21:25,Joker: Folie à Deux,Netanya,Upgrade
 HC,22/10/2024,22:30,Joker: Folie à Deux,Carmiel,R
 HC,22/10/2024,19:00,Joker: Folie à Deux,Nahariya,R
 HC,22/10/2024,21:50,Joker: Folie à Deux,Nahariya,R
@@ -1118,8 +1122,7 @@ HC,22/10/2024,19:15,Joker: Folie à Deux,Kfar Saba,R
 HC,22/10/2024,20:45,Joker: Folie à Deux,Kfar Saba,R
 HC,22/10/2024,22:10,Joker: Folie à Deux,Kfar Saba,R
 HC,22/10/2024,21:50,Joker: Folie à Deux,Petach Tikvah,R
-HC,22/10/2024,19:45,Joker: Folie à Deux,Modiin,R
-HC,22/10/2024,22:40,Joker: Folie à Deux,Modiin,R
+HC,22/10/2024,22:30,Joker: Folie à Deux,Modiin,R
 HC,22/10/2024,19:40,Joker: Folie à Deux,Rehovot,R
 HC,22/10/2024,22:30,Joker: Folie à Deux,Rehovot,R
 HC,22/10/2024,19:15,Joker: Folie à Deux,Ashdod,R
@@ -1181,11 +1184,8 @@ YP,22/10/2024,12:00,Joker: Folie à Deux,Haifa,SCREENX
 YP,22/10/2024,15:10,Joker: Folie à Deux,Haifa,SCREENX
 YP,22/10/2024,18:15,Joker: Folie à Deux,Haifa,SCREENX
 YP,22/10/2024,21:15,Joker: Folie à Deux,Haifa,SCREENX
-YP,22/10/2024,17:15,Joker: Folie à Deux,Haifa,VIP
 YP,22/10/2024,18:00,Joker: Folie à Deux,Haifa,VIP
-YP,22/10/2024,20:00,Joker: Folie à Deux,Haifa,VIP
 YP,22/10/2024,21:00,Joker: Folie à Deux,Haifa,VIP
-YP,22/10/2024,23:00,Joker: Folie à Deux,Haifa,VIP
 YP,22/10/2024,11:30,Joker: Folie à Deux,Jerusalem,R
 YP,22/10/2024,14:30,Joker: Folie à Deux,Jerusalem,R
 YP,22/10/2024,17:30,Joker: Folie à Deux,Jerusalem,R
@@ -1208,14 +1208,13 @@ CC,22/10/2024,23:45,Joker: Folie à Deux,Rishon Letzion,R
 CC,22/10/2024,20:10,Joker: Folie à Deux,Jerusalem,R
 CC,22/10/2024,22:20,Joker: Folie à Deux,Jerusalem,R
 CC,22/10/2024,19:50,Joker: Folie à Deux,Kfar Saba,R
-CC,22/10/2024,20:30,Joker: Folie à Deux,Kfar Saba,R
+CC,22/10/2024,20:50,Joker: Folie à Deux,Kfar Saba,R
 CC,22/10/2024,19:20,Joker: Folie à Deux,Netanya,R
 CC,22/10/2024,20:30,Joker: Folie à Deux,Netanya,Prime
 CC,22/10/2024,23:30,Joker: Folie à Deux,Netanya,Prime
 CC,22/10/2024,19:10,Joker: Folie à Deux,Beer Sheva,R
 CC,22/10/2024,21:40,Joker: Folie à Deux,Beer Sheva,R
-CC,22/10/2024,21:10,Joker: Folie à Deux,Chadera,Prime
-CC,22/10/2024,00:10,Joker: Folie à Deux,Chadera,Prime
+CC,22/10/2024,00:20,Joker: Folie à Deux,Chadera,Prime
 CC,22/10/2024,21:30,Joker: Folie à Deux,Ashdod,R
 CC,22/10/2024,23:40,Joker: Folie à Deux,Ashdod,R
 RH,22/10/2024,21:50,Joker: Folie à Deux,Givataim,R
@@ -1223,6 +1222,7 @@ RH,22/10/2024,21:50,Joker: Folie à Deux,Tel Aviv,R
 RH,22/10/2024,19:15,Joker: Folie à Deux,Kiryat Ono,R
 RH,22/10/2024,22:00,Joker: Folie à Deux,Kiryat Ono,R
 CC,22/10/2024,13:10,Les choses simples,Glilot,R
+ML,22/10/2024,19:20,Megalopolis,Netanya,R
 CC,22/10/2024,19:30,Megalopolis,Glilot,R
 LC,22/10/2024,13:30,Monster,Raanana,R
 LC,22/10/2024,13:10,Monster,Tel Aviv,R
@@ -1234,8 +1234,6 @@ HC,22/10/2024,19:20,My Hero Academia: You're Next,Kiryat Bialik,R
 HC,22/10/2024,21:40,My Hero Academia: You're Next,Kiryat Bialik,R
 HC,22/10/2024,17:10,My Hero Academia: You're Next,Haifa,R
 HC,22/10/2024,21:50,My Hero Academia: You're Next,Haifa,R
-HC,22/10/2024,17:50,My Hero Academia: You're Next,Kfar Saba,R
-HC,22/10/2024,20:10,My Hero Academia: You're Next,Kfar Saba,R
 CC,22/10/2024,19:00,My Hero Academia: You're Next,Glilot,R
 CC,22/10/2024,21:35,My Hero Academia: You're Next,Glilot,R
 CC,22/10/2024,19:50,My Hero Academia: You're Next,Rishon Letzion,R
@@ -1248,13 +1246,21 @@ LC,22/10/2024,13:00,My Old Ass,Tel Aviv,R
 LC,22/10/2024,17:00,My Old Ass,Tel Aviv,R
 LC,22/10/2024,19:40,My Old Ass,Tel Aviv,R
 LC,22/10/2024,21:10,My Old Ass,Tel Aviv,R
-LC,22/10/2024,16:00,My Old Ass,Beer Sheva,R
-LC,22/10/2024,16:10,My Old Ass,Jerusalem,R
+LC,22/10/2024,15:50,My Old Ass,Ramat Hasharon,R
 LC,22/10/2024,15:15,My Old Ass,Even Yehuda,R
 LC,22/10/2024,19:30,My Old Ass,Even Yehuda,R
-LC,22/10/2024,15:50,My Old Ass,Ramat Hasharon,R
 LC,22/10/2024,18:50,My Old Ass,Herziliya,R
 LC,22/10/2024,17:00,My Old Ass,Shoham,R
+LC,22/10/2024,16:00,My Old Ass,Beer Sheva,R
+LC,22/10/2024,16:10,My Old Ass,Jerusalem,R
+ML,22/10/2024,11:20,My Old Ass,Carmiel,Upgrade
+ML,22/10/2024,19:30,My Old Ass,Carmiel,R
+ML,22/10/2024,13:00,My Old Ass,Haifa,Upgrade
+ML,22/10/2024,19:50,My Old Ass,Haifa,R
+ML,22/10/2024,13:45,My Old Ass,Netanya,R
+ML,22/10/2024,15:55,My Old Ass,Netanya,R
+ML,22/10/2024,20:20,My Old Ass,Netanya,R
+ML,22/10/2024,22:35,My Old Ass,Netanya,R
 CC,22/10/2024,10:45,My Old Ass,Glilot,R
 CC,22/10/2024,13:00,My Old Ass,Glilot,R
 CC,22/10/2024,15:10,My Old Ass,Glilot,R
@@ -1300,14 +1306,17 @@ YP,22/10/2024,00:15,Red Flower,Haifa,R
 CC,22/10/2024,20:40,Sleeping Dogs,Glilot,R
 CC,22/10/2024,23:10,Sleeping Dogs,Glilot,R
 CC,22/10/2024,19:00,Sleeping Dogs,Rishon Letzion,R
-CC,22/10/2024,00:10,Sleeping Dogs,Chadera,R
+CC,22/10/2024,00:20,Sleeping Dogs,Chadera,R
 YP,22/10/2024,19:15,Sleeping Dogs,Rishon Letzion,R
 YP,22/10/2024,23:45,Sleeping Dogs,Beer Sheva,R
 HC,22/10/2024,22:15,Sleeping Dogs,Modiin,R
+HC,22/10/2024,17:00,Smile 2,Carmiel,R
+HC,22/10/2024,18:50,Smile 2,Carmiel,R
 HC,22/10/2024,19:40,Smile 2,Carmiel,R
 HC,22/10/2024,21:30,Smile 2,Carmiel,R
 HC,22/10/2024,22:20,Smile 2,Carmiel,R
 HC,22/10/2024,19:10,Smile 2,Nahariya,R
+ML,22/10/2024,21:15,Smile 2,Carmiel,Upgrade
 HC,22/10/2024,21:50,Smile 2,Nahariya,R
 HC,22/10/2024,15:10,Smile 2,Kiryat Bialik,R
 HC,22/10/2024,17:45,Smile 2,Kiryat Bialik,R
@@ -1332,9 +1341,8 @@ HC,22/10/2024,22:50,Smile 2,Kfar Saba,R
 HC,22/10/2024,19:50,Smile 2,Petach Tikvah,R
 HC,22/10/2024,21:20,Smile 2,Petach Tikvah,R
 HC,22/10/2024,22:30,Smile 2,Petach Tikvah,R
-HC,22/10/2024,17:30,Smile 2,Modiin,R
-HC,22/10/2024,19:40,Smile 2,Modiin,R
-HC,22/10/2024,22:20,Smile 2,Modiin,R
+HC,22/10/2024,19:45,Smile 2,Modiin,R
+HC,22/10/2024,22:00,Smile 2,Modiin,R
 HC,22/10/2024,19:40,Smile 2,Rehovot,R
 HC,22/10/2024,22:20,Smile 2,Rehovot,R
 HC,22/10/2024,19:30,Smile 2,Ashdod,R
@@ -1342,6 +1350,10 @@ HC,22/10/2024,22:10,Smile 2,Ashdod,R
 HC,22/10/2024,19:45,Smile 2,Ashkelon,R
 HC,22/10/2024,21:00,Smile 2,Ashkelon,R
 HC,22/10/2024,22:20,Smile 2,Ashkelon,R
+ML,22/10/2024,19:20,Smile 2,Haifa,Upgrade
+ML,22/10/2024,22:05,Smile 2,Haifa,Upgrade
+ML,22/10/2024,22:20,Smile 2,Netanya,R
+ML,22/10/2024,23:15,Smile 2,Netanya,R
 CC,22/10/2024,14:30,Smile 2,Glilot,R
 CC,22/10/2024,17:40,Smile 2,Glilot,R
 CC,22/10/2024,19:20,Smile 2,Glilot,R
@@ -1352,6 +1364,19 @@ CC,22/10/2024,22:30,Smile 2,Glilot,R
 CC,22/10/2024,23:10,Smile 2,Glilot,R
 CC,22/10/2024,00:00,Smile 2,Glilot,R
 CC,22/10/2024,20:50,Smile 2,Glilot,4DX
+CC,22/10/2024,17:00,Smile 2,Rishon Letzion,R
+CC,22/10/2024,19:00,Smile 2,Rishon Letzion,R
+CC,22/10/2024,20:15,Smile 2,Rishon Letzion,R
+CC,22/10/2024,21:15,Smile 2,Rishon Letzion,R
+CC,22/10/2024,22:20,Smile 2,Rishon Letzion,R
+CC,22/10/2024,23:20,Smile 2,Rishon Letzion,R
+CC,22/10/2024,16:50,Smile 2,Jerusalem,R
+CC,22/10/2024,19:15,Smile 2,Jerusalem,R
+CC,22/10/2024,20:00,Smile 2,Jerusalem,R
+CC,22/10/2024,21:00,Smile 2,Jerusalem,R
+CC,22/10/2024,22:15,Smile 2,Jerusalem,R
+CC,22/10/2024,23:00,Smile 2,Jerusalem,R
+CC,22/10/2024,00:10,Smile 2,Jerusalem,R
 YP,22/10/2024,11:00,Smile 2,Rishon Letzion,R
 YP,22/10/2024,14:40,Smile 2,Rishon Letzion,R
 YP,22/10/2024,17:00,Smile 2,Rishon Letzion,R
@@ -1366,19 +1391,11 @@ YP,22/10/2024,18:00,Smile 2,Rishon Letzion,VIP
 YP,22/10/2024,21:00,Smile 2,Rishon Letzion,VIP
 YP,22/10/2024,00:00,Smile 2,Rishon Letzion,VIP
 YP,22/10/2024,21:00,Smile 2,Rishon Letzion,4DX
-CC,22/10/2024,17:00,Smile 2,Rishon Letzion,R
-CC,22/10/2024,19:00,Smile 2,Rishon Letzion,R
-CC,22/10/2024,20:15,Smile 2,Rishon Letzion,R
-CC,22/10/2024,21:15,Smile 2,Rishon Letzion,R
-CC,22/10/2024,22:20,Smile 2,Rishon Letzion,R
-CC,22/10/2024,23:20,Smile 2,Rishon Letzion,R
-CC,22/10/2024,16:50,Smile 2,Jerusalem,R
-CC,22/10/2024,19:15,Smile 2,Jerusalem,R
-CC,22/10/2024,20:00,Smile 2,Jerusalem,R
-CC,22/10/2024,21:00,Smile 2,Jerusalem,R
-CC,22/10/2024,22:15,Smile 2,Jerusalem,R
-CC,22/10/2024,23:00,Smile 2,Jerusalem,R
-CC,22/10/2024,00:10,Smile 2,Jerusalem,R
+CC,22/10/2024,19:00,Smile 2,Jerusalem,VIP
+CC,22/10/2024,22:00,Smile 2,Jerusalem,VIP
+CC,22/10/2024,18:50,Smile 2,Kfar Saba,R
+CC,22/10/2024,22:00,Smile 2,Kfar Saba,R
+CC,22/10/2024,23:00,Smile 2,Kfar Saba,R
 YP,22/10/2024,15:00,Smile 2,Ayalon,R
 YP,22/10/2024,17:20,Smile 2,Ayalon,R
 YP,22/10/2024,18:50,Smile 2,Ayalon,R
@@ -1387,11 +1404,10 @@ YP,22/10/2024,21:30,Smile 2,Ayalon,R
 YP,22/10/2024,22:45,Smile 2,Ayalon,R
 YP,22/10/2024,23:40,Smile 2,Ayalon,R
 YP,22/10/2024,00:15,Smile 2,Ayalon,R
-CC,22/10/2024,19:00,Smile 2,Jerusalem,VIP
-CC,22/10/2024,22:00,Smile 2,Jerusalem,VIP
-CC,22/10/2024,18:50,Smile 2,Kfar Saba,R
-CC,22/10/2024,22:00,Smile 2,Kfar Saba,R
-CC,22/10/2024,23:00,Smile 2,Kfar Saba,R
+CC,22/10/2024,19:10,Smile 2,Netanya,R
+CC,22/10/2024,22:20,Smile 2,Netanya,R
+CC,22/10/2024,23:00,Smile 2,Netanya,R
+CC,22/10/2024,00:00,Smile 2,Netanya,R
 YP,22/10/2024,12:00,Smile 2,Beer Sheva,R
 YP,22/10/2024,16:40,Smile 2,Beer Sheva,R
 YP,22/10/2024,19:00,Smile 2,Beer Sheva,R
@@ -1401,10 +1417,10 @@ YP,22/10/2024,00:20,Smile 2,Beer Sheva,R
 YP,22/10/2024,20:20,Smile 2,Beer Sheva,VIP
 YP,22/10/2024,20:50,Smile 2,Beer Sheva,VIP
 YP,22/10/2024,23:30,Smile 2,Beer Sheva,VIP
-CC,22/10/2024,19:10,Smile 2,Netanya,R
-CC,22/10/2024,22:20,Smile 2,Netanya,R
-CC,22/10/2024,23:00,Smile 2,Netanya,R
-CC,22/10/2024,00:00,Smile 2,Netanya,R
+CC,22/10/2024,17:30,Smile 2,Netanya,Prime
+CC,22/10/2024,18:40,Smile 2,Beer Sheva,R
+CC,22/10/2024,20:30,Smile 2,Beer Sheva,R
+CC,22/10/2024,22:00,Smile 2,Beer Sheva,R
 YP,22/10/2024,16:50,Smile 2,Zichron Yaakov,R
 YP,22/10/2024,19:20,Smile 2,Zichron Yaakov,R
 YP,22/10/2024,21:00,Smile 2,Zichron Yaakov,R
@@ -1412,27 +1428,34 @@ YP,22/10/2024,21:50,Smile 2,Zichron Yaakov,R
 YP,22/10/2024,00:00,Smile 2,Zichron Yaakov,R
 YP,22/10/2024,00:30,Smile 2,Zichron Yaakov,R
 YP,22/10/2024,21:45,Smile 2,Zichron Yaakov,VIP
-CC,22/10/2024,17:30,Smile 2,Netanya,Prime
-CC,22/10/2024,18:40,Smile 2,Beer Sheva,R
-CC,22/10/2024,20:30,Smile 2,Beer Sheva,R
-CC,22/10/2024,22:00,Smile 2,Beer Sheva,R
-YP,22/10/2024,15:50,Smile 2,Haifa,R
-YP,22/10/2024,18:45,Smile 2,Haifa,R
-YP,22/10/2024,20:00,Smile 2,Haifa,R
-YP,22/10/2024,21:30,Smile 2,Haifa,R
-YP,22/10/2024,23:00,Smile 2,Haifa,R
-YP,22/10/2024,00:10,Smile 2,Haifa,R
-YP,22/10/2024,00:15,Smile 2,Haifa,R
-YP,22/10/2024,19:00,Smile 2,Haifa,VIP
-YP,22/10/2024,22:00,Smile 2,Haifa,VIP
-YP,22/10/2024,21:30,Smile 2,Haifa,4DX
 CC,22/10/2024,16:10,Smile 2,Chadera,R
 CC,22/10/2024,18:30,Smile 2,Chadera,R
 CC,22/10/2024,20:00,Smile 2,Chadera,R
 CC,22/10/2024,21:30,Smile 2,Chadera,R
+CC,22/10/2024,21:50,Smile 2,Chadera,R
 CC,22/10/2024,23:10,Smile 2,Chadera,R
 CC,22/10/2024,23:50,Smile 2,Chadera,R
 CC,22/10/2024,00:30,Smile 2,Chadera,R
+CC,22/10/2024,00:30,Smile 2,Chadera,R
+YP,22/10/2024,15:50,Smile 2,Haifa,R
+YP,22/10/2024,18:45,Smile 2,Haifa,R
+YP,22/10/2024,20:00,Smile 2,Haifa,R
+CC,22/10/2024,14:15,Smile 2,Ashdod,R
+YP,22/10/2024,21:30,Smile 2,Haifa,R
+CC,22/10/2024,17:30,Smile 2,Ashdod,R
+YP,22/10/2024,23:00,Smile 2,Haifa,R
+CC,22/10/2024,19:00,Smile 2,Ashdod,R
+YP,22/10/2024,00:10,Smile 2,Haifa,R
+CC,22/10/2024,20:40,Smile 2,Ashdod,R
+YP,22/10/2024,00:15,Smile 2,Haifa,R
+CC,22/10/2024,22:15,Smile 2,Ashdod,R
+CC,22/10/2024,23:50,Smile 2,Ashdod,R
+YP,22/10/2024,17:15,Smile 2,Haifa,VIP
+YP,22/10/2024,19:00,Smile 2,Haifa,VIP
+YP,22/10/2024,20:00,Smile 2,Haifa,VIP
+YP,22/10/2024,22:00,Smile 2,Haifa,VIP
+YP,22/10/2024,23:00,Smile 2,Haifa,VIP
+YP,22/10/2024,21:30,Smile 2,Haifa,4DX
 YP,22/10/2024,15:10,Smile 2,Jerusalem,R
 YP,22/10/2024,17:15,Smile 2,Jerusalem,R
 YP,22/10/2024,20:00,Smile 2,Jerusalem,R
@@ -1441,12 +1464,6 @@ YP,22/10/2024,21:20,Smile 2,Jerusalem,R
 YP,22/10/2024,00:00,Smile 2,Jerusalem,R
 YP,22/10/2024,00:20,Smile 2,Jerusalem,R
 YP,22/10/2024,21:00,Smile 2,Jerusalem,4DX
-CC,22/10/2024,14:15,Smile 2,Ashdod,R
-CC,22/10/2024,17:30,Smile 2,Ashdod,R
-CC,22/10/2024,19:00,Smile 2,Ashdod,R
-CC,22/10/2024,20:40,Smile 2,Ashdod,R
-CC,22/10/2024,22:15,Smile 2,Ashdod,R
-CC,22/10/2024,23:50,Smile 2,Ashdod,R
 RH,22/10/2024,17:00,Smile 2,Givataim,R
 RH,22/10/2024,19:00,Smile 2,Givataim,R
 RH,22/10/2024,21:50,Smile 2,Givataim,R
@@ -1472,7 +1489,6 @@ LC,22/10/2024,13:00,Take a Chance on Me,Tel Aviv,R
 LC,22/10/2024,15:00,Take a Chance on Me,Raanana,R
 CC,22/10/2024,19:20,Take a Chance on Me,Glilot,R
 HC,22/10/2024,15:00,Take a Chance on Me,Modiin,R
-HC,22/10/2024,19:00,The Apprentice,Carmiel,R
 HC,22/10/2024,16:50,The Apprentice,Kiryat Bialik,R
 HC,22/10/2024,19:00,The Apprentice,Kiryat Bialik,R
 HC,22/10/2024,21:30,The Apprentice,Kiryat Bialik,R
@@ -1503,6 +1519,8 @@ YP,22/10/2024,00:15,The Apprentice,Haifa,R
 YP,22/10/2024,17:30,The Apprentice,Jerusalem,R
 YP,22/10/2024,19:20,The Apprentice,Jerusalem,R
 YP,22/10/2024,21:50,The Apprentice,Jerusalem,R
+ML,22/10/2024,16:50,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
+ML,22/10/2024,18:00,The Day the Earth Blew Up: A Looney Tunes Movie,Netanya,R
 HC,22/10/2024,15:05,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
 YP,22/10/2024,13:40,The Day the Earth Blew Up: A Looney Tunes Movie,Rishon Letzion,R
 YP,22/10/2024,19:40,The Day the Earth Blew Up: A Looney Tunes Movie,Rishon Letzion,R
@@ -1521,13 +1539,13 @@ YP,22/10/2024,00:40,The Engineer,Jerusalem,R
 LC,22/10/2024,12:40,The Second Act,Tel Aviv,R
 LC,22/10/2024,15:45,The Second Act,Tel Aviv,R
 LC,22/10/2024,16:00,The Second Act,Even Yehuda,R
-LC,22/10/2024,16:30,The Second Act,Herziliya,R
-LC,22/10/2024,12:45,The Second Act,Raanana,R
-LC,22/10/2024,19:15,The Second Act,Raanana,R
 LC,22/10/2024,13:30,The Second Act,Beer Sheva,R
 LC,22/10/2024,13:30,The Second Act,Ramat Hasharon,R
+LC,22/10/2024,12:45,The Second Act,Raanana,R
+LC,22/10/2024,19:15,The Second Act,Raanana,R
 LC,22/10/2024,12:50,The Second Act,Shoham,R
 LC,22/10/2024,13:40,The Second Act,Jerusalem,R
+LC,22/10/2024,16:30,The Second Act,Herziliya,R
 CC,22/10/2024,17:30,The Second Act,Glilot,R
 YP,22/10/2024,21:50,The Second Act,Rishon Letzion,R
 YP,22/10/2024,17:00,The Second Act,Ayalon,R
@@ -1560,7 +1578,7 @@ YP,22/10/2024,00:10,The Silent Hour,Jerusalem,R
 CC,22/10/2024,18:30,The Tasting,Glilot,R
 CC,22/10/2024,20:50,The Tasting,Glilot,R
 CC,22/10/2024,19:20,The Tasting,Rishon Letzion,R
-CC,22/10/2024,18:00,The Tasting,Kfar Saba,R
+CC,22/10/2024,18:40,The Tasting,Kfar Saba,R
 CC,22/10/2024,19:30,The Tasting,Chadera,R
 HC,22/10/2024,12:45,The Tasting,Kiryat Bialik,R
 HC,22/10/2024,19:50,The Tasting,Kiryat Bialik,R
@@ -1570,7 +1588,6 @@ HC,22/10/2024,19:50,The Tasting,Haifa,R
 HC,22/10/2024,11:00,The Tasting,Kfar Saba,R
 HC,22/10/2024,14:50,The Tasting,Kfar Saba,Premium
 HC,22/10/2024,19:00,The Tasting,Kfar Saba,Premium
-HC,22/10/2024,17:10,The Tasting,Petach Tikvah,R
 HC,22/10/2024,19:15,The Tasting,Petach Tikvah,R
 HC,22/10/2024,20:00,The Tasting,Modiin,R
 HC,22/10/2024,12:45,The Tasting,Rehovot,R
@@ -1578,6 +1595,11 @@ HC,22/10/2024,19:10,The Tasting,Rehovot,R
 YP,22/10/2024,17:30,The Tasting,Ayalon,R
 YP,22/10/2024,19:55,The Tasting,Haifa,R
 YP,22/10/2024,20:00,The Tasting,Jerusalem,R
+ML,22/10/2024,12:55,The Teachers' Lounge,Carmiel,Upgrade
+ML,22/10/2024,16:45,The Teachers' Lounge,Carmiel,Upgrade
+ML,22/10/2024,12:50,The Teachers' Lounge,Haifa,R
+ML,22/10/2024,13:10,The Teachers' Lounge,Netanya,Upgrade
+ML,22/10/2024,18:05,The Teachers' Lounge,Netanya,R
 CC,22/10/2024,15:15,The Teachers' Lounge,Glilot,R
 CC,22/10/2024,18:30,The Teachers' Lounge,Glilot,R
 CC,22/10/2024,20:10,The Teachers' Lounge,Glilot,R
@@ -1596,27 +1618,27 @@ LC,22/10/2024,11:00,The Tiger's Apprentice,Raanana,R
 LC,22/10/2024,16:00,The Tiger's Apprentice,Raanana,R
 LC,22/10/2024,18:30,The Tiger's Apprentice,Raanana,R
 LC,22/10/2024,21:00,The Tiger's Apprentice,Raanana,R
-LC,22/10/2024,11:10,The Tiger's Apprentice,Tel Aviv,R
-LC,22/10/2024,13:40,The Tiger's Apprentice,Tel Aviv,R
-LC,22/10/2024,16:10,The Tiger's Apprentice,Tel Aviv,R
-LC,22/10/2024,19:00,The Tiger's Apprentice,Tel Aviv,R
-LC,22/10/2024,21:15,The Tiger's Apprentice,Tel Aviv,R
 LC,22/10/2024,11:00,The Tiger's Apprentice,Even Yehuda,R
 LC,22/10/2024,13:30,The Tiger's Apprentice,Even Yehuda,R
 LC,22/10/2024,16:00,The Tiger's Apprentice,Even Yehuda,R
 LC,22/10/2024,18:30,The Tiger's Apprentice,Even Yehuda,R
 LC,22/10/2024,21:00,The Tiger's Apprentice,Even Yehuda,R
-LC,22/10/2024,11:00,The Tiger's Apprentice,Jerusalem,R
-LC,22/10/2024,20:30,The Tiger's Apprentice,Jerusalem,R
+LC,22/10/2024,11:10,The Tiger's Apprentice,Tel Aviv,R
+LC,22/10/2024,13:40,The Tiger's Apprentice,Tel Aviv,R
+LC,22/10/2024,16:10,The Tiger's Apprentice,Tel Aviv,R
+LC,22/10/2024,19:00,The Tiger's Apprentice,Tel Aviv,R
+LC,22/10/2024,21:15,The Tiger's Apprentice,Tel Aviv,R
 LC,22/10/2024,11:00,The Tiger's Apprentice,Shoham,R
 LC,22/10/2024,15:50,The Tiger's Apprentice,Shoham,R
 LC,22/10/2024,18:20,The Tiger's Apprentice,Shoham,R
 LC,22/10/2024,20:50,The Tiger's Apprentice,Shoham,R
-LC,22/10/2024,11:00,The Tiger's Apprentice,Beer Sheva,R
-LC,22/10/2024,18:00,The Tiger's Apprentice,Beer Sheva,R
+LC,22/10/2024,20:45,The Tiger's Apprentice,Herziliya,R
 LC,22/10/2024,11:00,The Tiger's Apprentice,Ramat Hasharon,R
 LC,22/10/2024,20:10,The Tiger's Apprentice,Ramat Hasharon,R
-LC,22/10/2024,20:45,The Tiger's Apprentice,Herziliya,R
+LC,22/10/2024,11:00,The Tiger's Apprentice,Beer Sheva,R
+LC,22/10/2024,18:00,The Tiger's Apprentice,Beer Sheva,R
+LC,22/10/2024,11:00,The Tiger's Apprentice,Jerusalem,R
+LC,22/10/2024,20:30,The Tiger's Apprentice,Jerusalem,R
 CC,22/10/2024,11:10,The Tiger's Apprentice,Glilot,R
 CC,22/10/2024,17:40,The Tiger's Apprentice,Glilot,R
 CC,22/10/2024,19:15,The Tiger's Apprentice,Glilot,R
@@ -1634,6 +1656,7 @@ CC,22/10/2024,18:20,The Tiger's Apprentice,Beer Sheva,R
 CC,22/10/2024,21:20,The Tiger's Apprentice,Beer Sheva,R
 CC,22/10/2024,19:00,The Tiger's Apprentice,Chadera,R
 CC,22/10/2024,21:40,The Tiger's Apprentice,Chadera,R
+CC,22/10/2024,16:20,The Tiger's Apprentice,Chadera,Prime
 CC,22/10/2024,16:15,The Tiger's Apprentice,Ashdod,R
 CC,22/10/2024,19:00,The Tiger's Apprentice,Ashdod,R
 CC,22/10/2024,22:00,The Tiger's Apprentice,Ashdod,R
@@ -1644,6 +1667,9 @@ YP,22/10/2024,18:00,The Wild Robot,Rishon Letzion,R
 YP,22/10/2024,13:10,The Wild Robot,Ayalon,R
 YP,22/10/2024,19:45,The Wild Robot,Beer Sheva,R
 YP,22/10/2024,22:00,The Wild Robot,Beer Sheva,R
+YP,22/10/2024,13:30,The Wild Robot,Haifa,R
+YP,22/10/2024,15:20,The Wild Robot,Jerusalem,R
+ML,22/10/2024,10:40,The Wild Robot,Netanya,R
 HC,22/10/2024,12:40,The Wild Robot,Kiryat Bialik,R
 HC,22/10/2024,13:00,The Wild Robot,Haifa,R
 HC,22/10/2024,13:00,The Wild Robot,Petach Tikvah,R
@@ -1665,6 +1691,9 @@ LC,22/10/2024,16:50,There's Still Tomorrow,Raanana,R
 LC,22/10/2024,14:50,There's Still Tomorrow,Tel Aviv,R
 CC,22/10/2024,12:40,There's Still Tomorrow,Glilot,R
 YP,22/10/2024,21:50,This Time Next Year,Jerusalem,R
+ML,22/10/2024,16:50,Transformers One,Carmiel,R
+ML,22/10/2024,16:45,Transformers One,Haifa,Upgrade
+ML,22/10/2024,15:30,Transformers One,Netanya,R
 HC,22/10/2024,12:45,Transformers One,Kiryat Bialik,R
 HC,22/10/2024,15:00,Transformers One,Kiryat Bialik,R
 HC,22/10/2024,17:30,Transformers One,Kiryat Bialik,R
@@ -1672,7 +1701,10 @@ HC,22/10/2024,19:45,Transformers One,Kiryat Bialik,R
 HC,22/10/2024,15:00,Transformers One,Haifa,R
 HC,22/10/2024,17:15,Transformers One,Haifa,R
 HC,22/10/2024,15:00,Transformers One,Kfar Saba,R
+HC,22/10/2024,17:50,Transformers One,Kfar Saba,R
+HC,22/10/2024,20:10,Transformers One,Kfar Saba,R
 HC,22/10/2024,15:15,Transformers One,Petach Tikvah,R
+HC,22/10/2024,14:45,Transformers One,Modiin,R
 HC,22/10/2024,17:00,Transformers One,Modiin,R
 HC,22/10/2024,16:50,Transformers One,Rehovot,R
 YP,22/10/2024,14:15,Transformers One,Rishon Letzion,4DX
@@ -1700,19 +1732,13 @@ YP,22/10/2024,20:00,Transformers One,Zichron Yaakov,R
 YP,22/10/2024,22:15,Transformers One,Zichron Yaakov,R
 YP,22/10/2024,00:30,Transformers One,Zichron Yaakov,R
 YP,22/10/2024,19:30,Transformers One,Zichron Yaakov,VIP
+CC,22/10/2024,14:00,Transformers One,Glilot,R
+CC,22/10/2024,19:20,Transformers One,Glilot,R
 YP,22/10/2024,14:20,Transformers One,Haifa,4DX
 YP,22/10/2024,19:10,Transformers One,Haifa,4DX
 YP,22/10/2024,19:20,Transformers One,Haifa,R
 YP,22/10/2024,21:50,Transformers One,Haifa,R
 YP,22/10/2024,00:10,Transformers One,Haifa,R
-YP,22/10/2024,13:00,Transformers One,Jerusalem,R
-CC,22/10/2024,14:00,Transformers One,Glilot,R
-YP,22/10/2024,20:00,Transformers One,Jerusalem,R
-CC,22/10/2024,19:20,Transformers One,Glilot,R
-YP,22/10/2024,22:10,Transformers One,Jerusalem,R
-YP,22/10/2024,00:20,Transformers One,Jerusalem,R
-YP,22/10/2024,13:40,Transformers One,Jerusalem,4DX
-YP,22/10/2024,18:20,Transformers One,Jerusalem,4DX
 CC,22/10/2024,12:30,Transformers One,Rishon Letzion,R
 CC,22/10/2024,15:10,Transformers One,Rishon Letzion,R
 CC,22/10/2024,17:50,Transformers One,Rishon Letzion,R
@@ -1720,6 +1746,12 @@ CC,22/10/2024,20:30,Transformers One,Rishon Letzion,R
 CC,22/10/2024,11:10,Transformers One,Jerusalem,R
 CC,22/10/2024,17:20,Transformers One,Jerusalem,R
 CC,22/10/2024,19:50,Transformers One,Jerusalem,R
+YP,22/10/2024,13:00,Transformers One,Jerusalem,R
+YP,22/10/2024,20:00,Transformers One,Jerusalem,R
+YP,22/10/2024,22:10,Transformers One,Jerusalem,R
+YP,22/10/2024,00:20,Transformers One,Jerusalem,R
+YP,22/10/2024,13:40,Transformers One,Jerusalem,4DX
+YP,22/10/2024,18:20,Transformers One,Jerusalem,4DX
 CC,22/10/2024,19:20,Transformers One,Kfar Saba,R
 CC,22/10/2024,21:40,Transformers One,Kfar Saba,R
 CC,22/10/2024,18:00,Transformers One,Netanya,R
@@ -1734,6 +1766,9 @@ RH,22/10/2024,19:40,Transformers One,Tel Aviv,R
 RH,22/10/2024,22:00,Transformers One,Tel Aviv,R
 RH,22/10/2024,19:45,Transformers One,Kiryat Ono,R
 RH,22/10/2024,22:00,Transformers One,Kiryat Ono,R
+ML,22/10/2024,16:55,Un mondo a parte,Haifa,Upgrade
+ML,22/10/2024,11:15,Un mondo a parte,Netanya,R
+ML,22/10/2024,20:10,Un mondo a parte,Netanya,R
 CC,22/10/2024,00:00,Venom: The Last Dance,Glilot,R
 CC,22/10/2024,00:00,Venom: The Last Dance,Glilot,4DX
 CC,22/10/2024,00:00,Venom: The Last Dance,Rishon Letzion,R
@@ -1750,11 +1785,6 @@ CC,22/10/2024,00:00,Venom: The Last Dance,Chadera,R
 CC,22/10/2024,00:00,Venom: The Last Dance,Ashdod,R
 YP,22/10/2024,00:00,Venom: The Last Dance,Ayalon,R
 YP,22/10/2024,00:20,Venom: The Last Dance,Ayalon,R
-YP,22/10/2024,00:00,Venom: The Last Dance,Beer Sheva,VIP
-YP,22/10/2024,00:00,Venom: The Last Dance,Beer Sheva,R
-YP,22/10/2024,00:00,Venom: The Last Dance,Beer Sheva,IMAX 3D
-YP,22/10/2024,00:30,Venom: The Last Dance,Beer Sheva,4DX
-YP,22/10/2024,00:30,Venom: The Last Dance,Beer Sheva,SCREENX
 YP,22/10/2024,00:00,Venom: The Last Dance,Zichron Yaakov,VIP
 YP,22/10/2024,00:30,Venom: The Last Dance,Zichron Yaakov,VIP
 YP,22/10/2024,00:00,Venom: The Last Dance,Zichron Yaakov,R
@@ -1772,15 +1802,26 @@ LC,22/10/2024,10:45,We Live in Time,Tel Aviv,R
 LC,22/10/2024,17:20,We Live in Time,Tel Aviv,R
 LC,22/10/2024,18:50,We Live in Time,Tel Aviv,R
 LC,22/10/2024,21:40,We Live in Time,Tel Aviv,R
-LC,22/10/2024,11:00,We Live in Time,Even Yehuda,R
-LC,22/10/2024,18:30,We Live in Time,Even Yehuda,R
-LC,22/10/2024,21:30,We Live in Time,Even Yehuda,R
 LC,22/10/2024,14:40,We Live in Time,Raanana,R
 LC,22/10/2024,19:15,We Live in Time,Raanana,R
 LC,22/10/2024,21:30,We Live in Time,Raanana,R
 LC,22/10/2024,15:10,We Live in Time,Shoham,R
 LC,22/10/2024,19:20,We Live in Time,Shoham,R
 LC,22/10/2024,21:30,We Live in Time,Shoham,R
+LC,22/10/2024,11:00,We Live in Time,Even Yehuda,R
+LC,22/10/2024,18:30,We Live in Time,Even Yehuda,R
+LC,22/10/2024,21:30,We Live in Time,Even Yehuda,R
+ML,22/10/2024,10:55,We Live in Time,Carmiel,R
+ML,22/10/2024,13:55,We Live in Time,Carmiel,R
+ML,22/10/2024,19:00,We Live in Time,Carmiel,R
+ML,22/10/2024,11:35,We Live in Time,Haifa,R
+ML,22/10/2024,16:30,We Live in Time,Haifa,R
+ML,22/10/2024,18:55,We Live in Time,Haifa,R
+ML,22/10/2024,21:55,We Live in Time,Haifa,R
+ML,22/10/2024,13:00,We Live in Time,Netanya,R
+ML,22/10/2024,16:10,We Live in Time,Netanya,R
+ML,22/10/2024,19:20,We Live in Time,Netanya,R
+ML,22/10/2024,22:30,We Live in Time,Netanya,R
 CC,22/10/2024,16:40,We Live in Time,Glilot,R
 CC,22/10/2024,19:00,We Live in Time,Glilot,R
 CC,22/10/2024,21:35,We Live in Time,Glilot,R
@@ -1803,8 +1844,6 @@ CC,22/10/2024,18:50,We Live in Time,Beer Sheva,R
 CC,22/10/2024,21:40,We Live in Time,Beer Sheva,R
 CC,22/10/2024,19:20,We Live in Time,Chadera,R
 CC,22/10/2024,21:50,We Live in Time,Chadera,R
-CC,22/10/2024,00:20,We Live in Time,Chadera,R
-CC,22/10/2024,16:25,We Live in Time,Chadera,Prime
 CC,22/10/2024,16:00,We Live in Time,Ashdod,R
 CC,22/10/2024,19:20,We Live in Time,Ashdod,R
 CC,22/10/2024,22:00,We Live in Time,Ashdod,R
@@ -1834,15 +1873,15 @@ HC,22/10/2024,22:20,We Live in Time,Petach Tikvah,R
 HC,22/10/2024,19:00,We Live in Time,Modiin,R
 HC,22/10/2024,21:15,We Live in Time,Modiin,R
 HC,22/10/2024,12:30,We Live in Time,Rehovot,R
-HC,22/10/2024,17:00,We Live in Time,Rehovot,R
 HC,22/10/2024,19:20,We Live in Time,Rehovot,R
 HC,22/10/2024,21:40,We Live in Time,Rehovot,R
 HC,22/10/2024,15:00,We Live in Time,Ashdod,R
 HC,22/10/2024,19:30,We Live in Time,Ashdod,R
 HC,22/10/2024,21:50,We Live in Time,Ashdod,R
-HC,22/10/2024,15:20,We Live in Time,Ashkelon,R
 HC,22/10/2024,20:00,We Live in Time,Ashkelon,R
 HC,22/10/2024,22:20,We Live in Time,Ashkelon,R
+YP,22/10/2024,18:45,We Live in Time,Rishon Letzion,VIP
+YP,22/10/2024,22:45,We Live in Time,Rishon Letzion,VIP
 YP,22/10/2024,19:45,We Live in Time,Rishon Letzion,R
 YP,22/10/2024,22:10,We Live in Time,Rishon Letzion,R
 YP,22/10/2024,00:35,We Live in Time,Rishon Letzion,R
@@ -1876,6 +1915,7 @@ RH,22/10/2024,22:00,We Live in Time,Tel Aviv,R
 RH,22/10/2024,17:00,We Live in Time,Kiryat Ono,R
 RH,22/10/2024,19:40,We Live in Time,Kiryat Ono,R
 RH,22/10/2024,22:00,We Live in Time,Kiryat Ono,R
+ML,22/10/2024,22:00,Woman of the Hour,Haifa,R
 CC,22/10/2024,20:50,Woman of the Hour,Glilot,R
 CC,22/10/2024,22:30,Woman of the Hour,Glilot,R
 CC,22/10/2024,23:10,Woman of the Hour,Jerusalem,R
@@ -1887,6 +1927,7 @@ YP,22/10/2024,22:20,Woman of the Hour,Jerusalem,R
 RH,22/10/2024,13:10,Woman of the Hour,Givataim,R
 RH,22/10/2024,17:15,Woman of the Hour,Givataim,R
 RH,22/10/2024,21:50,Woman of the Hour,Givataim,R
+ML,23/10/2024,22:00,1 Million Followers,Netanya,R
 CC,23/10/2024,00:30,1 Million Followers,Glilot,R
 CC,23/10/2024,22:40,1 Million Followers,Rishon Letzion,R
 CC,23/10/2024,23:00,1 Million Followers,Rishon Letzion,R
@@ -1921,13 +1962,13 @@ YP,23/10/2024,21:45,Bad Genius,Rishon Letzion,R
 YP,23/10/2024,00:00,Bad Genius,Rishon Letzion,R
 YP,23/10/2024,00:30,Bad Genius,Ayalon,R
 YP,23/10/2024,23:15,Bad Genius,Jerusalem,R
+ML,23/10/2024,12:45,Beetlejuice Beetlejuice,Netanya,R
 HC,23/10/2024,18:40,Beetlejuice Beetlejuice,Kiryat Bialik,R
 HC,23/10/2024,21:00,Beetlejuice Beetlejuice,Kiryat Bialik,R
 HC,23/10/2024,15:15,Beetlejuice Beetlejuice,Haifa,R
 HC,23/10/2024,17:30,Beetlejuice Beetlejuice,Haifa,R
 HC,23/10/2024,19:45,Beetlejuice Beetlejuice,Haifa,R
 HC,23/10/2024,22:00,Beetlejuice Beetlejuice,Haifa,R
-HC,23/10/2024,14:30,Beetlejuice Beetlejuice,Kfar Saba,Premium
 HC,23/10/2024,20:00,Beetlejuice Beetlejuice,Kfar Saba,R
 HC,23/10/2024,19:00,Beetlejuice Beetlejuice,Modiin,R
 HC,23/10/2024,21:45,Beetlejuice Beetlejuice,Ashkelon,R
@@ -1974,6 +2015,7 @@ YP,23/10/2024,19:20,Come Closer,Ayalon,R
 YP,23/10/2024,17:50,Come Closer,Haifa,R
 YP,23/10/2024,22:00,Come Closer,Haifa,R
 YP,23/10/2024,19:00,Come Closer,Jerusalem,R
+ML,23/10/2024,15:15,Deadpool & Wolverine,Netanya,R
 HC,23/10/2024,19:45,Deadpool & Wolverine,Kiryat Bialik,R
 HC,23/10/2024,22:25,Deadpool & Wolverine,Kiryat Bialik,R
 HC,23/10/2024,19:30,Deadpool & Wolverine,Haifa,R
@@ -1984,12 +2026,14 @@ HC,23/10/2024,21:15,Deadpool & Wolverine,Modiin,R
 CC,23/10/2024,19:15,Deadpool & Wolverine,Glilot,R
 CC,23/10/2024,22:10,Deadpool & Wolverine,Beer Sheva,R
 CC,23/10/2024,13:30,Deadpool & Wolverine,Chadera,Prime
-YP,23/10/2024,19:20,Deadpool & Wolverine,Rishon Letzion,R
-YP,23/10/2024,21:55,Deadpool & Wolverine,Rishon Letzion,R
-YP,23/10/2024,00:30,Deadpool & Wolverine,Rishon Letzion,R
-YP,23/10/2024,19:05,Deadpool & Wolverine,Ayalon,R
-YP,23/10/2024,21:50,Deadpool & Wolverine,Ayalon,R
+YP,23/10/2024,19:20,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,23/10/2024,21:55,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,23/10/2024,00:30,Deadpool and Wolverine (2024),Rishon Letzion,R
+YP,23/10/2024,19:05,Deadpool and Wolverine (2024),Ayalon,R
+YP,23/10/2024,21:50,Deadpool and Wolverine (2024),Ayalon,R
 LC,23/10/2024,12:50,Fallen Leaves,Tel Aviv,R
+ML,23/10/2024,19:55,Hellboy: The Crooked Man,Netanya,R
+ML,23/10/2024,22:15,Hellboy: The Crooked Man,Netanya,R
 CC,23/10/2024,23:15,Hellboy: The Crooked Man,Glilot,R
 CC,23/10/2024,20:10,Hellboy: The Crooked Man,Rishon Letzion,R
 CC,23/10/2024,22:10,Hellboy: The Crooked Man,Kfar Saba,R
@@ -2022,6 +2066,13 @@ CC,23/10/2024,19:10,It Ends with Us,Beer Sheva,R
 CC,23/10/2024,20:40,It Ends with Us,Ashdod,R
 YP,23/10/2024,15:00,It Ends with Us,Ayalon,R
 LC,23/10/2024,21:15,Joker: Folie à Deux,Tel Aviv,R
+ML,23/10/2024,18:40,Joker: Folie à Deux,Carmiel,R
+ML,23/10/2024,22:00,Joker: Folie à Deux,Carmiel,R
+ML,23/10/2024,18:15,Joker: Folie à Deux,Haifa,Upgrade
+ML,23/10/2024,22:15,Joker: Folie à Deux,Haifa,R
+ML,23/10/2024,15:55,Joker: Folie à Deux,Netanya,Upgrade
+ML,23/10/2024,18:55,Joker: Folie à Deux,Netanya,Upgrade
+ML,23/10/2024,22:00,Joker: Folie à Deux,Netanya,Upgrade
 HC,23/10/2024,19:15,Joker: Folie à Deux,Carmiel,R
 HC,23/10/2024,22:10,Joker: Folie à Deux,Carmiel,R
 HC,23/10/2024,11:30,Joker: Folie à Deux,Kiryat Bialik,R
@@ -2039,7 +2090,7 @@ HC,23/10/2024,17:50,Joker: Folie à Deux,Kfar Saba,R
 HC,23/10/2024,19:15,Joker: Folie à Deux,Kfar Saba,R
 HC,23/10/2024,22:10,Joker: Folie à Deux,Kfar Saba,R
 HC,23/10/2024,19:00,Joker: Folie à Deux,Petach Tikvah,R
-HC,23/10/2024,21:15,Joker: Folie à Deux,Petach Tikvah,R
+HC,23/10/2024,21:40,Joker: Folie à Deux,Petach Tikvah,R
 HC,23/10/2024,21:50,Joker: Folie à Deux,Petach Tikvah,R
 HC,23/10/2024,19:00,Joker: Folie à Deux,Modiin,R
 HC,23/10/2024,21:50,Joker: Folie à Deux,Modiin,R
@@ -2053,8 +2104,6 @@ YP,23/10/2024,11:30,Joker: Folie à Deux,Rishon Letzion,R
 YP,23/10/2024,17:50,Joker: Folie à Deux,Rishon Letzion,R
 YP,23/10/2024,20:45,Joker: Folie à Deux,Rishon Letzion,R
 YP,23/10/2024,23:40,Joker: Folie à Deux,Rishon Letzion,R
-YP,23/10/2024,21:30,Joker: Folie à Deux,Rishon Letzion,VIP
-YP,23/10/2024,00:20,Joker: Folie à Deux,Rishon Letzion,VIP
 YP,23/10/2024,13:30,Joker: Folie à Deux,Ayalon,R
 YP,23/10/2024,16:15,Joker: Folie à Deux,Ayalon,R
 YP,23/10/2024,18:15,Joker: Folie à Deux,Ayalon,R
@@ -2082,9 +2131,6 @@ YP,23/10/2024,20:50,Joker: Folie à Deux,Haifa,R
 YP,23/10/2024,21:40,Joker: Folie à Deux,Haifa,R
 YP,23/10/2024,00:10,Joker: Folie à Deux,Haifa,R
 YP,23/10/2024,00:10,Joker: Folie à Deux,Haifa,R
-YP,23/10/2024,17:30,Joker: Folie à Deux,Haifa,VIP
-YP,23/10/2024,20:20,Joker: Folie à Deux,Haifa,VIP
-YP,23/10/2024,23:10,Joker: Folie à Deux,Haifa,VIP
 YP,23/10/2024,11:30,Joker: Folie à Deux,Jerusalem,R
 YP,23/10/2024,14:30,Joker: Folie à Deux,Jerusalem,R
 YP,23/10/2024,17:30,Joker: Folie à Deux,Jerusalem,R
@@ -2116,8 +2162,6 @@ HC,23/10/2024,17:10,My Hero Academia: You're Next,Kiryat Bialik,R
 HC,23/10/2024,19:30,My Hero Academia: You're Next,Kiryat Bialik,R
 HC,23/10/2024,17:10,My Hero Academia: You're Next,Haifa,R
 HC,23/10/2024,19:30,My Hero Academia: You're Next,Haifa,R
-HC,23/10/2024,17:20,My Hero Academia: You're Next,Kfar Saba,R
-HC,23/10/2024,19:40,My Hero Academia: You're Next,Kfar Saba,R
 CC,23/10/2024,19:00,My Hero Academia: You're Next,Glilot,R
 CC,23/10/2024,21:35,My Hero Academia: You're Next,Glilot,R
 CC,23/10/2024,18:50,My Hero Academia: You're Next,Rishon Letzion,R
@@ -2128,12 +2172,13 @@ LC,23/10/2024,13:00,My Old Ass,Tel Aviv,R
 LC,23/10/2024,17:00,My Old Ass,Tel Aviv,R
 LC,23/10/2024,19:40,My Old Ass,Tel Aviv,R
 LC,23/10/2024,21:40,My Old Ass,Tel Aviv,R
-LC,23/10/2024,16:00,My Old Ass,Beer Sheva,R
-LC,23/10/2024,16:30,My Old Ass,Jerusalem,R
-LC,23/10/2024,18:30,My Old Ass,Even Yehuda,R
 LC,23/10/2024,18:30,My Old Ass,Ramat Hasharon,R
+LC,23/10/2024,18:30,My Old Ass,Even Yehuda,R
 LC,23/10/2024,16:30,My Old Ass,Herziliya,R
 LC,23/10/2024,21:30,My Old Ass,Shoham,R
+LC,23/10/2024,16:00,My Old Ass,Beer Sheva,R
+LC,23/10/2024,16:30,My Old Ass,Jerusalem,R
+ML,23/10/2024,18:05,My Old Ass,Netanya,R
 CC,23/10/2024,20:30,My Old Ass,Glilot,R
 CC,23/10/2024,19:20,My Old Ass,Rishon Letzion,R
 CC,23/10/2024,20:30,My Old Ass,Rishon Letzion,R
@@ -2170,6 +2215,8 @@ YP,23/10/2024,00:15,Red Flower,Haifa,R
 CC,23/10/2024,22:45,Sleeping Dogs,Glilot,R
 CC,23/10/2024,00:10,Sleeping Dogs,Chadera,R
 YP,23/10/2024,19:15,Sleeping Dogs,Rishon Letzion,R
+ML,23/10/2024,19:20,Smile 2,Carmiel,Upgrade
+ML,23/10/2024,22:00,Smile 2,Carmiel,Upgrade
 HC,23/10/2024,16:35,Smile 2,Carmiel,R
 HC,23/10/2024,19:00,Smile 2,Carmiel,R
 HC,23/10/2024,21:40,Smile 2,Carmiel,R
@@ -2180,7 +2227,9 @@ HC,23/10/2024,17:45,Smile 2,Kiryat Bialik,R
 HC,23/10/2024,19:40,Smile 2,Kiryat Bialik,R
 HC,23/10/2024,20:20,Smile 2,Kiryat Bialik,R
 HC,23/10/2024,22:20,Smile 2,Kiryat Bialik,R
+ML,23/10/2024,19:20,Smile 2,Haifa,Upgrade
 HC,23/10/2024,23:00,Smile 2,Kiryat Bialik,R
+ML,23/10/2024,22:05,Smile 2,Haifa,Upgrade
 HC,23/10/2024,15:05,Smile 2,Haifa,R
 HC,23/10/2024,17:40,Smile 2,Haifa,R
 HC,23/10/2024,19:10,Smile 2,Haifa,R
@@ -2195,8 +2244,6 @@ HC,23/10/2024,22:50,Smile 2,Kfar Saba,R
 HC,23/10/2024,17:40,Smile 2,Petach Tikvah,R
 HC,23/10/2024,19:30,Smile 2,Petach Tikvah,R
 HC,23/10/2024,22:10,Smile 2,Petach Tikvah,R
-HC,23/10/2024,15:25,Smile 2,Modiin,R
-HC,23/10/2024,18:00,Smile 2,Modiin,R
 HC,23/10/2024,20:40,Smile 2,Modiin,R
 HC,23/10/2024,21:30,Smile 2,Modiin,R
 HC,23/10/2024,17:10,Smile 2,Rehovot,R
@@ -2209,6 +2256,8 @@ HC,23/10/2024,16:20,Smile 2,Ashkelon,R
 HC,23/10/2024,19:15,Smile 2,Ashkelon,R
 HC,23/10/2024,21:50,Smile 2,Ashkelon,R
 HC,23/10/2024,22:30,Smile 2,Ashkelon,R
+ML,23/10/2024,19:30,Smile 2,Netanya,R
+ML,23/10/2024,22:25,Smile 2,Netanya,R
 CC,23/10/2024,14:30,Smile 2,Glilot,R
 CC,23/10/2024,17:30,Smile 2,Glilot,R
 CC,23/10/2024,19:00,Smile 2,Glilot,R
@@ -2219,14 +2268,6 @@ CC,23/10/2024,23:50,Smile 2,Glilot,R
 CC,23/10/2024,00:30,Smile 2,Glilot,R
 CC,23/10/2024,21:45,Smile 2,Glilot,VIP
 CC,23/10/2024,23:00,Smile 2,Glilot,VIP
-YP,23/10/2024,11:00,Smile 2,Rishon Letzion,R
-YP,23/10/2024,14:20,Smile 2,Rishon Letzion,R
-YP,23/10/2024,20:45,Smile 2,Rishon Letzion,R
-YP,23/10/2024,23:30,Smile 2,Rishon Letzion,R
-YP,23/10/2024,00:00,Smile 2,Rishon Letzion,R
-YP,23/10/2024,00:30,Smile 2,Rishon Letzion,R
-YP,23/10/2024,19:15,Smile 2,Rishon Letzion,VIP
-YP,23/10/2024,22:15,Smile 2,Rishon Letzion,VIP
 CC,23/10/2024,17:00,Smile 2,Rishon Letzion,R
 CC,23/10/2024,20:10,Smile 2,Rishon Letzion,R
 CC,23/10/2024,21:15,Smile 2,Rishon Letzion,R
@@ -2234,6 +2275,18 @@ CC,23/10/2024,22:40,Smile 2,Rishon Letzion,R
 CC,23/10/2024,23:20,Smile 2,Rishon Letzion,R
 CC,23/10/2024,11:20,Smile 2,Jerusalem,R
 CC,23/10/2024,14:20,Smile 2,Jerusalem,R
+YP,23/10/2024,11:00,Smile 2,Rishon Letzion,R
+YP,23/10/2024,14:20,Smile 2,Rishon Letzion,R
+YP,23/10/2024,20:45,Smile 2,Rishon Letzion,R
+YP,23/10/2024,23:30,Smile 2,Rishon Letzion,R
+YP,23/10/2024,00:00,Smile 2,Rishon Letzion,R
+YP,23/10/2024,00:30,Smile 2,Rishon Letzion,R
+YP,23/10/2024,19:15,Smile 2,Rishon Letzion,VIP
+YP,23/10/2024,21:30,Smile 2,Rishon Letzion,VIP
+YP,23/10/2024,22:15,Smile 2,Rishon Letzion,VIP
+YP,23/10/2024,00:30,Smile 2,Rishon Letzion,VIP
+CC,23/10/2024,19:00,Smile 2,Kfar Saba,R
+CC,23/10/2024,21:50,Smile 2,Kfar Saba,R
 YP,23/10/2024,15:30,Smile 2,Ayalon,R
 YP,23/10/2024,17:20,Smile 2,Ayalon,R
 YP,23/10/2024,18:50,Smile 2,Ayalon,R
@@ -2242,8 +2295,11 @@ YP,23/10/2024,21:30,Smile 2,Ayalon,R
 YP,23/10/2024,22:45,Smile 2,Ayalon,R
 YP,23/10/2024,23:40,Smile 2,Ayalon,R
 YP,23/10/2024,00:10,Smile 2,Ayalon,R
-CC,23/10/2024,19:00,Smile 2,Kfar Saba,R
-CC,23/10/2024,21:50,Smile 2,Kfar Saba,R
+CC,23/10/2024,17:50,Smile 2,Kfar Saba,Prime
+CC,23/10/2024,19:30,Smile 2,Netanya,R
+CC,23/10/2024,20:30,Smile 2,Netanya,R
+CC,23/10/2024,22:30,Smile 2,Netanya,R
+CC,23/10/2024,23:30,Smile 2,Netanya,R
 YP,23/10/2024,12:30,Smile 2,Beer Sheva,R
 YP,23/10/2024,19:00,Smile 2,Beer Sheva,R
 YP,23/10/2024,21:40,Smile 2,Beer Sheva,R
@@ -2251,11 +2307,10 @@ YP,23/10/2024,00:15,Smile 2,Beer Sheva,R
 YP,23/10/2024,00:20,Smile 2,Beer Sheva,R
 YP,23/10/2024,19:10,Smile 2,Beer Sheva,VIP
 YP,23/10/2024,21:50,Smile 2,Beer Sheva,VIP
-CC,23/10/2024,17:50,Smile 2,Kfar Saba,Prime
-CC,23/10/2024,19:30,Smile 2,Netanya,R
-CC,23/10/2024,20:30,Smile 2,Netanya,R
-CC,23/10/2024,22:30,Smile 2,Netanya,R
-CC,23/10/2024,23:30,Smile 2,Netanya,R
+CC,23/10/2024,17:30,Smile 2,Netanya,Prime
+CC,23/10/2024,18:40,Smile 2,Beer Sheva,R
+CC,23/10/2024,20:30,Smile 2,Beer Sheva,R
+CC,23/10/2024,22:00,Smile 2,Beer Sheva,R
 YP,23/10/2024,16:50,Smile 2,Zichron Yaakov,R
 YP,23/10/2024,19:20,Smile 2,Zichron Yaakov,R
 YP,23/10/2024,21:00,Smile 2,Zichron Yaakov,R
@@ -2264,10 +2319,18 @@ YP,23/10/2024,23:40,Smile 2,Zichron Yaakov,R
 YP,23/10/2024,00:30,Smile 2,Zichron Yaakov,R
 YP,23/10/2024,20:00,Smile 2,Zichron Yaakov,VIP
 YP,23/10/2024,22:45,Smile 2,Zichron Yaakov,VIP
-CC,23/10/2024,17:30,Smile 2,Netanya,Prime
-CC,23/10/2024,18:40,Smile 2,Beer Sheva,R
-CC,23/10/2024,20:30,Smile 2,Beer Sheva,R
-CC,23/10/2024,22:00,Smile 2,Beer Sheva,R
+CC,23/10/2024,16:00,Smile 2,Chadera,R
+CC,23/10/2024,19:30,Smile 2,Chadera,R
+CC,23/10/2024,21:35,Smile 2,Chadera,R
+CC,23/10/2024,22:30,Smile 2,Chadera,R
+CC,23/10/2024,23:30,Smile 2,Chadera,R
+CC,23/10/2024,00:30,Smile 2,Chadera,R
+CC,23/10/2024,14:15,Smile 2,Ashdod,R
+CC,23/10/2024,17:30,Smile 2,Ashdod,R
+CC,23/10/2024,19:00,Smile 2,Ashdod,R
+CC,23/10/2024,20:40,Smile 2,Ashdod,R
+CC,23/10/2024,22:15,Smile 2,Ashdod,R
+CC,23/10/2024,23:50,Smile 2,Ashdod,R
 YP,23/10/2024,15:50,Smile 2,Haifa,R
 YP,23/10/2024,18:45,Smile 2,Haifa,R
 YP,23/10/2024,20:40,Smile 2,Haifa,R
@@ -2275,15 +2338,12 @@ YP,23/10/2024,21:30,Smile 2,Haifa,R
 YP,23/10/2024,23:20,Smile 2,Haifa,R
 YP,23/10/2024,00:10,Smile 2,Haifa,R
 YP,23/10/2024,00:15,Smile 2,Haifa,R
+YP,23/10/2024,17:30,Smile 2,Haifa,VIP
 YP,23/10/2024,18:00,Smile 2,Haifa,VIP
+YP,23/10/2024,20:20,Smile 2,Haifa,VIP
 YP,23/10/2024,20:45,Smile 2,Haifa,VIP
+YP,23/10/2024,23:10,Smile 2,Haifa,VIP
 YP,23/10/2024,23:30,Smile 2,Haifa,VIP
-CC,23/10/2024,16:00,Smile 2,Chadera,R
-CC,23/10/2024,19:30,Smile 2,Chadera,R
-CC,23/10/2024,21:35,Smile 2,Chadera,R
-CC,23/10/2024,22:30,Smile 2,Chadera,R
-CC,23/10/2024,23:30,Smile 2,Chadera,R
-CC,23/10/2024,00:30,Smile 2,Chadera,R
 YP,23/10/2024,15:10,Smile 2,Jerusalem,R
 YP,23/10/2024,17:20,Smile 2,Jerusalem,R
 YP,23/10/2024,20:00,Smile 2,Jerusalem,R
@@ -2291,19 +2351,14 @@ YP,23/10/2024,20:30,Smile 2,Jerusalem,R
 YP,23/10/2024,22:40,Smile 2,Jerusalem,R
 YP,23/10/2024,23:50,Smile 2,Jerusalem,R
 YP,23/10/2024,00:20,Smile 2,Jerusalem,R
-CC,23/10/2024,14:15,Smile 2,Ashdod,R
-CC,23/10/2024,17:30,Smile 2,Ashdod,R
-CC,23/10/2024,19:00,Smile 2,Ashdod,R
-CC,23/10/2024,20:40,Smile 2,Ashdod,R
-CC,23/10/2024,22:15,Smile 2,Ashdod,R
-CC,23/10/2024,23:50,Smile 2,Ashdod,R
 RH,23/10/2024,22:00,Smile 2,Givataim,R
 RH,23/10/2024,21:50,Smile 2,Tel Aviv,R
 RH,23/10/2024,22:00,Smile 2,Kiryat Ono,R
-HC,23/10/2024,19:15,Speak No Evil,Haifa,R
+ML,23/10/2024,22:30,Speak No Evil,Netanya,R
 CC,23/10/2024,22:00,Speak No Evil,Glilot,R
 CC,23/10/2024,22:40,Speak No Evil,Rishon Letzion,R
 CC,23/10/2024,18:00,Speak No Evil,Chadera,R
+HC,23/10/2024,19:15,Speak No Evil,Haifa,R
 YP,23/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,23/10/2024,00:30,Speak No Evil,Rishon Letzion,R
 YP,23/10/2024,19:00,Speak No Evil,Beer Sheva,R
@@ -2335,6 +2390,10 @@ YP,23/10/2024,00:15,The Apprentice,Haifa,R
 YP,23/10/2024,17:30,The Apprentice,Jerusalem,R
 YP,23/10/2024,19:20,The Apprentice,Jerusalem,R
 YP,23/10/2024,21:50,The Apprentice,Jerusalem,R
+ML,23/10/2024,17:40,The Day the Earth Blew Up: A Looney Tunes Movie,Carmiel,Upgrade
+ML,23/10/2024,16:50,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
+ML,23/10/2024,11:35,The Day the Earth Blew Up: A Looney Tunes Movie,Netanya,R
+ML,23/10/2024,17:40,The Day the Earth Blew Up: A Looney Tunes Movie,Netanya,R
 HC,23/10/2024,13:10,The Day the Earth Blew Up: A Looney Tunes Movie,Carmiel,R
 HC,23/10/2024,18:50,The Day the Earth Blew Up: A Looney Tunes Movie,Kiryat Bialik,R
 HC,23/10/2024,15:05,The Day the Earth Blew Up: A Looney Tunes Movie,Haifa,R
@@ -2360,6 +2419,7 @@ YP,23/10/2024,19:30,The Second Act,Rishon Letzion,R
 YP,23/10/2024,13:20,The Second Act,Haifa,R
 YP,23/10/2024,19:40,The Second Act,Haifa,R
 YP,23/10/2024,21:20,The Second Act,Jerusalem,R
+ML,23/10/2024,20:10,The Silent Hour,Netanya,R
 CC,23/10/2024,22:10,The Silent Hour,Glilot,R
 CC,23/10/2024,00:30,The Silent Hour,Glilot,R
 CC,23/10/2024,00:00,The Silent Hour,Rishon Letzion,R
@@ -2390,23 +2450,23 @@ LC,23/10/2024,11:00,The Tiger's Apprentice,Raanana,R
 LC,23/10/2024,16:00,The Tiger's Apprentice,Raanana,R
 LC,23/10/2024,18:30,The Tiger's Apprentice,Raanana,R
 LC,23/10/2024,21:00,The Tiger's Apprentice,Raanana,R
+LC,23/10/2024,13:30,The Tiger's Apprentice,Even Yehuda,R
+LC,23/10/2024,16:00,The Tiger's Apprentice,Even Yehuda,R
+LC,23/10/2024,18:30,The Tiger's Apprentice,Even Yehuda,R
+LC,23/10/2024,20:45,The Tiger's Apprentice,Even Yehuda,R
 LC,23/10/2024,11:10,The Tiger's Apprentice,Tel Aviv,R
 LC,23/10/2024,13:40,The Tiger's Apprentice,Tel Aviv,R
 LC,23/10/2024,16:10,The Tiger's Apprentice,Tel Aviv,R
 LC,23/10/2024,19:00,The Tiger's Apprentice,Tel Aviv,R
 LC,23/10/2024,21:30,The Tiger's Apprentice,Tel Aviv,R
-LC,23/10/2024,13:30,The Tiger's Apprentice,Even Yehuda,R
-LC,23/10/2024,16:00,The Tiger's Apprentice,Even Yehuda,R
-LC,23/10/2024,18:30,The Tiger's Apprentice,Even Yehuda,R
-LC,23/10/2024,20:45,The Tiger's Apprentice,Even Yehuda,R
-LC,23/10/2024,14:00,The Tiger's Apprentice,Jerusalem,R
-LC,23/10/2024,20:50,The Tiger's Apprentice,Jerusalem,R
 LC,23/10/2024,15:40,The Tiger's Apprentice,Shoham,R
 LC,23/10/2024,18:10,The Tiger's Apprentice,Shoham,R
 LC,23/10/2024,20:45,The Tiger's Apprentice,Shoham,R
-LC,23/10/2024,20:15,The Tiger's Apprentice,Beer Sheva,R
-LC,23/10/2024,20:30,The Tiger's Apprentice,Ramat Hasharon,R
 LC,23/10/2024,20:45,The Tiger's Apprentice,Herziliya,R
+LC,23/10/2024,20:30,The Tiger's Apprentice,Ramat Hasharon,R
+LC,23/10/2024,20:15,The Tiger's Apprentice,Beer Sheva,R
+LC,23/10/2024,14:00,The Tiger's Apprentice,Jerusalem,R
+LC,23/10/2024,20:50,The Tiger's Apprentice,Jerusalem,R
 CC,23/10/2024,17:15,The Tiger's Apprentice,Glilot,R
 CC,23/10/2024,18:50,The Tiger's Apprentice,Glilot,R
 CC,23/10/2024,21:40,The Tiger's Apprentice,Glilot,R
@@ -2431,6 +2491,11 @@ YP,23/10/2024,18:00,The Wild Robot,Rishon Letzion,R
 YP,23/10/2024,13:10,The Wild Robot,Ayalon,R
 YP,23/10/2024,19:45,The Wild Robot,Beer Sheva,R
 YP,23/10/2024,22:00,The Wild Robot,Beer Sheva,R
+YP,23/10/2024,18:50,The Wild Robot,Haifa,R
+YP,23/10/2024,15:20,The Wild Robot,Jerusalem,R
+ML,23/10/2024,17:25,The Wild Robot,Haifa,R
+ML,23/10/2024,11:15,The Wild Robot,Netanya,R
+ML,23/10/2024,16:50,The Wild Robot,Netanya,R
 HC,23/10/2024,12:55,The Wild Robot,Kiryat Bialik,R
 HC,23/10/2024,13:00,The Wild Robot,Haifa,R
 HC,23/10/2024,19:30,The Wild Robot,Haifa,R
@@ -2456,6 +2521,12 @@ LC,23/10/2024,19:10,There's Still Tomorrow,Tel Aviv,R
 LC,23/10/2024,16:00,There's Still Tomorrow,Ramat Hasharon,R
 LC,23/10/2024,18:20,There's Still Tomorrow,Herziliya,R
 YP,23/10/2024,21:50,This Time Next Year,Jerusalem,R
+ML,23/10/2024,16:20,Transformers One,Carmiel,R
+ML,23/10/2024,15:30,Transformers One,Haifa,R
+ML,23/10/2024,17:45,Transformers One,Haifa,R
+ML,23/10/2024,20:00,Transformers One,Haifa,R
+ML,23/10/2024,16:15,Transformers One,Netanya,R
+ML,23/10/2024,18:35,Transformers One,Netanya,R
 HC,23/10/2024,13:05,Transformers One,Nahariya,R
 HC,23/10/2024,12:45,Transformers One,Kiryat Bialik,R
 HC,23/10/2024,15:00,Transformers One,Kiryat Bialik,R
@@ -2466,8 +2537,9 @@ HC,23/10/2024,17:15,Transformers One,Haifa,R
 HC,23/10/2024,13:15,Transformers One,Kfar Saba,R
 HC,23/10/2024,15:30,Transformers One,Kfar Saba,R
 HC,23/10/2024,17:45,Transformers One,Kfar Saba,R
-HC,23/10/2024,19:00,Transformers One,Kfar Saba,Premium
-HC,23/10/2024,19:00,Transformers One,Petach Tikvah,R
+HC,23/10/2024,19:40,Transformers One,Kfar Saba,R
+HC,23/10/2024,19:25,Transformers One,Petach Tikvah,R
+HC,23/10/2024,15:25,Transformers One,Modiin,R
 HC,23/10/2024,17:00,Transformers One,Modiin,R
 HC,23/10/2024,19:15,Transformers One,Modiin,R
 HC,23/10/2024,16:30,Transformers One,Rehovot,R
@@ -2490,22 +2562,22 @@ YP,23/10/2024,13:20,Transformers One,Zichron Yaakov,R
 YP,23/10/2024,20:00,Transformers One,Zichron Yaakov,R
 YP,23/10/2024,22:15,Transformers One,Zichron Yaakov,R
 YP,23/10/2024,00:30,Transformers One,Zichron Yaakov,R
-YP,23/10/2024,19:20,Transformers One,Haifa,R
-YP,23/10/2024,21:50,Transformers One,Haifa,R
-YP,23/10/2024,00:10,Transformers One,Haifa,R
 CC,23/10/2024,10:50,Transformers One,Glilot,R
 CC,23/10/2024,13:30,Transformers One,Glilot,R
 CC,23/10/2024,16:10,Transformers One,Glilot,R
 CC,23/10/2024,19:00,Transformers One,Glilot,R
-YP,23/10/2024,13:00,Transformers One,Jerusalem,R
-YP,23/10/2024,20:00,Transformers One,Jerusalem,R
-YP,23/10/2024,22:10,Transformers One,Jerusalem,R
-YP,23/10/2024,00:20,Transformers One,Jerusalem,R
+YP,23/10/2024,19:20,Transformers One,Haifa,R
+YP,23/10/2024,21:50,Transformers One,Haifa,R
+YP,23/10/2024,00:10,Transformers One,Haifa,R
 CC,23/10/2024,12:20,Transformers One,Rishon Letzion,R
 CC,23/10/2024,15:00,Transformers One,Rishon Letzion,R
 CC,23/10/2024,17:40,Transformers One,Rishon Letzion,R
 CC,23/10/2024,20:20,Transformers One,Rishon Letzion,R
 CC,23/10/2024,15:15,Transformers One,Jerusalem,R
+YP,23/10/2024,13:00,Transformers One,Jerusalem,R
+YP,23/10/2024,20:00,Transformers One,Jerusalem,R
+YP,23/10/2024,22:10,Transformers One,Jerusalem,R
+YP,23/10/2024,00:20,Transformers One,Jerusalem,R
 CC,23/10/2024,19:20,Transformers One,Kfar Saba,R
 CC,23/10/2024,22:00,Transformers One,Kfar Saba,R
 CC,23/10/2024,18:00,Transformers One,Netanya,R
@@ -2515,6 +2587,20 @@ CC,23/10/2024,18:45,Transformers One,Ashdod,R
 RH,23/10/2024,22:00,Transformers One,Givataim,R
 RH,23/10/2024,22:00,Transformers One,Tel Aviv,R
 RH,23/10/2024,22:00,Transformers One,Kiryat Ono,R
+ML,23/10/2024,14:55,Venom: The Last Dance,Carmiel,Upgrade
+ML,23/10/2024,19:40,Venom: The Last Dance,Carmiel,Upgrade
+ML,23/10/2024,22:00,Venom: The Last Dance,Carmiel,Upgrade
+ML,23/10/2024,13:15,Venom: The Last Dance,Haifa,Upgrade
+ML,23/10/2024,15:45,Venom: The Last Dance,Haifa,Upgrade
+ML,23/10/2024,19:40,Venom: The Last Dance,Haifa,R
+ML,23/10/2024,21:10,Venom: The Last Dance,Haifa,Upgrade
+ML,23/10/2024,22:05,Venom: The Last Dance,Haifa,R
+ML,23/10/2024,12:55,Venom: The Last Dance,Netanya,Upgrade
+ML,23/10/2024,16:30,Venom: The Last Dance,Netanya,R
+ML,23/10/2024,19:00,Venom: The Last Dance,Netanya,R
+ML,23/10/2024,20:00,Venom: The Last Dance,Netanya,Upgrade
+ML,23/10/2024,21:30,Venom: The Last Dance,Netanya,R
+ML,23/10/2024,22:30,Venom: The Last Dance,Netanya,Upgrade
 CC,23/10/2024,11:00,Venom: The Last Dance,Glilot,R
 CC,23/10/2024,13:45,Venom: The Last Dance,Glilot,R
 CC,23/10/2024,16:30,Venom: The Last Dance,Glilot,R
@@ -2554,45 +2640,116 @@ CC,23/10/2024,19:10,Venom: The Last Dance,Netanya,R
 CC,23/10/2024,22:10,Venom: The Last Dance,Netanya,R
 CC,23/10/2024,20:30,Venom: The Last Dance,Netanya,Prime
 CC,23/10/2024,23:20,Venom: The Last Dance,Netanya,Prime
-CC,23/10/2024,11:00,Venom: The Last Dance,Beer Sheva,R
-CC,23/10/2024,13:50,Venom: The Last Dance,Beer Sheva,R
-CC,23/10/2024,16:40,Venom: The Last Dance,Beer Sheva,R
-CC,23/10/2024,18:00,Venom: The Last Dance,Beer Sheva,R
-CC,23/10/2024,19:20,Venom: The Last Dance,Beer Sheva,R
-CC,23/10/2024,20:50,Venom: The Last Dance,Beer Sheva,R
-CC,23/10/2024,22:10,Venom: The Last Dance,Beer Sheva,R
+HC,23/10/2024,12:50,Venom: The Last Dance,Carmiel,R
+HC,23/10/2024,15:10,Venom: The Last Dance,Carmiel,R
+HC,23/10/2024,17:30,Venom: The Last Dance,Carmiel,R
+HC,23/10/2024,19:10,Venom: The Last Dance,Carmiel,R
+HC,23/10/2024,19:50,Venom: The Last Dance,Carmiel,R
 YP,23/10/2024,11:00,Venom: The Last Dance,Rishon Letzion,R
+HC,23/10/2024,21:30,Venom: The Last Dance,Carmiel,R
 YP,23/10/2024,13:30,Venom: The Last Dance,Rishon Letzion,R
+HC,23/10/2024,22:15,Venom: The Last Dance,Carmiel,R
 YP,23/10/2024,16:00,Venom: The Last Dance,Rishon Letzion,R
 YP,23/10/2024,18:30,Venom: The Last Dance,Rishon Letzion,R
+CC,23/10/2024,11:00,Venom: The Last Dance,Beer Sheva,R
 YP,23/10/2024,21:00,Venom: The Last Dance,Rishon Letzion,R
+HC,23/10/2024,11:00,Venom: The Last Dance,Nahariya,R
+CC,23/10/2024,13:50,Venom: The Last Dance,Beer Sheva,R
+HC,23/10/2024,13:20,Venom: The Last Dance,Nahariya,R
 YP,23/10/2024,23:30,Venom: The Last Dance,Rishon Letzion,R
+CC,23/10/2024,16:40,Venom: The Last Dance,Beer Sheva,R
+HC,23/10/2024,15:40,Venom: The Last Dance,Nahariya,R
+CC,23/10/2024,18:00,Venom: The Last Dance,Beer Sheva,R
+CC,23/10/2024,19:20,Venom: The Last Dance,Beer Sheva,R
+HC,23/10/2024,18:00,Venom: The Last Dance,Nahariya,R
+CC,23/10/2024,20:50,Venom: The Last Dance,Beer Sheva,R
+HC,23/10/2024,20:20,Venom: The Last Dance,Nahariya,R
+CC,23/10/2024,22:10,Venom: The Last Dance,Beer Sheva,R
 YP,23/10/2024,11:30,Venom: The Last Dance,Rishon Letzion,4DX
+HC,23/10/2024,22:40,Venom: The Last Dance,Nahariya,R
 YP,23/10/2024,14:00,Venom: The Last Dance,Rishon Letzion,4DX
 YP,23/10/2024,16:30,Venom: The Last Dance,Rishon Letzion,4DX
 YP,23/10/2024,19:00,Venom: The Last Dance,Rishon Letzion,4DX
+HC,23/10/2024,11:50,Venom: The Last Dance,Kiryat Bialik,R
+HC,23/10/2024,14:15,Venom: The Last Dance,Kiryat Bialik,R
 YP,23/10/2024,21:30,Venom: The Last Dance,Rishon Letzion,4DX
+HC,23/10/2024,16:50,Venom: The Last Dance,Kiryat Bialik,R
 YP,23/10/2024,00:00,Venom: The Last Dance,Rishon Letzion,4DX
+HC,23/10/2024,19:20,Venom: The Last Dance,Kiryat Bialik,R
+HC,23/10/2024,20:00,Venom: The Last Dance,Kiryat Bialik,R
+HC,23/10/2024,21:45,Venom: The Last Dance,Kiryat Bialik,R
+HC,23/10/2024,22:30,Venom: The Last Dance,Kiryat Bialik,R
 YP,23/10/2024,11:45,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,23/10/2024,14:15,Venom: The Last Dance,Rishon Letzion,SCREENX
+HC,23/10/2024,11:30,Venom: The Last Dance,Haifa,R
 YP,23/10/2024,16:45,Venom: The Last Dance,Rishon Letzion,SCREENX
+HC,23/10/2024,12:20,Venom: The Last Dance,Haifa,R
+HC,23/10/2024,14:40,Venom: The Last Dance,Haifa,R
 YP,23/10/2024,19:15,Venom: The Last Dance,Rishon Letzion,SCREENX
+HC,23/10/2024,17:00,Venom: The Last Dance,Haifa,R
 YP,23/10/2024,21:45,Venom: The Last Dance,Rishon Letzion,SCREENX
+HC,23/10/2024,19:20,Venom: The Last Dance,Haifa,R
 YP,23/10/2024,00:10,Venom: The Last Dance,Rishon Letzion,SCREENX
+HC,23/10/2024,20:20,Venom: The Last Dance,Haifa,R
+HC,23/10/2024,21:45,Venom: The Last Dance,Haifa,R
+HC,23/10/2024,22:40,Venom: The Last Dance,Haifa,R
 YP,23/10/2024,12:00,Venom: The Last Dance,Rishon Letzion,IMAX 3D
+HC,23/10/2024,11:40,Venom: The Last Dance,Kfar Saba,Premium
 YP,23/10/2024,14:30,Venom: The Last Dance,Rishon Letzion,IMAX 3D
+HC,23/10/2024,12:50,Venom: The Last Dance,Kfar Saba,R
+HC,23/10/2024,15:20,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,17:00,Venom: The Last Dance,Rishon Letzion,IMAX 3D
+HC,23/10/2024,17:45,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,19:30,Venom: The Last Dance,Rishon Letzion,IMAX 3D
+HC,23/10/2024,19:10,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,22:00,Venom: The Last Dance,Rishon Letzion,IMAX 3D
+HC,23/10/2024,20:45,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,00:30,Venom: The Last Dance,Rishon Letzion,IMAX 3D
+HC,23/10/2024,21:15,Venom: The Last Dance,Kfar Saba,Premium
+HC,23/10/2024,21:45,Venom: The Last Dance,Kfar Saba,R
+HC,23/10/2024,22:40,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,16:45,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,12:40,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,17:15,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,15:00,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,18:45,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,17:20,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,19:45,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,19:40,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,21:15,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,20:30,Venom: The Last Dance,Petach Tikvah,R
+HC,23/10/2024,22:00,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,22:15,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,22:50,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,23:40,Venom: The Last Dance,Rishon Letzion,VIP
 YP,23/10/2024,00:40,Venom: The Last Dance,Rishon Letzion,VIP
+HC,23/10/2024,12:30,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,14:50,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,17:10,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,19:30,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,20:10,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,21:50,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,22:30,Venom: The Last Dance,Modiin,R
+HC,23/10/2024,12:30,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,14:50,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,17:10,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,18:45,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,19:30,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,21:10,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,21:50,Venom: The Last Dance,Rehovot,R
+HC,23/10/2024,13:00,Venom: The Last Dance,Ashdod,R
+HC,23/10/2024,15:20,Venom: The Last Dance,Ashdod,R
+HC,23/10/2024,17:40,Venom: The Last Dance,Ashdod,R
+HC,23/10/2024,20:00,Venom: The Last Dance,Ashdod,R
+HC,23/10/2024,21:10,Venom: The Last Dance,Ashdod,R
+HC,23/10/2024,22:20,Venom: The Last Dance,Ashdod,R
+HC,23/10/2024,12:50,Venom: The Last Dance,Ashkelon,R
+HC,23/10/2024,15:15,Venom: The Last Dance,Ashkelon,R
+HC,23/10/2024,17:40,Venom: The Last Dance,Ashkelon,R
+HC,23/10/2024,19:00,Venom: The Last Dance,Ashkelon,R
+HC,23/10/2024,20:00,Venom: The Last Dance,Ashkelon,R
+HC,23/10/2024,21:30,Venom: The Last Dance,Ashkelon,R
+HC,23/10/2024,22:20,Venom: The Last Dance,Ashkelon,R
 CC,23/10/2024,11:30,Venom: The Last Dance,Chadera,R
 CC,23/10/2024,14:10,Venom: The Last Dance,Chadera,R
 CC,23/10/2024,16:50,Venom: The Last Dance,Chadera,R
@@ -2662,106 +2819,35 @@ YP,23/10/2024,20:45,Venom: The Last Dance,Zichron Yaakov,R
 YP,23/10/2024,21:45,Venom: The Last Dance,Zichron Yaakov,R
 YP,23/10/2024,23:15,Venom: The Last Dance,Zichron Yaakov,R
 YP,23/10/2024,00:10,Venom: The Last Dance,Zichron Yaakov,R
-HC,23/10/2024,12:50,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,15:10,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,17:30,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,19:10,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,19:50,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,21:30,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,22:15,Venom: The Last Dance,Carmiel,R
-HC,23/10/2024,11:00,Venom: The Last Dance,Nahariya,R
-HC,23/10/2024,13:20,Venom: The Last Dance,Nahariya,R
-HC,23/10/2024,15:40,Venom: The Last Dance,Nahariya,R
-HC,23/10/2024,18:00,Venom: The Last Dance,Nahariya,R
-HC,23/10/2024,20:20,Venom: The Last Dance,Nahariya,R
-HC,23/10/2024,22:40,Venom: The Last Dance,Nahariya,R
-HC,23/10/2024,11:50,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,14:15,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,16:50,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,19:20,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,20:00,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,21:45,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,22:30,Venom: The Last Dance,Kiryat Bialik,R
-HC,23/10/2024,11:30,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,12:20,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,14:40,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,17:00,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,19:20,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,20:20,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,21:45,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,22:40,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,11:40,Venom: The Last Dance,Kfar Saba,Premium
-HC,23/10/2024,12:50,Venom: The Last Dance,Kfar Saba,R
-HC,23/10/2024,15:20,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,11:00,Venom: The Last Dance,Haifa,4DX
-HC,23/10/2024,17:45,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,13:15,Venom: The Last Dance,Haifa,4DX
-HC,23/10/2024,19:10,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,15:30,Venom: The Last Dance,Haifa,4DX
-HC,23/10/2024,20:45,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,18:00,Venom: The Last Dance,Haifa,4DX
-HC,23/10/2024,21:15,Venom: The Last Dance,Kfar Saba,Premium
 YP,23/10/2024,20:50,Venom: The Last Dance,Haifa,4DX
 YP,23/10/2024,23:10,Venom: The Last Dance,Haifa,4DX
-HC,23/10/2024,21:45,Venom: The Last Dance,Kfar Saba,R
-HC,23/10/2024,22:40,Venom: The Last Dance,Kfar Saba,R
 YP,23/10/2024,12:00,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,12:40,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,14:15,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,15:00,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,16:40,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,17:20,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,19:00,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,19:40,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,21:10,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,20:30,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,21:30,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,22:00,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,23:30,Venom: The Last Dance,Haifa,R
 YP,23/10/2024,00:00,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,22:50,Venom: The Last Dance,Petach Tikvah,R
 YP,23/10/2024,00:10,Venom: The Last Dance,Haifa,R
-HC,23/10/2024,12:30,Venom: The Last Dance,Modiin,R
-HC,23/10/2024,14:50,Venom: The Last Dance,Modiin,R
-HC,23/10/2024,17:10,Venom: The Last Dance,Modiin,R
 YP,23/10/2024,12:10,Venom: The Last Dance,Haifa,SCREENX
-HC,23/10/2024,19:30,Venom: The Last Dance,Modiin,R
 YP,23/10/2024,14:30,Venom: The Last Dance,Haifa,SCREENX
-HC,23/10/2024,20:10,Venom: The Last Dance,Modiin,R
 YP,23/10/2024,16:50,Venom: The Last Dance,Haifa,SCREENX
 YP,23/10/2024,19:15,Venom: The Last Dance,Haifa,SCREENX
-HC,23/10/2024,21:50,Venom: The Last Dance,Modiin,R
 YP,23/10/2024,21:45,Venom: The Last Dance,Haifa,SCREENX
 YP,23/10/2024,00:10,Venom: The Last Dance,Haifa,SCREENX
-HC,23/10/2024,22:30,Venom: The Last Dance,Modiin,R
-HC,23/10/2024,12:30,Venom: The Last Dance,Rehovot,R
-HC,23/10/2024,14:50,Venom: The Last Dance,Rehovot,R
 YP,23/10/2024,16:30,Venom: The Last Dance,Haifa,VIP
-HC,23/10/2024,17:10,Venom: The Last Dance,Rehovot,R
 YP,23/10/2024,16:45,Venom: The Last Dance,Haifa,VIP
-HC,23/10/2024,18:45,Venom: The Last Dance,Rehovot,R
-HC,23/10/2024,19:30,Venom: The Last Dance,Rehovot,R
 YP,23/10/2024,19:00,Venom: The Last Dance,Haifa,VIP
 YP,23/10/2024,19:15,Venom: The Last Dance,Haifa,VIP
-HC,23/10/2024,21:10,Venom: The Last Dance,Rehovot,R
 YP,23/10/2024,21:30,Venom: The Last Dance,Haifa,VIP
-HC,23/10/2024,21:50,Venom: The Last Dance,Rehovot,R
 YP,23/10/2024,21:45,Venom: The Last Dance,Haifa,VIP
 YP,23/10/2024,00:00,Venom: The Last Dance,Haifa,VIP
-HC,23/10/2024,13:00,Venom: The Last Dance,Ashdod,R
 YP,23/10/2024,00:15,Venom: The Last Dance,Haifa,VIP
-HC,23/10/2024,15:20,Venom: The Last Dance,Ashdod,R
-HC,23/10/2024,17:40,Venom: The Last Dance,Ashdod,R
-HC,23/10/2024,20:00,Venom: The Last Dance,Ashdod,R
-HC,23/10/2024,21:10,Venom: The Last Dance,Ashdod,R
-HC,23/10/2024,22:20,Venom: The Last Dance,Ashdod,R
-HC,23/10/2024,12:50,Venom: The Last Dance,Ashkelon,R
-HC,23/10/2024,15:15,Venom: The Last Dance,Ashkelon,R
-HC,23/10/2024,17:40,Venom: The Last Dance,Ashkelon,R
-HC,23/10/2024,19:00,Venom: The Last Dance,Ashkelon,R
-HC,23/10/2024,20:00,Venom: The Last Dance,Ashkelon,R
-HC,23/10/2024,21:30,Venom: The Last Dance,Ashkelon,R
-HC,23/10/2024,22:20,Venom: The Last Dance,Ashkelon,R
 YP,23/10/2024,11:00,Venom: The Last Dance,Jerusalem,R
 YP,23/10/2024,13:30,Venom: The Last Dance,Jerusalem,R
 YP,23/10/2024,16:00,Venom: The Last Dance,Jerusalem,R
@@ -2790,16 +2876,22 @@ LC,23/10/2024,10:45,We Live in Time,Tel Aviv,R
 LC,23/10/2024,17:25,We Live in Time,Tel Aviv,R
 LC,23/10/2024,18:50,We Live in Time,Tel Aviv,R
 LC,23/10/2024,21:15,We Live in Time,Tel Aviv,R
-LC,23/10/2024,11:00,We Live in Time,Even Yehuda,R
-LC,23/10/2024,15:50,We Live in Time,Even Yehuda,R
-LC,23/10/2024,18:20,We Live in Time,Even Yehuda,R
-LC,23/10/2024,20:40,We Live in Time,Even Yehuda,R
 LC,23/10/2024,14:40,We Live in Time,Raanana,R
 LC,23/10/2024,19:15,We Live in Time,Raanana,R
 LC,23/10/2024,21:30,We Live in Time,Raanana,R
 LC,23/10/2024,15:00,We Live in Time,Shoham,R
 LC,23/10/2024,19:15,We Live in Time,Shoham,R
 LC,23/10/2024,21:30,We Live in Time,Shoham,R
+LC,23/10/2024,11:00,We Live in Time,Even Yehuda,R
+LC,23/10/2024,15:50,We Live in Time,Even Yehuda,R
+LC,23/10/2024,18:20,We Live in Time,Even Yehuda,R
+LC,23/10/2024,20:40,We Live in Time,Even Yehuda,R
+ML,23/10/2024,21:40,We Live in Time,Carmiel,R
+ML,23/10/2024,18:55,We Live in Time,Haifa,R
+ML,23/10/2024,21:55,We Live in Time,Haifa,R
+ML,23/10/2024,13:40,We Live in Time,Netanya,R
+ML,23/10/2024,19:10,We Live in Time,Netanya,R
+ML,23/10/2024,22:20,We Live in Time,Netanya,R
 CC,23/10/2024,11:15,We Live in Time,Glilot,R
 CC,23/10/2024,17:10,We Live in Time,Glilot,R
 CC,23/10/2024,19:00,We Live in Time,Glilot,R
@@ -2838,18 +2930,18 @@ HC,23/10/2024,19:15,We Live in Time,Haifa,R
 HC,23/10/2024,20:30,We Live in Time,Haifa,R
 HC,23/10/2024,21:35,We Live in Time,Haifa,R
 HC,23/10/2024,14:55,We Live in Time,Kfar Saba,R
+HC,23/10/2024,17:15,We Live in Time,Kfar Saba,R
 HC,23/10/2024,20:15,We Live in Time,Kfar Saba,R
-HC,23/10/2024,19:10,We Live in Time,Petach Tikvah,R
-HC,23/10/2024,21:30,We Live in Time,Petach Tikvah,R
+HC,23/10/2024,19:40,We Live in Time,Petach Tikvah,R
+HC,23/10/2024,22:00,We Live in Time,Petach Tikvah,R
 HC,23/10/2024,19:25,We Live in Time,Modiin,R
 HC,23/10/2024,21:40,We Live in Time,Modiin,R
-HC,23/10/2024,15:00,We Live in Time,Rehovot,R
-HC,23/10/2024,19:10,We Live in Time,Rehovot,R
-HC,23/10/2024,21:30,We Live in Time,Rehovot,R
+HC,23/10/2024,15:30,We Live in Time,Rehovot,R
+HC,23/10/2024,19:45,We Live in Time,Rehovot,R
+HC,23/10/2024,22:00,We Live in Time,Rehovot,R
 HC,23/10/2024,17:10,We Live in Time,Ashdod,R
 HC,23/10/2024,19:30,We Live in Time,Ashdod,R
 HC,23/10/2024,21:50,We Live in Time,Ashdod,R
-HC,23/10/2024,16:30,We Live in Time,Ashkelon,R
 HC,23/10/2024,18:50,We Live in Time,Ashkelon,R
 HC,23/10/2024,21:10,We Live in Time,Ashkelon,R
 YP,23/10/2024,19:45,We Live in Time,Rishon Letzion,R
@@ -2883,12 +2975,18 @@ YP,23/10/2024,15:30,Woman of the Hour,Beer Sheva,R
 YP,23/10/2024,15:45,Woman of the Hour,Haifa,R
 YP,23/10/2024,20:00,Woman of the Hour,Haifa,R
 YP,23/10/2024,22:20,Woman of the Hour,Jerusalem,R
+ML,24/10/2024,19:30,Venom: The Last Dance,Carmiel,Upgrade
+ML,24/10/2024,21:50,Venom: The Last Dance,Carmiel,Upgrade
+ML,24/10/2024,19:05,Venom: The Last Dance,Haifa,Upgrade
+ML,24/10/2024,21:30,Venom: The Last Dance,Haifa,Upgrade
+ML,24/10/2024,19:25,Venom: The Last Dance,Netanya,Upgrade
+ML,24/10/2024,21:00,Venom: The Last Dance,Netanya,R
+ML,24/10/2024,22:00,Venom: The Last Dance,Netanya,Upgrade
 CC,24/10/2024,11:00,Venom: The Last Dance,Glilot,R
 CC,24/10/2024,13:50,Venom: The Last Dance,Glilot,R
 CC,24/10/2024,16:40,Venom: The Last Dance,Glilot,R
 CC,24/10/2024,19:30,Venom: The Last Dance,Glilot,R
 CC,24/10/2024,22:20,Venom: The Last Dance,Glilot,R
-CC,24/10/2024,00:30,Venom: The Last Dance,Glilot,R
 CC,24/10/2024,19:30,Venom: The Last Dance,Glilot,4DX
 CC,24/10/2024,22:20,Venom: The Last Dance,Glilot,4DX
 CC,24/10/2024,11:30,Venom: The Last Dance,Rishon Letzion,R
@@ -2917,7 +3015,6 @@ YP,24/10/2024,11:00,Venom: The Last Dance,Rishon Letzion,R
 YP,24/10/2024,13:30,Venom: The Last Dance,Rishon Letzion,R
 YP,24/10/2024,16:00,Venom: The Last Dance,Rishon Letzion,R
 YP,24/10/2024,18:30,Venom: The Last Dance,Rishon Letzion,R
-YP,24/10/2024,21:00,Venom: The Last Dance,Rishon Letzion,R
 YP,24/10/2024,23:30,Venom: The Last Dance,Rishon Letzion,R
 YP,24/10/2024,11:30,Venom: The Last Dance,Rishon Letzion,4DX
 YP,24/10/2024,14:00,Venom: The Last Dance,Rishon Letzion,4DX
@@ -2941,6 +3038,43 @@ YP,24/10/2024,17:15,Venom: The Last Dance,Rishon Letzion,VIP
 YP,24/10/2024,19:45,Venom: The Last Dance,Rishon Letzion,VIP
 YP,24/10/2024,22:15,Venom: The Last Dance,Rishon Letzion,VIP
 YP,24/10/2024,00:40,Venom: The Last Dance,Rishon Letzion,VIP
+HC,24/10/2024,14:30,Venom: The Last Dance,Carmiel,R
+HC,24/10/2024,17:00,Venom: The Last Dance,Carmiel,R
+HC,24/10/2024,19:25,Venom: The Last Dance,Carmiel,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Carmiel,R
+HC,24/10/2024,19:40,Venom: The Last Dance,Nahariya,R
+HC,24/10/2024,22:10,Venom: The Last Dance,Nahariya,R
+HC,24/10/2024,14:30,Venom: The Last Dance,Kiryat Bialik,R
+HC,24/10/2024,17:00,Venom: The Last Dance,Kiryat Bialik,R
+HC,24/10/2024,19:25,Venom: The Last Dance,Kiryat Bialik,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Kiryat Bialik,R
+HC,24/10/2024,14:35,Venom: The Last Dance,Haifa,R
+HC,24/10/2024,17:00,Venom: The Last Dance,Haifa,R
+HC,24/10/2024,19:25,Venom: The Last Dance,Haifa,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Haifa,R
+HC,24/10/2024,14:15,Venom: The Last Dance,Kfar Saba,R
+HC,24/10/2024,16:50,Venom: The Last Dance,Kfar Saba,R
+HC,24/10/2024,19:25,Venom: The Last Dance,Kfar Saba,R
+HC,24/10/2024,22:00,Venom: The Last Dance,Kfar Saba,R
+HC,24/10/2024,14:35,Venom: The Last Dance,Petach Tikvah,R
+HC,24/10/2024,17:00,Venom: The Last Dance,Petach Tikvah,R
+HC,24/10/2024,19:25,Venom: The Last Dance,Petach Tikvah,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Petach Tikvah,R
+HC,24/10/2024,15:00,Venom: The Last Dance,Modiin,R
+HC,24/10/2024,20:00,Venom: The Last Dance,Modiin,R
+HC,24/10/2024,22:20,Venom: The Last Dance,Modiin,R
+HC,24/10/2024,14:30,Venom: The Last Dance,Rehovot,R
+HC,24/10/2024,17:00,Venom: The Last Dance,Rehovot,R
+HC,24/10/2024,19:25,Venom: The Last Dance,Rehovot,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Rehovot,R
+HC,24/10/2024,14:50,Venom: The Last Dance,Ashdod,R
+HC,24/10/2024,17:10,Venom: The Last Dance,Ashdod,R
+HC,24/10/2024,19:30,Venom: The Last Dance,Ashdod,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Ashdod,R
+HC,24/10/2024,14:50,Venom: The Last Dance,Ashkelon,R
+HC,24/10/2024,17:10,Venom: The Last Dance,Ashkelon,R
+HC,24/10/2024,19:30,Venom: The Last Dance,Ashkelon,R
+HC,24/10/2024,21:50,Venom: The Last Dance,Ashkelon,R
 CC,24/10/2024,11:30,Venom: The Last Dance,Chadera,R
 CC,24/10/2024,14:10,Venom: The Last Dance,Chadera,R
 CC,24/10/2024,16:50,Venom: The Last Dance,Chadera,R
@@ -3004,57 +3138,21 @@ YP,24/10/2024,16:30,Venom: The Last Dance,Haifa,R
 YP,24/10/2024,19:00,Venom: The Last Dance,Haifa,R
 YP,24/10/2024,21:30,Venom: The Last Dance,Haifa,R
 YP,24/10/2024,00:00,Venom: The Last Dance,Haifa,R
-HC,24/10/2024,14:30,Venom: The Last Dance,Carmiel,R
 YP,24/10/2024,12:00,Venom: The Last Dance,Haifa,SCREENX
-HC,24/10/2024,17:00,Venom: The Last Dance,Carmiel,R
 YP,24/10/2024,14:30,Venom: The Last Dance,Haifa,SCREENX
-HC,24/10/2024,19:25,Venom: The Last Dance,Carmiel,R
 YP,24/10/2024,17:00,Venom: The Last Dance,Haifa,SCREENX
-HC,24/10/2024,21:50,Venom: The Last Dance,Carmiel,R
 YP,24/10/2024,19:30,Venom: The Last Dance,Haifa,SCREENX
 YP,24/10/2024,22:00,Venom: The Last Dance,Haifa,SCREENX
-HC,24/10/2024,19:40,Venom: The Last Dance,Nahariya,R
 YP,24/10/2024,00:20,Venom: The Last Dance,Haifa,SCREENX
-HC,24/10/2024,22:10,Venom: The Last Dance,Nahariya,R
-HC,24/10/2024,14:30,Venom: The Last Dance,Kiryat Bialik,R
-HC,24/10/2024,17:00,Venom: The Last Dance,Kiryat Bialik,R
 YP,24/10/2024,17:00,Venom: The Last Dance,Haifa,VIP
-HC,24/10/2024,19:25,Venom: The Last Dance,Kiryat Bialik,R
 YP,24/10/2024,19:30,Venom: The Last Dance,Haifa,VIP
-HC,24/10/2024,21:50,Venom: The Last Dance,Kiryat Bialik,R
 YP,24/10/2024,22:00,Venom: The Last Dance,Haifa,VIP
 YP,24/10/2024,00:30,Venom: The Last Dance,Haifa,VIP
-HC,24/10/2024,14:35,Venom: The Last Dance,Haifa,R
-HC,24/10/2024,17:00,Venom: The Last Dance,Haifa,R
-HC,24/10/2024,19:25,Venom: The Last Dance,Haifa,R
-HC,24/10/2024,21:50,Venom: The Last Dance,Haifa,R
-HC,24/10/2024,14:15,Venom: The Last Dance,Kfar Saba,R
-HC,24/10/2024,16:50,Venom: The Last Dance,Kfar Saba,R
-HC,24/10/2024,19:25,Venom: The Last Dance,Kfar Saba,R
-HC,24/10/2024,22:00,Venom: The Last Dance,Kfar Saba,R
-HC,24/10/2024,14:35,Venom: The Last Dance,Petach Tikvah,R
-HC,24/10/2024,17:00,Venom: The Last Dance,Petach Tikvah,R
-HC,24/10/2024,19:25,Venom: The Last Dance,Petach Tikvah,R
-HC,24/10/2024,21:50,Venom: The Last Dance,Petach Tikvah,R
-HC,24/10/2024,15:00,Venom: The Last Dance,Modiin,R
-HC,24/10/2024,20:00,Venom: The Last Dance,Modiin,R
-HC,24/10/2024,22:20,Venom: The Last Dance,Modiin,R
-HC,24/10/2024,14:30,Venom: The Last Dance,Rehovot,R
-HC,24/10/2024,17:00,Venom: The Last Dance,Rehovot,R
-HC,24/10/2024,19:25,Venom: The Last Dance,Rehovot,R
-HC,24/10/2024,21:50,Venom: The Last Dance,Rehovot,R
-HC,24/10/2024,14:50,Venom: The Last Dance,Ashdod,R
-HC,24/10/2024,17:10,Venom: The Last Dance,Ashdod,R
-HC,24/10/2024,19:30,Venom: The Last Dance,Ashdod,R
-HC,24/10/2024,21:50,Venom: The Last Dance,Ashdod,R
-HC,24/10/2024,14:50,Venom: The Last Dance,Ashkelon,R
-HC,24/10/2024,17:10,Venom: The Last Dance,Ashkelon,R
-HC,24/10/2024,19:30,Venom: The Last Dance,Ashkelon,R
-HC,24/10/2024,21:50,Venom: The Last Dance,Ashkelon,R
 YP,24/10/2024,11:00,Venom: The Last Dance,Jerusalem,R
 YP,24/10/2024,13:30,Venom: The Last Dance,Jerusalem,R
 YP,24/10/2024,16:00,Venom: The Last Dance,Jerusalem,R
 YP,24/10/2024,18:30,Venom: The Last Dance,Jerusalem,R
+YP,24/10/2024,19:15,Venom: The Last Dance,Jerusalem,R
 YP,24/10/2024,21:00,Venom: The Last Dance,Jerusalem,R
 YP,24/10/2024,23:30,Venom: The Last Dance,Jerusalem,R
 YP,24/10/2024,11:40,Venom: The Last Dance,Jerusalem,4DX
@@ -3070,6 +3168,13 @@ YP,24/10/2024,19:30,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,24/10/2024,22:00,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,24/10/2024,00:20,Venom: The Last Dance,Jerusalem,IMAX 3D
 HC,25/10/2024,19:15,Joker: Folie à Deux,Haifa,R
+ML,25/10/2024,19:30,Venom: The Last Dance,Carmiel,Upgrade
+ML,25/10/2024,21:50,Venom: The Last Dance,Carmiel,Upgrade
+ML,25/10/2024,19:05,Venom: The Last Dance,Haifa,Upgrade
+ML,25/10/2024,21:30,Venom: The Last Dance,Haifa,Upgrade
+ML,25/10/2024,19:25,Venom: The Last Dance,Netanya,Upgrade
+ML,25/10/2024,21:00,Venom: The Last Dance,Netanya,R
+ML,25/10/2024,22:00,Venom: The Last Dance,Netanya,Upgrade
 CC,25/10/2024,11:00,Venom: The Last Dance,Glilot,R
 CC,25/10/2024,13:50,Venom: The Last Dance,Glilot,R
 CC,25/10/2024,16:40,Venom: The Last Dance,Glilot,R
@@ -3085,18 +3190,14 @@ CC,25/10/2024,19:00,Venom: The Last Dance,Rishon Letzion,R
 CC,25/10/2024,22:00,Venom: The Last Dance,Rishon Letzion,R
 CC,25/10/2024,11:30,Venom: The Last Dance,Jerusalem,R
 CC,25/10/2024,14:15,Venom: The Last Dance,Jerusalem,R
-CC,25/10/2024,11:00,Venom: The Last Dance,Kfar Saba,R
 CC,25/10/2024,14:00,Venom: The Last Dance,Kfar Saba,R
 CC,25/10/2024,17:00,Venom: The Last Dance,Kfar Saba,R
 CC,25/10/2024,19:00,Venom: The Last Dance,Kfar Saba,R
 CC,25/10/2024,22:00,Venom: The Last Dance,Kfar Saba,R
-CC,25/10/2024,11:50,Venom: The Last Dance,Netanya,R
 CC,25/10/2024,14:40,Venom: The Last Dance,Netanya,R
 CC,25/10/2024,17:20,Venom: The Last Dance,Netanya,R
 CC,25/10/2024,19:10,Venom: The Last Dance,Netanya,R
 CC,25/10/2024,22:00,Venom: The Last Dance,Netanya,R
-CC,25/10/2024,11:00,Venom: The Last Dance,Beer Sheva,R
-CC,25/10/2024,14:00,Venom: The Last Dance,Beer Sheva,R
 CC,25/10/2024,17:10,Venom: The Last Dance,Beer Sheva,R
 CC,25/10/2024,19:00,Venom: The Last Dance,Beer Sheva,R
 CC,25/10/2024,22:00,Venom: The Last Dance,Beer Sheva,R
@@ -3110,25 +3211,62 @@ YP,25/10/2024,16:45,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,25/10/2024,19:15,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,25/10/2024,21:45,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,25/10/2024,00:10,Venom: The Last Dance,Rishon Letzion,SCREENX
-CC,25/10/2024,11:30,Venom: The Last Dance,Chadera,R
-CC,25/10/2024,14:10,Venom: The Last Dance,Chadera,R
-CC,25/10/2024,16:50,Venom: The Last Dance,Chadera,R
 YP,25/10/2024,14:30,Venom: The Last Dance,Rishon Letzion,IMAX 3D
-CC,25/10/2024,19:10,Venom: The Last Dance,Chadera,R
-CC,25/10/2024,21:50,Venom: The Last Dance,Chadera,R
 YP,25/10/2024,17:00,Venom: The Last Dance,Rishon Letzion,IMAX 3D
-CC,25/10/2024,00:30,Venom: The Last Dance,Chadera,R
 YP,25/10/2024,19:30,Venom: The Last Dance,Rishon Letzion,IMAX 3D
 YP,25/10/2024,22:00,Venom: The Last Dance,Rishon Letzion,IMAX 3D
 YP,25/10/2024,00:30,Venom: The Last Dance,Rishon Letzion,IMAX 3D
 YP,25/10/2024,16:00,Venom: The Last Dance,Rishon Letzion,R
+YP,25/10/2024,18:30,Venom: The Last Dance,Rishon Letzion,R
 YP,25/10/2024,21:00,Venom: The Last Dance,Rishon Letzion,R
 YP,25/10/2024,23:30,Venom: The Last Dance,Rishon Letzion,R
 YP,25/10/2024,17:15,Venom: The Last Dance,Rishon Letzion,VIP
 YP,25/10/2024,19:45,Venom: The Last Dance,Rishon Letzion,VIP
 YP,25/10/2024,22:15,Venom: The Last Dance,Rishon Letzion,VIP
 YP,25/10/2024,00:40,Venom: The Last Dance,Rishon Letzion,VIP
-CC,25/10/2024,11:20,Venom: The Last Dance,Ashdod,R
+HC,25/10/2024,15:00,Venom: The Last Dance,Carmiel,R
+HC,25/10/2024,17:25,Venom: The Last Dance,Carmiel,R
+HC,25/10/2024,19:50,Venom: The Last Dance,Carmiel,R
+HC,25/10/2024,22:15,Venom: The Last Dance,Carmiel,R
+HC,25/10/2024,19:40,Venom: The Last Dance,Nahariya,R
+HC,25/10/2024,22:10,Venom: The Last Dance,Nahariya,R
+HC,25/10/2024,15:00,Venom: The Last Dance,Kiryat Bialik,R
+HC,25/10/2024,17:30,Venom: The Last Dance,Kiryat Bialik,R
+HC,25/10/2024,20:00,Venom: The Last Dance,Kiryat Bialik,R
+HC,25/10/2024,22:30,Venom: The Last Dance,Kiryat Bialik,R
+HC,25/10/2024,15:00,Venom: The Last Dance,Haifa,R
+HC,25/10/2024,17:25,Venom: The Last Dance,Haifa,R
+HC,25/10/2024,19:50,Venom: The Last Dance,Haifa,R
+HC,25/10/2024,22:15,Venom: The Last Dance,Haifa,R
+HC,25/10/2024,14:25,Venom: The Last Dance,Kfar Saba,R
+HC,25/10/2024,17:00,Venom: The Last Dance,Kfar Saba,R
+HC,25/10/2024,19:40,Venom: The Last Dance,Kfar Saba,R
+HC,25/10/2024,22:15,Venom: The Last Dance,Kfar Saba,R
+HC,25/10/2024,15:00,Venom: The Last Dance,Petach Tikvah,R
+HC,25/10/2024,17:25,Venom: The Last Dance,Petach Tikvah,R
+HC,25/10/2024,19:50,Venom: The Last Dance,Petach Tikvah,R
+HC,25/10/2024,22:15,Venom: The Last Dance,Petach Tikvah,R
+HC,25/10/2024,15:10,Venom: The Last Dance,Modiin,R
+HC,25/10/2024,17:30,Venom: The Last Dance,Modiin,R
+HC,25/10/2024,19:50,Venom: The Last Dance,Modiin,R
+HC,25/10/2024,22:15,Venom: The Last Dance,Modiin,R
+HC,25/10/2024,15:00,Venom: The Last Dance,Rehovot,R
+HC,25/10/2024,17:25,Venom: The Last Dance,Rehovot,R
+HC,25/10/2024,19:50,Venom: The Last Dance,Rehovot,R
+HC,25/10/2024,22:15,Venom: The Last Dance,Rehovot,R
+HC,25/10/2024,15:10,Venom: The Last Dance,Ashdod,R
+HC,25/10/2024,17:30,Venom: The Last Dance,Ashdod,R
+HC,25/10/2024,19:50,Venom: The Last Dance,Ashdod,R
+HC,25/10/2024,22:10,Venom: The Last Dance,Ashdod,R
+HC,25/10/2024,14:50,Venom: The Last Dance,Ashkelon,R
+HC,25/10/2024,17:10,Venom: The Last Dance,Ashkelon,R
+HC,25/10/2024,19:30,Venom: The Last Dance,Ashkelon,R
+HC,25/10/2024,21:50,Venom: The Last Dance,Ashkelon,R
+CC,25/10/2024,14:10,Venom: The Last Dance,Chadera,R
+CC,25/10/2024,16:50,Venom: The Last Dance,Chadera,R
+CC,25/10/2024,19:10,Venom: The Last Dance,Chadera,R
+CC,25/10/2024,21:50,Venom: The Last Dance,Chadera,R
+CC,25/10/2024,00:30,Venom: The Last Dance,Chadera,R
 CC,25/10/2024,14:10,Venom: The Last Dance,Ashdod,R
 CC,25/10/2024,17:00,Venom: The Last Dance,Ashdod,R
 CC,25/10/2024,19:10,Venom: The Last Dance,Ashdod,R
@@ -3189,44 +3327,6 @@ YP,25/10/2024,17:00,Venom: The Last Dance,Haifa,VIP
 YP,25/10/2024,19:30,Venom: The Last Dance,Haifa,VIP
 YP,25/10/2024,22:00,Venom: The Last Dance,Haifa,VIP
 YP,25/10/2024,00:30,Venom: The Last Dance,Haifa,VIP
-HC,25/10/2024,15:00,Venom: The Last Dance,Carmiel,R
-HC,25/10/2024,17:25,Venom: The Last Dance,Carmiel,R
-HC,25/10/2024,19:50,Venom: The Last Dance,Carmiel,R
-HC,25/10/2024,22:15,Venom: The Last Dance,Carmiel,R
-HC,25/10/2024,19:40,Venom: The Last Dance,Nahariya,R
-HC,25/10/2024,22:10,Venom: The Last Dance,Nahariya,R
-HC,25/10/2024,15:00,Venom: The Last Dance,Kiryat Bialik,R
-HC,25/10/2024,17:30,Venom: The Last Dance,Kiryat Bialik,R
-HC,25/10/2024,20:00,Venom: The Last Dance,Kiryat Bialik,R
-HC,25/10/2024,22:30,Venom: The Last Dance,Kiryat Bialik,R
-HC,25/10/2024,15:00,Venom: The Last Dance,Haifa,R
-HC,25/10/2024,17:25,Venom: The Last Dance,Haifa,R
-HC,25/10/2024,19:50,Venom: The Last Dance,Haifa,R
-HC,25/10/2024,22:15,Venom: The Last Dance,Haifa,R
-HC,25/10/2024,14:25,Venom: The Last Dance,Kfar Saba,R
-HC,25/10/2024,17:00,Venom: The Last Dance,Kfar Saba,R
-HC,25/10/2024,19:40,Venom: The Last Dance,Kfar Saba,R
-HC,25/10/2024,22:15,Venom: The Last Dance,Kfar Saba,R
-HC,25/10/2024,15:00,Venom: The Last Dance,Petach Tikvah,R
-HC,25/10/2024,17:25,Venom: The Last Dance,Petach Tikvah,R
-HC,25/10/2024,19:50,Venom: The Last Dance,Petach Tikvah,R
-HC,25/10/2024,22:15,Venom: The Last Dance,Petach Tikvah,R
-HC,25/10/2024,15:10,Venom: The Last Dance,Modiin,R
-HC,25/10/2024,17:30,Venom: The Last Dance,Modiin,R
-HC,25/10/2024,19:50,Venom: The Last Dance,Modiin,R
-HC,25/10/2024,22:15,Venom: The Last Dance,Modiin,R
-HC,25/10/2024,15:00,Venom: The Last Dance,Rehovot,R
-HC,25/10/2024,17:25,Venom: The Last Dance,Rehovot,R
-HC,25/10/2024,19:50,Venom: The Last Dance,Rehovot,R
-HC,25/10/2024,22:15,Venom: The Last Dance,Rehovot,R
-HC,25/10/2024,15:10,Venom: The Last Dance,Ashdod,R
-HC,25/10/2024,17:30,Venom: The Last Dance,Ashdod,R
-HC,25/10/2024,19:50,Venom: The Last Dance,Ashdod,R
-HC,25/10/2024,22:10,Venom: The Last Dance,Ashdod,R
-HC,25/10/2024,14:50,Venom: The Last Dance,Ashkelon,R
-HC,25/10/2024,17:10,Venom: The Last Dance,Ashkelon,R
-HC,25/10/2024,19:30,Venom: The Last Dance,Ashkelon,R
-HC,25/10/2024,21:50,Venom: The Last Dance,Ashkelon,R
 YP,25/10/2024,14:00,Venom: The Last Dance,Jerusalem,4DX
 YP,25/10/2024,16:30,Venom: The Last Dance,Jerusalem,4DX
 YP,25/10/2024,19:00,Venom: The Last Dance,Jerusalem,4DX
@@ -3254,7 +3354,6 @@ CC,26/10/2024,17:15,Venom: The Last Dance,Rishon Letzion,R
 CC,26/10/2024,19:00,Venom: The Last Dance,Rishon Letzion,R
 CC,26/10/2024,22:10,Venom: The Last Dance,Rishon Letzion,R
 CC,26/10/2024,21:45,Venom: The Last Dance,Jerusalem,R
-CC,26/10/2024,00:30,Venom: The Last Dance,Jerusalem,R
 CC,26/10/2024,11:00,Venom: The Last Dance,Kfar Saba,R
 CC,26/10/2024,14:00,Venom: The Last Dance,Kfar Saba,R
 CC,26/10/2024,17:00,Venom: The Last Dance,Kfar Saba,R
@@ -3270,11 +3369,6 @@ CC,26/10/2024,14:00,Venom: The Last Dance,Beer Sheva,R
 CC,26/10/2024,17:00,Venom: The Last Dance,Beer Sheva,R
 CC,26/10/2024,19:00,Venom: The Last Dance,Beer Sheva,R
 CC,26/10/2024,22:00,Venom: The Last Dance,Beer Sheva,R
-CC,26/10/2024,11:50,Venom: The Last Dance,Chadera,R
-CC,26/10/2024,14:30,Venom: The Last Dance,Chadera,R
-CC,26/10/2024,17:10,Venom: The Last Dance,Chadera,R
-CC,26/10/2024,19:10,Venom: The Last Dance,Chadera,R
-CC,26/10/2024,22:00,Venom: The Last Dance,Chadera,R
 YP,26/10/2024,11:00,Venom: The Last Dance,Rishon Letzion,R
 YP,26/10/2024,13:30,Venom: The Last Dance,Rishon Letzion,R
 YP,26/10/2024,16:00,Venom: The Last Dance,Rishon Letzion,R
@@ -3287,7 +3381,6 @@ YP,26/10/2024,16:30,Venom: The Last Dance,Rishon Letzion,4DX
 YP,26/10/2024,19:00,Venom: The Last Dance,Rishon Letzion,4DX
 YP,26/10/2024,21:30,Venom: The Last Dance,Rishon Letzion,4DX
 YP,26/10/2024,00:00,Venom: The Last Dance,Rishon Letzion,4DX
-YP,26/10/2024,11:45,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,26/10/2024,14:15,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,26/10/2024,16:45,Venom: The Last Dance,Rishon Letzion,SCREENX
 YP,26/10/2024,19:15,Venom: The Last Dance,Rishon Letzion,SCREENX
@@ -3304,6 +3397,11 @@ YP,26/10/2024,17:15,Venom: The Last Dance,Rishon Letzion,VIP
 YP,26/10/2024,19:45,Venom: The Last Dance,Rishon Letzion,VIP
 YP,26/10/2024,22:15,Venom: The Last Dance,Rishon Letzion,VIP
 YP,26/10/2024,00:40,Venom: The Last Dance,Rishon Letzion,VIP
+CC,26/10/2024,11:50,Venom: The Last Dance,Chadera,R
+CC,26/10/2024,14:30,Venom: The Last Dance,Chadera,R
+CC,26/10/2024,17:10,Venom: The Last Dance,Chadera,R
+CC,26/10/2024,19:10,Venom: The Last Dance,Chadera,R
+CC,26/10/2024,22:00,Venom: The Last Dance,Chadera,R
 CC,26/10/2024,11:20,Venom: The Last Dance,Ashdod,R
 CC,26/10/2024,14:10,Venom: The Last Dance,Ashdod,R
 CC,26/10/2024,17:00,Venom: The Last Dance,Ashdod,R
