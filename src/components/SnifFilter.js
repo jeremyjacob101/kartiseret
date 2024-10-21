@@ -55,7 +55,7 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
 
   return (
     <div className="snif-filter">
-      <h4>Filter by Snif (Cinema)</h4>
+      <h4>Filter by Location</h4>
       {snifs.map((snif) => (
         <div key={snif}>
           <label>
