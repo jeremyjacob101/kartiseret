@@ -62,9 +62,9 @@ const MovieCarousel = ({ selectedSnifs }) => {
               poster: movie.poster,
               runtime: movie.runtime,
               popularity: movie.popularity,
-              imdbScore: movie.imdbScore,
+              imdbRating: movie.imdbRating,
               imdbVotes: movie.imdbVotes,
-              rtScore: movie.rtScore,
+              rtRating: movie.rtRating,
             };
           });
         },
@@ -94,9 +94,9 @@ const MovieCarousel = ({ selectedSnifs }) => {
               poster: movieInfoMap[movie.title]?.poster || null, // Add the poster URL or null if none exists
               runtime: movieInfoMap[movie.title]?.runtime || null, // Add runtime or null if not found
               popularity: movieInfoMap[movie.title]?.popularity || 0, // Add popularity or default to 0 if not found
-              imdbScore: movieInfoMap[movie.title]?.imdbScore || 0, // Add popularity or default to 0 if not found              popularity: movieInfoMap[movie.title]?.popularity || 0, // Add popularity or default to 0 if not found
+              imdbRating: movieInfoMap[movie.title]?.imdbRating || 0, // Add popularity or default to 0 if not found              popularity: movieInfoMap[movie.title]?.popularity || 0, // Add popularity or default to 0 if not found
               imdbVotes: movieInfoMap[movie.title]?.imdbVotes || 0, // Add popularity or default to 0 if not found
-              rtScore: movieInfoMap[movie.title]?.rtScore || 0, // Add popularity or default to 0 if not found
+              rtRating: movieInfoMap[movie.title]?.rtRating || 0, // Add popularity or default to 0 if not found
             }));
           setMovies(filteredMovies);
         },
