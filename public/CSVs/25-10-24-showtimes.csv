@@ -72,7 +72,7 @@ YP,25/10/2024,22:00,Come Closer,Rishon Letzion,R
 YP,25/10/2024,19:20,Come Closer,Ayalon,R
 YP,25/10/2024,22:00,Come Closer,Haifa,R
 YP,25/10/2024,19:00,Come Closer,Jerusalem,R
-Rav Hen,25/10/2024,19:30,Come Closer,Givataim,R
+RH,25/10/2024,19:30,Come Closer,Givataim,R
 HC,25/10/2024,19:10,Deadpool & Wolverine,Kiryat Bialik,R
 HC,25/10/2024,21:50,Deadpool & Wolverine,Kiryat Bialik,R
 HC,25/10/2024,22:50,Deadpool & Wolverine,Haifa,R
@@ -102,7 +102,7 @@ HC,25/10/2024,19:10,It Ends with Us,Haifa,R
 HC,25/10/2024,21:50,It Ends with Us,Haifa,R
 HC,25/10/2024,19:00,It Ends with Us,Kfar Saba,R
 HC,25/10/2024,21:10,It Ends with Us,Modiin,R
-Rav Hen,25/10/2024,19:20,It Ends with Us,Givataim,R
+RH,25/10/2024,19:20,It Ends with Us,Givataim,R
 LC,25/10/2024,21:00,Joker: Folie à Deux,Tel Aviv,R
 ML,25/10/2024,18:45,Joker: Folie à Deux,Carmiel,R
 ML,25/10/2024,18:00,Joker: Folie à Deux,Netanya,R
@@ -324,17 +324,17 @@ YP,25/10/2024,19:30,Smile 2,Jerusalem,R
 YP,25/10/2024,21:20,Smile 2,Jerusalem,R
 YP,25/10/2024,22:40,Smile 2,Jerusalem,R
 YP,25/10/2024,23:50,Smile 2,Jerusalem,R
-Rav Hen,25/10/2024,19:20,Smile 2,Givataim,R
-Rav Hen,25/10/2024,22:00,Smile 2,Givataim,R
-Rav Hen,25/10/2024,19:20,Smile 2,Tel Aviv,R
-Rav Hen,25/10/2024,22:00,Smile 2,Tel Aviv,R
-Rav Hen,25/10/2024,19:20,Smile 2,Kiryat Ono,R
-Rav Hen,25/10/2024,22:00,Smile 2,Kiryat Ono,R
+RH,25/10/2024,19:20,Smile 2,Givataim,R
+RH,25/10/2024,22:00,Smile 2,Givataim,R
+RH,25/10/2024,19:20,Smile 2,Tel Aviv,R
+RH,25/10/2024,22:00,Smile 2,Tel Aviv,R
+RH,25/10/2024,19:20,Smile 2,Kiryat Ono,R
+RH,25/10/2024,22:00,Smile 2,Kiryat Ono,R
 CC,25/10/2024,00:20,Speak No Evil,Glilot,R
 YP,25/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,25/10/2024,00:30,Speak No Evil,Rishon Letzion,R
 YP,25/10/2024,19:00,Speak No Evil,Beer Sheva,R
-Rav Hen,25/10/2024,22:00,Speak No Evil,Givataim,R
+RH,25/10/2024,22:00,Speak No Evil,Givataim,R
 CC,25/10/2024,23:20,Strange Darling,Rishon Letzion,R
 HC,25/10/2024,19:00,The Apprentice,Kiryat Bialik,R
 HC,25/10/2024,21:30,The Apprentice,Kiryat Bialik,R
@@ -507,11 +507,11 @@ CC,25/10/2024,19:30,Transformers One,Ashdod,R
 YP,25/10/2024,19:40,Transformers One,Jerusalem,R
 YP,25/10/2024,21:50,Transformers One,Jerusalem,R
 YP,25/10/2024,00:00,Transformers One,Jerusalem,R
-Rav Hen,25/10/2024,19:30,Transformers One,Givataim,R
-Rav Hen,25/10/2024,22:00,Transformers One,Givataim,R
-Rav Hen,25/10/2024,22:00,Transformers One,Tel Aviv,R
-Rav Hen,25/10/2024,19:30,Transformers One,Kiryat Ono,R
-Rav Hen,25/10/2024,22:00,Transformers One,Kiryat Ono,R
+RH,25/10/2024,19:30,Transformers One,Givataim,R
+RH,25/10/2024,22:00,Transformers One,Givataim,R
+RH,25/10/2024,22:00,Transformers One,Tel Aviv,R
+RH,25/10/2024,19:30,Transformers One,Kiryat Ono,R
+RH,25/10/2024,22:00,Transformers One,Kiryat Ono,R
 CC,25/10/2024,16:40,Venom: The Last Dance,Glilot,R
 CC,25/10/2024,18:00,Venom: The Last Dance,Glilot,R
 CC,25/10/2024,19:30,Venom: The Last Dance,Glilot,R
@@ -764,12 +764,12 @@ YP,25/10/2024,17:00,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,25/10/2024,19:30,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,25/10/2024,22:00,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,25/10/2024,00:20,Venom: The Last Dance,Jerusalem,IMAX 3D
-Rav Hen,25/10/2024,19:30,Venom: The Last Dance,Givataim,R
-Rav Hen,25/10/2024,22:00,Venom: The Last Dance,Givataim,R
-Rav Hen,25/10/2024,19:30,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,25/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,25/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,25/10/2024,22:00,Venom: The Last Dance,Kiryat Ono,R
+RH,25/10/2024,19:30,Venom: The Last Dance,Givataim,R
+RH,25/10/2024,22:00,Venom: The Last Dance,Givataim,R
+RH,25/10/2024,19:30,Venom: The Last Dance,Tel Aviv,R
+RH,25/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
+RH,25/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
+RH,25/10/2024,22:00,Venom: The Last Dance,Kiryat Ono,R
 LC,25/10/2024,17:00,We Live in Time,Raanana,R
 LC,25/10/2024,21:30,We Live in Time,Raanana,R
 LC,25/10/2024,18:45,We Live in Time,Tel Aviv,R
@@ -827,10 +827,10 @@ YP,25/10/2024,17:30,We Live in Time,Jerusalem,R
 YP,25/10/2024,19:45,We Live in Time,Jerusalem,R
 YP,25/10/2024,22:00,We Live in Time,Jerusalem,R
 YP,25/10/2024,00:20,We Live in Time,Jerusalem,R
-Rav Hen,25/10/2024,19:30,We Live in Time,Givataim,R
-Rav Hen,25/10/2024,22:00,We Live in Time,Givataim,R
-Rav Hen,25/10/2024,19:20,We Live in Time,Tel Aviv,R
-Rav Hen,25/10/2024,19:30,We Live in Time,Kiryat Ono,R
+RH,25/10/2024,19:30,We Live in Time,Givataim,R
+RH,25/10/2024,22:00,We Live in Time,Givataim,R
+RH,25/10/2024,19:20,We Live in Time,Tel Aviv,R
+RH,25/10/2024,19:30,We Live in Time,Kiryat Ono,R
 ML,25/10/2024,19:20,Weekend in Taipei,Carmiel,R
 ML,25/10/2024,21:30,Weekend in Taipei,Carmiel,R
 ML,25/10/2024,21:35,Weekend in Taipei,Haifa,R
@@ -990,7 +990,7 @@ YP,26/10/2024,22:00,Come Closer,Rishon Letzion,R
 YP,26/10/2024,19:20,Come Closer,Ayalon,R
 YP,26/10/2024,22:00,Come Closer,Haifa,R
 YP,26/10/2024,19:00,Come Closer,Jerusalem,R
-Rav Hen,26/10/2024,19:30,Come Closer,Givataim,R
+RH,26/10/2024,19:30,Come Closer,Givataim,R
 ML,26/10/2024,13:30,Deadpool & Wolverine,Netanya,R
 HC,26/10/2024,19:10,Deadpool & Wolverine,Kiryat Bialik,R
 HC,26/10/2024,21:50,Deadpool & Wolverine,Kiryat Bialik,R
@@ -1025,7 +1025,7 @@ HC,26/10/2024,21:40,It Ends with Us,Kfar Saba,R
 HC,26/10/2024,19:55,It Ends with Us,Rehovot,R
 YP,26/10/2024,15:00,It Ends with Us,Ayalon,R
 YP,26/10/2024,19:00,It Ends with Us,Zichron Yaakov,R
-Rav Hen,26/10/2024,19:15,It Ends with Us,Givataim,R
+RH,26/10/2024,19:15,It Ends with Us,Givataim,R
 YP,26/10/2024,11:30,Joker: Folie à Deux,Rishon Letzion,R
 YP,26/10/2024,11:45,Joker: Folie à Deux,Rishon Letzion,R
 YP,26/10/2024,14:40,Joker: Folie à Deux,Rishon Letzion,R
@@ -1256,21 +1256,21 @@ YP,26/10/2024,17:40,Smile 2,Jerusalem,R
 YP,26/10/2024,20:20,Smile 2,Jerusalem,R
 YP,26/10/2024,23:10,Smile 2,Jerusalem,R
 YP,26/10/2024,00:00,Smile 2,Jerusalem,R
-Rav Hen,26/10/2024,17:00,Smile 2,Givataim,R
-Rav Hen,26/10/2024,19:00,Smile 2,Givataim,R
-Rav Hen,26/10/2024,21:50,Smile 2,Givataim,R
-Rav Hen,26/10/2024,16:30,Smile 2,Tel Aviv,R
-Rav Hen,26/10/2024,19:10,Smile 2,Tel Aviv,R
-Rav Hen,26/10/2024,21:50,Smile 2,Tel Aviv,R
-Rav Hen,26/10/2024,16:30,Smile 2,Kiryat Ono,R
-Rav Hen,26/10/2024,19:10,Smile 2,Kiryat Ono,R
-Rav Hen,26/10/2024,21:50,Smile 2,Kiryat Ono,R
+RH,26/10/2024,17:00,Smile 2,Givataim,R
+RH,26/10/2024,19:00,Smile 2,Givataim,R
+RH,26/10/2024,21:50,Smile 2,Givataim,R
+RH,26/10/2024,16:30,Smile 2,Tel Aviv,R
+RH,26/10/2024,19:10,Smile 2,Tel Aviv,R
+RH,26/10/2024,21:50,Smile 2,Tel Aviv,R
+RH,26/10/2024,16:30,Smile 2,Kiryat Ono,R
+RH,26/10/2024,19:10,Smile 2,Kiryat Ono,R
+RH,26/10/2024,21:50,Smile 2,Kiryat Ono,R
 HC,26/10/2024,23:45,Speak No Evil,Kiryat Bialik,R
 YP,26/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,26/10/2024,00:30,Speak No Evil,Rishon Letzion,R
 YP,26/10/2024,19:00,Speak No Evil,Beer Sheva,R
 YP,26/10/2024,00:20,Speak No Evil,Jerusalem,R
-Rav Hen,26/10/2024,21:50,Speak No Evil,Givataim,R
+RH,26/10/2024,21:50,Speak No Evil,Givataim,R
 LC,26/10/2024,13:00,Take a Chance on Me,Tel Aviv,R
 HC,26/10/2024,19:00,The Apprentice,Kiryat Bialik,R
 HC,26/10/2024,21:30,The Apprentice,Kiryat Bialik,R
@@ -1394,7 +1394,7 @@ CC,26/10/2024,15:40,The Wild Robot,Kfar Saba,Prime
 CC,26/10/2024,12:10,The Wild Robot,Netanya,R
 CC,26/10/2024,16:45,The Wild Robot,Chadera,R
 CC,26/10/2024,16:10,The Wild Robot,Ashdod,R
-Rav Hen,26/10/2024,15:00,The Wild Robot,Givataim,R
+RH,26/10/2024,15:00,The Wild Robot,Givataim,R
 LC,26/10/2024,13:15,There's Still Tomorrow,Herziliya,R
 LC,26/10/2024,13:30,There's Still Tomorrow,Tel Aviv,R
 LC,26/10/2024,13:45,There's Still Tomorrow,Raanana,R
@@ -1517,10 +1517,10 @@ YP,26/10/2024,13:00,Transformers One,Jerusalem,R
 YP,26/10/2024,19:20,Transformers One,Jerusalem,R
 YP,26/10/2024,22:00,Transformers One,Jerusalem,R
 YP,26/10/2024,00:10,Transformers One,Jerusalem,R
-Rav Hen,26/10/2024,19:45,Transformers One,Givataim,R
-Rav Hen,26/10/2024,21:50,Transformers One,Givataim,R
-Rav Hen,26/10/2024,17:00,Transformers One,Tel Aviv,R
-Rav Hen,26/10/2024,19:30,Transformers One,Kiryat Ono,R
+RH,26/10/2024,19:45,Transformers One,Givataim,R
+RH,26/10/2024,21:50,Transformers One,Givataim,R
+RH,26/10/2024,17:00,Transformers One,Tel Aviv,R
+RH,26/10/2024,19:30,Transformers One,Kiryat Ono,R
 CC,26/10/2024,11:10,Venom: The Last Dance,Glilot,R
 CC,26/10/2024,14:00,Venom: The Last Dance,Glilot,R
 CC,26/10/2024,16:50,Venom: The Last Dance,Glilot,R
@@ -1834,21 +1834,21 @@ YP,26/10/2024,17:00,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,26/10/2024,19:30,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,26/10/2024,22:00,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,26/10/2024,00:20,Venom: The Last Dance,Jerusalem,IMAX 3D
-Rav Hen,26/10/2024,11:00,Venom: The Last Dance,Givataim,R
-Rav Hen,26/10/2024,14:00,Venom: The Last Dance,Givataim,R
-Rav Hen,26/10/2024,17:10,Venom: The Last Dance,Givataim,R
-Rav Hen,26/10/2024,19:30,Venom: The Last Dance,Givataim,R
-Rav Hen,26/10/2024,22:00,Venom: The Last Dance,Givataim,R
-Rav Hen,26/10/2024,11:10,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,26/10/2024,14:10,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,26/10/2024,18:30,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,26/10/2024,19:30,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,26/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,26/10/2024,11:00,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,26/10/2024,14:00,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,26/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,26/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,26/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
+RH,26/10/2024,11:00,Venom: The Last Dance,Givataim,R
+RH,26/10/2024,14:00,Venom: The Last Dance,Givataim,R
+RH,26/10/2024,17:10,Venom: The Last Dance,Givataim,R
+RH,26/10/2024,19:30,Venom: The Last Dance,Givataim,R
+RH,26/10/2024,22:00,Venom: The Last Dance,Givataim,R
+RH,26/10/2024,11:10,Venom: The Last Dance,Tel Aviv,R
+RH,26/10/2024,14:10,Venom: The Last Dance,Tel Aviv,R
+RH,26/10/2024,18:30,Venom: The Last Dance,Tel Aviv,R
+RH,26/10/2024,19:30,Venom: The Last Dance,Tel Aviv,R
+RH,26/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
+RH,26/10/2024,11:00,Venom: The Last Dance,Kiryat Ono,R
+RH,26/10/2024,14:00,Venom: The Last Dance,Kiryat Ono,R
+RH,26/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
+RH,26/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
+RH,26/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
 LC,26/10/2024,16:15,We Live in Time,Raanana,R
 LC,26/10/2024,21:10,We Live in Time,Raanana,R
 LC,26/10/2024,18:45,We Live in Time,Tel Aviv,R
@@ -1917,12 +1917,12 @@ YP,26/10/2024,17:30,We Live in Time,Jerusalem,R
 YP,26/10/2024,19:45,We Live in Time,Jerusalem,R
 YP,26/10/2024,22:00,We Live in Time,Jerusalem,R
 YP,26/10/2024,00:20,We Live in Time,Jerusalem,R
-Rav Hen,26/10/2024,19:40,We Live in Time,Givataim,R
-Rav Hen,26/10/2024,21:50,We Live in Time,Givataim,R
-Rav Hen,26/10/2024,22:00,We Live in Time,Tel Aviv,R
-Rav Hen,26/10/2024,17:10,We Live in Time,Kiryat Ono,R
-Rav Hen,26/10/2024,19:30,We Live in Time,Kiryat Ono,R
-Rav Hen,26/10/2024,21:50,We Live in Time,Kiryat Ono,R
+RH,26/10/2024,19:40,We Live in Time,Givataim,R
+RH,26/10/2024,21:50,We Live in Time,Givataim,R
+RH,26/10/2024,22:00,We Live in Time,Tel Aviv,R
+RH,26/10/2024,17:10,We Live in Time,Kiryat Ono,R
+RH,26/10/2024,19:30,We Live in Time,Kiryat Ono,R
+RH,26/10/2024,21:50,We Live in Time,Kiryat Ono,R
 HC,26/10/2024,20:15,Weekend in Taipei,Carmiel,R
 HC,26/10/2024,22:30,Weekend in Taipei,Carmiel,R
 HC,26/10/2024,19:40,Weekend in Taipei,Kiryat Bialik,R
@@ -2203,13 +2203,13 @@ YP,27/10/2024,21:50,Smile 2,Zichron Yaakov,R
 YP,27/10/2024,20:45,Smile 2,Haifa,R
 YP,27/10/2024,20:30,Smile 2,Jerusalem,R
 YP,27/10/2024,22:00,Smile 2,Jerusalem,R
-Rav Hen,27/10/2024,21:50,Smile 2,Givataim,R
-Rav Hen,27/10/2024,21:50,Smile 2,Tel Aviv,R
-Rav Hen,27/10/2024,21:50,Smile 2,Kiryat Ono,R
+RH,27/10/2024,21:50,Smile 2,Givataim,R
+RH,27/10/2024,21:50,Smile 2,Tel Aviv,R
+RH,27/10/2024,21:50,Smile 2,Kiryat Ono,R
 ML,27/10/2024,21:20,Speak No Evil,Haifa,R
 YP,27/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,27/10/2024,19:45,Speak No Evil,Beer Sheva,R
-Rav Hen,27/10/2024,21:50,Speak No Evil,Givataim,R
+RH,27/10/2024,21:50,Speak No Evil,Givataim,R
 HC,27/10/2024,19:15,The Apprentice,Carmiel,R
 HC,27/10/2024,21:30,The Apprentice,Kiryat Bialik,R
 HC,27/10/2024,19:35,The Apprentice,Haifa,R
@@ -2358,8 +2358,8 @@ YP,27/10/2024,19:45,Transformers One,Haifa,R
 YP,27/10/2024,22:10,Transformers One,Haifa,R
 YP,27/10/2024,19:30,Transformers One,Jerusalem,R
 YP,27/10/2024,22:00,Transformers One,Jerusalem,R
-Rav Hen,27/10/2024,21:50,Transformers One,Givataim,R
-Rav Hen,27/10/2024,21:50,Transformers One,Kiryat Ono,R
+RH,27/10/2024,21:50,Transformers One,Givataim,R
+RH,27/10/2024,21:50,Transformers One,Kiryat Ono,R
 CC,27/10/2024,14:30,Venom: The Last Dance,Glilot,R
 CC,27/10/2024,17:10,Venom: The Last Dance,Glilot,R
 CC,27/10/2024,19:15,Venom: The Last Dance,Glilot,R
@@ -2485,9 +2485,9 @@ YP,27/10/2024,19:30,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,27/10/2024,22:00,Venom: The Last Dance,Jerusalem,IMAX 3D
 YP,27/10/2024,19:30,Venom: The Last Dance,Jerusalem,R
 YP,27/10/2024,22:10,Venom: The Last Dance,Jerusalem,R
-Rav Hen,27/10/2024,21:50,Venom: The Last Dance,Givataim,R
-Rav Hen,27/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,27/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
+RH,27/10/2024,21:50,Venom: The Last Dance,Givataim,R
+RH,27/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
+RH,27/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
 LC,27/10/2024,17:00,We Live in Time,Raanana,R
 LC,27/10/2024,21:40,We Live in Time,Raanana,R
 LC,27/10/2024,21:10,We Live in Time,Tel Aviv,R
@@ -2542,7 +2542,7 @@ YP,27/10/2024,19:45,We Live in Time,Haifa,R
 YP,27/10/2024,22:00,We Live in Time,Haifa,R
 YP,27/10/2024,19:45,We Live in Time,Jerusalem,R
 YP,27/10/2024,22:00,We Live in Time,Jerusalem,R
-Rav Hen,27/10/2024,21:50,We Live in Time,Givataim,R
+RH,27/10/2024,21:50,We Live in Time,Givataim,R
 ML,27/10/2024,21:35,Weekend in Taipei,Carmiel,R
 ML,27/10/2024,21:55,Weekend in Taipei,Haifa,R
 ML,27/10/2024,21:15,Weekend in Taipei,Netanya,R
@@ -2658,7 +2658,7 @@ YP,28/10/2024,22:00,Come Closer,Rishon Letzion,R
 YP,28/10/2024,19:20,Come Closer,Ayalon,R
 YP,28/10/2024,22:00,Come Closer,Haifa,R
 YP,28/10/2024,19:00,Come Closer,Jerusalem,R
-Rav Hen,28/10/2024,19:30,Come Closer,Givataim,R
+RH,28/10/2024,19:30,Come Closer,Givataim,R
 ML,28/10/2024,16:00,Deadpool & Wolverine,Haifa,R
 HC,28/10/2024,19:10,Deadpool & Wolverine,Kiryat Bialik,R
 HC,28/10/2024,21:50,Deadpool & Wolverine,Kiryat Bialik,R
@@ -2692,7 +2692,7 @@ HC,28/10/2024,16:45,It Ends with Us,Petach Tikvah,R
 HC,28/10/2024,18:45,It Ends with Us,Modiin,R
 HC,28/10/2024,19:15,It Ends with Us,Ashkelon,R
 YP,28/10/2024,15:00,It Ends with Us,Ayalon,R
-Rav Hen,28/10/2024,19:15,It Ends with Us,Givataim,R
+RH,28/10/2024,19:15,It Ends with Us,Givataim,R
 ML,28/10/2024,19:00,Jigra,Carmiel,R
 ML,28/10/2024,18:45,Jigra,Haifa,R
 ML,28/10/2024,19:00,Jigra,Netanya,R
@@ -2869,19 +2869,19 @@ YP,28/10/2024,15:10,Smile 2,Jerusalem,R
 YP,28/10/2024,18:50,Smile 2,Jerusalem,R
 YP,28/10/2024,21:20,Smile 2,Jerusalem,R
 YP,28/10/2024,21:40,Smile 2,Jerusalem,R
-Rav Hen,28/10/2024,17:00,Smile 2,Givataim,R
-Rav Hen,28/10/2024,19:10,Smile 2,Givataim,R
-Rav Hen,28/10/2024,21:50,Smile 2,Givataim,R
-Rav Hen,28/10/2024,17:00,Smile 2,Tel Aviv,R
-Rav Hen,28/10/2024,19:10,Smile 2,Tel Aviv,R
-Rav Hen,28/10/2024,21:50,Smile 2,Tel Aviv,R
-Rav Hen,28/10/2024,17:00,Smile 2,Kiryat Ono,R
-Rav Hen,28/10/2024,19:20,Smile 2,Kiryat Ono,R
-Rav Hen,28/10/2024,21:50,Smile 2,Kiryat Ono,R
+RH,28/10/2024,17:00,Smile 2,Givataim,R
+RH,28/10/2024,19:10,Smile 2,Givataim,R
+RH,28/10/2024,21:50,Smile 2,Givataim,R
+RH,28/10/2024,17:00,Smile 2,Tel Aviv,R
+RH,28/10/2024,19:10,Smile 2,Tel Aviv,R
+RH,28/10/2024,21:50,Smile 2,Tel Aviv,R
+RH,28/10/2024,17:00,Smile 2,Kiryat Ono,R
+RH,28/10/2024,19:20,Smile 2,Kiryat Ono,R
+RH,28/10/2024,21:50,Smile 2,Kiryat Ono,R
 ML,28/10/2024,22:00,Speak No Evil,Carmiel,R
 YP,28/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,28/10/2024,19:00,Speak No Evil,Beer Sheva,R
-Rav Hen,28/10/2024,21:50,Speak No Evil,Givataim,R
+RH,28/10/2024,21:50,Speak No Evil,Givataim,R
 HC,28/10/2024,21:50,The Apprentice,Kiryat Bialik,R
 HC,28/10/2024,19:00,The Apprentice,Haifa,R
 HC,28/10/2024,21:50,The Apprentice,Haifa,R
@@ -3055,12 +3055,12 @@ YP,28/10/2024,19:20,Transformers One,Haifa,R
 YP,28/10/2024,21:45,Transformers One,Haifa,R
 YP,28/10/2024,19:50,Transformers One,Jerusalem,R
 YP,28/10/2024,22:00,Transformers One,Jerusalem,R
-Rav Hen,28/10/2024,19:30,Transformers One,Givataim,R
-Rav Hen,28/10/2024,21:50,Transformers One,Givataim,R
-Rav Hen,28/10/2024,17:00,Transformers One,Tel Aviv,R
-Rav Hen,28/10/2024,22:00,Transformers One,Tel Aviv,R
-Rav Hen,28/10/2024,19:30,Transformers One,Kiryat Ono,R
-Rav Hen,28/10/2024,21:50,Transformers One,Kiryat Ono,R
+RH,28/10/2024,19:30,Transformers One,Givataim,R
+RH,28/10/2024,21:50,Transformers One,Givataim,R
+RH,28/10/2024,17:00,Transformers One,Tel Aviv,R
+RH,28/10/2024,22:00,Transformers One,Tel Aviv,R
+RH,28/10/2024,19:30,Transformers One,Kiryat Ono,R
+RH,28/10/2024,21:50,Transformers One,Kiryat Ono,R
 CC,28/10/2024,14:30,Venom: The Last Dance,Glilot,R
 CC,28/10/2024,17:10,Venom: The Last Dance,Glilot,R
 CC,28/10/2024,19:15,Venom: The Last Dance,Glilot,R
@@ -3252,15 +3252,15 @@ YP,28/10/2024,14:50,Venom: The Last Dance,Jerusalem,R
 YP,28/10/2024,17:20,Venom: The Last Dance,Jerusalem,R
 YP,28/10/2024,19:45,Venom: The Last Dance,Jerusalem,R
 YP,28/10/2024,22:10,Venom: The Last Dance,Jerusalem,R
-Rav Hen,28/10/2024,17:00,Venom: The Last Dance,Givataim,R
-Rav Hen,28/10/2024,19:30,Venom: The Last Dance,Givataim,R
-Rav Hen,28/10/2024,21:50,Venom: The Last Dance,Givataim,R
-Rav Hen,28/10/2024,17:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,28/10/2024,19:20,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,28/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,28/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,28/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,28/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
+RH,28/10/2024,17:00,Venom: The Last Dance,Givataim,R
+RH,28/10/2024,19:30,Venom: The Last Dance,Givataim,R
+RH,28/10/2024,21:50,Venom: The Last Dance,Givataim,R
+RH,28/10/2024,17:00,Venom: The Last Dance,Tel Aviv,R
+RH,28/10/2024,19:20,Venom: The Last Dance,Tel Aviv,R
+RH,28/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
+RH,28/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
+RH,28/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
+RH,28/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
 LC,28/10/2024,17:00,We Live in Time,Raanana,R
 LC,28/10/2024,21:30,We Live in Time,Raanana,R
 LC,28/10/2024,21:10,We Live in Time,Tel Aviv,R
@@ -3319,11 +3319,11 @@ YP,28/10/2024,17:30,We Live in Time,Haifa,VIP
 YP,28/10/2024,17:30,We Live in Time,Jerusalem,R
 YP,28/10/2024,19:45,We Live in Time,Jerusalem,R
 YP,28/10/2024,22:00,We Live in Time,Jerusalem,R
-Rav Hen,28/10/2024,19:40,We Live in Time,Givataim,R
-Rav Hen,28/10/2024,21:50,We Live in Time,Givataim,R
-Rav Hen,28/10/2024,19:40,We Live in Time,Tel Aviv,R
-Rav Hen,28/10/2024,17:00,We Live in Time,Kiryat Ono,R
-Rav Hen,28/10/2024,19:40,We Live in Time,Kiryat Ono,R
+RH,28/10/2024,19:40,We Live in Time,Givataim,R
+RH,28/10/2024,21:50,We Live in Time,Givataim,R
+RH,28/10/2024,19:40,We Live in Time,Tel Aviv,R
+RH,28/10/2024,17:00,We Live in Time,Kiryat Ono,R
+RH,28/10/2024,19:40,We Live in Time,Kiryat Ono,R
 ML,28/10/2024,21:35,Weekend in Taipei,Carmiel,R
 ML,28/10/2024,21:55,Weekend in Taipei,Haifa,R
 ML,28/10/2024,21:15,Weekend in Taipei,Netanya,R
@@ -3578,9 +3578,9 @@ YP,29/10/2024,22:00,Come Closer,Rishon Letzion,R
 YP,29/10/2024,19:20,Come Closer,Ayalon,R
 YP,29/10/2024,22:00,Come Closer,Haifa,R
 YP,29/10/2024,19:00,Come Closer,Jerusalem,R
-Rav Hen,29/10/2024,11:00,Come Closer,Givataim,R
-Rav Hen,29/10/2024,14:00,Come Closer,Givataim,R
-Rav Hen,29/10/2024,19:30,Come Closer,Givataim,R
+RH,29/10/2024,11:00,Come Closer,Givataim,R
+RH,29/10/2024,14:00,Come Closer,Givataim,R
+RH,29/10/2024,19:30,Come Closer,Givataim,R
 ML,29/10/2024,12:15,Daddio,Netanya,R
 HC,29/10/2024,21:50,Deadpool & Wolverine,Kiryat Bialik,R
 HC,29/10/2024,22:00,Deadpool & Wolverine,Haifa,R
@@ -3623,9 +3623,9 @@ HC,29/10/2024,22:00,It Ends with Us,Modiin,R
 HC,29/10/2024,17:00,It Ends with Us,Rehovot,R
 YP,29/10/2024,12:00,It Ends with Us,Ayalon,R
 YP,29/10/2024,15:00,It Ends with Us,Ayalon,R
-Rav Hen,29/10/2024,11:00,It Ends with Us,Givataim,R
-Rav Hen,29/10/2024,14:00,It Ends with Us,Givataim,R
-Rav Hen,29/10/2024,19:15,It Ends with Us,Givataim,R
+RH,29/10/2024,11:00,It Ends with Us,Givataim,R
+RH,29/10/2024,14:00,It Ends with Us,Givataim,R
+RH,29/10/2024,19:15,It Ends with Us,Givataim,R
 ML,29/10/2024,20:55,Joker: Folie à Deux,Carmiel,R
 ML,29/10/2024,19:00,Joker: Folie à Deux,Netanya,R
 ML,29/10/2024,22:00,Joker: Folie à Deux,Netanya,R
@@ -3857,20 +3857,20 @@ YP,29/10/2024,15:10,Smile 2,Jerusalem,R
 YP,29/10/2024,18:50,Smile 2,Jerusalem,R
 YP,29/10/2024,21:20,Smile 2,Jerusalem,R
 YP,29/10/2024,21:40,Smile 2,Jerusalem,R
-Rav Hen,29/10/2024,11:00,Smile 2,Givataim,R
-Rav Hen,29/10/2024,14:00,Smile 2,Givataim,R
-Rav Hen,29/10/2024,17:00,Smile 2,Givataim,R
-Rav Hen,29/10/2024,19:10,Smile 2,Givataim,R
-Rav Hen,29/10/2024,21:50,Smile 2,Givataim,R
-Rav Hen,29/10/2024,17:00,Smile 2,Tel Aviv,R
-Rav Hen,29/10/2024,19:10,Smile 2,Tel Aviv,R
-Rav Hen,29/10/2024,21:50,Smile 2,Tel Aviv,R
-Rav Hen,29/10/2024,17:00,Smile 2,Kiryat Ono,R
-Rav Hen,29/10/2024,19:20,Smile 2,Kiryat Ono,R
-Rav Hen,29/10/2024,21:50,Smile 2,Kiryat Ono,R
+RH,29/10/2024,11:00,Smile 2,Givataim,R
+RH,29/10/2024,14:00,Smile 2,Givataim,R
+RH,29/10/2024,17:00,Smile 2,Givataim,R
+RH,29/10/2024,19:10,Smile 2,Givataim,R
+RH,29/10/2024,21:50,Smile 2,Givataim,R
+RH,29/10/2024,17:00,Smile 2,Tel Aviv,R
+RH,29/10/2024,19:10,Smile 2,Tel Aviv,R
+RH,29/10/2024,21:50,Smile 2,Tel Aviv,R
+RH,29/10/2024,17:00,Smile 2,Kiryat Ono,R
+RH,29/10/2024,19:20,Smile 2,Kiryat Ono,R
+RH,29/10/2024,21:50,Smile 2,Kiryat Ono,R
 YP,29/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,29/10/2024,19:00,Speak No Evil,Beer Sheva,R
-Rav Hen,29/10/2024,21:50,Speak No Evil,Givataim,R
+RH,29/10/2024,21:50,Speak No Evil,Givataim,R
 LC,29/10/2024,11:10,Take a Chance on Me,Raanana,R
 HC,29/10/2024,13:20,Take a Chance on Me,Kiryat Bialik,R
 HC,29/10/2024,15:35,Take a Chance on Me,Kiryat Bialik,R
@@ -4210,12 +4210,12 @@ YP,29/10/2024,19:20,Transformers One,Haifa,R
 YP,29/10/2024,21:45,Transformers One,Haifa,R
 YP,29/10/2024,19:50,Transformers One,Jerusalem,R
 YP,29/10/2024,22:00,Transformers One,Jerusalem,R
-Rav Hen,29/10/2024,19:30,Transformers One,Givataim,R
-Rav Hen,29/10/2024,21:50,Transformers One,Givataim,R
-Rav Hen,29/10/2024,17:00,Transformers One,Tel Aviv,R
-Rav Hen,29/10/2024,22:00,Transformers One,Tel Aviv,R
-Rav Hen,29/10/2024,19:30,Transformers One,Kiryat Ono,R
-Rav Hen,29/10/2024,21:50,Transformers One,Kiryat Ono,R
+RH,29/10/2024,19:30,Transformers One,Givataim,R
+RH,29/10/2024,21:50,Transformers One,Givataim,R
+RH,29/10/2024,17:00,Transformers One,Tel Aviv,R
+RH,29/10/2024,22:00,Transformers One,Tel Aviv,R
+RH,29/10/2024,19:30,Transformers One,Kiryat Ono,R
+RH,29/10/2024,21:50,Transformers One,Kiryat Ono,R
 ML,29/10/2024,17:00,Un mondo a parte,Carmiel,R
 ML,29/10/2024,12:10,Un mondo a parte,Haifa,R
 ML,29/10/2024,16:20,Un mondo a parte,Haifa,R
@@ -4397,17 +4397,17 @@ YP,29/10/2024,14:00,Venom: The Last Dance,Jerusalem,4DX
 YP,29/10/2024,16:30,Venom: The Last Dance,Jerusalem,4DX
 YP,29/10/2024,19:00,Venom: The Last Dance,Jerusalem,4DX
 YP,29/10/2024,21:30,Venom: The Last Dance,Jerusalem,4DX
-Rav Hen,29/10/2024,11:00,Venom: The Last Dance,Givataim,R
-Rav Hen,29/10/2024,14:00,Venom: The Last Dance,Givataim,R
-Rav Hen,29/10/2024,17:00,Venom: The Last Dance,Givataim,R
-Rav Hen,29/10/2024,19:30,Venom: The Last Dance,Givataim,R
-Rav Hen,29/10/2024,21:50,Venom: The Last Dance,Givataim,R
-Rav Hen,29/10/2024,17:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,29/10/2024,19:20,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,29/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,29/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,29/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,29/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
+RH,29/10/2024,11:00,Venom: The Last Dance,Givataim,R
+RH,29/10/2024,14:00,Venom: The Last Dance,Givataim,R
+RH,29/10/2024,17:00,Venom: The Last Dance,Givataim,R
+RH,29/10/2024,19:30,Venom: The Last Dance,Givataim,R
+RH,29/10/2024,21:50,Venom: The Last Dance,Givataim,R
+RH,29/10/2024,17:00,Venom: The Last Dance,Tel Aviv,R
+RH,29/10/2024,19:20,Venom: The Last Dance,Tel Aviv,R
+RH,29/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
+RH,29/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
+RH,29/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
+RH,29/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
 LC,29/10/2024,16:15,We Live in Time,Raanana,R
 LC,29/10/2024,21:10,We Live in Time,Raanana,R
 LC,29/10/2024,13:30,We Live in Time,Tel Aviv,R
@@ -4496,13 +4496,13 @@ YP,29/10/2024,11:00,We Live in Time,Jerusalem,R
 YP,29/10/2024,17:45,We Live in Time,Jerusalem,R
 YP,29/10/2024,20:00,We Live in Time,Jerusalem,R
 YP,29/10/2024,22:15,We Live in Time,Jerusalem,R
-Rav Hen,29/10/2024,11:00,We Live in Time,Givataim,R
-Rav Hen,29/10/2024,14:00,We Live in Time,Givataim,R
-Rav Hen,29/10/2024,19:40,We Live in Time,Givataim,R
-Rav Hen,29/10/2024,21:50,We Live in Time,Givataim,R
-Rav Hen,29/10/2024,19:40,We Live in Time,Tel Aviv,R
-Rav Hen,29/10/2024,17:00,We Live in Time,Kiryat Ono,R
-Rav Hen,29/10/2024,19:40,We Live in Time,Kiryat Ono,R
+RH,29/10/2024,11:00,We Live in Time,Givataim,R
+RH,29/10/2024,14:00,We Live in Time,Givataim,R
+RH,29/10/2024,19:40,We Live in Time,Givataim,R
+RH,29/10/2024,21:50,We Live in Time,Givataim,R
+RH,29/10/2024,19:40,We Live in Time,Tel Aviv,R
+RH,29/10/2024,17:00,We Live in Time,Kiryat Ono,R
+RH,29/10/2024,19:40,We Live in Time,Kiryat Ono,R
 ML,29/10/2024,21:10,Weekend in Taipei,Carmiel,R
 ML,29/10/2024,21:55,Weekend in Taipei,Haifa,R
 ML,29/10/2024,21:25,Weekend in Taipei,Netanya,R
@@ -4638,7 +4638,7 @@ YP,30/10/2024,22:00,Come Closer,Rishon Letzion,R
 YP,30/10/2024,19:20,Come Closer,Ayalon,R
 YP,30/10/2024,22:00,Come Closer,Haifa,R
 YP,30/10/2024,19:20,Come Closer,Jerusalem,R
-Rav Hen,30/10/2024,19:30,Come Closer,Givataim,R
+RH,30/10/2024,19:30,Come Closer,Givataim,R
 ML,30/10/2024,16:00,Deadpool & Wolverine,Haifa,R
 HC,30/10/2024,19:10,Deadpool & Wolverine,Kiryat Bialik,R
 HC,30/10/2024,21:50,Deadpool & Wolverine,Kiryat Bialik,R
@@ -4673,7 +4673,7 @@ HC,30/10/2024,19:00,It Ends with Us,Kfar Saba,R
 HC,30/10/2024,18:45,It Ends with Us,Modiin,R
 HC,30/10/2024,18:50,It Ends with Us,Ashdod,R
 YP,30/10/2024,15:00,It Ends with Us,Ayalon,R
-Rav Hen,30/10/2024,19:15,It Ends with Us,Givataim,R
+RH,30/10/2024,19:15,It Ends with Us,Givataim,R
 YP,30/10/2024,14:40,Joker: Folie à Deux,Rishon Letzion,R
 YP,30/10/2024,17:50,Joker: Folie à Deux,Rishon Letzion,R
 YP,30/10/2024,20:45,Joker: Folie à Deux,Rishon Letzion,R
@@ -4828,19 +4828,19 @@ YP,30/10/2024,15:10,Smile 2,Jerusalem,R
 YP,30/10/2024,19:40,Smile 2,Jerusalem,R
 YP,30/10/2024,21:15,Smile 2,Jerusalem,R
 YP,30/10/2024,21:50,Smile 2,Jerusalem,R
-Rav Hen,30/10/2024,17:00,Smile 2,Givataim,R
-Rav Hen,30/10/2024,19:10,Smile 2,Givataim,R
-Rav Hen,30/10/2024,21:50,Smile 2,Givataim,R
-Rav Hen,30/10/2024,17:00,Smile 2,Tel Aviv,R
-Rav Hen,30/10/2024,19:10,Smile 2,Tel Aviv,R
-Rav Hen,30/10/2024,21:50,Smile 2,Tel Aviv,R
-Rav Hen,30/10/2024,17:00,Smile 2,Kiryat Ono,R
-Rav Hen,30/10/2024,19:20,Smile 2,Kiryat Ono,R
-Rav Hen,30/10/2024,21:50,Smile 2,Kiryat Ono,R
+RH,30/10/2024,17:00,Smile 2,Givataim,R
+RH,30/10/2024,19:10,Smile 2,Givataim,R
+RH,30/10/2024,21:50,Smile 2,Givataim,R
+RH,30/10/2024,17:00,Smile 2,Tel Aviv,R
+RH,30/10/2024,19:10,Smile 2,Tel Aviv,R
+RH,30/10/2024,21:50,Smile 2,Tel Aviv,R
+RH,30/10/2024,17:00,Smile 2,Kiryat Ono,R
+RH,30/10/2024,19:20,Smile 2,Kiryat Ono,R
+RH,30/10/2024,21:50,Smile 2,Kiryat Ono,R
 ML,30/10/2024,22:05,Speak No Evil,Haifa,R
 YP,30/10/2024,22:10,Speak No Evil,Rishon Letzion,R
 YP,30/10/2024,19:00,Speak No Evil,Beer Sheva,R
-Rav Hen,30/10/2024,21:50,Speak No Evil,Givataim,R
+RH,30/10/2024,21:50,Speak No Evil,Givataim,R
 HC,30/10/2024,21:15,The Apprentice,Kiryat Bialik,R
 HC,30/10/2024,19:35,The Apprentice,Haifa,R
 HC,30/10/2024,21:50,The Apprentice,Haifa,R
@@ -4994,12 +4994,12 @@ YP,30/10/2024,19:20,Transformers One,Haifa,R
 YP,30/10/2024,21:45,Transformers One,Haifa,R
 YP,30/10/2024,19:50,Transformers One,Jerusalem,R
 YP,30/10/2024,22:00,Transformers One,Jerusalem,R
-Rav Hen,30/10/2024,19:30,Transformers One,Givataim,R
-Rav Hen,30/10/2024,21:50,Transformers One,Givataim,R
-Rav Hen,30/10/2024,17:00,Transformers One,Tel Aviv,R
-Rav Hen,30/10/2024,22:00,Transformers One,Tel Aviv,R
-Rav Hen,30/10/2024,19:30,Transformers One,Kiryat Ono,R
-Rav Hen,30/10/2024,21:50,Transformers One,Kiryat Ono,R
+RH,30/10/2024,19:30,Transformers One,Givataim,R
+RH,30/10/2024,21:50,Transformers One,Givataim,R
+RH,30/10/2024,17:00,Transformers One,Tel Aviv,R
+RH,30/10/2024,22:00,Transformers One,Tel Aviv,R
+RH,30/10/2024,19:30,Transformers One,Kiryat Ono,R
+RH,30/10/2024,21:50,Transformers One,Kiryat Ono,R
 CC,30/10/2024,14:50,Venom: The Last Dance,Glilot,R
 CC,30/10/2024,17:30,Venom: The Last Dance,Glilot,R
 CC,30/10/2024,19:15,Venom: The Last Dance,Glilot,R
@@ -5186,15 +5186,15 @@ YP,30/10/2024,14:50,Venom: The Last Dance,Jerusalem,R
 YP,30/10/2024,17:20,Venom: The Last Dance,Jerusalem,R
 YP,30/10/2024,19:45,Venom: The Last Dance,Jerusalem,R
 YP,30/10/2024,22:10,Venom: The Last Dance,Jerusalem,R
-Rav Hen,30/10/2024,17:00,Venom: The Last Dance,Givataim,R
-Rav Hen,30/10/2024,19:30,Venom: The Last Dance,Givataim,R
-Rav Hen,30/10/2024,21:50,Venom: The Last Dance,Givataim,R
-Rav Hen,30/10/2024,17:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,30/10/2024,19:20,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,30/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
-Rav Hen,30/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,30/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
-Rav Hen,30/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
+RH,30/10/2024,17:00,Venom: The Last Dance,Givataim,R
+RH,30/10/2024,19:30,Venom: The Last Dance,Givataim,R
+RH,30/10/2024,21:50,Venom: The Last Dance,Givataim,R
+RH,30/10/2024,17:00,Venom: The Last Dance,Tel Aviv,R
+RH,30/10/2024,19:20,Venom: The Last Dance,Tel Aviv,R
+RH,30/10/2024,22:00,Venom: The Last Dance,Tel Aviv,R
+RH,30/10/2024,17:00,Venom: The Last Dance,Kiryat Ono,R
+RH,30/10/2024,19:30,Venom: The Last Dance,Kiryat Ono,R
+RH,30/10/2024,21:50,Venom: The Last Dance,Kiryat Ono,R
 LC,30/10/2024,17:00,We Live in Time,Raanana,R
 LC,30/10/2024,21:30,We Live in Time,Raanana,R
 LC,30/10/2024,19:15,We Live in Time,Tel Aviv,R
@@ -5249,11 +5249,11 @@ YP,30/10/2024,17:30,We Live in Time,Haifa,VIP
 YP,30/10/2024,17:30,We Live in Time,Jerusalem,R
 YP,30/10/2024,19:45,We Live in Time,Jerusalem,R
 YP,30/10/2024,22:00,We Live in Time,Jerusalem,R
-Rav Hen,30/10/2024,19:40,We Live in Time,Givataim,R
-Rav Hen,30/10/2024,21:50,We Live in Time,Givataim,R
-Rav Hen,30/10/2024,19:40,We Live in Time,Tel Aviv,R
-Rav Hen,30/10/2024,17:00,We Live in Time,Kiryat Ono,R
-Rav Hen,30/10/2024,19:40,We Live in Time,Kiryat Ono,R
+RH,30/10/2024,19:40,We Live in Time,Givataim,R
+RH,30/10/2024,21:50,We Live in Time,Givataim,R
+RH,30/10/2024,19:40,We Live in Time,Tel Aviv,R
+RH,30/10/2024,17:00,We Live in Time,Kiryat Ono,R
+RH,30/10/2024,19:40,We Live in Time,Kiryat Ono,R
 HC,30/10/2024,20:40,Weekend in Taipei,Carmiel,R
 HC,30/10/2024,19:40,Weekend in Taipei,Kiryat Bialik,R
 HC,30/10/2024,21:50,Weekend in Taipei,Kiryat Bialik,R
