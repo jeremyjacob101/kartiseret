@@ -22,14 +22,6 @@
     /*main #c86309*/
     border: 2px solid black;
     color: #d8d8d8;
-    /* text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-    text-shadow:
-        -1px -1px 0 black,
-        1px -1px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black; */
 }
 
 .hot-cinema {
@@ -46,15 +38,32 @@
 
 .movie-list {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.divider-line {
+    width: 110%;
+    height: 1.3px;
+    margin: 8px;
+    background: linear-gradient(to right,
+            rgba(141, 141, 141, 0.03),
+            rgba(141, 141, 141, 0.7) 15%,
+            rgba(141, 141, 141, 1) 50%,
+            rgba(141, 141, 141, 0.7) 85%,
+            rgba(141, 141, 141, 0.03));
+    border-radius: 50px;
 }
 
 .movie-block {
     display: flex;
+    width: 100%;
     flex-direction: row;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #777;
-    border-radius: 8px;
+    border-radius: 8px; */
     background: none;
 }
 
@@ -76,6 +85,7 @@
     height: 57px;
     justify-content: flex-end;
 }
+
 .smaller-showtime {
     height: 39px;
     /* reduced height when all first 5 are Regular */
