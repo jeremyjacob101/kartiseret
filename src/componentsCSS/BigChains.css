@@ -127,13 +127,18 @@
 
 .movie-info-sub-block {
     width: 250px;
+    height: 170px;
     padding: 10px;
+    padding-top: 13px;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .movie-ratings-block {
     width: 100%;
-    padding-top: 90px;
+    /* padding-top: 90px; */
     display: flex;
     flex-direction: row;
     gap: 10px;

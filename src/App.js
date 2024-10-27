@@ -8,6 +8,9 @@ const App = () => {
 
   return (
     <>
+      {/* <div className="home">
+        <div className="main-sections-drop"></div>
+      </div> */}
       <div className="main-carousel-holder">
         <div className="pre-carousel">
           <SnifFilter

@@ -60,7 +60,7 @@ const getCinemaClass = (cinema) => {
 };
 
 const areFirstFiveShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 5).every((showtime) => showtime.type === "R");
+  showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
 
 const BigChains = ({ movies }) => {
   const groupedMovies = groupShowtimesByTitle(movies);
@@ -80,9 +80,11 @@ const BigChains = ({ movies }) => {
 
           {/* Movie information section */}
           <div className="movie-info-sub-block">
-            <div className="movie-title">{title}</div>
-            <div className="movie-runtime">
-              {groupedMovies[title][0].runtime} minutes
+            <div className="movie-top-sub-block">
+              <div className="movie-title">{title}</div>
+              <div className="movie-runtime">
+                {groupedMovies[title][0].runtime} minutes
+              </div>
             </div>
             <div className="movie-ratings-block">
               <div className="movie-ratings-sub-block-imdb">
@@ -105,7 +107,7 @@ const BigChains = ({ movies }) => {
               <div
                 className={`each-showtime ${
                   areFirstFiveShowtimesRegular(groupedMovies[title]) &&
-                  index < 5
+                  index < 4
                     ? "smaller-showtime" // Apply smaller height if conditions met
                     : ""
                 }`}

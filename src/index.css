@@ -28,14 +28,24 @@ h6 {
 }
 
 .pre-carousel {
-  width: 90%;
+  width: 85%;
+  position: fixed; /* "absolute" to flow with the container above it I think */
   display: flex;
-  position: fixed;
   flex-direction: row;
   justify-content: space-between;
   z-index: 1;
 }
 
-.main-carousel {
-  z-index: 2;
+.home {
+  width: 100%;
+  height: 800px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.main-sections-drop {
+  width: 90%;
+  height: 90%;
+  background-color: rgb(64, 77, 77);
+  border-radius: 5px
 }
