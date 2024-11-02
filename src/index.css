@@ -24,15 +24,16 @@ h6 {
 .main-carousel-holder {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:flex-start;
 }
 
 .pre-carousel {
-  width: 85%;
-  position: fixed; /* "absolute" to flow with the container above it I think */
+  width: 90%;
+  gap: 5px;
+  position: absolute; /* "absolute" to flow with the container above it I think */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   z-index: 1;
 }
 

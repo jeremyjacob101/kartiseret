@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../componentsCSS/SnifFilter.css"; // Optional CSS file for styling
 
 const snifs = [
@@ -18,7 +18,6 @@ const snifs = [
   /* South of TLV */
   "Rishon Letzion",
   "Rehovot",
-
   /* South of Rishon */
   "Ashkelon",
   "Ashdod",
@@ -44,6 +43,8 @@ const snifs = [
 ];
 
 const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const handleSnifChange = (event) => {
     const { value, checked } = event.target;
     if (checked) {
@@ -53,22 +54,32 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
     }
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
   return (
     <div className="snif-filter">
-      <h4>Filter by Location</h4>
-      {snifs.map((snif) => (
-        <div key={snif}>
-          <label>
-            <input
-              type="checkbox"
-              value={snif}
-              checked={selectedSnifs.includes(snif)}
-              onChange={handleSnifChange}
-            />
-            {snif}
-          </label>
+      <button onClick={toggleDropdown} className="dropdown-button">
+        Filter by Location
+      </button>
+      {isDropdownOpen && (
+        <div className="dropdown-menu">
+          {snifs.map((snif) => (
+            <div key={snif} className="dropdown-item">
+              <label>
+                <input
+                  type="checkbox"
+                  value={snif}
+                  checked={selectedSnifs.includes(snif)}
+                  onChange={handleSnifChange}
+                />
+                {snif}
+              </label>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };
