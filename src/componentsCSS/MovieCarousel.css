@@ -35,6 +35,7 @@
     align-items: center;
     width: 54.7%;
     z-index: 2;
+    padding: 20px;
 }
 
 .carousel-movie-list-area {

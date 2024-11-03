@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MovieCarousel from "./components/MovieCarousel";
 import CinemaColorKey from "./components/CinemaColorKey";
 import SnifFilter from "./components/SnifFilter";
+import Cinemateques from "./components/Cinemateques";
 
 const App = () => {
   const [selectedSnifs, setSelectedSnifs] = useState([]);
@@ -19,7 +20,8 @@ const App = () => {
             setSelectedSnifs={setSelectedSnifs}
           />
         </div>
-        <MovieCarousel selectedSnifs={selectedSnifs} />{" "}
+        <MovieCarousel selectedSnifs={selectedSnifs} />
+        <Cinemateques selectedSnifs={selectedSnifs} />
       </div>
     </>
   );

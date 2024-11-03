@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../componentsCSS/SnifFilter.css"; // Optional CSS file for styling
 
 const snifs = [
+  /* JLEM */
+  "Jerusalem",
   /* TLV */
   "Tel Aviv",
   /* North of TLV */
@@ -33,8 +35,6 @@ const snifs = [
   /* Modiin */
   "Modiin",
   "Shoham",
-  /* JLEM */
-  "Jerusalem",
   /* North */
   "Nahariya",
   "Carmiel",

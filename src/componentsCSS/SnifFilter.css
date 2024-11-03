@@ -1,5 +1,8 @@
 .snif-filter {
     margin-bottom: 10px;
+    position: fixed;
+    top: 40px;
+    right: 100px;
 }
 
 .snif-filter h4 {
@@ -30,7 +33,7 @@
     top: 100%;
     left: 0;
     z-index: 1;
-    max-height: 200px;
+    max-height: 290px;
     overflow-y: auto;
     background-color: white;
     color: black;

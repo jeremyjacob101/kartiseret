@@ -1,0 +1,82 @@
+.cinemateque-carousel {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 500px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    color: rgb(138, 132, 132);
+    position: relative;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.cinemateque-carousel-inner {
+    display: flex;
+}
+
+.cinemateque-header-name {
+    position: fixed;
+    bottom: 380px;
+    right: 250px;
+}
+
+.cinemateque-card {
+    flex: 0 0 auto;
+    width: 160px;
+    height: 325px;
+    padding: 10px;
+    border-radius: 8px;
+    scroll-snap-align: center;
+    text-align: center;
+}
+
+.cinemateque-card>a>img {
+    height: 225px;
+    width: 160px;
+}
+
+.cinemateque-poster {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.cinemateque-details {
+    font-size: 14px;
+}
+
+.cinemateque-title {
+    font-size: 1.2em;
+    margin: 0;
+    height: 40px;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cinemateque-details a {
+    color: #0073e6;
+    text-decoration: none;
+}
+
+.cinemateque-details a:hover {
+    text-decoration: underline;
+}
+
+.cinemateque-placeholder {
+    width: 160px;
+    height: 225px;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: #666;
+}
