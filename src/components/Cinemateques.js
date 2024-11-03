@@ -12,6 +12,17 @@ const cinematequeCities = {
   TLVCT: "Tel Aviv",
 };
 
+// Function to check if the showtime is valid
+const isValidShowtime = (date, time) => {
+  const [day, month, year] = date.split("/").map(Number);
+  const [hours, minutes] = time.split(":").map(Number);
+
+  const showtimeDate = new Date(year, month - 1, day, hours, minutes);
+  const now = new Date();
+
+  return showtimeDate >= now;
+};
+
 const Cinemateques = ({ selectedSnifs }) => {
   const [movies, setMovies] = useState([]);
   const [visibleMovies, setVisibleMovies] = useState([]);
@@ -29,7 +40,11 @@ const Cinemateques = ({ selectedSnifs }) => {
             const city = cinema ? cinematequeCities[cinema] : undefined;
             const isSelected =
               selectedSnifs.length === 0 || selectedSnifs.includes(city);
-            return city && isSelected;
+
+            // Only include if showtime is valid
+            return (
+              city && isSelected && isValidShowtime(movie.date, movie.time)
+            );
           });
 
           setMovies(filteredMovies);
