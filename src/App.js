@@ -5,7 +5,7 @@ import SnifFilter from "./components/SnifFilter";
 import Cinemateques from "./components/Cinemateques";
 
 const App = () => {
-  const [selectedSnifs, setSelectedSnifs] = useState([]);
+  const [selectedSnifs, setSelectedSnifs] = useState(["Jerusalem"]);
 
   return (
     <>

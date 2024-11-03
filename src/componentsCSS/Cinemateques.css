@@ -2,8 +2,8 @@
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    width: 500px;
-    scroll-snap-type: x mandatory;
+    width: 560px;
+    /* scroll-snap-type: x mandatory; */
     scrollbar-width: thin;
     color: rgb(138, 132, 132);
     position: relative;
@@ -22,14 +22,14 @@
 
 .cinemateque-header-name {
     position: fixed;
-    bottom: 380px;
-    right: 250px;
+    bottom: 410px;
+    right: 300px;
 }
 
 .cinemateque-card {
     flex: 0 0 auto;
-    width: 160px;
-    height: 325px;
+    width: 170px;
+    height: 360px;
     padding: 10px;
     border-radius: 8px;
     scroll-snap-align: center;
@@ -37,8 +37,8 @@
 }
 
 .cinemateque-card>a>img {
-    height: 225px;
-    width: 160px;
+    height: 250px;
+    width: 175px;
 }
 
 .cinemateque-poster {
