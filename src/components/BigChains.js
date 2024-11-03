@@ -1,6 +1,5 @@
 import React from "react";
 import "../componentsCSS/BigChains.css";
-import Cinemateques from "./Cinemateques";
 
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
