@@ -12,6 +12,9 @@ const App = () => {
       {/* <div className="home">
         <div className="main-sections-drop"></div>
       </div> */}
+      <div class="testing-title-holder">
+        <span>כרטיסרט</span>
+      </div>
       <div className="main-carousel-holder">
         <div className="pre-carousel">
           <CinemaColorKey />
