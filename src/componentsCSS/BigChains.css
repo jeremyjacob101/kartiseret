@@ -74,6 +74,7 @@
     align-content: flex-start;
     gap: 7px;
     padding: 10px;
+    min-width: 317px;
 }
 
 .each-showtime {
