@@ -15,9 +15,9 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     ).padStart(2, "0")}/${today.getFullYear()}`;
   };
 
-  const selectedDate = getFormattedDate(dayOffset);
-
   useEffect(() => {
+    const selectedDate = getFormattedDate(dayOffset); // Moved inside useEffect
+
     const loadShowtimeData = async () => {
       const showtimesData = await (await fetch(showtimes_csv)).text();
 
@@ -26,8 +26,9 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
         dynamicTyping: true,
         complete: (results) => {
           const cinemaSet = new Set();
-          // Check if showtime matches the selected date and selected snif
+
           results.data.forEach((showtime) => {
+            // Check if showtime matches the selected date and selected snif
             if (
               showtime.date === selectedDate &&
               (selectedSnifs.length === 0 ||
@@ -43,7 +44,7 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     };
 
     loadShowtimeData();
-  }, [selectedSnifs, dayOffset]);
+  }, [selectedSnifs, dayOffset]); // No need to add selectedDate here
 
   const cinemaClasses = {
     YP: "yes-planet",
