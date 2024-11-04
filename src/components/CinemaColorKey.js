@@ -16,7 +16,9 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
   };
 
   useEffect(() => {
-    const selectedDate = getFormattedDate(dayOffset); // Moved inside useEffect
+    const selectedDate = getFormattedDate(dayOffset);
+    const now = new Date();
+    const currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
 
     const loadShowtimeData = async () => {
       const showtimesData = await (await fetch(showtimes_csv)).text();
@@ -28,11 +30,21 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
           const cinemaSet = new Set();
 
           results.data.forEach((showtime) => {
-            // Check if showtime matches the selected date and selected snif
+            if (!showtime.time) {
+              // Skip if time is missing or undefined
+              return;
+            }
+
+            const [hours, minutes] = showtime.time.split(":").map(Number);
+            const showtimeMinutes = hours * 60 + minutes;
+
+            // Check if showtime matches the selected date, selected snif, and is in the future if today
             if (
               showtime.date === selectedDate &&
               (selectedSnifs.length === 0 ||
-                selectedSnifs.includes(showtime.snif))
+                selectedSnifs.includes(showtime.snif)) &&
+              (showtime.date !== getFormattedDate(0) ||
+                showtimeMinutes >= currentTimeMinutes)
             ) {
               cinemaSet.add(showtime.cinema);
             }
@@ -44,7 +56,7 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     };
 
     loadShowtimeData();
-  }, [selectedSnifs, dayOffset]); // No need to add selectedDate here
+  }, [selectedSnifs, dayOffset]);
 
   const cinemaClasses = {
     YP: "yes-planet",

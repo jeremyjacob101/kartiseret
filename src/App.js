@@ -6,7 +6,7 @@ import Cinemateques from "./components/Cinemateques";
 
 const App = () => {
   const [selectedSnifs, setSelectedSnifs] = useState(["Jerusalem"]);
-  const [dayOffset] = useState(0);
+  const [dayOffset, setDayOffset] = useState(0);
 
   return (
     <>
@@ -24,7 +24,7 @@ const App = () => {
             setSelectedSnifs={setSelectedSnifs}
           />
         </div>
-        <MovieCarousel selectedSnifs={selectedSnifs} />
+        <MovieCarousel selectedSnifs={selectedSnifs} setDayOffset={setDayOffset} />
         <Cinemateques selectedSnifs={selectedSnifs} />
       </div>
     </>

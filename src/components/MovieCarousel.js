@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/MovieCarousel.css";
-import BigChains from "./BigChains.js";
+import BigChains from "./BigChains";
 
 const showtimes_csv = "/CSVs/31-10-24-showtimes.csv";
 const movies_csv = "/CSVs/31-10-24-movies.csv";
@@ -30,31 +30,28 @@ const isValidShowtime = (
   );
 };
 
-const MovieCarousel = ({ selectedSnifs }) => {
+const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
   const [movies, setMovies] = useState([]);
-  const [dayOffset, setDayOffset] = useState(0);
+  const [dayOffsetLocal, setDayOffsetLocal] = useState(0); // Local dayOffset state
 
-  const offsatDay = getFormattedDate(dayOffset);
+  const offsatDay = getFormattedDate(dayOffsetLocal);
 
   useEffect(() => {
     const loadMovieData = async () => {
-      // Load CSVs
       const showtimesData = await (await fetch(showtimes_csv)).text();
       const moviesData = await (await fetch(movies_csv)).text();
-      
+
       const currentTime = new Date();
       const currentMinutesSinceMidnight =
         currentTime.getHours() * 60 + currentTime.getMinutes();
-      const today = getFormattedDate(0); // Today's date in the same format as showtimes
+      const today = getFormattedDate(0);
 
-      // Parse the movies CSV to create a set of valid movie titles and poster/runtimes/popularity
       let validMovieTitles = new Set();
       let movieInfoMap = {};
 
       Papa.parse(moviesData, {
         header: true,
         dynamicTyping: true,
-
         complete: (results) => {
           results.data.forEach((movie) => {
             validMovieTitles.add(movie.title);
@@ -70,7 +67,6 @@ const MovieCarousel = ({ selectedSnifs }) => {
         },
       });
 
-      // Parse the showtimes CSV and filter by selected snifs, date, and valid title
       Papa.parse(showtimesData, {
         header: true,
         dynamicTyping: true,
@@ -87,16 +83,16 @@ const MovieCarousel = ({ selectedSnifs }) => {
                   movie.date,
                   today,
                   currentMinutesSinceMidnight
-                ) // Check only today’s showtimes
+                )
             )
             .map((movie) => ({
               ...movie,
-              poster: movieInfoMap[movie.title]?.poster || null, // Add the poster URL or null if none exists
-              runtime: movieInfoMap[movie.title]?.runtime || null, // Add runtime or null if not found
-              popularity: movieInfoMap[movie.title]?.popularity || 0, // Add popularity or default to 0 if not found
-              imdbRating: movieInfoMap[movie.title]?.imdbRating || 0, // Add popularity or default to 0 if not found              popularity: movieInfoMap[movie.title]?.popularity || 0, // Add popularity or default to 0 if not found
-              imdbVotes: movieInfoMap[movie.title]?.imdbVotes || 0, // Add popularity or default to 0 if not found
-              rtRating: movieInfoMap[movie.title]?.rtRating || 0, // Add popularity or default to 0 if not found
+              poster: movieInfoMap[movie.title]?.poster || null,
+              runtime: movieInfoMap[movie.title]?.runtime || null,
+              popularity: movieInfoMap[movie.title]?.popularity || 0,
+              imdbRating: movieInfoMap[movie.title]?.imdbRating || 0,
+              imdbVotes: movieInfoMap[movie.title]?.imdbVotes || 0,
+              rtRating: movieInfoMap[movie.title]?.rtRating || 0,
             }));
           setMovies(filteredMovies);
         },
@@ -104,22 +100,17 @@ const MovieCarousel = ({ selectedSnifs }) => {
     };
 
     loadMovieData();
-  }, [offsatDay, selectedSnifs]); // Re-fetch when the day or snif selection changes
+    setDayOffset(dayOffsetLocal); // Update global dayOffset when local dayOffset changes
+  }, [offsatDay, selectedSnifs, dayOffsetLocal, setDayOffset]);
 
-  const handleNextDay = () => {
-    setDayOffset(dayOffset + 1);
-  };
-
-  const handlePrevDay = () => {
-    if (dayOffset > 0) {
-      setDayOffset(dayOffset - 1);
-    }
-  };
+  const handleNextDay = () => setDayOffsetLocal((prev) => prev + 1);
+  const handlePrevDay = () =>
+    setDayOffsetLocal((prev) => (prev > 0 ? prev - 1 : 0));
 
   return (
     <div className="main-carousel">
       <div className="carousel-controls">
-        <button onClick={handlePrevDay} disabled={dayOffset === 0}>
+        <button onClick={handlePrevDay} disabled={dayOffsetLocal === 0}>
           Previous
         </button>
         <div className="carousel-current-date">{offsatDay}</div>
