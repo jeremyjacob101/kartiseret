@@ -69,4 +69,8 @@ h6 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
+
+  letter-spacing: 1px;
+  transform: scaleX(1.15);
+  display: inline-block;
 }
