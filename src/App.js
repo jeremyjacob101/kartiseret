@@ -6,6 +6,7 @@ import Cinemateques from "./components/Cinemateques";
 
 const App = () => {
   const [selectedSnifs, setSelectedSnifs] = useState(["Jerusalem"]);
+  const [dayOffset] = useState(0);
 
   return (
     <>
@@ -17,7 +18,7 @@ const App = () => {
       </div>
       <div className="main-carousel-holder">
         <div className="pre-carousel">
-          <CinemaColorKey />
+          <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
           <SnifFilter
             selectedSnifs={selectedSnifs}
             setSelectedSnifs={setSelectedSnifs}

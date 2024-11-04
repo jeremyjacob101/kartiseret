@@ -1,34 +1,76 @@
-import React from "react";
-import "../componentsCSS/CinemaColorKey.css"; // Optional CSS file for styling
+import React, { useState, useEffect } from "react";
+import Papa from "papaparse";
+import "../componentsCSS/CinemaColorKey.css";
 
-const CinemaColorKey = () => {
+const showtimes_csv = "/CSVs/31-10-24-showtimes.csv";
+
+const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
+  const [availableCinemas, setAvailableCinemas] = useState(new Set());
+
+  const getFormattedDate = (dayOffset) => {
+    const today = new Date();
+    today.setDate(today.getDate() + dayOffset);
+    return `${String(today.getDate()).padStart(2, "0")}/${String(
+      today.getMonth() + 1
+    ).padStart(2, "0")}/${today.getFullYear()}`;
+  };
+
+  const selectedDate = getFormattedDate(dayOffset);
+
+  useEffect(() => {
+    const loadShowtimeData = async () => {
+      const showtimesData = await (await fetch(showtimes_csv)).text();
+
+      Papa.parse(showtimesData, {
+        header: true,
+        dynamicTyping: true,
+        complete: (results) => {
+          const cinemaSet = new Set();
+          // Check if showtime matches the selected date and selected snif
+          results.data.forEach((showtime) => {
+            if (
+              showtime.date === selectedDate &&
+              (selectedSnifs.length === 0 ||
+                selectedSnifs.includes(showtime.snif))
+            ) {
+              cinemaSet.add(showtime.cinema);
+            }
+          });
+
+          setAvailableCinemas(cinemaSet);
+        },
+      });
+    };
+
+    loadShowtimeData();
+  }, [selectedSnifs, dayOffset]);
+
+  const cinemaClasses = {
+    YP: "yes-planet",
+    CC: "cinema-city",
+    RH: "rav-hen-cinema",
+    HC: "hot-cinema",
+    ML: "movieland-cinema",
+    LC: "lev-cinema",
+  };
+  const cinemaNames = {
+    YP: "Yes Planet",
+    CC: "Cinema City",
+    RH: "Rav Hen",
+    HC: "Hot Cinema",
+    ML: "MovieLand",
+    LC: "Lev Cinema",
+  };
+
   return (
     <div className="cinema-key">
       <div className="cinema-key-heading">Legend</div>
-      <div className="key-item">
-        <div className="showtime-time yes-planet">19:30</div>
-        <span>Yes Planet</span>
-      </div>
-      <div className="key-item">
-        <div className="showtime-time cinema-city">19:30</div>
-        <span>Cinema City</span>
-      </div>
-      <div className="key-item">
-        <div className="showtime-time rav-hen-cinema">19:30</div>
-        <span>Rav Hen</span>
-      </div>
-      <div className="key-item">
-        <div className="showtime-time hot-cinema">19:30</div>
-        <span>Hot Cinema</span>
-      </div>
-      <div className="key-item">
-        <div className="showtime-time movieland-cinema">19:30</div>
-        <span>MovieLand</span>
-      </div>
-      <div className="key-item">
-        <div className="showtime-time lev-cinema">19:30</div>
-        <span>Lev Cinema</span>
-      </div>
+      {Array.from(availableCinemas).map((cinema) => (
+        <div key={cinema} className="key-item">
+          <div className={`showtime-time ${cinemaClasses[cinema]}`}>19:30</div>
+          <span>{cinemaNames[cinema]}</span>
+        </div>
+      ))}
     </div>
   );
 };
