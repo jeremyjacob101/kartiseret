@@ -31,7 +31,8 @@ h6 {
 .pre-carousel {
   width: 90%;
   gap: 5px;
-  position: absolute; /* "absolute" to flow with the container above it I think */
+  position: absolute;
+  /* "absolute" to flow with the container above it I think */
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -45,9 +46,27 @@ h6 {
   justify-content: center;
   display: flex;
 }
+
 .main-sections-drop {
   width: 90%;
   height: 90%;
   background-color: rgb(64, 77, 77);
   border-radius: 5px
+}
+
+.testing-title-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-family: 'Tahoma';
+  font-size: 45px;
+}
+
+.testing-title-holder>span {
+  background: linear-gradient(90deg, rgb(120, 6, 162), rgb(60, 9, 171));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
