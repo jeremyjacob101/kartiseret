@@ -1,11 +1,12 @@
 .cinema-key {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-bottom: 20px;
     margin-top: 20px;
-    position: fixed;
+    margin-right: 60px;
+    /* position: fixed;
     top: 20px;
-    right: 325px;
+    right: 325px; */
 
     border: 1px solid gray;
     border-radius: 10px;
@@ -15,8 +16,7 @@
 
 .cinema-key-heading {
     padding: 12px;
-    padding-left: 50px;
-    padding-bottom: 15px;
+    /* padding-bottom: 15px; */
     font-size: 20px;
     font-weight: bold;
     align-items: center;
@@ -27,10 +27,10 @@
 .key-item {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
 }
 .cinema-key>.key-item>span {
     font-weight: 400;
+    font-size: 17px;
 }
 
 .key-item .showtime-time {
@@ -38,6 +38,7 @@
     height: 10px;
     padding: 1px;
     margin-right: 10px;
+    margin-left: 10px;
 
     padding: 5px 10px;
     margin-top: 0px;

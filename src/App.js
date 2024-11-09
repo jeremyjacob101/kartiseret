@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MovieCarousel from "./components/MovieCarousel";
 import CinemaColorKey from "./components/CinemaColorKey";
 import SnifFilter from "./components/SnifFilter";
-import Cinemateques from "./components/Cinemateques";
+import ComingSoons from "./components/ComingSoons";
 
 const App = () => {
   const [selectedSnifs, setSelectedSnifs] = useState(["Jerusalem"]);
@@ -14,18 +14,19 @@ const App = () => {
         <div className="main-sections-drop"></div>
       </div> */}
       <div class="testing-title-holder">
+        <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
         <span>כרטיסרט</span>
+        <SnifFilter
+          selectedSnifs={selectedSnifs}
+          setSelectedSnifs={setSelectedSnifs}
+        />
       </div>
       <div className="main-carousel-holder">
-        <div className="pre-carousel">
-          <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
-          <SnifFilter
-            selectedSnifs={selectedSnifs}
-            setSelectedSnifs={setSelectedSnifs}
-          />
-        </div>
-        <MovieCarousel selectedSnifs={selectedSnifs} setDayOffset={setDayOffset} />
-        <Cinemateques selectedSnifs={selectedSnifs} />
+        <ComingSoons selectedSnifs={selectedSnifs} />
+        <MovieCarousel
+          selectedSnifs={selectedSnifs}
+          setDayOffset={setDayOffset}
+        />
       </div>
     </>
   );

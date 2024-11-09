@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "../componentsCSS/BigChains.css";
+import Cinemateques from "../components/Cinemateques";
 
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
@@ -62,7 +63,7 @@ const getCinemaClass = (cinema) => {
 const areFirstFiveShowtimesRegular = (showtimes) =>
   showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
 
-const BigChains = ({ movies }) => {
+const BigChains = ({ movies, selectedSnifs }) => {
   const groupedMovies = groupShowtimesByTitle(movies);
   const sortedTitles = Object.keys(groupedMovies).sort(
     (a, b) => groupedMovies[b][0].popularity - groupedMovies[a][0].popularity
@@ -71,10 +72,13 @@ const BigChains = ({ movies }) => {
   return (
     <>
       <div className="movie-list">
+        <Cinemateques selectedSnifs={selectedSnifs} />
         {/* Iterate through each title in the sorted movie titles */}
         {sortedTitles.map((title, index) => (
           <>
+            {index === 0 && <div className="divider-line-main"></div>}
             {index !== 0 && <div className="divider-line"></div>}
+            {/* <div className="divider-line-main"></div> */}
             <div className="movie-block" key={title}>
               {/* Movie poster section */}
               <div className="movie-poster-sub-block">

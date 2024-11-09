@@ -1,8 +1,7 @@
-.cinemateque-carousel {
+.coming-soon-carousel {
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    /* scroll-snap-type: x mandatory; */
     scrollbar-width: thin;
     color: rgb(138, 132, 132);
     position: relative;
@@ -12,38 +11,39 @@
     box-sizing: border-box;
 }
 
-.cinemateque-carousel-wrapper {
-    width: 120%;
+.coming-soon-carousel-wrapper {
+    width: 80%;
 }
 
-.cinemateque-carousel-inner {
-    display: flex;
-}
-
-.cinemateque-card {
+.coming-soon-carousel-inner {
     display: flex;
     flex-direction: row;
+}
+
+.coming-soon-card {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     scroll-snap-align: center;
     text-align: center;
 }
 
-.cinemateque-card > a > img {
+.coming-soon-card>a>img {
     height: 180px;
     width: 120px;
 }
 
-.cinemateque-poster {
+.coming-soon-poster {
     width: 100%;
     height: auto;
     border-radius: 5px;
 }
 
-.cinemateque-details {
+.coming-soon-details {
     font-size: 14px;
 }
 
-.cinemateque-title {
+.coming-soon-title {
     font-size: 1.2em;
     margin: 0;
     height: 40px;
@@ -52,16 +52,16 @@
     text-overflow: ellipsis;
 }
 
-.cinemateque-details a {
+.coming-soon-details a {
     color: #0073e6;
     text-decoration: none;
 }
 
-.cinemateque-details a:hover {
+.coming-soon-details a:hover {
     text-decoration: underline;
 }
 
-.cinemateque-placeholder {
+.coming-soon-placeholder {
     width: 160px;
     height: 225px;
     background-color: #e0e0e0;

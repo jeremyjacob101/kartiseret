@@ -56,6 +56,20 @@
     border-radius: 50px;
 }
 
+.divider-line-main {
+    width: 114%;
+    height: 3.5px;
+    margin: 8px;
+    margin-top: 0px !important;
+    background: linear-gradient(to right,
+            rgba(141, 141, 141, 0.03),
+            rgba(141, 141, 141, 0.7) 15%,
+            rgba(141, 141, 141, 1) 50%,
+            rgba(141, 141, 141, 0.7) 85%,
+            rgba(141, 141, 141, 0.03));
+    border-radius: 50px;
+}
+
 .movie-block {
     display: flex;
     width: 100%;
@@ -74,7 +88,9 @@
     align-content: flex-start;
     gap: 7px;
     padding: 10px;
-    min-width: 317px;
+    /**/
+    /* min-width: 317px; */
+    /**/
 }
 
 .each-showtime {

@@ -1,29 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
-import "../componentsCSS/Cinemateques.css";
+import "../componentsCSS/ComingSoons.css";
 
-const showtimes_csv = "/CSVs/05-11-24-cinemateques.csv";
+const showtimes_csv = "/CSVs/05-11-24-comingsoons.csv";
 const defaultPoster = "/images/defposter.jpeg";
 
-const cinematequeCities = {
-  HFCT: "Haifa",
-  JLMCT: "Jerusalem",
-  HRZCT: "Herziliya",
-  TLVCT: "Tel Aviv",
-};
-
-// Function to check if the showtime is valid
-const isValidShowtime = (date, time) => {
+// Function to check if the showtime date is valid
+const isValidShowtimeDate = (date) => {
+  if (!date) return false; // Ensure date is defined
   const [day, month, year] = date.split("/").map(Number);
-  const [hours, minutes] = time.split(":").map(Number);
-
-  const showtimeDate = new Date(year, month - 1, day, hours, minutes);
+  const showtimeDate = new Date(year, month - 1, day);
   const now = new Date();
 
   return showtimeDate >= now;
 };
 
-const Cinemateques = ({ selectedSnifs }) => {
+const ComingSoons = ({ selectedSnifs }) => {
   const [movies, setMovies] = useState([]);
   const [visibleMovies, setVisibleMovies] = useState([]);
 
@@ -36,14 +28,12 @@ const Cinemateques = ({ selectedSnifs }) => {
         dynamicTyping: true,
         complete: (results) => {
           const filteredMovies = results.data.filter((movie) => {
-            const cinema = movie.cinema;
-            const city = cinema ? cinematequeCities[cinema] : undefined;
-            const isSelected =
-              selectedSnifs.length === 0 || selectedSnifs.includes(city);
-
-            // Only include if showtime is valid
+            // Ensure all required fields are present and valid
             return (
-              city && isSelected && isValidShowtime(movie.date, movie.time)
+              movie.date &&
+              movie.title &&
+              movie.poster &&
+              isValidShowtimeDate(movie.date)
             );
           });
 
@@ -62,16 +52,14 @@ const Cinemateques = ({ selectedSnifs }) => {
 
   return (
     <>
-      <h2 className="cinemateque-header-name">
-        {movies.length > 0
-          ? `${cinematequeCities[movies[0].cinema]} Cinemateque`
-          : "Cinemateque"}
+      <h2 className="coming-soon-header-name">
+        <span>Coming Soon</span>
       </h2>
-      <div className="cinemateque-carousel-wrapper">
-        <div className="cinemateque-carousel">
-          <div className="cinemateque-carousel-inner">
+      <div className="coming-soon-carousel-wrapper">
+        <div className="coming-soon-carousel">
+          <div className="coming-soon-carousel-inner">
             {movies.map((movie, index) => {
-              const { date, time, title, year, href, poster } = movie;
+              const { date, title, poster } = movie;
               const isVisible = visibleMovies.includes(index);
               const posterSrc =
                 !poster || poster === "N/A" ? defaultPoster : poster;
@@ -79,15 +67,15 @@ const Cinemateques = ({ selectedSnifs }) => {
               return (
                 <div
                   key={index}
-                  className="cinemateque-card"
+                  className="coming-soon-card"
                   data-index={index}
                 >
                   {isVisible ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer">
+                    <a href="#" target="_blank" rel="noopener noreferrer">
                       <img
                         src={posterSrc}
                         alt={title}
-                        className="cinemateque-poster"
+                        className="coming-soon-poster"
                         loading="lazy"
                         onError={(e) => {
                           if (e.target.src !== defaultPoster) {
@@ -97,14 +85,11 @@ const Cinemateques = ({ selectedSnifs }) => {
                       />
                     </a>
                   ) : (
-                    <div className="cinemateque-placeholder">Loading...</div>
+                    <div className="coming-soon-placeholder">Loading...</div>
                   )}
-                  <div className="cinemateque-details">
-                    <h3 className="cinemateque-title">{title}</h3>
-                    <h3>({year})</h3>
-                    <p>
-                      {date} - {time}
-                    </p>
+                  <div className="coming-soon-details">
+                    <h3 className="coming-soon-title">{title}</h3>
+                    <p>{date}</p>
                   </div>
                 </div>
               );
@@ -116,4 +101,4 @@ const Cinemateques = ({ selectedSnifs }) => {
   );
 };
 
-export default Cinemateques;
+export default ComingSoons;

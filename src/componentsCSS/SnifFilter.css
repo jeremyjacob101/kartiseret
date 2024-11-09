@@ -1,8 +1,8 @@
 .snif-filter {
     margin-bottom: 10px;
-    position: fixed;
-    top: 40px;
-    right: 100px;
+    position: relative;
+    margin-left: 50px;
+    display: inline-block;
 }
 
 .snif-filter h4 {
@@ -12,11 +12,6 @@
 
 .snif-filter div {
     margin-bottom: 5px;
-}
-
-.snif-filter {
-    position: fixed;
-    display: inline-block;
 }
 
 .dropdown-button {
@@ -32,7 +27,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1;
+    z-index: 5;
     max-height: 290px;
     overflow-y: auto;
     background-color: white;
@@ -45,6 +40,7 @@
 
 .dropdown-item {
     padding: 5px;
+    font-size: 12px;
 }
 
 .dropdown-item label {

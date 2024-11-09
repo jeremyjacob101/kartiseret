@@ -75,6 +75,11 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     LC: "Lev Cinema",
   };
 
+  // Early return if no cinemas are available
+  if (availableCinemas.size === 0) {
+    return null;
+  }
+
   return (
     <div className="cinema-key">
       <div className="cinema-key-heading">Legend</div>

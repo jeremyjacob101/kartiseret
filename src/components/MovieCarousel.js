@@ -26,7 +26,9 @@ const isValidShowtime = (
   return (
     showtimeDate !== today ||
     showtimeMinutes <= 60 ||
-    showtimeMinutes >= currentMinutesSinceMidnight - 30
+    // MINUS 30 ???
+    // showtimeMinutes >= currentMinutesSinceMidnight - 30
+    showtimeMinutes >= currentMinutesSinceMidnight
   );
 };
 
@@ -118,7 +120,7 @@ const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
       </div>
 
       <div className="carousel-movie-list-area">
-        <BigChains movies={movies} />
+        <BigChains movies={movies} selectedSnifs={selectedSnifs} />
       </div>
     </div>
   );
