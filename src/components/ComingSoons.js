@@ -17,7 +17,6 @@ const isValidShowtimeDate = (date) => {
 
 const ComingSoons = ({ selectedSnifs }) => {
   const [movies, setMovies] = useState([]);
-  const [visibleMovies, setVisibleMovies] = useState([]);
 
   useEffect(() => {
     const loadShowtimeData = async () => {
@@ -38,7 +37,6 @@ const ComingSoons = ({ selectedSnifs }) => {
           });
 
           setMovies(filteredMovies);
-          setVisibleMovies(filteredMovies.map((_, index) => index));
         },
       });
     };
@@ -60,33 +58,14 @@ const ComingSoons = ({ selectedSnifs }) => {
           <div className="coming-soon-carousel-inner">
             {movies.map((movie, index) => {
               const { date, title, poster } = movie;
-              const isVisible = visibleMovies.includes(index);
-              const posterSrc =
-                !poster || poster === "N/A" ? defaultPoster : poster;
 
               return (
-                <div
-                  key={index}
-                  className="coming-soon-card"
-                  data-index={index}
-                >
-                  {isVisible ? (
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                      <img
-                        src={posterSrc}
-                        alt={title}
-                        className="coming-soon-poster"
-                        loading="lazy"
-                        onError={(e) => {
-                          if (e.target.src !== defaultPoster) {
-                            e.target.src = defaultPoster;
-                          }
-                        }}
-                      />
-                    </a>
-                  ) : (
-                    <div className="coming-soon-placeholder">Loading...</div>
-                  )}
+                <div key={index} className="coming-soon-card">
+                  <img
+                    src={poster || defaultPoster}
+                    alt={title}
+                    className="coming-soon-poster"
+                  />
                   <div className="coming-soon-details">
                     <h3 className="coming-soon-title">{title}</h3>
                     <p>{date}</p>

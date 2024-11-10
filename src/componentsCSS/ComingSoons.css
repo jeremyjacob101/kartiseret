@@ -28,7 +28,7 @@
     text-align: center;
 }
 
-.coming-soon-card>a>img {
+.coming-soon-card > img {
     height: 180px;
     width: 120px;
 }
@@ -41,6 +41,7 @@
 
 .coming-soon-details {
     font-size: 14px;
+    padding: 5px;
 }
 
 .coming-soon-title {
@@ -52,13 +53,8 @@
     text-overflow: ellipsis;
 }
 
-.coming-soon-details a {
-    color: #0073e6;
-    text-decoration: none;
-}
-
-.coming-soon-details a:hover {
-    text-decoration: underline;
+.coming-soon-details > p {
+    margin: 0px;
 }
 
 .coming-soon-placeholder {
