@@ -44,7 +44,7 @@
 }
 
 .divider-line {
-    width: 110%;
+    width: 65vw;
     height: 1.3px;
     margin: 8px;
     background: linear-gradient(to right,
@@ -57,7 +57,7 @@
 }
 
 .divider-line-main {
-    width: 114%;
+    width: 68vw;
     height: 3.5px;
     margin: 8px;
     margin-top: 0px !important;

@@ -14,7 +14,7 @@ const App = () => {
         <div className="main-sections-drop"></div>
       </div> */}
       <div class="testing-title-holder">
-        <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
+        {/* <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} /> */}
         <span>כרטיסרט</span>
         <SnifFilter
           selectedSnifs={selectedSnifs}
