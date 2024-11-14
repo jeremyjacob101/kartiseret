@@ -75,3 +75,8 @@ h6 {
   transform: scaleX(1.15);
   display: inline-block;
 }
+
+.testing-title-holder > img {
+  width: 30vw;
+  height: 10vw;
+}

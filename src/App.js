@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MovieCarousel from "./components/MovieCarousel";
-import CinemaColorKey from "./components/CinemaColorKey";
+// import CinemaColorKey from "./components/CinemaColorKey";
 import SnifFilter from "./components/SnifFilter";
 import ComingSoons from "./components/ComingSoons";
 
@@ -15,11 +15,8 @@ const App = () => {
       </div> */}
       <div class="testing-title-holder">
         {/* <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} /> */}
-        <span>כרטיסרט</span>
-        <SnifFilter
-          selectedSnifs={selectedSnifs}
-          setSelectedSnifs={setSelectedSnifs}
-        />
+        <img src="/images/kartiseretAiLogoTry1.jpeg" alt="כרטיסרט" />
+        <SnifFilter selectedSnifs={selectedSnifs} setSelectedSnifs={setSelectedSnifs} />
       </div>
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />
