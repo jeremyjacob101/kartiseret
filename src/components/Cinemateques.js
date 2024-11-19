@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/Cinemateques.css";
 
-const showtimes_csv = "/CSVs/17-11-24-cinemateques.csv";
+const showtimes_csv = "/CSVs/19-11-24-cinemateques.csv";
 const defaultPoster = "/images/defposter.jpeg";
 
 const cinematequeCities = {
