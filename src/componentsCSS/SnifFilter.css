@@ -5,6 +5,7 @@
     transform: translateX(100%);
     /* margin-left: 50px; */
     display: inline-block;
+    z-index: 20;
 }
 
 .snif-filter h4 {
@@ -29,7 +30,6 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 15;
     max-height: 290px;
     overflow-y: auto;
     background-color: white;
