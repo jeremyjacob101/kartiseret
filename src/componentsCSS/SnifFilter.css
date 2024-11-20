@@ -1,7 +1,7 @@
 .snif-filter {
-    margin-bottom: 10px;
     position: absolute;
     right: 25%;
+    top: 20%;
     transform: translateX(100%);
     display: inline-block;
     z-index: 20;
