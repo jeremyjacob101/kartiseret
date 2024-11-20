@@ -6,6 +6,7 @@ const showtimes_csv = "/CSVs/20-11-24-showtimes.csv";
 
 const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
   const [availableCinemas, setAvailableCinemas] = useState(new Set());
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // To control dropdown visibility
 
   const getFormattedDate = (dayOffset) => {
     const today = new Date();
@@ -31,14 +32,12 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
 
           results.data.forEach((showtime) => {
             if (!showtime.time) {
-              // Skip if time is missing or undefined
-              return;
+              return; // Skip if time is missing or undefined
             }
 
             const [hours, minutes] = showtime.time.split(":").map(Number);
             const showtimeMinutes = hours * 60 + minutes;
 
-            // Check if showtime matches the selected date, selected snif, and is in the future if today
             if (
               showtime.date === selectedDate &&
               (selectedSnifs.length === 0 ||
@@ -75,20 +74,31 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     LC: "Lev Cinema",
   };
 
-  // Early return if no cinemas are available
   if (availableCinemas.size === 0) {
     return null;
   }
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
   return (
-    <div className="cinema-key">
-      <div className="cinema-key-heading">Legend</div>
-      {Array.from(availableCinemas).map((cinema) => (
-        <div key={cinema} className="key-item">
-          <div className={`showtime-time ${cinemaClasses[cinema]}`}>19:30</div>
-          <span>{cinemaNames[cinema]}</span>
+    <div className="cinema-color-key">
+      <button onClick={toggleDropdown} className="dropdown-button">
+        Legend
+      </button>
+      {isDropdownOpen && (
+        <div className="dropdown-menu">
+          {Array.from(availableCinemas).map((cinema) => (
+            <div key={cinema} className="dropdown-item">
+              <div className={`showtime-time ${cinemaClasses[cinema]}`}>
+                19:30
+              </div>
+              <span>{cinemaNames[cinema]}</span>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };

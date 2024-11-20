@@ -1,57 +1,60 @@
-.cinema-key {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    margin-right: 60px;
-    /* position: fixed;
-    top: 20px;
-    right: 325px; */
-
-    border: 1px solid gray;
-    border-radius: 10px;
-    box-sizing: border-box;
-    padding: 10px;
+.cinema-color-key {
+    position: absolute;
+    left: 25%;
+    /* Positioned 25% to the left of the central title div */
+    transform: translateX(-100%);
+    display: inline-block;
+    z-index: 20;
 }
 
-.cinema-key-heading {
-    padding: 12px;
-    /* padding-bottom: 15px; */
-    font-size: 20px;
-    font-weight: bold;
-    align-items: center;
-    justify-content: center;
-    width: min-content;
-}
-
-.key-item {
-    display: flex;
-    align-items: center;
-}
-.cinema-key>.key-item>span {
-    font-weight: 400;
-    font-size: 17px;
-}
-
-.key-item .showtime-time {
-    width: 10px;
-    height: 10px;
-    padding: 1px;
-    margin-right: 10px;
-    margin-left: 10px;
-
-    padding: 5px 10px;
-    margin-top: 0px;
-    border-radius: 12px;
-    font-weight: bold;
+.dropdown-button {
+    padding: 8px 12px;
     font-size: 16px;
+    cursor: pointer;
+    background-color: #080461;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: white;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20;
+    /* Ensure it displays above other elements */
+    max-height: 290px;
+    overflow-y: auto;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+    padding: 5px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item .showtime-time {
+    margin-right: 10px;
     width: 50px;
     height: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 12px;
+    background-color: lightgray;
+    /* Optional default background color */
 }
 
-.key-item span {
+.dropdown-item span {
     font-weight: bold;
+    font-size: 14px;
 }

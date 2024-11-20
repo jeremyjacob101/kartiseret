@@ -3,7 +3,6 @@
     position: absolute;
     right: 25%;
     transform: translateX(100%);
-    /* margin-left: 50px; */
     display: inline-block;
     z-index: 20;
 }
@@ -21,9 +20,10 @@
     padding: 8px 12px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: #080461;
     border: 1px solid #ccc;
     border-radius: 4px;
+    color: white;
 }
 
 .dropdown-menu {
