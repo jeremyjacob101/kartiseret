@@ -6,7 +6,7 @@ const showtimes_csv = "/CSVs/20-11-24-showtimes.csv";
 
 const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
   const [availableCinemas, setAvailableCinemas] = useState(new Set());
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // To control dropdown visibility
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const getFormattedDate = (dayOffset) => {
     const today = new Date();
@@ -31,27 +31,35 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
           const cinemaSet = new Set();
 
           results.data.forEach((showtime) => {
-            if (!showtime.time) {
-              return; // Skip if time is missing or undefined
+            if (!showtime.time || !showtime.date) {
+              return; // Skip invalid rows
             }
 
             const [hours, minutes] = showtime.time.split(":").map(Number);
             const showtimeMinutes = hours * 60 + minutes;
 
+            const isSameDay = showtime.date === selectedDate;
+            const isEarlyNextDay =
+              showtime.date === getFormattedDate(dayOffset + 1);
+
             if (
-              showtime.date === selectedDate &&
-              (selectedSnifs.length === 0 ||
-                selectedSnifs.includes(showtime.snif)) &&
-              (showtime.date !== getFormattedDate(0) ||
-                showtimeMinutes >= currentTimeMinutes)
+              (isSameDay &&
+                (dayOffset !== 0 || showtimeMinutes >= currentTimeMinutes)) ||
+              (isEarlyNextDay && showtimeMinutes < 60)
             ) {
-              cinemaSet.add(showtime.cinema);
+              if (
+                selectedSnifs.length === 0 ||
+                selectedSnifs.includes(showtime.snif)
+              ) {
+                cinemaSet.add(showtime.cinema);
+              }
             }
           });
 
           setAvailableCinemas(cinemaSet);
         },
       });
+
     };
 
     loadShowtimeData();
