@@ -56,7 +56,7 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
   return (
     <div className="snif-filter">
       <button onClick={toggleDropdown} className="dropdown-button-snifs">
-        Filter by Location
+        Select City
       </button>
       {isDropdownOpen && (
         <div className="dropdown-menu-snifs">
