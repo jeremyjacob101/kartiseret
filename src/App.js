@@ -14,9 +14,12 @@ const App = () => {
         <div className="main-sections-drop"></div>
       </div> */}
       <div class="testing-title-holder">
-        <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
+        <SnifFilter
+          selectedSnifs={selectedSnifs}
+          setSelectedSnifs={setSelectedSnifs}
+        />
         <img src="/images/kartiseretAiLogoTry1.jpeg" alt="כרטיסרט" />
-        <SnifFilter selectedSnifs={selectedSnifs} setSelectedSnifs={setSelectedSnifs} />
+        <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
       </div>
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />

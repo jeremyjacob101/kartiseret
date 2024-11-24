@@ -1,13 +1,13 @@
 .cinema-color-key {
     position: absolute;
-    left: 25%;
+    right: 15%;
     top: 20%;
     transform: translateX(-100%);
     display: inline-block;
     z-index: 20;
 }
 
-.dropdown-button {
+.dropdown-button-legend {
     padding: 8px 12px;
     font-size: 16px;
     cursor: pointer;
@@ -17,30 +17,30 @@
     color: white;
 }
 
-.dropdown-menu {
+.dropdown-menu-legend {
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 20;
-    /* Ensure it displays above other elements */
+    min-width: 180px;
     max-height: 290px;
     overflow-y: auto;
-    background-color: white;
-    color: black;
+    background-color: rgb(24, 23, 23);
+    color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.dropdown-item {
+.dropdown-item-legend {
     padding: 5px;
     font-size: 12px;
     display: flex;
     align-items: center;
 }
 
-.dropdown-item .showtime-time {
+.dropdown-item-legend .showtime-time {
     margin-right: 10px;
     width: 50px;
     height: 25px;
@@ -54,7 +54,7 @@
     /* Optional default background color */
 }
 
-.dropdown-item span {
+.dropdown-item-legend span {
     font-weight: bold;
     font-size: 14px;
 }

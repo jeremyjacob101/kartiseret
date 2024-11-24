@@ -45,13 +45,8 @@ const snifs = [
 const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleSnifChange = (event) => {
-    const { value, checked } = event.target;
-    if (checked) {
-      setSelectedSnifs((prev) => [...prev, value]); // Add snif to the selection
-    } else {
-      setSelectedSnifs((prev) => prev.filter((snif) => snif !== value)); // Remove snif from the selection
-    }
+  const handleSnifClick = (snif) => {
+    setSelectedSnifs([snif]); // Ensure only one snif is selected at a time
   };
 
   const toggleDropdown = () => {
@@ -60,22 +55,20 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
 
   return (
     <div className="snif-filter">
-      <button onClick={toggleDropdown} className="dropdown-button">
+      <button onClick={toggleDropdown} className="dropdown-button-snifs">
         Filter by Location
       </button>
       {isDropdownOpen && (
-        <div className="dropdown-menu">
+        <div className="dropdown-menu-snifs">
           {snifs.map((snif) => (
-            <div key={snif} className="dropdown-item">
-              <label>
-                <input
-                  type="checkbox"
-                  value={snif}
-                  checked={selectedSnifs.includes(snif)}
-                  onChange={handleSnifChange}
-                />
-                {snif}
-              </label>
+            <div
+              key={snif}
+              className={`dropdown-item-snifs ${
+                selectedSnifs.includes(snif) ? "checked" : ""
+              }`}
+              onClick={() => handleSnifClick(snif)}
+            >
+              {snif}
             </div>
           ))}
         </div>

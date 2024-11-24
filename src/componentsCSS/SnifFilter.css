@@ -1,6 +1,6 @@
 .snif-filter {
     position: absolute;
-    right: 25%;
+    left: 5%;
     top: 20%;
     transform: translateX(100%);
     display: inline-block;
@@ -16,7 +16,7 @@
     margin-bottom: 5px;
 }
 
-.dropdown-button {
+.dropdown-button-snifs {
     padding: 8px 12px;
     font-size: 16px;
     cursor: pointer;
@@ -26,26 +26,53 @@
     color: white;
 }
 
-.dropdown-menu {
+.dropdown-menu-snifs {
     position: absolute;
     top: 100%;
     left: 0;
+    min-width: 140px;
     max-height: 290px;
     overflow-y: auto;
-    background-color: white;
-    color: black;
+    background-color: rgb(24, 23, 23);
+    color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 10px;
+    padding: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.dropdown-item {
-    padding: 5px;
-    font-size: 12px;
-    z-index: 14;
+.dropdown-item-snifs {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: rgb(40, 40, 40);
+    /* Default unselected background */
+    color: white;
+    /* Default text color */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transitions */
 }
 
-.dropdown-item label {
-    cursor: pointer;
+/* Hover effect for unselected items */
+.dropdown-item-snifs:hover {
+    background-color: rgb(60, 60, 60);
+    /* Slightly lighter on hover */
+}
+
+/* Style for selected (checked) item */
+.dropdown-item-snifs.checked {
+    background-color: #797977;
+    /* Yellow background for selected item */
+    color: white;
+    /* Black text for contrast */
+    font-weight: bold;
+    /* Optional: Make the text bold for emphasis */
+}
+
+/* Optional: Remove the bottom margin for the last item */
+.dropdown-item-snifs:last-child {
+    margin-bottom: 0;
 }

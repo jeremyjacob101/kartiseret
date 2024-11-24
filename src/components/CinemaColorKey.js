@@ -92,13 +92,13 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
 
   return (
     <div className="cinema-color-key">
-      <button onClick={toggleDropdown} className="dropdown-button">
+      <button onClick={toggleDropdown} className="dropdown-button-legend">
         Legend
       </button>
       {isDropdownOpen && (
-        <div className="dropdown-menu">
+        <div className="dropdown-menu-legend">
           {Array.from(availableCinemas).map((cinema) => (
-            <div key={cinema} className="dropdown-item">
+            <div key={cinema} className="dropdown-item-legend">
               <div className={`showtime-time ${cinemaClasses[cinema]}`}>
                 19:30
               </div>
