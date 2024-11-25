@@ -3,17 +3,23 @@ import MovieCarousel from "./components/MovieCarousel";
 import CinemaColorKey from "./components/CinemaColorKey";
 import SnifFilter from "./components/SnifFilter";
 import ComingSoons from "./components/ComingSoons";
+// import useDeviceType from "./utils/useDeviceType";
 
 const App = () => {
   const [selectedSnifs, setSelectedSnifs] = useState(["Jerusalem"]);
   const [dayOffset, setDayOffset] = useState(0);
+
+  // const isMobile = useDeviceType();
+  // if (isMobile) {
+  //   const mobileCSS = true;
+  // }
 
   return (
     <>
       {/* <div className="home">
         <div className="main-sections-drop"></div>
       </div> */}
-      <div class="testing-title-holder">
+      <div className="testing-title-holder">
         <SnifFilter
           selectedSnifs={selectedSnifs}
           setSelectedSnifs={setSelectedSnifs}

@@ -75,6 +75,28 @@ h6 {
   /* MAKE IT STAY AT TOP ALWAYS */
 }
 
+@media (max-width: 700px) {
+  .testing-title-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: 'Tahoma';
+    font-size: 45px;
+
+    /* MAKE IT STAY AT TOP ALWAYS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 30;
+    background: linear-gradient(to bottom, rgb(164, 74, 182) 0%, rgba(163, 48, 186, 0.75) 75%, rgba(183, 46, 210, 0) 100%);
+    padding-top: 10px;
+    padding-bottom: 40px;
+    /* MAKE IT STAY AT TOP ALWAYS */
+  }
+}
+
 .testing-title-holder>span {
   background: linear-gradient(90deg, rgb(120, 6, 162), rgb(60, 9, 171));
   -webkit-background-clip: text;
