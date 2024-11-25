@@ -1,21 +1,3 @@
-/* .main-carousel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    margin: 0 auto;
-    font-size: 2rem;
-}
-
-.testing-title-1 {
-    font-size: 1.2rem;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-} */
-
 .carousel-current-date {
     margin: auto;
 }
@@ -25,7 +7,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* width: 30%; */
     padding: 10px;
 }
 
