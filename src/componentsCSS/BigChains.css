@@ -76,6 +76,7 @@
     flex-direction: row;
     background: none;
 }
+
 @media (max-width: 700px) {
     .movie-block {
         flex-direction: column;
