@@ -75,6 +75,28 @@ h6 {
   /* MAKE IT STAY AT TOP ALWAYS */
 }
 
+.testing-title-holder>span {
+  background: linear-gradient(90deg, rgb(120, 6, 162), rgb(60, 9, 171));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+
+  letter-spacing: 1px;
+  transform: scaleX(1.15);
+  display: inline-block;
+}
+
+.testing-title-holder>img {
+  width: 27vw;
+  height: 9vw;
+  border-radius: 25px;
+}
+
+/**/
+/**/
+/**/
+
 @media (max-width: 700px) {
   .testing-title-holder {
     display: flex;
@@ -95,22 +117,4 @@ h6 {
     padding-bottom: 40px;
     /* MAKE IT STAY AT TOP ALWAYS */
   }
-}
-
-.testing-title-holder>span {
-  background: linear-gradient(90deg, rgb(120, 6, 162), rgb(60, 9, 171));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-
-  letter-spacing: 1px;
-  transform: scaleX(1.15);
-  display: inline-block;
-}
-
-.testing-title-holder>img {
-  width: 27vw;
-  height: 9vw;
-  border-radius: 25px;
 }
