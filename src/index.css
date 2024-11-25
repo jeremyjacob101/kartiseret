@@ -48,12 +48,12 @@ h6 {
   display: flex;
 }
 
-.main-sections-drop {
+/* .main-sections-drop {
   width: 90%;
   height: 90%;
   background-color: rgb(64, 77, 77);
   border-radius: 5px
-}
+} */
 
 .testing-title-holder {
   display: flex;
