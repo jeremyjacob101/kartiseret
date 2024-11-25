@@ -58,3 +58,19 @@
     font-weight: bold;
     font-size: 14px;
 }
+
+/**/
+/* MOBILE STYLINGS */
+/**/
+
+@media (max-width: 700px) {
+    .cinema-color-key {
+        top: 1%;
+        right: 26%;
+    }
+
+    .dropdown-menu-legend {
+        right: 0;
+        left: auto;
+    }
+}

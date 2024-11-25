@@ -76,3 +76,14 @@
 .dropdown-item-snifs:last-child {
     margin-bottom: 0;
 }
+
+/**/
+/* MOBILE STYLINGS */
+/**/
+
+@media (max-width: 700px) {
+    .snif-filter {
+        top: 1%;
+        left: 29%;
+    }
+}

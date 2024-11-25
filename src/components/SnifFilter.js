@@ -47,6 +47,7 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
 
   const handleSnifClick = (snif) => {
     setSelectedSnifs([snif]); // Ensure only one snif is selected at a time
+    setIsDropdownOpen(false); // Close the dropdown after selection
   };
 
   const toggleDropdown = () => {
