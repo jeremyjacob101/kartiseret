@@ -1,7 +1,6 @@
 // import React, { useState } from "react";
 import React from "react";
 import "../componentsCSS/BigChains.css";
-import Cinemateques from "../components/Cinemateques";
 
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
@@ -73,11 +72,10 @@ const BigChains = ({ movies, selectedSnifs }) => {
   return (
     <>
       <div className="movie-list">
-        <Cinemateques selectedSnifs={selectedSnifs} />
         {/* Iterate through each title in the sorted movie titles */}
         {sortedTitles.map((title, index) => (
           <>
-            {index === 0 && <div className="divider-line-main"></div>}
+            {/* {index === 0 && <div className="divider-line-main"></div>} */}
             {index !== 0 && <div className="divider-line"></div>}
             {/* <div className="divider-line-main"></div> */}
             <div className="movie-block" key={title}>

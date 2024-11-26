@@ -3,6 +3,7 @@ import MovieCarousel from "./components/MovieCarousel";
 import CinemaColorKey from "./components/CinemaColorKey";
 import SnifFilter from "./components/SnifFilter";
 import ComingSoons from "./components/ComingSoons";
+import Cinemateques from "./components/Cinemateques";
 // import useDeviceType from "./utils/useDeviceType";
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
       </div>
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />
+        <Cinemateques selectedSnifs={selectedSnifs} />
         <MovieCarousel
           selectedSnifs={selectedSnifs}
           setDayOffset={setDayOffset}
