@@ -1,7 +1,7 @@
 .cinema-color-key {
     position: absolute;
-    right: 25%;
-    top: 20%;
+    right: 26%;
+    top: 6%;
     transform: translateX(100%);
     display: inline-block;
     z-index: 20;
