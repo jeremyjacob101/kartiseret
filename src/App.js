@@ -31,10 +31,7 @@ const App = () => {
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />
         <Cinemateques selectedSnifs={selectedSnifs} />
-        <MovieCarousel
-          selectedSnifs={selectedSnifs}
-          setDayOffset={setDayOffset}
-        />
+        <MovieCarousel selectedSnifs={selectedSnifs} setDayOffset={setDayOffset} />
       </div>
     </>
   );
