@@ -79,35 +79,39 @@ const BigChains = ({ movies, selectedSnifs }) => {
             {index !== 0 && <div className="divider-line"></div>}
             {/* <div className="divider-line-main"></div> */}
             <div className="movie-block" key={title}>
-              {/* Movie poster section */}
-              <div className="movie-poster-sub-block">
-                <img
-                  src={groupedMovies[title][0].poster}
-                  alt={`${title} poster`}
-                />
-              </div>
+              <div className="movie-poster-and-info-section">
+                {/* Movie poster section */}
+                <div className="movie-poster-sub-block">
+                  <img
+                    src={groupedMovies[title][0].poster}
+                    alt={`${title} poster`}
+                  />
+                </div>
 
-              {/* Movie information section */}
-              <div className="movie-info-sub-block">
-                <div className="movie-top-sub-block">
-                  <div className="movie-title">{title}</div>
-                  <div className="movie-runtime">
-                    {groupedMovies[title][0].runtime} minutes
+                {/* Movie information section */}
+                <div className="movie-info-sub-block">
+                  <div className="movie-top-sub-block">
+                    <div className="movie-title">{title}</div>
+                    <div className="movie-runtime">
+                      {groupedMovies[title][0].runtime} minutes
+                    </div>
+                  </div>
+                  <div className="movie-ratings-block">
+                    <div className="movie-ratings-sub-block-imdb">
+                      <img src="/images/imdbLogo.png" alt="IMDB logo" />
+                      {groupedMovies[title][0].imdbRating}/10 (
+                      {groupedMovies[title][0].imdbVotes})
+                    </div>
+                    <div className="movie-ratings-sub-block-rt">
+                      <img
+                        src="/images/rtLogo.png"
+                        alt="Rotten Tomatoes logo"
+                      />
+                      {groupedMovies[title][0].rtRating}%
+                    </div>
                   </div>
                 </div>
-                <div className="movie-ratings-block">
-                  <div className="movie-ratings-sub-block-imdb">
-                    <img src="/images/imdbLogo.png" alt="IMDB logo" />
-                    {groupedMovies[title][0].imdbRating}/10 (
-                    {groupedMovies[title][0].imdbVotes})
-                  </div>
-                  <div className="movie-ratings-sub-block-rt">
-                    <img src="/images/rtLogo.png" alt="Rotten Tomatoes logo" />
-                    {groupedMovies[title][0].rtRating}%
-                  </div>
-                </div>
               </div>
-
               {/* Showtimes section */}
               <div className="movie-times-sub-block">
                 {/* Iterate through each showtime for the current movie */}

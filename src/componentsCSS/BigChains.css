@@ -36,13 +36,6 @@
     color: #d8d8d8;
 }
 
-.movie-list {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .divider-line {
     width: 110%;
     height: 1.3px;
@@ -70,17 +63,18 @@
     border-radius: 50px;
 }
 
+.movie-list {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .movie-block {
     display: flex;
     width: 100%;
     flex-direction: row;
     background: none;
-}
-
-@media (max-width: 700px) {
-    .movie-block {
-        flex-direction: column;
-    }
 }
 
 .movie-times-sub-block {
@@ -141,6 +135,11 @@
     background-color: transparent;
 }
 
+.movie-poster-and-info-section {
+    display: flex;
+    flex-direction: row;
+}
+
 .movie-poster-sub-block>img {
     width: 120px;
     height: 180px;
@@ -194,4 +193,10 @@
     font-size: 25px;
     font-weight: 375;
     margin-bottom: 10px;
+}
+
+@media (max-width: 700px) {
+    .movie-block {
+        flex-direction: column;
+    }
 }
