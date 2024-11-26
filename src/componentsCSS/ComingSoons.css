@@ -29,7 +29,7 @@
     text-align: center;
 }
 
-.coming-soon-card > img {
+.coming-soon-card>img {
     height: 180px;
     width: 120px;
 }
@@ -54,7 +54,7 @@
     text-overflow: ellipsis;
 }
 
-.coming-soon-details > p {
+.coming-soon-details>p {
     margin: 0px;
 }
 
@@ -69,6 +69,8 @@
     color: #666;
 }
 
-.coming-soon-header-name {
-    margin-top: 15px;
+@media (max-width: 700px) {
+    .coming-soon-carousel-wrapper {
+        width: 350px;
+    }
 }

@@ -28,7 +28,7 @@
     text-align: center;
 }
 
-.cinemateque-card > a > img {
+.cinemateque-card>a>img {
     height: 180px;
     width: 120px;
 }
@@ -80,4 +80,10 @@
     padding: 20px;
     padding-bottom: 0px !important;
     width: 1000px;
+}
+
+@media (max-width: 700px) {
+    .cinemateque-section {
+        width: 290px;
+    }
 }
