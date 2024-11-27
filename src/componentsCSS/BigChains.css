@@ -154,7 +154,7 @@
 }
 
 .movie-info-sub-block {
-    width: 250px;
+    width: 225px;
     height: 170px;
     padding: 10px;
     padding-top: 13px;
@@ -180,13 +180,15 @@
 .movie-ratings-sub-block-imdb>img {
     width: 30px;
     height: 15px;
-    padding-right: 10px;
+    padding-right: 5px;
+    margin-bottom: -1px;
 }
 
 .movie-ratings-sub-block-rt>img {
     width: 20px;
     height: 15px;
-    padding-right: 5px;
+    padding-right: 1px;
+    margin-bottom: -1px;
 }
 
 .movie-title {
@@ -198,5 +200,24 @@
 @media (max-width: 700px) {
     .movie-block {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .movie-times-sub-block {
+        width: 117px;
+    }
+
+    .movie-list {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .movie-info-sub-block {
+        padding-left: 2px;
+        width: 215px;
+    }
+
+    .divider-line {
+        width: 99%;
     }
 }

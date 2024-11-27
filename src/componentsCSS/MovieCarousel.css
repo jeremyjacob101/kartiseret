@@ -24,3 +24,10 @@
 .carousel-movie-list-area {
     width: 100%;
 }
+
+@media (max-width: 700px) {
+    .main-carousel {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
