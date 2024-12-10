@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/ComingSoons.css";
 
-const showtimes_csv = "/CSVs/03-12-24-comingsoons.csv";
+const showtimes_csv = "/CSVs/10-12-24-comingsoons.csv";
 const defaultPoster = "/images/defposter.jpeg";
 
 // Function to check if the showtime date is valid
@@ -65,6 +65,10 @@ const ComingSoons = ({ selectedSnifs }) => {
                     src={poster || defaultPoster}
                     alt={title}
                     className="coming-soon-poster"
+                    onError={(e) => {
+                      e.target.onerror = null; // Prevent infinite loop in case default poster also fails
+                      e.target.src = defaultPoster;
+                    }}
                   />
                   <div className="coming-soon-details">
                     <h3 className="coming-soon-title">{title}</h3>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/Cinemateques.css";
 
-const showtimes_csv = "/CSVs/03-12-24-cinemateques.csv";
+const showtimes_csv = "/CSVs/10-12-24-cinemateques.csv";
 const defaultPoster = "/images/defposter.jpeg";
 
 const cinematequeCities = {
@@ -88,6 +88,10 @@ const Cinemateques = ({ selectedSnifs }) => {
                           src={posterSrc || defaultPoster}
                           alt={title}
                           className="cinemateque-poster"
+                          onError={(e) => {
+                            e.target.onerror = null; // Prevent infinite loop in case default poster also fails
+                            e.target.src = defaultPoster;
+                          }}
                         />
                       </a>
                       <div className="cinemateque-details">

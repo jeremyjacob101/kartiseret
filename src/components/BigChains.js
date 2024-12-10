@@ -2,6 +2,8 @@
 import React from "react";
 import "../componentsCSS/BigChains.css";
 
+const defaultPoster = "/images/defposter.jpeg";
+
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
 
@@ -85,6 +87,10 @@ const BigChains = ({ movies, selectedSnifs }) => {
                   <img
                     src={groupedMovies[title][0].poster}
                     alt={`${title} poster`}
+                    onError={(e) => {
+                      e.target.onerror = null; // Prevent infinite loop in case default poster also fails
+                      e.target.src = defaultPoster;
+                    }}
                   />
                 </div>
 
