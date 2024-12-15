@@ -89,6 +89,15 @@
     /**/
 }
 
+.by-theater-movie-times-sub-block {
+    display: flex;
+    flex-direction: column;
+    /* Stack theaters vertically */
+    gap: 20px;
+    /* Space between each theater */
+    padding: 10px;
+}
+
 .each-showtime {
     display: inline-flex;
     flex-direction: column;
@@ -219,13 +228,25 @@
     margin-right: 10px;
 }
 
+/* Showtimes inside each theater block maintain original layout */
+.by-theater-showtimes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 7px;
+    min-width: 317px;
+}
+
+/* Theater block contains title and showtimes */
 .theater-block {
-    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .theater-title {
-    font-weight: bold;
     font-size: 18px;
+    font-weight: bold;
     margin-bottom: 5px;
 }
 

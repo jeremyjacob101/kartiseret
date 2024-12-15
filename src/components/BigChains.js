@@ -6,6 +6,16 @@ const imdbLogo = "/images/imdbLogo.png";
 const rtLogo = "/images/rtLogo.png";
 const dropdownIcon = "/icons/more-horizontal.svg"; // Replace with your SVG path
 
+// Dictionary for full theater names
+const theaterNames = {
+  LC: "Lev Cinema",
+  HC: "Hot Cinema",
+  CC: "Cinema City",
+  YP: "Yes Planet",
+  ML: "MovieLand",
+  RH: "Rav Hen",
+};
+
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
 
@@ -168,28 +178,34 @@ const BigChains = ({ movies }) => {
             </div>
 
             {/* Showtimes */}
-            <div className="movie-times-sub-block">
+            <div
+              className={
+                sortByTheater
+                  ? "by-theater-movie-times-sub-block"
+                  : "movie-times-sub-block"
+              }
+            >
               {sortByTheater
                 ? Object.entries(
                     groupShowtimesByTheater(groupedMovies[title])
                   ).map(([cinema, showtimes]) => (
                     <div key={cinema} className="theater-block">
-                      <div
-                        className={`theater-title ${getCinemaClass(cinema)}`}
-                      >
-                        {cinema}
+                      <div className={`theater-title`}>
+                        {theaterNames[cinema] || cinema}
                       </div>
-                      {showtimes.map((showtime, index) => (
-                        <div className="each-showtime" key={index}>
-                          <div
-                            className={`showtime-time ${getCinemaClass(
-                              showtime.cinema
-                            )}`}
-                          >
-                            {showtime.time}
+                      <div className="by-theater-showtimes">
+                        {showtimes.map((showtime, index) => (
+                          <div className="each-showtime" key={index}>
+                            <div
+                              className={`showtime-time ${getCinemaClass(
+                                showtime.cinema
+                              )}`}
+                            >
+                              {showtime.time}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   ))
                 : groupedMovies[title].map((showtime, index) => (
