@@ -112,11 +112,17 @@ const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
   return (
     <div className="main-carousel">
       <div className="carousel-controls">
-        <button onClick={handlePrevDay} disabled={dayOffsetLocal === 0}>
+        <button
+          className="previous-day-button"
+          onClick={handlePrevDay}
+          disabled={dayOffsetLocal === 0}
+        >
           Previous
         </button>
         <div className="carousel-current-date">{offsatDay}</div>
-        <button onClick={handleNextDay}>Next</button>
+        <button className="next-day-button" onClick={handleNextDay}>
+          Next
+        </button>
       </div>
 
       <div className="carousel-movie-list-area">

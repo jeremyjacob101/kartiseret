@@ -3,6 +3,9 @@ import Papa from "papaparse";
 import "../componentsCSS/Cinemateques.css";
 
 const showtimes_csv = "/CSVs/10-12-24-cinemateques.csv";
+
+const ChevronUp = "/icons/chevron-up.svg";
+const ChevronDown = "/icons/chevron-down.svg";
 const defaultPoster = "/images/defposter.jpeg";
 
 const cinematequeCities = {
@@ -10,7 +13,7 @@ const cinematequeCities = {
   JLMCT: "Jerusalem",
   HRZCT: "Herziliya",
   TLVCT: "Tel Aviv",
-  JAFC: "Tel Aviv",
+  JAFC: "Tel Aviv"
 };
 
 // Function to check if the showtime is valid
@@ -26,6 +29,7 @@ const isValidShowtime = (date, time) => {
 
 const Cinemateques = ({ selectedSnifs }) => {
   const [cinemaMovies, setCinemaMovies] = useState({});
+  const [openSections, setOpenSections] = useState({});
 
   useEffect(() => {
     const loadShowtimeData = async () => {
@@ -58,6 +62,13 @@ const Cinemateques = ({ selectedSnifs }) => {
     loadShowtimeData();
   }, [selectedSnifs]);
 
+  const toggleSection = (cinema) => {
+    setOpenSections((prevState) => ({
+      ...prevState,
+      [cinema]: !prevState[cinema],
+    }));
+  };
+
   if (!Object.keys(cinemaMovies).length) {
     return null;
   }
@@ -66,14 +77,26 @@ const Cinemateques = ({ selectedSnifs }) => {
     <>
       {Object.entries(cinemaMovies).map(([cinema, movies]) => (
         <div key={cinema} className="cinemateque-section">
-          <h2 className="cinemateque-header-name">
+          <h2
+            className="cinemateque-header-name"
+            onClick={() => toggleSection(cinema)}
+          >
             <span>
               {cinema === "JAFC"
                 ? "Jaffa Cinema"
                 : `${cinematequeCities[cinema]} Cinemateque`}
             </span>
+            <img
+              src={openSections[cinema] ? ChevronUp : ChevronDown}
+              alt={openSections[cinema] ? "Close" : "Open"}
+              className="cinemateque-chevron"
+            />
           </h2>
-          <div className="cinemateque-carousel-wrapper">
+          <div
+            className={`cinemateque-carousel-wrapper ${
+              openSections[cinema] ? "open" : "closed"
+            }`}
+          >
             <div className="cinemateque-carousel">
               <div className="cinemateque-carousel-inner">
                 {movies.map((movie, index) => {
@@ -88,6 +111,7 @@ const Cinemateques = ({ selectedSnifs }) => {
                           src={posterSrc || defaultPoster}
                           alt={title}
                           className="cinemateque-poster"
+                          loading="lazy"
                           onError={(e) => {
                             e.target.onerror = null; // Prevent infinite loop in case default poster also fails
                             e.target.src = defaultPoster;

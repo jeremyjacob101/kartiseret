@@ -197,6 +197,38 @@
     margin-bottom: 10px;
 }
 
+.by-theater-dropdown-container {
+    /* position: relative; */
+}
+
+.by-theater-dropdown-icon {
+    cursor: pointer;
+    width: 20px;
+}
+
+.by-theater-dropdown-menu {
+    position: absolute;
+    background-color: rgb(36, 35, 35);
+    width: 160px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 10;
+}
+.by-theater-dropdown-menu > label > input {
+    margin-right: 10px;
+}
+
+.theater-block {
+    margin-top: 10px;
+}
+
+.theater-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
 @media (max-width: 700px) {
     .movie-block {
         flex-direction: column;

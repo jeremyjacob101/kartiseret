@@ -1,8 +1,8 @@
-// import React, { useState } from "react";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../componentsCSS/BigChains.css";
 
 const defaultPoster = "/images/defposter.jpeg";
+const dropdownIcon = "/icons/more-horizontal.svg"; // Replace with your SVG path
 
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
@@ -16,7 +16,6 @@ const groupShowtimesByTitle = (movies) => {
       cinema: movie.cinema,
       type: movie.type,
       poster: movie.poster,
-      // snif: movie.snif,
       runtime: movie.runtime,
       popularity: movie.popularity,
       imdbRating: movie.imdbRating,
@@ -25,18 +24,13 @@ const groupShowtimesByTitle = (movies) => {
     });
   });
 
-  // Order movie times chronologically (includes midnight showings)
   Object.keys(groupedMovies).forEach((title) => {
     groupedMovies[title].sort((a, b) => {
       const getMinutes = (time) => {
         const [hours, minutes] = time.split(":").map(Number);
         return hours * 60 + minutes;
       };
-
-      return (
-        (getMinutes(a.time) <= 60) - (getMinutes(b.time) <= 60) ||
-        getMinutes(a.time) - getMinutes(b.time)
-      );
+      return getMinutes(a.time) - getMinutes(b.time);
     });
   });
 
@@ -62,82 +56,126 @@ const getCinemaClass = (cinema) => {
   }
 };
 
-const areFirstFiveShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
+const groupShowtimesByTheater = (showtimes) => {
+  const groupedByTheater = {};
 
-const BigChains = ({ movies, selectedSnifs }) => {
+  showtimes.forEach((showtime) => {
+    if (!groupedByTheater[showtime.cinema]) {
+      groupedByTheater[showtime.cinema] = [];
+    }
+    groupedByTheater[showtime.cinema].push(showtime);
+  });
+
+  Object.values(groupedByTheater).forEach((group) =>
+    group.sort((a, b) => {
+      const getMinutes = (time) => {
+        const [hours, minutes] = time.split(":").map(Number);
+        return hours * 60 + minutes;
+      };
+      return getMinutes(a.time) - getMinutes(b.time);
+    })
+  );
+
+  return groupedByTheater;
+};
+
+const BigChains = ({ movies }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [sortByTheater, setSortByTheater] = useState(false);
+  const dropdownRef = useRef(null);
+
   const groupedMovies = groupShowtimesByTitle(movies);
   const sortedTitles = Object.keys(groupedMovies).sort(
     (a, b) => groupedMovies[b][0].popularity - groupedMovies[a][0].popularity
   );
 
-  return (
-    <>
-      <div className="movie-list">
-        {/* Iterate through each title in the sorted movie titles */}
-        {sortedTitles.map((title, index) => (
-          <>
-            {/* {index === 0 && <div className="divider-line-main"></div>} */}
-            {index !== 0 && <div className="divider-line"></div>}
-            {/* <div className="divider-line-main"></div> */}
-            <div className="movie-block" key={title}>
-              <div className="movie-poster-and-info-section">
-                {/* Movie poster section */}
-                <div className="movie-poster-sub-block">
-                  <img
-                    src={groupedMovies[title][0].poster}
-                    alt={`${title} poster`}
-                    onError={(e) => {
-                      e.target.onerror = null; // Prevent infinite loop in case default poster also fails
-                      e.target.src = defaultPoster;
-                    }}
-                  />
-                </div>
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
-                {/* Movie information section */}
-                <div className="movie-info-sub-block">
-                  <div className="movie-top-sub-block">
-                    <div className="movie-title">{title}</div>
-                    <div className="movie-runtime">
-                      {groupedMovies[title][0].runtime} minutes
-                    </div>
-                  </div>
-                  <div className="movie-ratings-block">
-                    <div className="movie-ratings-sub-block-imdb">
-                      <img src="/images/imdbLogo.png" alt="IMDB logo" />
-                      {groupedMovies[title][0].imdbRating}/10 (
-                      {groupedMovies[title][0].imdbVotes})
-                    </div>
-                    <div className="movie-ratings-sub-block-rt">
-                      <img
-                        src="/images/rtLogo.png"
-                        alt="Rotten Tomatoes logo"
-                      />
-                      {groupedMovies[title][0].rtRating}%
-                    </div>
-                  </div>
+  return (
+    <div className="movie-list">
+      {/* Dropdown Button */}
+      <div className="by-theater-dropdown-container" ref={dropdownRef}>
+        <img
+          src={dropdownIcon}
+          alt="Options"
+          className="by-theater-dropdown-icon"
+          onClick={() => setShowDropdown((prev) => !prev)}
+        />
+        {showDropdown && (
+          <div className="by-theater-dropdown-menu">
+            <label>
+              <input
+                type="checkbox"
+                checked={sortByTheater}
+                onChange={() => {
+                  setSortByTheater((prev) => !prev);
+                  setShowDropdown(false); // Close dropdown after selection
+                }}
+              />
+              Display by theater
+            </label>
+          </div>
+        )}
+      </div>
+
+      {/* Movies */}
+      {sortedTitles.map((title, index) => (
+        <React.Fragment key={title}>
+          {/* Divider Lines */}
+          {index !== 0 && <div className="divider-line"></div>}
+          <div className="movie-block">
+            <div className="movie-poster-and-info-section">
+              <div className="movie-poster-sub-block">
+                <img
+                  src={groupedMovies[title][0].poster || defaultPoster}
+                  alt={`${title} poster`}
+                  onError={(e) => (e.target.src = defaultPoster)}
+                />
+              </div>
+              <div className="movie-info-sub-block">
+                <div className="movie-title">{title}</div>
+                <div className="movie-runtime">
+                  {groupedMovies[title][0].runtime} minutes
                 </div>
               </div>
-              {/* Showtimes section */}
-              <div className="movie-times-sub-block">
-                {/* Iterate through each showtime for the current movie */}
-                {groupedMovies[title].map((showtime, index) => (
-                  // Each individual showtime block
-                  <div
-                    className={`each-showtime ${
-                      areFirstFiveShowtimesRegular(groupedMovies[title]) &&
-                      index < 4
-                        ? "smaller-showtime" // Apply smaller height if conditions met
-                        : ""
-                    }`}
-                    key={index}
-                  >
-                    <div className="showtime-background">
-                      {/* Display the type if it's not "Regular" */}
-                      {showtime.type !== "R" && (
-                        <div className="showtime-type">{showtime.type}</div>
-                      )}
-                      {/* Display the showtime with cinema-specific styling */}
+            </div>
+
+            {/* Showtimes */}
+            <div className="movie-times-sub-block">
+              {sortByTheater
+                ? Object.entries(
+                    groupShowtimesByTheater(groupedMovies[title])
+                  ).map(([cinema, showtimes]) => (
+                    <div key={cinema} className="theater-block">
+                      <div
+                        className={`theater-title ${getCinemaClass(cinema)}`}
+                      >
+                        {cinema}
+                      </div>
+                      {showtimes.map((showtime, index) => (
+                        <div className="each-showtime" key={index}>
+                          <div
+                            className={`showtime-time ${getCinemaClass(
+                              showtime.cinema
+                            )}`}
+                          >
+                            {showtime.time}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))
+                : groupedMovies[title].map((showtime, index) => (
+                    <div className="each-showtime" key={index}>
                       <div
                         className={`showtime-time ${getCinemaClass(
                           showtime.cinema
@@ -146,14 +184,12 @@ const BigChains = ({ movies, selectedSnifs }) => {
                         {showtime.time}
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
             </div>
-          </>
-        ))}
-      </div>
-    </>
+          </div>
+        </React.Fragment>
+      ))}
+    </div>
   );
 };
 
