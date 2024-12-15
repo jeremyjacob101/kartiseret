@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import "../componentsCSS/BigChains.css";
 
 const defaultPoster = "/images/defposter.jpeg";
+const imdbLogo = "/images/imdbLogo.png";
+const rtLogo = "/images/rtLogo.png";
 const dropdownIcon = "/icons/more-horizontal.svg"; // Replace with your SVG path
 
 const groupShowtimesByTitle = (movies) => {
@@ -134,6 +136,7 @@ const BigChains = ({ movies }) => {
           {index !== 0 && <div className="divider-line"></div>}
           <div className="movie-block">
             <div className="movie-poster-and-info-section">
+              {/* Movie Poster */}
               <div className="movie-poster-sub-block">
                 <img
                   src={groupedMovies[title][0].poster || defaultPoster}
@@ -141,10 +144,25 @@ const BigChains = ({ movies }) => {
                   onError={(e) => (e.target.src = defaultPoster)}
                 />
               </div>
+
+              {/* Movie Info */}
               <div className="movie-info-sub-block">
                 <div className="movie-title">{title}</div>
                 <div className="movie-runtime">
                   {groupedMovies[title][0].runtime} minutes
+                </div>
+
+                {/* Ratings */}
+                <div className="movie-ratings-block">
+                  <div className="movie-ratings-sub-block-imdb">
+                    <img src={imdbLogo} alt="IMDB logo" />
+                    {groupedMovies[title][0].imdbRating}/10 (
+                    {groupedMovies[title][0].imdbVotes})
+                  </div>
+                  <div className="movie-ratings-sub-block-rt">
+                    <img src={rtLogo} alt="Rotten Tomatoes logo" />
+                    {groupedMovies[title][0].rtRating}%
+                  </div>
                 </div>
               </div>
             </div>
