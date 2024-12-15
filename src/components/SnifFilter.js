@@ -40,6 +40,7 @@ const snifs = [
   "Carmiel",
   /* South */
   "Beer Sheva",
+  "Omer"
 ];
 
 const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
