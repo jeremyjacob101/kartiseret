@@ -4,9 +4,8 @@ import "../componentsCSS/BigChains.css";
 const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
 const rtLogo = "/images/rtLogo.png";
-const dropdownIcon = "/icons/more-horizontal.svg"; // Replace with your SVG path
+const dropdownIcon = "/icons/more-horizontal.svg";
 
-// Dictionary for full theater names
 const theaterNames = {
   LC: "Lev Cinema",
   HC: "Hot Cinema",
@@ -14,6 +13,25 @@ const theaterNames = {
   YP: "Yes Planet",
   ML: "MovieLand",
   RH: "Rav Hen",
+};
+
+const getCinemaClass = (cinema) => {
+  switch (cinema) {
+    case "YP":
+      return "yes-planet";
+    case "CC":
+      return "cinema-city";
+    case "LC":
+      return "lev-cinema";
+    case "HC":
+      return "hot-cinema";
+    case "ML":
+      return "movieland-cinema";
+    case "RH":
+      return "rav-hen-cinema";
+    default:
+      return "";
+  }
 };
 
 const groupShowtimesByTitle = (movies) => {
@@ -49,25 +67,6 @@ const groupShowtimesByTitle = (movies) => {
   return groupedMovies;
 };
 
-const getCinemaClass = (cinema) => {
-  switch (cinema) {
-    case "YP":
-      return "yes-planet";
-    case "CC":
-      return "cinema-city";
-    case "LC":
-      return "lev-cinema";
-    case "HC":
-      return "hot-cinema";
-    case "ML":
-      return "movieland-cinema";
-    case "RH":
-      return "rav-hen-cinema";
-    default:
-      return "";
-  }
-};
-
 const groupShowtimesByTheater = (showtimes) => {
   const groupedByTheater = {};
 
@@ -93,7 +92,7 @@ const groupShowtimesByTheater = (showtimes) => {
 
 const BigChains = ({ movies }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [sortByTheater, setSortByTheater] = useState(false);
+  const [sortByTheater, setSortByTheater] = useState(true);
   const dropdownRef = useRef(null);
 
   const groupedMovies = groupShowtimesByTitle(movies);
@@ -141,7 +140,7 @@ const BigChains = ({ movies }) => {
 
       {/* Movies */}
       {sortedTitles.map((title, index) => (
-        <React.Fragment key={title}>
+        <>
           {/* Divider Lines */}
           {index !== 0 && <div className="divider-line"></div>}
           <div className="movie-block">
@@ -221,7 +220,7 @@ const BigChains = ({ movies }) => {
                   ))}
             </div>
           </div>
-        </React.Fragment>
+        </>
       ))}
     </div>
   );
