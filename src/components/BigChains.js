@@ -8,6 +8,7 @@ const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
 const rtLogo = "/images/rtLogo.png";
 const dropdownIcon = "/icons/more-horizontal.svg";
+const mapIcon = "/icons/map.svg";
 
 const theaterNames = {
   LC: "Lev Cinema",
@@ -100,7 +101,9 @@ const BigChains = ({ movies }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [sortByTheater, setSortByTheater] = useState(true);
   const [theatersData, setTheatersData] = useState([]);
+  const [openMapPopup, setOpenMapPopup] = useState(null); // { title, cinema }
   const dropdownRef = useRef(null);
+  const popupRef = useRef(null);
 
   const groupedMovies = groupShowtimesByTitle(movies);
   const sortedTitles = Object.keys(groupedMovies).sort(
@@ -115,8 +118,7 @@ const BigChains = ({ movies }) => {
         header: true,
         dynamicTyping: true,
         complete: (results) => {
-          // results.data will contain an array of objects with keys city, chain, address, location
-          // Example: { city: "Jerusalem", chain: "CC", address: "Sderot Yitshak Rabin 10", location: "https://maps.app.goo.gl/gidzqRCQgrMaDphF7" }
+          // Filter out rows that don't have a chain
           setTheatersData(results.data.filter((d) => d.chain));
         },
       });
@@ -125,16 +127,34 @@ const BigChains = ({ movies }) => {
     loadTheatersData();
   }, []);
 
-  // Close dropdown on outside click
+  // Close dropdown and map popup on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      const clickedOutsideDropdown =
+        dropdownRef.current && !dropdownRef.current.contains(e.target);
+      const clickedOutsidePopup =
+        popupRef.current && !popupRef.current.contains(e.target);
+
+      if (clickedOutsideDropdown && clickedOutsidePopup) {
         setShowDropdown(false);
+        setOpenMapPopup(null);
+      } else if (clickedOutsideDropdown) {
+        setShowDropdown(false);
+      } else if (openMapPopup && clickedOutsidePopup) {
+        setOpenMapPopup(null);
       }
     };
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+  }, [openMapPopup]);
+
+  const toggleMapPopup = (title, cinema) => {
+    setOpenMapPopup((prev) =>
+      prev && prev.title === title && prev.cinema === cinema
+        ? null
+        : { title, cinema }
+    );
+  };
 
   return (
     <div className="movie-list">
@@ -179,9 +199,11 @@ const BigChains = ({ movies }) => {
 
               {/* Movie Info */}
               <div className="movie-info-sub-block">
-                <div className="movie-title">{title}</div>
-                <div className="movie-runtime">
-                  {groupedMovies[title][0].runtime} minutes
+                <div className="movie-top-sub-block">
+                  <div className="movie-title">{title}</div>
+                  <div className="movie-runtime">
+                    {groupedMovies[title][0].runtime} minutes
+                  </div>
                 </div>
 
                 {/* Ratings */}
@@ -218,19 +240,32 @@ const BigChains = ({ movies }) => {
                     return (
                       <div key={cinema} className="theater-block">
                         <div className="theater-title">
-                          {theaterNames[cinema] || cinema}
                           {theaterInfo && (
-                            <>
-                              {" - "}
-                              <a
-                                href={theaterInfo.location}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {theaterInfo.address}
-                              </a>
-                            </>
+                            <img
+                              src={mapIcon}
+                              alt="Map Icon"
+                              className="map-icon"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleMapPopup(title, cinema);
+                              }}
+                            />
                           )}
+                          {theaterNames[cinema] || cinema}
+                          {openMapPopup &&
+                            openMapPopup.title === title &&
+                            openMapPopup.cinema === cinema &&
+                            theaterInfo && (
+                              <div className="map-popup" ref={popupRef}>
+                                <a
+                                  href={theaterInfo.location}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {theaterInfo.address}
+                                </a>
+                              </div>
+                            )}
                         </div>
                         <div className="by-theater-showtimes">
                           {showtimes.map((showtime, index) => (
