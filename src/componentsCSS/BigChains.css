@@ -110,7 +110,18 @@
 
 .smaller-showtime {
     height: 39px;
-    /* reduced height when all first 5 are Regular */
+}
+
+.by-theater-showtimes > .smaller-showtime {
+    height: 43px !important;
+}
+.by-theater-showtimes > .each-showtime {
+    height: 62px;
+}
+
+.by-theater-movie-times-sub-block>.theater-block>.theater-title {
+    font-weight: 375;
+    font-style: italic;
 }
 
 .showtime-background {

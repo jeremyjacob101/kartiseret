@@ -15,24 +15,8 @@ const theaterNames = {
   RH: "Rav Hen",
 };
 
-const getCinemaClass = (cinema) => {
-  switch (cinema) {
-    case "YP":
-      return "yes-planet";
-    case "CC":
-      return "cinema-city";
-    case "LC":
-      return "lev-cinema";
-    case "HC":
-      return "hot-cinema";
-    case "ML":
-      return "movieland-cinema";
-    case "RH":
-      return "rav-hen-cinema";
-    default:
-      return "";
-  }
-};
+const areFirstFourShowtimesRegular = (showtimes) =>
+  showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
 
 const groupShowtimesByTitle = (movies) => {
   const groupedMovies = {};
@@ -44,7 +28,7 @@ const groupShowtimesByTitle = (movies) => {
     groupedMovies[movie.title].push({
       time: movie.time,
       cinema: movie.cinema,
-      type: movie.type,
+      type: movie.type, // Include screening type
       poster: movie.poster,
       runtime: movie.runtime,
       popularity: movie.popularity,
@@ -65,6 +49,25 @@ const groupShowtimesByTitle = (movies) => {
   });
 
   return groupedMovies;
+};
+
+const getCinemaClass = (cinema) => {
+  switch (cinema) {
+    case "YP":
+      return "yes-planet";
+    case "CC":
+      return "cinema-city";
+    case "LC":
+      return "lev-cinema";
+    case "HC":
+      return "hot-cinema";
+    case "ML":
+      return "movieland-cinema";
+    case "RH":
+      return "rav-hen-cinema";
+    default:
+      return "";
+  }
 };
 
 const groupShowtimesByTheater = (showtimes) => {
@@ -113,7 +116,6 @@ const BigChains = ({ movies }) => {
 
   return (
     <div className="movie-list">
-      {/* Dropdown Button */}
       <div className="by-theater-dropdown-container" ref={dropdownRef}>
         <img
           src={dropdownIcon}
@@ -140,7 +142,7 @@ const BigChains = ({ movies }) => {
 
       {/* Movies */}
       {sortedTitles.map((title, index) => (
-        <>
+        <React.Fragment key={title}>
           {/* Divider Lines */}
           {index !== 0 && <div className="divider-line"></div>}
           <div className="movie-block">
@@ -189,18 +191,34 @@ const BigChains = ({ movies }) => {
                     groupShowtimesByTheater(groupedMovies[title])
                   ).map(([cinema, showtimes]) => (
                     <div key={cinema} className="theater-block">
-                      <div className={`theater-title`}>
+                      <div className="theater-title">
                         {theaterNames[cinema] || cinema}
                       </div>
                       <div className="by-theater-showtimes">
                         {showtimes.map((showtime, index) => (
-                          <div className="each-showtime" key={index}>
-                            <div
-                              className={`showtime-time ${getCinemaClass(
-                                showtime.cinema
-                              )}`}
-                            >
-                              {showtime.time}
+                          <div
+                            className={`each-showtime${
+                              areFirstFourShowtimesRegular(showtimes) &&
+                              index < 4
+                                ? " smaller-showtime"
+                                : ""
+                            }`}
+                            key={index}
+                          >
+                            <div className="showtime-background">
+                              {/* Display the type if it's not "Regular" */}
+                              {showtime.type !== "R" && (
+                                <div className="showtime-type">
+                                  {showtime.type}
+                                </div>
+                              )}
+                              <div
+                                className={`showtime-time ${getCinemaClass(
+                                  showtime.cinema
+                                )}`}
+                              >
+                                {showtime.time}
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -208,19 +226,33 @@ const BigChains = ({ movies }) => {
                     </div>
                   ))
                 : groupedMovies[title].map((showtime, index) => (
-                    <div className="each-showtime" key={index}>
-                      <div
-                        className={`showtime-time ${getCinemaClass(
-                          showtime.cinema
-                        )}`}
-                      >
-                        {showtime.time}
+                    <div
+                      className={`each-showtime ${
+                        areFirstFourShowtimesRegular(groupedMovies[title]) &&
+                        index < 4
+                          ? "smaller-showtime"
+                          : ""
+                      }`}
+                      key={index}
+                    >
+                      <div className="showtime-background">
+                        {/* Display the type if it's not "Regular" */}
+                        {showtime.type !== "R" && (
+                          <div className="showtime-type">{showtime.type}</div>
+                        )}
+                        <div
+                          className={`showtime-time ${getCinemaClass(
+                            showtime.cinema
+                          )}`}
+                        >
+                          {showtime.time}
+                        </div>
                       </div>
                     </div>
                   ))}
             </div>
           </div>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
