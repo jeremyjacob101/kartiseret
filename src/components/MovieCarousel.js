@@ -116,7 +116,6 @@ const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
         handlePrevDay={handlePrevDay}
         handleNextDay={handleNextDay}
       />
-
       <div className="carousel-movie-list-area">
         <MoviesSection movies={movies} selectedSnifs={selectedSnifs} />
       </div>
