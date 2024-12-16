@@ -97,7 +97,7 @@ const groupShowtimesByTheater = (showtimes) => {
   return groupedByTheater;
 };
 
-const BigChains = ({ movies }) => {
+const BigChains = ({ movies, selectedSnifs }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [sortByTheater, setSortByTheater] = useState(true);
   const [theatersData, setTheatersData] = useState([]);
@@ -156,6 +156,9 @@ const BigChains = ({ movies }) => {
     );
   };
 
+  const selectedCity =
+    selectedSnifs && selectedSnifs.length > 0 ? selectedSnifs[0] : null;
+
   return (
     <div className="movie-list">
       <div className="by-theater-dropdown-container" ref={dropdownRef}>
@@ -184,7 +187,7 @@ const BigChains = ({ movies }) => {
 
       {/* Movies */}
       {sortedTitles.map((title, index) => (
-        <React.Fragment key={title}>
+        <>
           {index !== 0 && <div className="divider-line"></div>}
           <div className="movie-block">
             <div className="movie-poster-and-info-section">
@@ -233,8 +236,9 @@ const BigChains = ({ movies }) => {
                 ? Object.entries(
                     groupShowtimesByTheater(groupedMovies[title])
                   ).map(([cinema, showtimes]) => {
+                    // Find theaterInfo by chain and the currently selected city
                     const theaterInfo = theatersData.find(
-                      (t) => t.chain === cinema
+                      (t) => t.chain === cinema && t.city === selectedCity
                     );
 
                     return (
@@ -324,7 +328,7 @@ const BigChains = ({ movies }) => {
                   ))}
             </div>
           </div>
-        </React.Fragment>
+        </>
       ))}
     </div>
   );
