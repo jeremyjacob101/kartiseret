@@ -1,0 +1,146 @@
+.yes-planet {
+    background: linear-gradient(to left, #d9710f, #b05806);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.cinema-city {
+    background: linear-gradient(to right, #186bdf, #084cab);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.lev-cinema {
+    background: linear-gradient(to right, #b50519, #5e030d);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.rav-hen-cinema {
+    background: linear-gradient(to right, #0d06da, #ab5306);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.hot-cinema {
+    background: linear-gradient(to left, #f06a87, #c13043);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.movieland-cinema {
+    background: linear-gradient(to right, #58003a, #a80371);
+    border: 2px solid black;
+    color: #d8d8d8;
+}
+
+.by-theater-movie-times-sub-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.movie-times-sub-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    align-content: flex-start;
+    gap: 7px;
+    padding: 10px;
+    min-width: 317px;
+}
+
+.by-theater-showtimes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    align-content: flex-start;
+    gap: 7px;
+    min-width: 317px;
+}
+
+.each-showtime {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+    gap: 1px;
+    height: 57px;
+    justify-content: flex-end;
+}
+
+.smaller-showtime {
+    height: 39px;
+}
+
+.by-theater-showtimes>.smaller-showtime {
+    height: 43px !important;
+}
+
+.by-theater-showtimes>.each-showtime {
+    height: 62px;
+}
+
+.showtime-background {
+    background-color: rgb(101, 94, 94);
+    width: 95%;
+    border-radius: 12px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.showtime-time {
+    padding: 5px 10px;
+    margin-top: 0px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 50px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.showtime-type {
+    padding: 2px 8px;
+    color: #fff;
+    font-style: italic;
+    font-size: 12px;
+    text-align: center;
+    background-color: transparent;
+}
+
+.theater-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.theater-title {
+    font-weight: 375;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.theater-title>.map-icon {
+    width: 17.5px;
+    height: 17.5px;
+    margin-right: 7px;
+    cursor: pointer;
+    margin-bottom: -2px;
+}
+
+.theater-title>.map-popup>a {
+    color: #186bdf;
+}
+
+@media (max-width: 700px) {
+    .movie-times-sub-block {
+        width: 117px;
+    }
+}

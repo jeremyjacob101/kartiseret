@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/MovieCarousel.css";
-import BigChains from "./BigChains";
+import MoviesSection from "./MoviesSection";
+import CarouselControls from "./CarouselControls"; // Import new component
 
 const showtimes_csv = "/CSVs/10-12-24-showtimes.csv";
 const movies_csv = "/CSVs/10-12-24-movies.csv";
@@ -26,8 +27,6 @@ const isValidShowtime = (
   return (
     showtimeDate !== today ||
     showtimeMinutes <= 60 ||
-    // MINUS 30 ???
-    // showtimeMinutes >= currentMinutesSinceMidnight - 30
     showtimeMinutes >= currentMinutesSinceMidnight
   );
 };
@@ -111,22 +110,15 @@ const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
 
   return (
     <div className="main-carousel">
-      <div className="carousel-controls">
-        <button
-          className="previous-day-button"
-          onClick={handlePrevDay}
-          disabled={dayOffsetLocal === 0}
-        >
-          Previous
-        </button>
-        <div className="carousel-current-date">{offsatDay}</div>
-        <button className="next-day-button" onClick={handleNextDay}>
-          Next
-        </button>
-      </div>
+      <CarouselControls
+        dayOffsetLocal={dayOffsetLocal}
+        offsatDay={offsatDay}
+        handlePrevDay={handlePrevDay}
+        handleNextDay={handleNextDay}
+      />
 
       <div className="carousel-movie-list-area">
-        <BigChains movies={movies} selectedSnifs={selectedSnifs} />
+        <MoviesSection movies={movies} selectedSnifs={selectedSnifs} />
       </div>
     </div>
   );

@@ -1,0 +1,130 @@
+.movie-list {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.by-theater-dropdown-container {
+    position: relative;
+}
+
+.by-theater-dropdown-icon {
+    cursor: pointer;
+    width: 20px;
+}
+
+.by-theater-dropdown-menu {
+    position: absolute;
+    background-color: rgb(36, 35, 35);
+    width: 160px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 10;
+}
+
+.by-theater-dropdown-menu>label>input {
+    margin-right: 10px;
+}
+
+.divider-line {
+    width: 110%;
+    height: 1.3px;
+    margin: 8px;
+    background: linear-gradient(to right,
+            rgba(141, 141, 141, 0.03),
+            rgba(141, 141, 141, 0.7) 15%,
+            rgba(141, 141, 141, 1) 50%,
+            rgba(141, 141, 141, 0.7) 85%,
+            rgba(141, 141, 141, 0.03));
+    border-radius: 50px;
+}
+
+.movie-block {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    background: none;
+}
+
+.movie-poster-and-info-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-poster-sub-block>img {
+    width: 120px;
+    height: 180px;
+    border-radius: 7px;
+}
+
+.movie-poster-sub-block {
+    width: 120px;
+    height: 180px;
+    padding: 10px;
+    flex-shrink: 0;
+}
+
+.movie-info-sub-block {
+    width: 225px;
+    height: 170px;
+    padding: 10px;
+    padding-top: 13px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.movie-ratings-block {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.movie-ratings-sub-block-imdb,
+.movie-ratings-sub-block-rt {
+    font-size: 18px;
+}
+
+.movie-ratings-sub-block-imdb>img {
+    width: 30px;
+    height: 15px;
+    padding-right: 5px;
+    margin-bottom: -1px;
+}
+
+.movie-ratings-sub-block-rt>img {
+    width: 20px;
+    height: 15px;
+    padding-right: 1px;
+    margin-bottom: -1px;
+}
+
+.movie-title {
+    font-size: 25px;
+    font-weight: 375;
+    margin-bottom: 10px;
+}
+
+.movie-runtime {
+    font-size: 14px;
+}
+
+@media (max-width: 700px) {
+    .divider-line {
+        width: 99%;
+    }
+
+    .movie-block {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .movie-info-sub-block {
+        padding-left: 2px;
+        width: 215px;
+    }
+}

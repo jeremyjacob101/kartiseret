@@ -1,0 +1,21 @@
+.carousel-current-date {
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.carousel-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.previous-day-button,
+.next-day-button {
+    width: 80px;
+    border-radius: 15px;
+    box-shadow: none;
+    border-color: blueviolet;
+}
