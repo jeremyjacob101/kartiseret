@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/Cinemateques.css";
 
-const showtimes_csv = "/CSVs/18-12-24-cinemateques.csv";
+const showtimes_csv = "/CSVs/19-12-24-cinemateques.csv";
 
 const ChevronUp = "/icons/chevron-up.svg";
 const ChevronDown = "/icons/chevron-down.svg";

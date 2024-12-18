@@ -4,8 +4,8 @@ import "../componentsCSS/MovieCarousel.css";
 import MoviesSection from "./MoviesSection";
 import CarouselControls from "./CarouselControls"; // Import new component
 
-const showtimes_csv = "/CSVs/18-12-24-showtimes.csv";
-const movies_csv = "/CSVs/18-12-24-movies.csv";
+const showtimes_csv = "/CSVs/19-12-24-showtimes.csv";
+const movies_csv = "/CSVs/19-12-24-movies.csv";
 
 const getFormattedDate = (dayOffset) => {
   const today = new Date();
