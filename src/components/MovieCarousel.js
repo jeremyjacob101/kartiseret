@@ -3,8 +3,8 @@ import Papa from "papaparse";
 import "../componentsCSS/MovieCarousel.css";
 import BigChains from "./BigChains";
 
-const showtimes_csv = "/CSVs/17-12-24-showtimes.csv";
-const movies_csv = "/CSVs/17-12-24-movies.csv";
+const showtimes_csv = "/CSVs/18-12-24-showtimes.csv";
+const movies_csv = "/CSVs/18-12-24-movies.csv";
 
 const getFormattedDate = (dayOffset) => {
   const today = new Date();
