@@ -44,18 +44,31 @@ const groupShowtimesByTheater = (showtimes) => {
     groupedByTheater[showtime.cinema].push(showtime);
   });
 
-  Object.values(groupedByTheater).forEach((group) =>
+  Object.values(groupedByTheater).forEach((group) => {
     group.sort((a, b) => {
       const getMinutes = (time) => {
         const [hours, minutes] = time.split(":").map(Number);
         return hours * 60 + minutes;
       };
-      return getMinutes(a.time) - getMinutes(b.time);
-    })
-  );
+
+      const aMinutes = getMinutes(a.time);
+      const bMinutes = getMinutes(b.time);
+
+      // Handle midnight showtimes (considered "previous night")
+      const isAMidnight = aMinutes <= 120; // Midnight range: 00:00–02:00
+      const isBMidnight = bMinutes <= 120;
+
+      if (isAMidnight && !isBMidnight) return 1; // Midnight goes last
+      if (!isAMidnight && isBMidnight) return -1; // Non-midnight goes first
+
+      // Sort normally for same category (midnight or non-midnight)
+      return aMinutes - bMinutes;
+    });
+  });
 
   return groupedByTheater;
 };
+
 
 const MovieTimesSection = ({
   title,
