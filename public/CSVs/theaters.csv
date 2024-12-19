@@ -1,5 +1,44 @@
 city,chain,address,location
 Jerusalem,CC,"Sderot Yitshak Rabin 10",https://maps.app.goo.gl/gidzqRCQgrMaDphF7
+Glilot,CC,"Cinema City Glilot,https://maps.app.goo.gl/EbU3r1TiphycaoXv8
+Rishon Letzion,CC,"Moshe Dayan Boulevard 3",https://maps.app.goo.gl/zMb4z32W2wUDRanm9
+Kfar Saba,CC,"G Mall Kfar Saba",https://maps.app.goo.gl/7j59mis2efu4fjDm6
+Netanya,CC,"HaMehkar Street 3",https://maps.app.goo.gl/Cc1cc41U8DAzLZNF6
+Chadera,CC,"Tsahal Street 35",https://maps.app.goo.gl/dkRw1FLzP4Gha3rM9
+Beer Sheva,CC,"Hita Street 1",https://maps.app.goo.gl/NtdqoKzfypRKiJTF7
+Ashdod,CC,"Derech HaRakevet 1",https://maps.app.goo.gl/Cr1pvKjWX86CokXU8
+
 Jerusalem,YP,"Naomi Street 4",https://maps.app.goo.gl/E5MNtJ5xPEFyyDPk7
-Jerusalem,LC,"Lloyd George Street 4",https://maps.app.goo.gl/CYoVrBYbth9AWDAH6
 Rishon Letzion,YP,"HaMea VeEsrim Street 4",https://maps.app.goo.gl/LCtTHFzkRyWAVTHx9
+Ayalon,YP,"Abba Hillel Silver Road 301",https://maps.app.goo.gl/E2xot6XNKWXpR4kv6
+Beer Sheva,YP,"Yitshak Salma 5",https://maps.app.goo.gl/uKL8zeEdRGocmNXHA
+Haifa,YP,"HaHistadrut Avenue 55",https://maps.app.goo.gl/PEFKwqcpQA3ZwUUb9
+Zichron Yaakov,YP,"Zichron Yaakov Shopping Mall",https://maps.app.goo.gl/j5adcdmcn3r7TQL76
+
+Jerusalem,LC,"Lloyd George Street 4",https://maps.app.goo.gl/CYoVrBYbth9AWDAH6
+Even Yehuda,LC,"HaMeyasdim Street 41",https://maps.app.goo.gl/G5LAbDHUdCYgXNms5
+Herziliya,LC,"Ramat Yam Street 60",https://maps.app.goo.gl/CYkdccdmffPTHUPT6
+Omer,LC,"Tamar Street 60",https://maps.app.goo.gl/wmeRyqeVuXDffUvV8
+Ramat Hasharon,LC,"Sokolov Street 95",https://maps.app.goo.gl/n1UJewZt4wCeYL8q6
+Tel Aviv,LC,"Dizengoff Street 50",https://maps.app.goo.gl/EhdaZU8hTAc1BwSk8
+Raanana,LC,"Achuza Street 267",https://maps.app.goo.gl/pkYGqMwRU5STEab99
+
+Givataim,RH,"Derech Yitzchak Rabin 53",https://maps.app.goo.gl/1hecodAVyjwtiwbw5
+Tel Aviv,RH,"Ben Ami Street 16",https://maps.app.goo.gl/MAuea1C9KZjXeWQx5
+Kiryat Ono,RH,"Shlomo HaMelech Street 37",https://maps.app.goo.gl/xoJQ9ckj9S7U3o256
+
+Glilot,ML,"Yunitsman Street 21",https://maps.app.goo.gl/ERzxDQbaawD96iWf6
+Carmiel,ML,"HaKharoshet Street 15",https://maps.app.goo.gl/2h22ZSXs1mPkd7hy8
+Netanya,ML,"Sderot Giborei Yisrael Street 17",https://maps.app.goo.gl/rg8BwksCH9cv5CrB6
+Haifa,ML,"Flieman Street 4",https://maps.app.goo.gl/1evQ9zgAqmdVc4NB7
+
+Carmiel,HC,"Maale Kamon Street 5",https://maps.app.goo.gl/XPuzeSRndr1En9Tr6
+Nahariya,HC,"Irit Street 2",https://maps.app.goo.gl/4R9XqnPu9RR9TDNR7
+Kiryat Bialik,HC,"Derech Acre 192",https://maps.app.goo.gl/dtep3CNfMRUd4G2B7
+Haifa,HC,"Derech Simha Golan 54",https://maps.app.goo.gl/kkAbrKbMN1yA7MRY9
+Kfar Saba,HC,"Atir Yeda Street 3",https://maps.app.goo.gl/heei7VCvK51CPS8D6
+Petach Tikvah,HC,"Zeev Jabotinsky Street 72",https://maps.app.goo.gl/cbywX322mn4xRDt68
+Modiin,HC,"HaMelachot Boulevard 121",https://maps.app.goo.gl/7i1MiFURQnWrUky1A
+Rehovot,HC,"Bilu Street 2",https://maps.app.goo.gl/mhPo8YA34TjUBSYH8
+Ashdod,HC,"Tsahal Street 2",https://maps.app.goo.gl/9KhdhiDcfyqeuAPu7
+Ashkelon,HC,"HaNamal Street 11",https://maps.app.goo.gl/6si1n2s92FpvRfEe7
