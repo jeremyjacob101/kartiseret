@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../componentsCSS/MovieTimesSection.css";
 
-const mapIcon = "/icons/map.svg";
+const mapIcon = "/icons/navigation.svg";
 
 const theaterNames = {
   LC: "Lev Cinema",
