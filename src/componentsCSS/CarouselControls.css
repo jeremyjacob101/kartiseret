@@ -7,9 +7,20 @@
 .carousel-controls {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 10px;
+    /* position: relative; */
+    width: 100%;
+}
+
+.clicking-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: relative;
 }
 
 .previous-day-button,

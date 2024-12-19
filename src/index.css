@@ -2,7 +2,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: linear-gradient(#071f38, #031d4e, #01073f) no-repeat fixed;
+  /* background: linear-gradient(#071f38, #031d4e, #01073f) no-repeat fixed; */
+  background: rgb(2, 0, 36);
   background-size: cover;
   color: #c5c5c5;
 
@@ -69,7 +70,7 @@ h6 {
   left: 0;
   width: 100%;
   z-index: 30;
-  background: rgb(46, 1, 66);
+  background: rgb(41, 7, 56);
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: 0.5px solid;

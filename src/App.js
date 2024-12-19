@@ -21,17 +21,17 @@ const App = () => {
         <div className="main-sections-drop"></div>
       </div> */}
       <div className="testing-title-holder">
-        <SnifFilter
-          selectedSnifs={selectedSnifs}
-          setSelectedSnifs={setSelectedSnifs}
-        />
         <img src="/images/kartiseretAiLogoTry1.jpeg" alt="כרטיסרט" />
         <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
       </div>
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />
         <Cinemateques selectedSnifs={selectedSnifs} />
-        <MovieCarousel selectedSnifs={selectedSnifs} setDayOffset={setDayOffset} />
+        <MovieCarousel
+          selectedSnifs={selectedSnifs}
+          setSelectedSnifs={setSelectedSnifs}
+          setDayOffset={setDayOffset}
+        />
       </div>
     </>
   );

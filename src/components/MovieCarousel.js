@@ -31,7 +31,7 @@ const isValidShowtime = (
   );
 };
 
-const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
+const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
   const [movies, setMovies] = useState([]);
   const [dayOffsetLocal, setDayOffsetLocal] = useState(0); // Local dayOffset state
 
@@ -115,6 +115,8 @@ const MovieCarousel = ({ selectedSnifs, setDayOffset }) => {
         offsatDay={offsatDay}
         handlePrevDay={handlePrevDay}
         handleNextDay={handleNextDay}
+        selectedSnifs={selectedSnifs} // Pass props to CarouselControls
+        setSelectedSnifs={setSelectedSnifs} // Pass props to CarouselControls
       />
       <div className="carousel-movie-list-area">
         <MoviesSection movies={movies} selectedSnifs={selectedSnifs} />
