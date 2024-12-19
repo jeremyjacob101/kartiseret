@@ -107,15 +107,17 @@ const MovieTimesSection = ({
                 <div key={cinema} className="theater-block">
                   <div className="theater-title">
                     {theaterInfo && (
-                      <img
-                        src={mapIcon}
-                        alt="Map Icon"
-                        className="map-icon"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMapPopup(title, cinema);
-                        }}
-                      />
+                      // <div className="theater-map-icon-div">
+                        <img
+                          src={mapIcon}
+                          alt="Map Icon"
+                          className="map-icon"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleMapPopup(title, cinema);
+                          }}
+                        />
+                      // </div>
                     )}
                     {theaterNames[cinema] || cinema}
                     {openMapPopup &&
