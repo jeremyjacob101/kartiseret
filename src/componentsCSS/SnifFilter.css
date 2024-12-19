@@ -1,29 +1,37 @@
 .snif-filter {
     z-index: 20;
+    position: relative;
+    /* Needed for dropdown positioning */
 }
 
-.snif-filter h4 {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.snif-filter-header {
+    display: flex;
+    align-items: center;
 }
 
-.snif-filter div {
-    margin-bottom: 5px;
-}
-
-.dropdown-button-snifs {
-    padding: 8px 12px;
-    font-size: 16px;
+.dropdown-icon-snifs {
+    width: 20px;
+    height: 20px;
     cursor: pointer;
-    background-color: #080461;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin-bottom: 3px;
+    margin-right: 4px;
+    transition: transform 0.1s ease;
+}
+
+.dropdown-icon-snifs:hover {
+    transform: scale(1.05);
+}
+
+.selected-snif {
+    font-size: 16px;
     color: white;
+    font-weight: bold;
 }
 
 .dropdown-menu-snifs {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 5px);
+    /* Position below the header */
     left: 0;
     min-width: 140px;
     max-height: 290px;
@@ -43,28 +51,21 @@
     border-radius: 4px;
     border: 1px solid #ccc;
     background-color: rgb(40, 40, 40);
-    /* Default unselected background */
     color: white;
-    /* Default text color */
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
-    /* Smooth transitions */
 }
 
 /* Hover effect for unselected items */
 .dropdown-item-snifs:hover {
     background-color: rgb(60, 60, 60);
-    /* Slightly lighter on hover */
 }
 
 /* Style for selected (checked) item */
 .dropdown-item-snifs.checked {
     background-color: #797977;
-    /* Yellow background for selected item */
     color: white;
-    /* Black text for contrast */
     font-weight: bold;
-    /* Optional: Make the text bold for emphasis */
 }
 
 /* Optional: Remove the bottom margin for the last item */

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../componentsCSS/SnifFilter.css"; // Optional CSS file for styling
 
+const mapPin = "/icons/map-pin.svg";
+
 const snifs = [
   /* JLEM */
   "Jerusalem",
@@ -40,7 +42,7 @@ const snifs = [
   "Carmiel",
   /* South */
   "Beer Sheva",
-  "Omer"
+  "Omer",
 ];
 
 const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
@@ -57,9 +59,18 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
 
   return (
     <div className="snif-filter">
-      <button onClick={toggleDropdown} className="dropdown-button-snifs">
-        Select City
-      </button>
+      <div className="snif-filter-header">
+        {/* SVG Icon */}
+        <img
+          src={mapPin}
+          alt="Select City"
+          className="dropdown-icon-snifs"
+          onClick={toggleDropdown}
+        />
+        {/* Display selected city */}
+        <span className="selected-snif">{selectedSnifs[0]}</span>
+      </div>
+
       {isDropdownOpen && (
         <div className="dropdown-menu-snifs">
           {snifs.map((snif) => (
