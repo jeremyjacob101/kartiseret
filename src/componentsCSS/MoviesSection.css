@@ -98,6 +98,7 @@
 
     .movie-info-sub-block {
         padding-left: 2px;
-        width: 215px;
+        width: 210px;
+        padding-right: 0px;
     }
 }

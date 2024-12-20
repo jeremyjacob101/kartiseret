@@ -15,8 +15,8 @@ const theaterNames = {
 const areFirstFourShowtimesRegular = (showtimes) =>
   showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
 
-const areAllShowtimesRegular = (showtimes) =>
-  showtimes.every((showtime) => showtime.type === "R");
+// const areAllShowtimesRegular = (showtimes) =>
+//   showtimes.every((showtime) => showtime.type === "R");
 
 const getCinemaClass = (cinema) => {
   switch (cinema) {
@@ -71,7 +71,6 @@ const groupShowtimesByTheater = (showtimes) => {
 
   return groupedByTheater;
 };
-
 
 const MovieTimesSection = ({
   title,
@@ -153,12 +152,20 @@ const MovieTimesSection = ({
                   </div>
                   <div className="by-theater-showtimes">
                     {cShowtimes.map((showtime, sIndex) => (
+                      // <div
+                      //   className={`each-showtime${
+                      //     areAllShowtimesRegular(cShowtimes)
+                      //       ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
+                      //       : areFirstFourShowtimesRegular(cShowtimes) &&
+                      //         sIndex < 4
+                      //       ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
+                      //       : "" // Default case
+                      //   }`}
+                      //   key={sIndex}
+                      // >
                       <div
                         className={`each-showtime${
-                          areAllShowtimesRegular(cShowtimes)
-                            ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
-                            : areFirstFourShowtimesRegular(cShowtimes) &&
-                              sIndex < 4
+                          areFirstFourShowtimesRegular(cShowtimes) && sIndex < 4
                             ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
                             : "" // Default case
                         }`}
@@ -184,11 +191,19 @@ const MovieTimesSection = ({
             }
           )
         : showtimes.map((showtime, sIndex) => (
+            // <div
+            //   className={`each-showtime${
+            //     areAllShowtimesRegular(showtimes)
+            //       ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
+            //       : areFirstFourShowtimesRegular(showtimes) && sIndex < 4
+            //       ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
+            //       : "" // Default case
+            //   }`}
+            //   key={sIndex}
+            // >
             <div
               className={`each-showtime${
-                areAllShowtimesRegular(showtimes)
-                  ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
-                  : areFirstFourShowtimesRegular(showtimes) && sIndex < 4
+                areFirstFourShowtimesRegular(showtimes) && sIndex < 4
                   ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
                   : "" // Default case
               }`}

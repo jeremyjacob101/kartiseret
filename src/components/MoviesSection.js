@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/MoviesSection.css";
 import MovieTimesSection from "./MovieTimesSection";
 
 const theaters_csv = "/CSVs/theaters.csv";
-const dropdownIcon = "/icons/more-horizontal.svg";
 const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
 const rtLogo = "/images/rtLogo.png";

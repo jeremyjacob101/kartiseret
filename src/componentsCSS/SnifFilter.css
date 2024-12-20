@@ -1,4 +1,5 @@
 .snif-filter {
+    position: relative;
     margin-right: auto;
     margin-left: 16px;
     /* Pushes this div to the left */
@@ -30,8 +31,8 @@
 
 .dropdown-menu-snifs {
     position: absolute;
-    top: calc(100% + 5px);
-    /* Position below the header */
+    top: 100%;
+    margin-top: 7px;
     left: 0;
     min-width: 140px;
     max-height: 290px;
@@ -42,6 +43,7 @@
     border-radius: 4px;
     padding: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 30;
 }
 
 .dropdown-item-snifs {
@@ -79,7 +81,6 @@
 
 @media (max-width: 700px) {
     .snif-filter {
-        top: 0%;
-        left: 29%;
+        margin-top: -47px;
     }
 }
