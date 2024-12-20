@@ -84,7 +84,7 @@ const Cinemateques = ({ selectedSnifs }) => {
             <span>
               {cinema === "JAFC"
                 ? "Jaffa Cinema"
-                : `${cinematequeCities[cinema]} Cinemateque`}
+                : `Cinemateque`}
             </span>
             <img
               src={openSections[cinema] ? ChevronUp : ChevronDown}

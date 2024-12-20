@@ -127,10 +127,13 @@
     margin-bottom: 5px;
 }
 
-/* .theater-map-icon-div>img {
-    border-width: 1px;
-    border-radius: 10px;
-} */
+.theater-map-icon-div>img {
+    transition: transform 0.1s ease;
+}
+
+.theater-map-icon-div>img:hover {
+    transform: scale(1.05);
+}
 
 .theater-title>.map-icon {
     width: 17.5px;
@@ -138,7 +141,13 @@
     margin-right: 6px;
     cursor: pointer;
     margin-bottom: -2px;
+    transition: transform 0.1s ease;
 }
+
+.theater-title>.map-icon:hover {
+    transform: scale(1.12);
+}
+
 
 .theater-title>.map-popup>a {
     color: #186bdf;
