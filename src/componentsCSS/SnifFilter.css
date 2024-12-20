@@ -1,7 +1,7 @@
 .snif-filter {
-    z-index: 20;
-    position: relative;
-    /* Needed for dropdown positioning */
+    margin-right: auto;
+    margin-left: 16px;
+    /* Pushes this div to the left */
 }
 
 .snif-filter-header {
@@ -13,7 +13,7 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     margin-right: 4px;
     transition: transform 0.1s ease;
 }

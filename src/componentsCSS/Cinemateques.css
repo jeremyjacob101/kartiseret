@@ -86,9 +86,10 @@
 /**/
 .cinemateque-header-name {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    /* width: 600px; */
 }
 
 .cinemateque-chevron {

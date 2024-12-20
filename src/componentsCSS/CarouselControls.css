@@ -7,26 +7,86 @@
 .carousel-controls {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
     padding: 10px;
-    /* position: relative; */
-    width: 100%;
+    width: 762px;
+    height: 50px;
+    background-color: rgb(42, 4, 112);
+    border-radius: 25px;
+    position: relative;
 }
 
 .clicking-controls {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    position: relative;
+    position: absolute;
+    left: 50%;
+    /* Start at the center of the parent */
+    transform: translateX(-50%);
+    /* Adjust to be horizontally centered */
 }
 
 .previous-day-button,
 .next-day-button {
-    width: 80px;
+    width: auto;
+    min-width: 80px;
     border-radius: 15px;
     box-shadow: none;
     border-color: blueviolet;
+}
+
+.by-theater-dropdown-container {
+    margin-left: auto;
+    margin-right: 16px;
+    position: relative;
+}
+
+.by-theater-dropdown-icon {
+    cursor: pointer;
+    width: 20px;
+}
+
+.by-theater-dropdown-menu {
+    position: absolute;
+    background-color: rgb(36, 35, 35);
+    width: 160px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 10;
+}
+
+.by-theater-dropdown-menu>label>input {
+    margin-right: 10px;
+}
+
+.chevron-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    /* Adjust as needed for the SVG size */
+    height: 40px;
+    border-radius: 50%;
+    /* Makes it circular */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Subtle background for better UX */
+    cursor: pointer;
+    /* Show pointer on hover */
+    transition: background-color 0.2s ease;
+}
+
+.chevron-container:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.chevron-container.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.chevron-icon {
+    width: 16px;
+    height: 16px;
 }
