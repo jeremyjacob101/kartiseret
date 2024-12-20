@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MovieCarousel from "./components/MovieCarousel";
 import CinemaColorKey from "./components/CinemaColorKey";
-import SnifFilter from "./components/SnifFilter";
 import ComingSoons from "./components/ComingSoons";
 import Cinemateques from "./components/Cinemateques";
 // import useDeviceType from "./utils/useDeviceType";
@@ -22,7 +21,7 @@ const App = () => {
       </div> */}
       <div className="testing-title-holder">
         <img src="/images/kartiseretAiLogoTry1.jpeg" alt="כרטיסרט" />
-        <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} />
+        {/* <CinemaColorKey selectedSnifs={selectedSnifs} dayOffset={dayOffset} /> */}
       </div>
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />
