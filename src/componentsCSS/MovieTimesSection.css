@@ -120,7 +120,7 @@
 }
 
 .theater-title {
-    font-weight: 375;
+    font-weight: 325;
     font-style: italic;
     font-size: 18px;
     font-weight: bold;
@@ -135,7 +135,7 @@
 .theater-title>.map-icon {
     width: 17.5px;
     height: 17.5px;
-    margin-right: 7px;
+    margin-right: 6px;
     cursor: pointer;
     margin-bottom: -2px;
 }

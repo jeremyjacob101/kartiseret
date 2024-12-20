@@ -109,10 +109,6 @@
     margin-bottom: 10px;
 }
 
-.movie-runtime {
-    font-size: 14px;
-}
-
 @media (max-width: 700px) {
     .divider-line {
         width: 99%;
