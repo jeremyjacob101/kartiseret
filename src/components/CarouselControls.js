@@ -31,6 +31,56 @@ const CarouselControls = ({
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  // Function to format the date
+  const formatDate = (dayOffset) => {
+    const today = new Date();
+    const targetDate = new Date(today);
+    targetDate.setDate(today.getDate() + dayOffset);
+
+    const dayNames = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    if (dayOffset === 0) {
+      return {
+        label: "Today",
+        date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
+      };
+    } else if (dayOffset === 1) {
+      return {
+        label: "Tomorrow",
+        date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
+      };
+    } else {
+      return {
+        label: dayNames[targetDate.getDay()],
+        date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
+      };
+    }
+  };
+
+  const { label, date } = formatDate(dayOffsetLocal);
+
   return (
     <>
       <div className="carousel-controls">
@@ -43,7 +93,7 @@ const CarouselControls = ({
         {/* Dates */}
         <div className="clicking-controls">
           <div
-            className={`chevron-container ${
+            className={`left-chevron-container ${
               dayOffsetLocal === 0 ? "disabled" : ""
             }`}
             onClick={dayOffsetLocal > 0 ? handlePrevDay : null} // Only trigger if not disabled
@@ -51,17 +101,20 @@ const CarouselControls = ({
             <img
               src={leftChevronIcon}
               alt="Previous Day"
-              className="chevron-icon"
+              className="left-chevron-icon"
             />
           </div>
 
-          <div className="carousel-current-date">{offsatDay}</div>
+          <div className="carousel-current-date">
+            <div className="date-label">{label}</div>
+            <div className="date-value">{date}</div>
+          </div>
 
-          <div className="chevron-container" onClick={handleNextDay}>
+          <div className="right-chevron-container" onClick={handleNextDay}>
             <img
               src={rightChevronIcon}
               alt="Next Day"
-              className="chevron-icon"
+              className="right-chevron-icon"
             />
           </div>
         </div>
