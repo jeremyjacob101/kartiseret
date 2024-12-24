@@ -18,10 +18,10 @@ const cinematequeCities = {
 
 // Function to check if the showtime is valid
 const isValidShowtime = (date, time) => {
-  const [day, month, year] = date.split("/").map(Number);
+  const [year, month, day] = date.split("-").map(Number);
   const [hours, minutes] = time.split(":").map(Number);
 
-  const showtimeDate = new Date(year, month - 1, day, hours, minutes);
+  const showtimeDate = new Date(year + 2000, month - 1, day, hours, minutes);
   const now = new Date();
 
   return showtimeDate >= now;
@@ -122,7 +122,11 @@ const Cinemateques = ({ selectedSnifs }) => {
                         <h3 className="cinemateque-title">{title}</h3>
                         <h3>({year})</h3>
                         <p>
-                          {date} - {time}
+                          <p>
+                            {date.split("-").reverse().slice(0, 2).join(".")}{" "}
+                            <br />
+                            @{time}
+                          </p>
                         </p>
                       </div>
                     </div>

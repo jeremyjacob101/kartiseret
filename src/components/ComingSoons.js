@@ -8,8 +8,8 @@ const defaultPoster = "/images/defposter.jpeg";
 // Function to check if the showtime date is valid
 const isValidShowtimeDate = (date) => {
   if (!date) return false; // Ensure date is defined
-  const [day, month, year] = date.split("/").map(Number);
-  const showtimeDate = new Date(year, month - 1, day);
+  const [year, month, day] = date.split("-").map(Number); // Parse as numbers
+  const showtimeDate = new Date(2000 + year, month - 1, day); // Add 2000 to ensure full year
   const now = new Date();
 
   return showtimeDate >= now;
@@ -17,6 +17,7 @@ const isValidShowtimeDate = (date) => {
 
 const ComingSoons = ({ selectedSnifs }) => {
   const [movies, setMovies] = useState([]);
+  const [isOpen, setIsOpen] = useState(false); // State to manage open/close functionality
 
   useEffect(() => {
     const loadShowtimeData = async () => {
@@ -48,12 +49,23 @@ const ComingSoons = ({ selectedSnifs }) => {
     return null;
   }
 
+  const toggleSection = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
   return (
     <>
-      <h2 className="coming-soon-header-name">
+      <h2 className="coming-soon-header-name" onClick={toggleSection}>
         <span>Coming Soon</span>
+        <img
+          src={isOpen ? "/icons/chevron-up.svg" : "/icons/chevron-down.svg"}
+          alt={isOpen ? "Close" : "Open"}
+          className="coming-soon-chevron"
+        />
       </h2>
-      <div className="coming-soon-carousel-wrapper">
+      <div
+        className={`coming-soon-carousel-wrapper ${isOpen ? "open" : "closed"}`}
+      >
         <div className="coming-soon-carousel">
           <div className="coming-soon-carousel-inner">
             {movies.map((movie, index) => {
@@ -72,7 +84,7 @@ const ComingSoons = ({ selectedSnifs }) => {
                   />
                   <div className="coming-soon-details">
                     <h3 className="coming-soon-title">{title}</h3>
-                    <p>{date}</p>
+                    <p> {date.split("-").reverse().slice(0, 2).join(".")} </p>
                   </div>
                 </div>
               );

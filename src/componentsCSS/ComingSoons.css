@@ -14,6 +14,23 @@
 
 .coming-soon-carousel-wrapper {
     width: 1200px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+.coming-soon-carousel-wrapper.open {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.coming-soon-chevron {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease-out;
+    cursor: pointer;
+    margin-bottom: -2.3px;
+    margin-left: 2px;
 }
 
 .coming-soon-carousel-inner {
