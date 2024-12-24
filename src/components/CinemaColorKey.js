@@ -8,12 +8,16 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
   const [availableCinemas, setAvailableCinemas] = useState(new Set());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  // Now returning date in yy-mm-dd format
   const getFormattedDate = (dayOffset) => {
     const today = new Date();
     today.setDate(today.getDate() + dayOffset);
-    return `${String(today.getDate()).padStart(2, "0")}/${String(
-      today.getMonth() + 1
-    ).padStart(2, "0")}/${today.getFullYear()}`;
+
+    const year = String(today.getFullYear()).slice(-2); // last two digits
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
   };
 
   useEffect(() => {
@@ -59,7 +63,6 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
           setAvailableCinemas(cinemaSet);
         },
       });
-
     };
 
     loadShowtimeData();

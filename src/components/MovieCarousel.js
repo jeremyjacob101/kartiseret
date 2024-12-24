@@ -7,12 +7,16 @@ import CarouselControls from "./CarouselControls"; // Import new component
 const showtimes_csv = "/CSVs/19-12-24-showtimes.csv";
 const movies_csv = "/CSVs/19-12-24-movies.csv";
 
+// Changed only the return value from "dd/mm/yyyy" to "yy-mm-dd"
 const getFormattedDate = (dayOffset) => {
   const today = new Date();
   today.setDate(today.getDate() + dayOffset);
-  return `${String(today.getDate()).padStart(2, "0")}/${String(
-    today.getMonth() + 1
-  ).padStart(2, "0")}/${today.getFullYear()}`;
+
+  const year = String(today.getFullYear()).slice(-2);
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 };
 
 const isValidShowtime = (
