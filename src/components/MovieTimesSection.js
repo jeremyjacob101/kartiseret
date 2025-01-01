@@ -12,12 +12,6 @@ const theaterNames = {
   RH: "Rav Hen",
 };
 
-const areFirstFourShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
-
-const areAllShowtimesRegular = (showtimes) =>
-  showtimes.every((showtime) => showtime.type === "R");
-
 const getCinemaClass = (cinema) => {
   switch (cinema) {
     case "YP":
@@ -36,6 +30,51 @@ const getCinemaClass = (cinema) => {
       return "";
   }
 };
+
+function getShowtimeURL(showtime) {
+  const { cinema, timeHref, snif } = showtime;
+
+  switch (cinema) {
+    case "HC":
+      return `https://hotcinema.co.il/movie/${timeHref}`;
+    case "CC":
+      return `https://www.cinema-city.co.il/movie/${timeHref}`;
+    case "YP":
+      return `https://www.planetcinema.co.il/films/${timeHref}s2r`;
+    case "ML": {
+      let theaterId;
+      switch (snif) {
+        case "Carmiel":
+          theaterId = "1290";
+          break;
+        case "Haifa":
+          theaterId = "1291";
+          break;
+        case "Netanya":
+          theaterId = "1292";
+          break;
+        case "Glilot":
+          theaterId = "1293";
+          break;
+        default:
+          theaterId = "1295";
+      }
+      return `https://www.movieland-cinema.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
+    }
+    case "LC":
+      return `https://ticket.lev.co.il/order/${timeHref}?lang=en`;
+    case "RH":
+      return `https://www.rav-hen.co.il/films/${timeHref}s2r`;
+    default:
+      return timeHref;
+  }
+}
+
+const areFirstFourShowtimesRegular = (showtimes) =>
+  showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
+
+// const areAllShowtimesRegular = (showtimes) =>
+//   showtimes.every((showtime) => showtime.type === "R");
 
 const groupShowtimesByTheater = (showtimes) => {
   const groupedByTheater = {};
@@ -77,8 +116,8 @@ function sortShowtimes(showtimes) {
     const bMinutes = getMinutes(b.time);
     const isAMidnight = aMinutes <= 120; // up to 00:30
     const isBMidnight = bMinutes <= 120;
-    if (isAMidnight && !isBMidnight) return 1;  // put midnight last
-    if (!isAMidnight && isBMidnight) return -1; 
+    if (isAMidnight && !isBMidnight) return 1; // put midnight last
+    if (!isAMidnight && isBMidnight) return -1;
     return aMinutes - bMinutes;
   });
 }
@@ -101,7 +140,6 @@ const MovieTimesSection = ({
     );
   };
 
-  // Close map popup on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       const clickedOutsidePopup =
@@ -125,7 +163,7 @@ const MovieTimesSection = ({
     >
       {sortByTheater
         ? Object.entries(groupShowtimesByTheater(showtimes)).map(
-            ([cinema, cShowtimes]) => {
+            ([cinema, perCinemaShowtimes]) => {
               const theaterInfo = theatersData.find(
                 (t) => t.chain === cinema && t.city === selectedCity
               );
@@ -133,7 +171,6 @@ const MovieTimesSection = ({
                 <div key={cinema} className="theater-block">
                   <div className="theater-title">
                     {theaterInfo && (
-                      // <div className="theater-map-icon-div">
                       <img
                         src={mapIcon}
                         alt="Map Icon"
@@ -143,7 +180,6 @@ const MovieTimesSection = ({
                           toggleMapPopup(title, cinema);
                         }}
                       />
-                      // </div>
                     )}
                     {theaterNames[cinema] || cinema}
                     {openMapPopup &&
@@ -162,38 +198,37 @@ const MovieTimesSection = ({
                       )}
                   </div>
                   <div className="by-theater-showtimes">
-                    {cShowtimes.map((showtime, sIndex) => (
+                    {perCinemaShowtimes.map((showtime, sIndex) => (
                       <div
                         className={`each-showtime${
-                          areAllShowtimesRegular(cShowtimes)
-                            ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
-                            : areFirstFourShowtimesRegular(cShowtimes) &&
-                              sIndex < 4
-                            ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
-                            : "" // Default case
+                          areFirstFourShowtimesRegular(perCinemaShowtimes) &&
+                          sIndex < 4
+                            ? " smaller-showtime"
+                            : ""
                         }`}
                         key={sIndex}
                       >
-                        {/* <div
-                        className={`each-showtime${
-                          areFirstFourShowtimesRegular(cShowtimes) && sIndex < 4
-                            ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
-                            : "" // Default case
-                        }`}
-                        key={sIndex}
-                      > */}
-                        <div className="showtime-background">
-                          {showtime.type !== "R" && (
-                            <div className="showtime-type">{showtime.type}</div>
-                          )}
-                          <div
-                            className={`showtime-time ${getCinemaClass(
-                              showtime.cinema
-                            )}`}
-                          >
-                            {showtime.time}
+                        <a
+                          href={getShowtimeURL(showtime)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="showtime-link" // Optional class for styling if you wish
+                        >
+                          <div className="showtime-background">
+                            {showtime.type !== "R" && (
+                              <div className="showtime-type">
+                                {showtime.type}
+                              </div>
+                            )}
+                            <div
+                              className={`showtime-time ${getCinemaClass(
+                                showtime.cinema
+                              )}`}
+                            >
+                              {showtime.time}
+                            </div>
                           </div>
-                        </div>
+                        </a>
                       </div>
                     ))}
                   </div>
@@ -204,32 +239,31 @@ const MovieTimesSection = ({
         : sortShowtimes(showtimes).map((showtime, sIndex) => (
             <div
               className={`each-showtime${
-                areAllShowtimesRegular(showtimes)
-                  ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
-                  : areFirstFourShowtimesRegular(showtimes) && sIndex < 4
-                  ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
-                  : "" // Default case
+                areFirstFourShowtimesRegular(showtimes) && sIndex < 4
+                  ? " smaller-showtime"
+                  : ""
               }`}
               key={sIndex}
             >
-              {/* <div
-              className={`each-showtime${
-                areFirstFourShowtimesRegular(showtimes) && sIndex < 4
-                  ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
-                  : "" // Default case
-              }`}
-              key={sIndex}
-            > */}
-              <div className="showtime-background">
-                {showtime.type !== "R" && (
-                  <div className="showtime-type">{showtime.type}</div>
-                )}
-                <div
-                  className={`showtime-time ${getCinemaClass(showtime.cinema)}`}
-                >
-                  {showtime.time}
+              <a
+                href={getShowtimeURL(showtime)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="showtime-link" // Optional class for styling if you wish
+              >
+                <div className="showtime-background">
+                  {showtime.type !== "R" && (
+                    <div className="showtime-type">{showtime.type}</div>
+                  )}
+                  <div
+                    className={`showtime-time ${getCinemaClass(
+                      showtime.cinema
+                    )}`}
+                  >
+                    {showtime.time}
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
           ))}
     </div>

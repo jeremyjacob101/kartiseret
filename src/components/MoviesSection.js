@@ -22,6 +22,8 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         time: movie.time,
         cinema: movie.cinema,
         type: movie.type,
+        snif: movie.snif,
+        timeHref: movie.timeHref,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,
@@ -99,9 +101,9 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
                       <img src={imdbLogo} alt="IMDB logo" />
+                    </a>
                       {groupedMovies[title][0].imdbRating}/10 (
                       {groupedMovies[title][0].imdbVotes})
-                    </a>
                   </div>
                   <div className="movie-ratings-sub-block-rt">
                     <img src={rtLogo} alt="Rotten Tomatoes logo" />

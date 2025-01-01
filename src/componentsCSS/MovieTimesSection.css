@@ -84,11 +84,21 @@
 
 .showtime-background {
     background-color: rgb(101, 94, 94);
-    width: 95%;
+    width: 100%;
     border-radius: 12px;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
+}
+
+.showtime-link {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 12px;
 }
 
 .showtime-time {
