@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/ComingSoons.css";
 
-const showtimes_csv = "/CSVs/24-12-24-comingsoons.csv";
+const showtimes_csv = "/CSVs/25-01-01-comingsoons.csv";
 const defaultPoster = "/images/defposter.jpeg";
 
 // Function to check if the showtime date is valid
