@@ -32,7 +32,6 @@ const ComingSoons = ({ selectedSnifs }) => {
             return (
               movie.date &&
               movie.title &&
-              movie.poster &&
               isValidShowtimeDate(movie.date)
             );
           });
