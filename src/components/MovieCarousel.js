@@ -68,6 +68,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
               imdbRating: movie.imdbRating,
               imdbVotes: movie.imdbVotes,
               rtRating: movie.rtRating,
+              imdbID: movie.imdbID,
             };
           });
         },
@@ -93,12 +94,13 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
             )
             .map((movie) => ({
               ...movie,
-              poster: movieInfoMap[movie.title]?.poster || null,
-              runtime: movieInfoMap[movie.title]?.runtime || null,
+              poster: movieInfoMap[movie.title]?.poster || 0,
+              runtime: movieInfoMap[movie.title]?.runtime || 0,
               popularity: movieInfoMap[movie.title]?.popularity || 0,
               imdbRating: movieInfoMap[movie.title]?.imdbRating || 0,
               imdbVotes: movieInfoMap[movie.title]?.imdbVotes || 0,
               rtRating: movieInfoMap[movie.title]?.rtRating || 0,
+              imdbID: movieInfoMap[movie.title]?.imdbID || 0,
             }));
           setMovies(filteredMovies);
         },

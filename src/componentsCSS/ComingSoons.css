@@ -46,7 +46,7 @@
     text-align: center;
 }
 
-.coming-soon-card>img {
+.coming-soon-card>a>img {
     height: 180px;
     width: 120px;
 }

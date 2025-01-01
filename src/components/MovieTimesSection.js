@@ -15,8 +15,8 @@ const theaterNames = {
 const areFirstFourShowtimesRegular = (showtimes) =>
   showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
 
-// const areAllShowtimesRegular = (showtimes) =>
-//   showtimes.every((showtime) => showtime.type === "R");
+const areAllShowtimesRegular = (showtimes) =>
+  showtimes.every((showtime) => showtime.type === "R");
 
 const getCinemaClass = (cinema) => {
   switch (cinema) {
@@ -56,21 +56,32 @@ const groupShowtimesByTheater = (showtimes) => {
 
       const aMinutes = getMinutes(a.time);
       const bMinutes = getMinutes(b.time);
-
-      // Handle midnight showtimes (considered "previous night")
       const isAMidnight = aMinutes <= 120; // Midnight range: 00:00–02:00
       const isBMidnight = bMinutes <= 120;
-
       if (isAMidnight && !isBMidnight) return 1; // Midnight goes last
       if (!isAMidnight && isBMidnight) return -1; // Non-midnight goes first
-
-      // Sort normally for same category (midnight or non-midnight)
       return aMinutes - bMinutes;
     });
   });
 
   return groupedByTheater;
 };
+
+function sortShowtimes(showtimes) {
+  return [...showtimes].sort((a, b) => {
+    const getMinutes = (time) => {
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
+    };
+    const aMinutes = getMinutes(a.time);
+    const bMinutes = getMinutes(b.time);
+    const isAMidnight = aMinutes <= 120; // up to 00:30
+    const isBMidnight = bMinutes <= 120;
+    if (isAMidnight && !isBMidnight) return 1;  // put midnight last
+    if (!isAMidnight && isBMidnight) return -1; 
+    return aMinutes - bMinutes;
+  });
+}
 
 const MovieTimesSection = ({
   title,
@@ -152,25 +163,25 @@ const MovieTimesSection = ({
                   </div>
                   <div className="by-theater-showtimes">
                     {cShowtimes.map((showtime, sIndex) => (
-                      // <div
-                      //   className={`each-showtime${
-                      //     areAllShowtimesRegular(cShowtimes)
-                      //       ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
-                      //       : areFirstFourShowtimesRegular(cShowtimes) &&
-                      //         sIndex < 4
-                      //       ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
-                      //       : "" // Default case
-                      //   }`}
-                      //   key={sIndex}
-                      // >
                       <div
+                        className={`each-showtime${
+                          areAllShowtimesRegular(cShowtimes)
+                            ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
+                            : areFirstFourShowtimesRegular(cShowtimes) &&
+                              sIndex < 4
+                            ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
+                            : "" // Default case
+                        }`}
+                        key={sIndex}
+                      >
+                        {/* <div
                         className={`each-showtime${
                           areFirstFourShowtimesRegular(cShowtimes) && sIndex < 4
                             ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
                             : "" // Default case
                         }`}
                         key={sIndex}
-                      >
+                      > */}
                         <div className="showtime-background">
                           {showtime.type !== "R" && (
                             <div className="showtime-type">{showtime.type}</div>
@@ -190,25 +201,25 @@ const MovieTimesSection = ({
               );
             }
           )
-        : showtimes.map((showtime, sIndex) => (
-            // <div
-            //   className={`each-showtime${
-            //     areAllShowtimesRegular(showtimes)
-            //       ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
-            //       : areFirstFourShowtimesRegular(showtimes) && sIndex < 4
-            //       ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
-            //       : "" // Default case
-            //   }`}
-            //   key={sIndex}
-            // >
+        : sortShowtimes(showtimes).map((showtime, sIndex) => (
             <div
+              className={`each-showtime${
+                areAllShowtimesRegular(showtimes)
+                  ? " smaller-showtime" // Apply to all indexes if all showtimes are regular
+                  : areFirstFourShowtimesRegular(showtimes) && sIndex < 4
+                  ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
+                  : "" // Default case
+              }`}
+              key={sIndex}
+            >
+              {/* <div
               className={`each-showtime${
                 areFirstFourShowtimesRegular(showtimes) && sIndex < 4
                   ? " smaller-showtime" // Apply to first 4 indexes if first 4 are regular
                   : "" // Default case
               }`}
               key={sIndex}
-            >
+            > */}
               <div className="showtime-background">
                 {showtime.type !== "R" && (
                   <div className="showtime-type">{showtime.type}</div>

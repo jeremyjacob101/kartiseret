@@ -28,6 +28,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         imdbRating: movie.imdbRating,
         imdbVotes: movie.imdbVotes,
         rtRating: movie.rtRating,
+        imdbID: movie.imdbID,
       });
     });
 
@@ -91,9 +92,16 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
                 </div>
                 <div className="movie-ratings-block">
                   <div className="movie-ratings-sub-block-imdb">
-                    <img src={imdbLogo} alt="IMDB logo" />
-                    {groupedMovies[title][0].imdbRating}/10 (
-                    {groupedMovies[title][0].imdbVotes})
+                    <a
+                      href={`https://www.imdb.com/title/${groupedMovies[title][0].imdbID}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <img src={imdbLogo} alt="IMDB logo" />
+                      {groupedMovies[title][0].imdbRating}/10 (
+                      {groupedMovies[title][0].imdbVotes})
+                    </a>
                   </div>
                   <div className="movie-ratings-sub-block-rt">
                     <img src={rtLogo} alt="Rotten Tomatoes logo" />

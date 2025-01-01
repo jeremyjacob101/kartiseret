@@ -7,17 +7,16 @@ const defaultPoster = "/images/defposter.jpeg";
 
 // Function to check if the showtime date is valid
 const isValidShowtimeDate = (date) => {
-  if (!date) return false; // Ensure date is defined
-  const [year, month, day] = date.split("-").map(Number); // Parse as numbers
-  const showtimeDate = new Date(2000 + year, month - 1, day); // Add 2000 to ensure full year
+  if (!date) return false;
+  const [year, month, day] = date.split("-").map(Number);
+  const showtimeDate = new Date(2000 + year, month - 1, day);
   const now = new Date();
-
   return showtimeDate >= now;
 };
 
 const ComingSoons = ({ selectedSnifs }) => {
   const [movies, setMovies] = useState([]);
-  const [isOpen, setIsOpen] = useState(false); // State to manage open/close functionality
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const loadShowtimeData = async () => {
@@ -28,12 +27,8 @@ const ComingSoons = ({ selectedSnifs }) => {
         dynamicTyping: true,
         complete: (results) => {
           const filteredMovies = results.data.filter((movie) => {
-            // Ensure all required fields are present and valid
-            return (
-              movie.date &&
-              movie.title &&
-              isValidShowtimeDate(movie.date)
-            );
+            // Check fields and valid date
+            return movie.date && movie.title && isValidShowtimeDate(movie.date);
           });
 
           setMovies(filteredMovies);
@@ -68,22 +63,29 @@ const ComingSoons = ({ selectedSnifs }) => {
         <div className="coming-soon-carousel">
           <div className="coming-soon-carousel-inner">
             {movies.map((movie, index) => {
-              const { date, title, poster } = movie;
+              const { date, title, poster, imdbID } = movie;
 
               return (
                 <div key={index} className="coming-soon-card">
-                  <img
-                    src={poster || defaultPoster}
-                    alt={title}
-                    className="coming-soon-poster"
-                    onError={(e) => {
-                      e.target.onerror = null; // Prevent infinite loop in case default poster also fails
-                      e.target.src = defaultPoster;
-                    }}
-                  />
+                  <a
+                    href={`https://www.imdb.com/title/${imdbID}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={poster || defaultPoster}
+                      alt={title}
+                      className="coming-soon-poster"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = defaultPoster;
+                      }}
+                    />
+                  </a>
+
                   <div className="coming-soon-details">
                     <h3 className="coming-soon-title">{title}</h3>
-                    <p> {date.split("-").reverse().slice(0, 2).join(".")} </p>
+                    <p>{date.split("-").reverse().slice(0, 2).join(".")}</p>
                   </div>
                 </div>
               );
