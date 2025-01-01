@@ -39,8 +39,34 @@ function getShowtimeURL(showtime) {
       return `https://hotcinema.co.il/movie/${timeHref}`;
     case "CC":
       return `https://www.cinema-city.co.il/movie/${timeHref}`;
-    case "YP":
-      return `https://www.planetcinema.co.il/films/${timeHref}s2r`;
+
+    case "YP": {
+      let theaterId;
+      switch (snif) {
+        case "Rishon Letzion":
+          theaterId = "1072";
+          break;
+        case "Ayalon":
+          theaterId = "1025";
+          break;
+        case "Beer Sheva":
+          theaterId = "1074";
+          break;
+        case "Zichron Yaakov":
+          theaterId = "1075";
+          break;
+        case "Haifa":
+          theaterId = "1070";
+          break;
+        case "Jerusalem":
+          theaterId = "1073";
+          break;
+        default:
+          theaterId = "9999";
+      }
+      return `https://tickets3.planetcinema.co.il/site/${theaterId}?code=${theaterId}-${timeHref}&languageId=en-GB`;
+    }
+
     case "ML": {
       let theaterId;
       switch (snif) {
@@ -57,14 +83,32 @@ function getShowtimeURL(showtime) {
           theaterId = "1293";
           break;
         default:
-          theaterId = "1295";
+          theaterId = "9999";
       }
       return `https://www.movieland-cinema.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
     }
+
     case "LC":
       return `https://ticket.lev.co.il/order/${timeHref}?lang=en`;
-    case "RH":
-      return `https://www.rav-hen.co.il/films/${timeHref}s2r`;
+
+    case "RH": {
+      let theaterId;
+      switch (snif) {
+        case "Givatayim":
+          theaterId = "1058";
+          break;
+        case "Tel Aviv":
+          theaterId = "1071";
+          break;
+        case "Kiryat Ono":
+          theaterId = "1062";
+          break;
+        default:
+          theaterId = "9999";
+      }
+      return `https://tickets3.rav-hen.co.il/site/${theaterId}?code=${theaterId}-${timeHref}&languageId=en-GB`;
+    }
+
     default:
       return timeHref;
   }
