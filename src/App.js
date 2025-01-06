@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MovieCarousel from "./components/MovieCarousel";
 import CinemaColorKey from "./components/CinemaColorKey";
 import ComingSoons from "./components/ComingSoons";
-import Cinemateques from "./components/Cinemateques";
+import Cinematheques from "./components/Cinematheques";
 // import useDeviceType from "./utils/useDeviceType";
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
       </div>
       <div className="main-carousel-holder">
         <ComingSoons selectedSnifs={selectedSnifs} />
-        <Cinemateques selectedSnifs={selectedSnifs} />
+        <Cinematheques selectedSnifs={selectedSnifs} />
         <MovieCarousel
           selectedSnifs={selectedSnifs}
           setSelectedSnifs={setSelectedSnifs}

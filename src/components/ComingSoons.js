@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+import { supabase } from "../supabaseClient"; // Import the Supabase client
 import "../componentsCSS/ComingSoons.css";
 
-const showtimes_csv = "/CSVs/25-01-01-comingsoons.csv";
 const defaultPoster = "/images/defposter.jpeg";
 
 // Function to check if the showtime date is valid
@@ -20,20 +19,17 @@ const ComingSoons = ({ selectedSnifs }) => {
 
   useEffect(() => {
     const loadShowtimeData = async () => {
-      const showtimesData = await (await fetch(showtimes_csv)).text();
+      const { data: showtimes } = await supabase
+        .from("comingsoons")
+        .select("*");
 
-      Papa.parse(showtimesData, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          const filteredMovies = results.data.filter((movie) => {
-            // Check fields and valid date
-            return movie.datetext && movie.title && isValidShowtimeDate(movie.datetext);
-          });
-
-          setMovies(filteredMovies);
-        },
+      const filteredMovies = showtimes.filter((movie) => {
+        return (
+          movie.datetext && movie.title && isValidShowtimeDate(movie.datetext)
+        );
       });
+
+      setMovies(filteredMovies);
     };
 
     loadShowtimeData();

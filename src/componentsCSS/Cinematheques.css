@@ -1,4 +1,4 @@
-.cinemateque-carousel {
+.cinematheque-carousel {
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
@@ -12,7 +12,7 @@
     box-sizing: border-box;
 }
 
-.cinemateque-carousel-wrapper {
+.cinematheque-carousel-wrapper {
     width: 100%;
     max-height: 0;
     overflow: hidden;
@@ -20,17 +20,17 @@
     opacity: 0;
 }
 
-.cinemateque-carousel-wrapper.open {
+.cinematheque-carousel-wrapper.open {
     max-height: 1000px;
     /* Large enough to show content */
     opacity: 1;
 }
 
-.cinemateque-carousel-inner {
+.cinematheque-carousel-inner {
     display: flex;
 }
 
-.cinemateque-card {
+.cinematheque-card {
     display: flex;
     flex-direction: row;
     padding: 10px;
@@ -38,23 +38,23 @@
     text-align: center;
 }
 
-.cinemateque-card>a>img {
+.cinematheque-card>a>img {
     height: 180px;
     width: 120px;
 }
 
-.cinemateque-poster {
+.cinematheque-poster {
     width: 100%;
     height: auto;
     border-radius: 5px;
 }
 
-.cinemateque-details {
+.cinematheque-details {
     font-size: 14px;
     padding: 5px;
 }
 
-.cinemateque-title {
+.cinematheque-title {
     font-size: 1.2em;
     margin: 0;
     height: 40px;
@@ -63,16 +63,16 @@
     text-overflow: ellipsis;
 }
 
-.cinemateque-details a {
+.cinematheque-details a {
     color: #0073e6;
     text-decoration: none;
 }
 
-.cinemateque-details a:hover {
+.cinematheque-details a:hover {
     text-decoration: underline;
 }
 
-.cinemateque-placeholder {
+.cinematheque-placeholder {
     width: 160px;
     height: 225px;
     background-color: #e0e0e0;
@@ -84,7 +84,7 @@
 }
 
 /**/
-.cinemateque-header-name {
+.cinematheque-header-name {
     display: inline-block;
     justify-content: flex-start;
     align-items: center;
@@ -94,7 +94,7 @@
     /* width: 600px; */
 }
 
-.cinemateque-chevron {
+.cinematheque-chevron {
     width: 20px;
     height: 20px;
     transition: transform 0.3s ease-out;
@@ -102,7 +102,7 @@
 
 /**/
 
-.cinemateque-section {
+.cinematheque-section {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -112,7 +112,7 @@
 }
 
 @media (max-width: 700px) {
-    .cinemateque-section {
+    .cinematheque-section {
         width: 290px;
     }
 }
