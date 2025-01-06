@@ -28,7 +28,7 @@ const ComingSoons = ({ selectedSnifs }) => {
         complete: (results) => {
           const filteredMovies = results.data.filter((movie) => {
             // Check fields and valid date
-            return movie.date && movie.title && isValidShowtimeDate(movie.date);
+            return movie.datetext && movie.title && isValidShowtimeDate(movie.datetext);
           });
 
           setMovies(filteredMovies);
@@ -63,7 +63,7 @@ const ComingSoons = ({ selectedSnifs }) => {
         <div className="coming-soon-carousel">
           <div className="coming-soon-carousel-inner">
             {movies.map((movie, index) => {
-              const { date, title, poster, imdbID } = movie;
+              const { datetext, title, poster, imdbID } = movie;
 
               return (
                 <div key={index} className="coming-soon-card">
@@ -85,7 +85,7 @@ const ComingSoons = ({ selectedSnifs }) => {
 
                   <div className="coming-soon-details">
                     <h3 className="coming-soon-title">{title}</h3>
-                    <p>{date.split("-").reverse().slice(0, 2).join(".")}</p>
+                    <p>{datetext.split("-").reverse().slice(0, 2).join(".")}</p>
                   </div>
                 </div>
               );

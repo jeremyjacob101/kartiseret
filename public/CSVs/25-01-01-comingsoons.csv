@@ -1,4 +1,4 @@
-cinema,date,title,year,imdbID,poster
+cinema,datetext,title,year,imdbID,poster
 CS,25-01-02,The Successor,2023,tt26597953,https://m.media-amazon.com/images/M/MV5BZWQwMzgzNjItNTcxZC00Zjk4LWIyMzAtYWZiMGIwZTQ1ZmQwXkEyXkFqcGc@._V1_SX300.jpg
 CS,25-01-02,Nosferatu,2024,tt5040012,https://m.media-amazon.com/images/M/MV5BY2FhZGE3NmEtNWJjOC00NDI1LWFhMTQtMjcxNmQzZmEwNGIzXkEyXkFqcGc@._V1_SX300.jpg
 CS,25-01-02,Better Man,2024,tt14260836,https://m.media-amazon.com/images/M/MV5BZDdhZWNkZTYtMzZjMy00OWIzLTllNGEtOWU0NjZhNjFiZTViXkEyXkFqcGc@._V1_SX300.jpg
