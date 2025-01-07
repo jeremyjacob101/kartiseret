@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+import { supabase } from "../supabaseClient";
 import "../componentsCSS/CinemaColorKey.css";
-
-const showtimes_csv = "/CSVs/25-01-07-showtimes.csv";
 
 const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
   const [availableCinemas, setAvailableCinemas] = useState(new Set());
@@ -26,43 +24,39 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     const currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
 
     const loadShowtimeData = async () => {
-      const showtimesData = await (await fetch(showtimes_csv)).text();
+      const { data: showtimesData, error } = await supabase
+        .from("showtimes")
+        .select("*");
 
-      Papa.parse(showtimesData, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          const cinemaSet = new Set();
+      const cinemaSet = new Set();
 
-          results.data.forEach((showtime) => {
-            if (!showtime.time || !showtime.date) {
-              return; // Skip invalid rows
-            }
+      showtimesData.forEach((showtime) => {
+        if (!showtime.timetext || !showtime.datetext) {
+          return; // Skip invalid rows
+        }
 
-            const [hours, minutes] = showtime.time.split(":").map(Number);
-            const showtimeMinutes = hours * 60 + minutes;
+        const [hours, minutes] = showtime.timetext.split(":").map(Number);
+        const showtimeMinutes = hours * 60 + minutes;
 
-            const isSameDay = showtime.date === selectedDate;
-            const isEarlyNextDay =
-              showtime.date === getFormattedDate(dayOffset + 1);
+        const isSameDay = showtime.datetext === selectedDate;
+        const isEarlyNextDay =
+          showtime.datetext === getFormattedDate(dayOffset + 1);
 
-            if (
-              (isSameDay &&
-                (dayOffset !== 0 || showtimeMinutes >= currentTimeMinutes)) ||
-              (isEarlyNextDay && showtimeMinutes < 60)
-            ) {
-              if (
-                selectedSnifs.length === 0 ||
-                selectedSnifs.includes(showtime.snif)
-              ) {
-                cinemaSet.add(showtime.cinema);
-              }
-            }
-          });
-
-          setAvailableCinemas(cinemaSet);
-        },
+        if (
+          (isSameDay &&
+            (dayOffset !== 0 || showtimeMinutes >= currentTimeMinutes)) ||
+          (isEarlyNextDay && showtimeMinutes < 60)
+        ) {
+          if (
+            selectedSnifs.length === 0 ||
+            selectedSnifs.includes(showtime.snif)
+          ) {
+            cinemaSet.add(showtime.cinema);
+          }
+        }
       });
+
+      setAvailableCinemas(cinemaSet);
     };
 
     loadShowtimeData();
