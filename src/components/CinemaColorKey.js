@@ -11,7 +11,7 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     const today = new Date();
     today.setDate(today.getDate() + dayOffset);
 
-    const year = String(today.getFullYear()).slice(-2); // last two digits
+    const year = String(today.getFullYear()).slice(-2);
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
 
@@ -32,7 +32,7 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
 
       showtimesData.forEach((showtime) => {
         if (!showtime.timetext || !showtime.datetext) {
-          return; // Skip invalid rows
+          return;
         }
 
         const [hours, minutes] = showtime.timetext.split(":").map(Number);
