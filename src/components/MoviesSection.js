@@ -4,6 +4,7 @@ import "../componentsCSS/MoviesSection.css";
 import MovieTimesSection from "./MovieTimesSection";
 
 const theaters_csv = "/CSVs/theaters.csv";
+
 const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
 const rtLogo = "/images/rtLogo.png";
