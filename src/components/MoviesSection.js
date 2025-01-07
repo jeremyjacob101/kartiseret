@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+import { supabase } from "../supabaseClient";
 import "../componentsCSS/MoviesSection.css";
 import MovieTimesSection from "./MovieTimesSection";
-
-const theaters_csv = "/CSVs/theaters.csv";
 
 const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
@@ -55,15 +53,11 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
 
   useEffect(() => {
     const loadTheatersData = async () => {
-      const theatersText = await (await fetch(theaters_csv)).text();
+      const { data: theatersData } = await supabase
+        .from("theaters")
+        .select("*");
 
-      Papa.parse(theatersText, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          setTheatersData(results.data.filter((d) => d.chain));
-        },
-      });
+      setTheatersData(theatersData.filter((d) => d.chain));
     };
 
     loadTheatersData();
@@ -103,8 +97,8 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
                     >
                       <img src={imdbLogo} alt="IMDB logo" />
                     </a>
-                      {groupedMovies[title][0].imdbRating}/10 (
-                      {groupedMovies[title][0].imdbVotes})
+                    {groupedMovies[title][0].imdbRating}/10 (
+                    {groupedMovies[title][0].imdbVotes})
                   </div>
                   <div className="movie-ratings-sub-block-rt">
                     <img src={rtLogo} alt="Rotten Tomatoes logo" />

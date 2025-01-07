@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient"; // Import the Supabase client
+import { supabase } from "../supabaseClient";
 import "../componentsCSS/Cinematheques.css";
 
 const cinemathequeCities = {
@@ -32,24 +32,16 @@ const Cinematheques = ({ selectedSnifs }) => {
   useEffect(() => {
     const loadShowtimeData = async () => {
       try {
-        // Fetch data from the "cinematheques" table in Supabase
-        const { data: showtimes, error } = await supabase
+        const { data: showtimes } = await supabase
           .from("cinematheques")
           .select("*");
 
-        if (error) {
-          console.error("Error fetching data from Supabase:", error);
-          return;
-        }
-
-        // Group movies by cinema
         const groupedMovies = showtimes.reduce((acc, movie) => {
           const cinema = movie.cinema;
           const city = cinema ? cinemathequeCities[cinema] : undefined;
           const isSelected =
             selectedSnifs.length === 0 || selectedSnifs.includes(city);
 
-          // Only include if showtime is valid
           if (
             city &&
             isSelected &&
