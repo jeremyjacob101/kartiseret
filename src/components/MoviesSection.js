@@ -19,11 +19,11 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         groupedMovies[movie.title] = [];
       }
       groupedMovies[movie.title].push({
-        time: movie.time,
+        time: movie.timetext,
         cinema: movie.cinema,
         type: movie.type,
         snif: movie.snif,
-        timeHref: movie.timeHref,
+        timeHref: movie.partialHref,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,

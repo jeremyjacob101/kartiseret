@@ -7,7 +7,6 @@ import CarouselControls from "./CarouselControls"; // Import new component
 const showtimes_csv = "/CSVs/25-01-07-showtimes.csv";
 const movies_csv = "/CSVs/25-01-07-movies.csv";
 
-// Changed only the return value from "dd/mm/yyyy" to "yy-mm-dd"
 const getFormattedDate = (dayOffset) => {
   const today = new Date();
   today.setDate(today.getDate() + dayOffset);
@@ -81,13 +80,13 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
           const filteredMovies = results.data
             .filter(
               (movie) =>
-                movie.date === offsatDay &&
+                movie.datetext === offsatDay &&
                 (selectedSnifs.length === 0 ||
                   selectedSnifs.includes(movie.snif)) &&
                 validMovieTitles.has(movie.title) &&
                 isValidShowtime(
-                  movie.time,
-                  movie.date,
+                  movie.timetext,
+                  movie.datetext,
                   today,
                   currentMinutesSinceMidnight
                 )
