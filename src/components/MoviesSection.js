@@ -10,15 +10,11 @@ const rtLogo = "/images/rtLogo.png";
 const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
   const [theatersData, setTheatersData] = useState([]);
 
-  console.log("Movies passed to MoviesSection:", movies);
 
   const groupShowtimesByTitle = (movies) => {
     const groupedMovies = {};
 
     movies.forEach((movie) => {
-      if (!movie.time) {
-        console.error("Movie missing time:", movie);
-      }
       if (!groupedMovies[movie.title]) {
         groupedMovies[movie.title] = [];
       }
@@ -48,8 +44,6 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
       });
     });
 
-    console.log("Grouped movies:", groupedMovies);
-
     return groupedMovies;
   };
 
@@ -58,15 +52,11 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     (a, b) => groupedMovies[b][0].popularity - groupedMovies[a][0].popularity
   );
 
-  console.log("Sorted movie titles:", sortedTitles);
-
   useEffect(() => {
     const loadTheatersData = async () => {
       const { data: theatersData } = await supabase
         .from("theaters")
         .select("*");
-
-      console.log("Fetched theaters data:", theatersData);
 
       setTheatersData(theatersData.filter((d) => d.chain));
     };
