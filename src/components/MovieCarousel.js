@@ -12,6 +12,8 @@ const getFormattedDate = (dayOffset) => {
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const day = String(today.getDate()).padStart(2, "0");
 
+  console.log("getFormattedDate:", { dayOffset, year, month, day });
+
   return `${year}-${month}-${day}`;
 };
 
@@ -21,14 +23,41 @@ const isValidShowtime = (
   today,
   currentMinutesSinceMidnight
 ) => {
+  console.log(
+    "Validating showtime:",
+    showtime,
+    "Showtime Date:",
+    showtimeDate,
+    "Today:",
+    today,
+    "Current Minutes Since Midnight:",
+    currentMinutesSinceMidnight
+  );
+
+  if (!showtime || typeof showtime !== "string") {
+    console.error("Invalid showtime value:", showtime);
+    return false; // Invalid showtime
+  }
+
   const [hours, minutes] = showtime.split(":").map(Number);
   const showtimeMinutes = hours * 60 + minutes;
 
-  return (
+  const isValid =
     showtimeDate !== today ||
     showtimeMinutes <= 60 ||
-    showtimeMinutes >= currentMinutesSinceMidnight
-  );
+    showtimeMinutes >= currentMinutesSinceMidnight;
+
+  if (!isValid) {
+    console.warn("Showtime failed validation:", {
+      showtime,
+      showtimeMinutes,
+      currentMinutesSinceMidnight,
+      showtimeDate,
+      today,
+    });
+  }
+
+  return isValid;
 };
 
 const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
@@ -37,14 +66,30 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
   const [sortByTheater, setSortByTheater] = useState(true);
 
   const offsatDay = getFormattedDate(dayOffsetLocal);
+  console.log("Calculated offsatDay (local timezone):", offsatDay);
 
   useEffect(() => {
+    console.log("Calculated offsatDay:", offsatDay);
+
+    console.log("Current local date (browser):", new Date());
+    console.log("Current UTC date:", new Date().toISOString());
+
     const loadMovieData = async () => {
       try {
-        const { data: showtimesData } = await supabase
+        // Fetch showtimes and movies data from Supabase
+        const { data: showtimesData, error: showtimesError } = await supabase
           .from("showtimes")
           .select("*");
-        const { data: moviesData } = await supabase.from("movies").select("*");
+        const { data: moviesData, error: moviesError } = await supabase
+          .from("movies")
+          .select("*");
+
+        if (showtimesError)
+          console.error("Error fetching showtimes:", showtimesError);
+        if (moviesError) console.error("Error fetching movies:", moviesError);
+
+        console.log("Fetched showtimesData:", showtimesData);
+        console.log("Fetched moviesData:", moviesData);
 
         const currentTime = new Date();
         const currentMinutesSinceMidnight =
@@ -69,10 +114,15 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
           };
         });
 
+        console.log("Valid movie titles:", [...validMovieTitles]);
+        console.log("Movie info map:", movieInfoMap);
+
+        console.log("Showtimes data:", showtimesData);
+
         // Filter and map showtimes to enrich with movie info
         const filteredMovies = showtimesData
-          .filter(
-            (movie) =>
+          .filter((movie) => {
+            const isValid =
               movie.datetext === offsatDay &&
               (selectedSnifs.length === 0 ||
                 selectedSnifs.includes(movie.snif)) &&
@@ -82,8 +132,72 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
                 movie.datetext,
                 today,
                 currentMinutesSinceMidnight
-              )
-          )
+              );
+
+            if (!isValid) {
+              console.log("Filtering movie:", {
+                datetext: movie.datetext,
+                timetext: movie.timetext,
+                snif: movie.snif,
+                title: movie.title,
+              });
+
+              // Check which condition failed
+              if (movie.datetext !== offsatDay) {
+                console.warn(
+                  "Reason: Date mismatch. Expected:",
+                  offsatDay,
+                  "Got:",
+                  movie.datetext
+                );
+              }
+
+              if (
+                !(
+                  selectedSnifs.length === 0 ||
+                  selectedSnifs.includes(movie.snif)
+                )
+              ) {
+                console.warn(
+                  "Reason: Snif mismatch. Selected Snifs:",
+                  selectedSnifs,
+                  "Got Snif:",
+                  movie.snif
+                );
+              }
+
+              if (!validMovieTitles.has(movie.title)) {
+                console.warn(
+                  "Reason: Invalid title. Valid Titles:",
+                  [...validMovieTitles],
+                  "Got Title:",
+                  movie.title
+                );
+              }
+
+              if (
+                !isValidShowtime(
+                  movie.timetext,
+                  movie.datetext,
+                  today,
+                  currentMinutesSinceMidnight
+                )
+              ) {
+                console.warn(
+                  "Reason: Invalid showtime. Showtime:",
+                  movie.timetext,
+                  "Date:",
+                  movie.datetext,
+                  "Today:",
+                  today,
+                  "Current Time (Minutes Since Midnight):",
+                  currentMinutesSinceMidnight
+                );
+              }
+            }
+
+            return isValid;
+          })
           .map((movie) => ({
             ...movie,
             time: movie.timetext,
@@ -96,6 +210,8 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
             rtRating: movieInfoMap[movie.title]?.rtRating || 0,
             imdbID: movieInfoMap[movie.title]?.imdbID || 0,
           }));
+
+        console.log("Filtered movies:", filteredMovies);
 
         setMovies(filteredMovies);
       } catch (err) {

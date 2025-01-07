@@ -10,12 +10,14 @@ const rtLogo = "/images/rtLogo.png";
 const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
   const [theatersData, setTheatersData] = useState([]);
 
+  console.log("Movies passed to MoviesSection:", movies);
+
   const groupShowtimesByTitle = (movies) => {
     const groupedMovies = {};
 
     movies.forEach((movie) => {
       if (!movie.time) {
-        console.error("Movie missing time:", movie); // Log invalid movies
+        console.error("Movie missing time:", movie);
       }
       if (!groupedMovies[movie.title]) {
         groupedMovies[movie.title] = [];
@@ -25,7 +27,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         cinema: movie.cinema,
         type: movie.type,
         snif: movie.snif,
-        timeHref: movie.timeHref,
+        timeHref: movie.partialHref,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,
@@ -39,16 +41,14 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     Object.keys(groupedMovies).forEach((title) => {
       groupedMovies[title].sort((a, b) => {
         const getMinutes = (time) => {
-            if (!time || typeof time !== "string") {
-              console.error("Invalid time value:", time); // Debugging log
-              return Infinity; // Return a high value to sort invalid times last
-            }
           const [hours, minutes] = time.split(":").map(Number);
           return hours * 60 + minutes;
         };
         return getMinutes(a.time) - getMinutes(b.time);
       });
     });
+
+    console.log("Grouped movies:", groupedMovies);
 
     return groupedMovies;
   };
@@ -58,11 +58,15 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     (a, b) => groupedMovies[b][0].popularity - groupedMovies[a][0].popularity
   );
 
+  console.log("Sorted movie titles:", sortedTitles);
+
   useEffect(() => {
     const loadTheatersData = async () => {
       const { data: theatersData } = await supabase
         .from("theaters")
         .select("*");
+
+      console.log("Fetched theaters data:", theatersData);
 
       setTheatersData(theatersData.filter((d) => d.chain));
     };
