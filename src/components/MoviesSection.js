@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient";
+import Papa from "papaparse";
 import "../componentsCSS/MoviesSection.css";
 import MovieTimesSection from "./MovieTimesSection";
 
+const theaters_csv = "/CSVs/theaters.csv";
 const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
 const rtLogo = "/images/rtLogo.png";
 
 const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
   const [theatersData, setTheatersData] = useState([]);
-
 
   const groupShowtimesByTitle = (movies) => {
     const groupedMovies = {};
@@ -23,7 +23,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         cinema: movie.cinema,
         type: movie.type,
         snif: movie.snif,
-        timeHref: movie.partialHref,
+        timeHref: movie.timeHref,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,
@@ -54,11 +54,15 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
 
   useEffect(() => {
     const loadTheatersData = async () => {
-      const { data: theatersData } = await supabase
-        .from("theaters")
-        .select("*");
+      const theatersText = await (await fetch(theaters_csv)).text();
 
-      setTheatersData(theatersData.filter((d) => d.chain));
+      Papa.parse(theatersText, {
+        header: true,
+        dynamicTyping: true,
+        complete: (results) => {
+          setTheatersData(results.data.filter((d) => d.chain));
+        },
+      });
     };
 
     loadTheatersData();
