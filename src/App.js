@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import MovieCarousel from "./components/MovieCarousel";
-import CinemaColorKey from "./components/CinemaColorKey";
+// import CinemaColorKey from "./components/CinemaColorKey";
 import ComingSoons from "./components/ComingSoons";
 import Cinematheques from "./components/Cinematheques";
 // import useDeviceType from "./utils/useDeviceType";
 
 const App = () => {
   const [selectedSnifs, setSelectedSnifs] = useState(["Jerusalem"]);
+  // eslint-disable-next-line no-unused-vars
   const [dayOffset, setDayOffset] = useState(0);
 
   // const isMobile = useDeviceType();

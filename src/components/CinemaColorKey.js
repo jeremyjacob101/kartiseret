@@ -24,7 +24,7 @@ const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
     const currentTimeMinutes = now.getHours() * 60 + now.getMinutes();
 
     const loadShowtimeData = async () => {
-      const { data: showtimesData, error } = await supabase
+      const { data: showtimesData } = await supabase
         .from("showtimes")
         .select("*");
 
