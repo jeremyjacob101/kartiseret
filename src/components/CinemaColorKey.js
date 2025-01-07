@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import "../componentsCSS/CinemaColorKey.css";
 
-const showtimes_csv = "/CSVs/25-01-01-showtimes.csv";
+const showtimes_csv = "/CSVs/25-01-07-showtimes.csv";
 
 const CinemaColorKey = ({ selectedSnifs, dayOffset }) => {
   const [availableCinemas, setAvailableCinemas] = useState(new Set());
