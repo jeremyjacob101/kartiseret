@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+import { supabase } from "../supabaseClient";
 import "../componentsCSS/MovieCarousel.css";
 import MoviesSection from "./MoviesSection";
-import CarouselControls from "./CarouselControls"; // Import new component
+import CarouselControls from "./CarouselControls";
 
-const showtimes_csv = "/CSVs/25-01-07-showtimes.csv";
-const movies_csv = "/CSVs/25-01-07-movies.csv";
-
-// Changed only the return value from "dd/mm/yyyy" to "yy-mm-dd"
 const getFormattedDate = (dayOffset) => {
   const today = new Date();
   today.setDate(today.getDate() + dayOffset);
@@ -37,78 +33,78 @@ const isValidShowtime = (
 
 const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
   const [movies, setMovies] = useState([]);
-  const [dayOffsetLocal, setDayOffsetLocal] = useState(0); // Local dayOffset state
+  const [dayOffsetLocal, setDayOffsetLocal] = useState(0);
   const [sortByTheater, setSortByTheater] = useState(true);
 
   const offsatDay = getFormattedDate(dayOffsetLocal);
 
   useEffect(() => {
     const loadMovieData = async () => {
-      const showtimesData = await (await fetch(showtimes_csv)).text();
-      const moviesData = await (await fetch(movies_csv)).text();
+      try {
+        const { data: showtimesData } = await supabase
+          .from("showtimes")
+          .select("*");
+        const { data: moviesData } = await supabase.from("movies").select("*");
 
-      const currentTime = new Date();
-      const currentMinutesSinceMidnight =
-        currentTime.getHours() * 60 + currentTime.getMinutes();
-      const today = getFormattedDate(0);
+        const currentTime = new Date();
+        const currentMinutesSinceMidnight =
+          currentTime.getHours() * 60 + currentTime.getMinutes();
+        const today = getFormattedDate(0);
 
-      let validMovieTitles = new Set();
-      let movieInfoMap = {};
+        // Build valid movie titles and movie info map
+        let validMovieTitles = new Set();
+        let movieInfoMap = {};
 
-      Papa.parse(moviesData, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          results.data.forEach((movie) => {
-            validMovieTitles.add(movie.title);
-            movieInfoMap[movie.title] = {
-              poster: movie.poster,
-              runtime: movie.runtime,
-              popularity: movie.popularity,
-              imdbRating: movie.imdbRating,
-              imdbVotes: movie.imdbVotes,
-              rtRating: movie.rtRating,
-              imdbID: movie.imdbID,
-            };
-          });
-        },
-      });
+        moviesData.forEach((movie) => {
+          validMovieTitles.add(movie.title);
+          movieInfoMap[movie.title] = {
+            time: movie.timetext,
+            poster: movie.poster,
+            runtime: movie.runtime,
+            popularity: movie.popularity,
+            imdbRating: movie.imdbRating,
+            imdbVotes: movie.imdbVotes,
+            rtRating: movie.rtRating,
+            imdbID: movie.imdbID,
+          };
+        });
 
-      Papa.parse(showtimesData, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          const filteredMovies = results.data
-            .filter(
-              (movie) =>
-                movie.date === offsatDay &&
-                (selectedSnifs.length === 0 ||
-                  selectedSnifs.includes(movie.snif)) &&
-                validMovieTitles.has(movie.title) &&
-                isValidShowtime(
-                  movie.time,
-                  movie.date,
-                  today,
-                  currentMinutesSinceMidnight
-                )
-            )
-            .map((movie) => ({
-              ...movie,
-              poster: movieInfoMap[movie.title]?.poster || 0,
-              runtime: movieInfoMap[movie.title]?.runtime || 0,
-              popularity: movieInfoMap[movie.title]?.popularity || 0,
-              imdbRating: movieInfoMap[movie.title]?.imdbRating || 0,
-              imdbVotes: movieInfoMap[movie.title]?.imdbVotes || 0,
-              rtRating: movieInfoMap[movie.title]?.rtRating || 0,
-              imdbID: movieInfoMap[movie.title]?.imdbID || 0,
-            }));
-          setMovies(filteredMovies);
-        },
-      });
+        // Filter and map showtimes to enrich with movie info
+        const filteredMovies = showtimesData
+          .filter(
+            (movie) =>
+              movie.datetext === offsatDay &&
+              (selectedSnifs.length === 0 ||
+                selectedSnifs.includes(movie.snif)) &&
+              validMovieTitles.has(movie.title) &&
+              isValidShowtime(
+                movie.timetext,
+                movie.datetext,
+                today,
+                currentMinutesSinceMidnight
+              )
+          )
+          .map((movie) => ({
+            ...movie,
+            time: movie.timetext,
+            poster:
+              movieInfoMap[movie.title]?.poster || "/images/defposter.jpeg",
+            runtime: movieInfoMap[movie.title]?.runtime || 0,
+            popularity: movieInfoMap[movie.title]?.popularity || 0,
+            imdbRating: movieInfoMap[movie.title]?.imdbRating || 0,
+            imdbVotes: movieInfoMap[movie.title]?.imdbVotes || 0,
+            rtRating: movieInfoMap[movie.title]?.rtRating || 0,
+            imdbID: movieInfoMap[movie.title]?.imdbID || 0,
+          }));
+
+        setMovies(filteredMovies);
+      } catch (err) {
+        console.error("Unexpected error while loading movie data:", err);
+      }
     };
 
     loadMovieData();
-    setDayOffset(dayOffsetLocal); // Update global dayOffset when local dayOffset changes
+    setDayOffset(dayOffsetLocal);
   }, [offsatDay, selectedSnifs, dayOffsetLocal, setDayOffset]);
 
   const handleNextDay = () => setDayOffsetLocal((prev) => prev + 1);
@@ -122,10 +118,10 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
         offsatDay={offsatDay}
         handlePrevDay={handlePrevDay}
         handleNextDay={handleNextDay}
-        selectedSnifs={selectedSnifs} // Pass props to CarouselControls
-        setSelectedSnifs={setSelectedSnifs} // Pass props to CarouselControls
-        sortByTheater={sortByTheater} // Pass to CarouselControls
-        setSortByTheater={setSortByTheater} // Pass to CarouselControls
+        selectedSnifs={selectedSnifs}
+        setSelectedSnifs={setSelectedSnifs}
+        sortByTheater={sortByTheater}
+        setSortByTheater={setSortByTheater}
       />
       <div className="carousel-movie-list-area">
         <MoviesSection

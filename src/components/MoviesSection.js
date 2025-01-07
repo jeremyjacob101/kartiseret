@@ -14,6 +14,9 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     const groupedMovies = {};
 
     movies.forEach((movie) => {
+      if (!movie.time) {
+        console.error("Movie missing time:", movie); // Log invalid movies
+      }
       if (!groupedMovies[movie.title]) {
         groupedMovies[movie.title] = [];
       }
@@ -36,6 +39,10 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     Object.keys(groupedMovies).forEach((title) => {
       groupedMovies[title].sort((a, b) => {
         const getMinutes = (time) => {
+            if (!time || typeof time !== "string") {
+              console.error("Invalid time value:", time); // Debugging log
+              return Infinity; // Return a high value to sort invalid times last
+            }
           const [hours, minutes] = time.split(":").map(Number);
           return hours * 60 + minutes;
         };
