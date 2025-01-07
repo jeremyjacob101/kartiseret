@@ -43,10 +43,10 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
     const loadMovieData = async () => {
       try {
         // Fetch showtimes and movies data from Supabase
-        const { data: showtimesData, error: showtimesError } = await supabase
+        const { data: showtimesData } = await supabase
           .from("showtimes")
           .select("*");
-        const { data: moviesData, error: moviesError } = await supabase
+        const { data: moviesData } = await supabase
           .from("movies")
           .select("*");
 
