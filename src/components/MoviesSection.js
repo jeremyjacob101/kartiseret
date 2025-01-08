@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+import { supabase } from "../supabaseClient";
 import "../componentsCSS/MoviesSection.css";
 import MovieTimesSection from "./MovieTimesSection";
-
-const theaters_csv = "/CSVs/theaters.csv";
 
 const defaultPoster = "/images/defposter.jpeg";
 const imdbLogo = "/images/imdbLogo.png";
@@ -55,17 +53,10 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
 
   useEffect(() => {
     const loadTheatersData = async () => {
-      const theatersText = await (await fetch(theaters_csv)).text();
-
-      Papa.parse(theatersText, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          setTheatersData(results.data.filter((d) => d.chain));
-        },
-      });
+      const { data } = await supabase.from("theaters").select("*");
+      const filteredTheaters = data.filter((d) => d.chain);
+      setTheatersData(filteredTheaters);
     };
-
     loadTheatersData();
   }, []);
 
