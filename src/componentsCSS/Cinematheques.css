@@ -1,8 +1,16 @@
+.cinematheque-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    padding-bottom: 0px !important;
+}
+
 .cinematheque-carousel {
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    /* scroll-snap-type: x mandatory; */
     scrollbar-width: thin;
     color: rgb(138, 132, 132);
     position: relative;
@@ -10,10 +18,11 @@
     border-right: 5px solid gray;
     border-radius: 25px;
     box-sizing: border-box;
+    z-index: 9;
 }
 
 .cinematheque-carousel-wrapper {
-    width: 100%;
+    width: 1000px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
@@ -22,12 +31,12 @@
 
 .cinematheque-carousel-wrapper.open {
     max-height: 1000px;
-    /* Large enough to show content */
     opacity: 1;
 }
 
 .cinematheque-carousel-inner {
     display: flex;
+    flex-direction: row;
 }
 
 .cinematheque-card {
@@ -100,19 +109,8 @@
     transition: transform 0.3s ease-out;
 }
 
-/**/
-
-.cinematheque-section {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    padding-bottom: 0px !important;
-    width: 1000px;
-}
-
 @media (max-width: 700px) {
-    .cinematheque-section {
+    .cinematheque-carousel-wrapper {
         width: 290px;
     }
 }

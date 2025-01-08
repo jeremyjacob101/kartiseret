@@ -77,18 +77,6 @@ h6 {
   /* MAKE IT STAY AT TOP ALWAYS */
 }
 
-/* .testing-title-holder>span {
-  background: linear-gradient(90deg, rgb(120, 6, 162), rgb(60, 9, 171));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-
-  letter-spacing: 1px;
-  transform: scaleX(1.15);
-  display: inline-block;
-} */
-
 .testing-title-holder>img {
   width: 210px;
   height: 70px;
@@ -110,3 +98,9 @@ h6 {
     margin-top: 80px;
   }
 }
+
+/*make it not scrollable left/right*/
+body {
+  overflow-x: hidden;
+}
+/*make it not scrollable left/right*/

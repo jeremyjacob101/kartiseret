@@ -1,3 +1,12 @@
+.coming-soon-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    padding-bottom: 0px !important;
+}
+
 .coming-soon-carousel {
     display: flex;
     overflow-x: auto;
@@ -19,18 +28,10 @@
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
     opacity: 0;
 }
+
 .coming-soon-carousel-wrapper.open {
     max-height: 1000px;
     opacity: 1;
-}
-
-.coming-soon-chevron {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease-out;
-    cursor: pointer;
-    margin-bottom: -2.3px;
-    margin-left: 2px;
 }
 
 .coming-soon-carousel-inner {
@@ -84,6 +85,15 @@
     justify-content: center;
     font-size: 1.2em;
     color: #666;
+}
+
+.coming-soon-chevron {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease-out;
+    cursor: pointer;
+    margin-bottom: -2.3px;
+    margin-left: 2px;
 }
 
 @media (max-width: 700px) {

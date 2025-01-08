@@ -45,7 +45,7 @@ const ComingSoons = ({ selectedSnifs }) => {
   };
 
   return (
-    <>
+    <div className="coming-soon-section">
       <h2 className="coming-soon-header-name" onClick={toggleSection}>
         <span>Coming Soon</span>
         <img
@@ -90,7 +90,7 @@ const ComingSoons = ({ selectedSnifs }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
