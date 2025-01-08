@@ -13,13 +13,12 @@ const CarouselControls = ({
   handleNextDay,
   selectedSnifs,
   setSelectedSnifs,
-  sortByTheater, // Add sortByTheater as prop
-  setSortByTheater, // Add setSortByTheater as prop
+  sortByTheater,
+  setSortByTheater,
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -31,7 +30,6 @@ const CarouselControls = ({
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // Function to format the date
   const formatDate = (dayOffset) => {
     const today = new Date();
     const targetDate = new Date(today);
@@ -135,7 +133,7 @@ const CarouselControls = ({
                   checked={sortByTheater}
                   onChange={() => {
                     setSortByTheater((prev) => !prev);
-                    setShowDropdown(false); // Close dropdown after selection
+                    setShowDropdown(false);
                   }}
                 />
                 Display by theater
