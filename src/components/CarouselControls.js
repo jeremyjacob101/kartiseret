@@ -59,22 +59,15 @@ const CarouselControls = ({
       "December",
     ];
 
-    if (dayOffset === 0) {
-      return {
-        label: "Today",
-        date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
-      };
-    } else if (dayOffset === 1) {
-      return {
-        label: "Tomorrow",
-        date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
-      };
-    } else {
-      return {
-        label: dayNames[targetDate.getDay()],
-        date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
-      };
-    }
+    return {
+      label:
+        dayOffset === 0
+          ? "Today"
+          : dayOffset === 1
+          ? "Tomorrow"
+          : dayNames[targetDate.getDay()],
+      date: `${monthNames[targetDate.getMonth()]} ${targetDate.getDate()}`,
+    };
   };
 
   const { label, date } = formatDate(dayOffsetLocal);
