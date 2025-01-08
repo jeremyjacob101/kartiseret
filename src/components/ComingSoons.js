@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../supabaseClient"; // Import the Supabase client
+import { supabase } from "../supabaseClient";
 import "../componentsCSS/ComingSoons.css";
 
 const defaultPoster = "/images/defposter.jpeg";
@@ -10,7 +10,7 @@ const isValidShowtimeDate = (date) => {
   const [year, month, day] = date.split("-").map(Number);
   const showtimeDate = new Date(2000 + year, month - 1, day);
   const now = new Date();
-  
+
   return showtimeDate >= now;
 };
 
