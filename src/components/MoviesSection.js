@@ -66,7 +66,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
   return (
     <div className="movie-list">
       {sortedTitles.map((title, index) => (
-        <>
+        <div key={title} className="movie-item-wrapper">
           {index !== 0 && <div className="divider-line"></div>}
           <div className="movie-block">
             <div className="movie-poster-and-info-section">
@@ -112,7 +112,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
               selectedCity={selectedCity}
             />
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
