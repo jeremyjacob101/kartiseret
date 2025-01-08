@@ -173,7 +173,7 @@ const MovieTimesSection = ({
   theatersData,
   selectedCity,
 }) => {
-  const [openMapPopup, setOpenMapPopup] = useState(null); // { title, cinema }
+  const [openMapPopup, setOpenMapPopup] = useState(null);
   const popupRef = useRef(null);
 
   const toggleMapPopup = (title, cinema) => {
@@ -256,7 +256,7 @@ const MovieTimesSection = ({
                           href={getShowtimeURL(showtime)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="showtime-link" // Optional class for styling if you wish
+                          className="showtime-link"
                         >
                           <div className="showtime-background">
                             {showtime.type !== "R" && (
@@ -293,7 +293,7 @@ const MovieTimesSection = ({
                 href={getShowtimeURL(showtime)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="showtime-link" // Optional class for styling if you wish
+                className="showtime-link"
               >
                 <div className="showtime-background">
                   {showtime.type !== "R" && (
