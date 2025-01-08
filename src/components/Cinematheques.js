@@ -13,9 +13,9 @@ const cinemathequeCities = {
 const ChevronUp = "/icons/chevron-up.svg";
 const ChevronDown = "/icons/chevron-down.svg";
 
-// Function to check if the showtime is valid
 const isValidShowtime = (date, time) => {
-  if (!date || !time) return false; // Ensure date and time are not undefined
+  if (!date || !time) return false;
+
   const [year, month, day] = date.split("-").map(Number);
   const [hours, minutes] = time.split(":").map(Number);
 
@@ -112,7 +112,7 @@ const Cinematheques = ({ selectedSnifs }) => {
                           className="cinematheque-poster"
                           loading="lazy"
                           onError={(e) => {
-                            e.target.onerror = null; // Prevent infinite loop in case default poster also fails
+                            e.target.onerror = null;
                             e.target.src = "/images/defposter.jpeg";
                           }}
                         />
