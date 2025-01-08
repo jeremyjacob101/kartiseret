@@ -56,7 +56,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
       }
 
       if (!data || data.length === 0) {
-        break; // no more rows in this day
+        break;
       }
 
       allShowtimes = allShowtimes.concat(data);
@@ -79,8 +79,8 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
 
       const showtimesData = await fetchAllShowtimesForDay(offsatDay);
 
-      console.log("Filtering for offsatDay =", offsatDay);
-      console.log("Supabase showtimesData:", showtimesData);
+      // console.log("Filtering for offsatDay =", offsatDay);
+      // console.log("Supabase showtimesData:", showtimesData);
 
       const currentTime = new Date();
       const currentMinutesSinceMidnight =
