@@ -4,12 +4,13 @@ import "../componentsCSS/ComingSoons.css";
 
 const defaultPoster = "/images/defposter.jpeg";
 
-// Function to check if the showtime date is valid
 const isValidShowtimeDate = (date) => {
   if (!date) return false;
+
   const [year, month, day] = date.split("-").map(Number);
   const showtimeDate = new Date(2000 + year, month - 1, day);
   const now = new Date();
+  
   return showtimeDate >= now;
 };
 
