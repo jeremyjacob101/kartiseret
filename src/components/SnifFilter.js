@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../componentsCSS/SnifFilter.css"; // Optional CSS file for styling
+import "../componentsCSS/SnifFilter.css";
 
 const mapPin = "/icons/map-pin.svg";
 
@@ -50,7 +50,7 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
 
   const handleSnifClick = (snif) => {
     setSelectedSnifs([snif]); // Ensure only one snif is selected at a time
-    setIsDropdownOpen(false); // Close the dropdown after selection
+    setIsDropdownOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -60,14 +60,12 @@ const SnifFilter = ({ selectedSnifs, setSelectedSnifs }) => {
   return (
     <div className="snif-filter">
       <div className="snif-filter-header">
-        {/* SVG Icon */}
         <img
           src={mapPin}
           alt="Select City"
           className="dropdown-icon-snifs"
           onClick={toggleDropdown}
         />
-        {/* Display selected city */}
         <span className="selected-snif">{selectedSnifs[0]}</span>
       </div>
 
