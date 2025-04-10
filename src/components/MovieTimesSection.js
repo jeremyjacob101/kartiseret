@@ -64,7 +64,9 @@ function getShowtimeURL(showtime) {
         default:
           theaterId = "9999";
       }
-      return `https://tickets3.planetcinema.co.il/site/${theaterId}?code=${theaterId}-${timeHref}&languageId=en-GB`;
+      // return `https://tickets3.planetcinema.co.il/site/${theaterId}?code=${theaterId}-${timeHref}&languageId=en-GB`;
+      // return `https://www.planetcinema.co.il/films/warfare/7191s2r#/buy-tickets-by-film?in-cinema=1070`;
+      return `https://www.planetcinema.co.il/`;
     }
 
     case "ML": {
@@ -85,7 +87,7 @@ function getShowtimeURL(showtime) {
         default:
           theaterId = "9999";
       }
-      return `https://www.movieland-cinema.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
+      return `https://www.movieland.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
     }
 
     case "LC":
