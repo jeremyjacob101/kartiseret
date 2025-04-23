@@ -40,34 +40,8 @@ function getShowtimeURL(showtime) {
     case "CC":
       return `https://www.cinema-city.co.il/movie/${timeHref}`;
 
-    case "YP": {
-      let theaterId;
-      switch (snif) {
-        case "Rishon Letzion":
-          theaterId = "1072";
-          break;
-        case "Ayalon":
-          theaterId = "1025";
-          break;
-        case "Beer Sheva":
-          theaterId = "1074";
-          break;
-        case "Zichron Yaakov":
-          theaterId = "1075";
-          break;
-        case "Haifa":
-          theaterId = "1070";
-          break;
-        case "Jerusalem":
-          theaterId = "1073";
-          break;
-        default:
-          theaterId = "9999";
-      }
-      // return `https://tickets3.planetcinema.co.il/site/${theaterId}?code=${theaterId}-${timeHref}&languageId=en-GB`;
-      // return `https://www.planetcinema.co.il/films/warfare/7191s2r#/buy-tickets-by-film?in-cinema=1070`;
-      return `https://www.planetcinema.co.il/`;
-    }
+    case "YP":
+      return `https://tickets5.planetcinema.co.il/api/order/${timeHref}?lang=en`;
 
     case "ML": {
       let theaterId;
