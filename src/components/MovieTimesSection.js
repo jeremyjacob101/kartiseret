@@ -41,7 +41,7 @@ function getShowtimeURL(showtime) {
       return `https://www.cinema-city.co.il/movie/${timeHref}`;
 
     case "YP":
-      return `https://tickets5.planetcinema.co.il/api/order/${timeHref}?lang=en`;
+      return `https://tickets5.planetcinema.co.il/order/${timeHref}?lang=en`;
 
     case "ML": {
       let theaterId;
