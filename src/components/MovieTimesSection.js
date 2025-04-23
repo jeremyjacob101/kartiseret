@@ -61,7 +61,7 @@ function getShowtimeURL(showtime) {
         default:
           theaterId = "9999";
       }
-      return `https://www.movieland.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
+      return `https://movieland.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
     }
 
     case "LC":
