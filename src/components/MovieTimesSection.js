@@ -67,23 +67,8 @@ function getShowtimeURL(showtime) {
     case "LC":
       return `https://ticket.lev.co.il/order/${timeHref}?lang=en`;
 
-    case "RH": {
-      let theaterId;
-      switch (snif) {
-        case "Givatayim":
-          theaterId = "1058";
-          break;
-        case "Tel Aviv":
-          theaterId = "1071";
-          break;
-        case "Kiryat Ono":
-          theaterId = "1062";
-          break;
-        default:
-          theaterId = "9999";
-      }
-      return `https://tickets3.rav-hen.co.il/site/${theaterId}?code=${theaterId}-${timeHref}&languageId=en-GB`;
-    }
+    case "RH": 
+      return `https://tickets5.rav-hen.co.il/order/${timeHref}?lang=he`;
 
     default:
       return timeHref;
