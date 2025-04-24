@@ -107,7 +107,7 @@ function getShowtimeURL(showtime) {
       return `https://tickets5.rav-hen.co.il/order/${timeHref}?lang=he`;
 
     default:
-      return timeHref;
+      return `https://www.google.com`;
   }
 }
 
