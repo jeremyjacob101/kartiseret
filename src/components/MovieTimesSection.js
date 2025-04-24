@@ -35,8 +35,44 @@ function getShowtimeURL(showtime) {
   const { cinema, timeHref, snif } = showtime;
 
   switch (cinema) {
-    case "HC":
-      return `https://hotcinema.co.il/movie/${timeHref}`;
+    case "HC": {
+      let theaterId;
+      switch (snif) {
+        case "Carmiel":
+          theaterId = "1192";
+          break;
+        case "Kiryat Bialik":
+          theaterId = "1184";
+          break;
+        case "Nahariya":
+          theaterId = "1181";
+          break;
+        case "Haifa":
+          theaterId = "1195";
+          break;
+        case "Kfar Saba":
+          theaterId = "1197";
+          break;
+        case "Petach Tikvah":
+          theaterId = "1194";
+          break;
+        case "Modiin":
+          theaterId = "1183";
+          break;
+        case "Rehovot":
+          theaterId = "1191";
+          break;
+        case "Ashdod":
+          theaterId = "1182";
+          break;
+        case "Ashkelon":
+          theaterId = "1193";
+          break;
+        default:
+          theaterId = "9999";
+      }
+      return `https://tickets.hotcinema.co.il/site/${theaterId}/tickets?code=${theaterId}-${timeHref}&saleChannelCode=WEB&languageid=en_gb`;
+    }
     case "CC":
       return `https://tickets.cinema-city.co.il/order/${timeHref}`;
 
