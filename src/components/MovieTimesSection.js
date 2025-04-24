@@ -97,14 +97,14 @@ function getShowtimeURL(showtime) {
         default:
           theaterId = "9999";
       }
-      return `https://movieland.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}`;
+      return `https://movieland.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}&saleChannelCode=web&languageid=en_gb`;
     }
 
     case "LC":
       return `https://ticket.lev.co.il/order/${timeHref}?lang=en`;
 
     case "RH": 
-      return `https://tickets5.rav-hen.co.il/order/${timeHref}?lang=he`;
+      return `https://tickets5.rav-hen.co.il/order/${timeHref}?lang=en`;
 
     default:
       return `https://www.google.com`;
