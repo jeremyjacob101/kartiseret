@@ -38,7 +38,7 @@ function getShowtimeURL(showtime) {
     case "HC":
       return `https://hotcinema.co.il/movie/${timeHref}`;
     case "CC":
-      return `https://www.cinema-city.co.il/movie/${timeHref}`;
+      return `https://tickets.cinema-city.co.il/order/${timeHref}`;
 
     case "YP":
       return `https://tickets5.planetcinema.co.il/order/${timeHref}?lang=en`;
