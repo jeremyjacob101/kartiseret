@@ -5,6 +5,7 @@ import "../componentsCSS/Cinematheques.css";
 const cinemathequeCities = {
   HFCT: "Haifa",
   JLMCT: "Jerusalem",
+  SSC: "Jerusalem",
   HRZCT: "Herziliya",
   TLVCT: "Tel Aviv",
   JAFC: "Tel Aviv",
