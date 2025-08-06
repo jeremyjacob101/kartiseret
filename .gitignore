@@ -11,3 +11,6 @@ __init__.py
 __pycache__/
 *.py[cod]
 *$py.class
+
+# VENV
+venv/
