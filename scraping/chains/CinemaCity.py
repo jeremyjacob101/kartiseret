@@ -7,7 +7,3 @@ class CinemaCity(BaseCinema):
 
     def logic(self, items):
         print(f"scraping cinema city")
-        a = self.elementCSS(
-            "body > div.container-fluid.footer > div > p > span:nth-child(3) > strong > a"
-        )
-        print(a.text)

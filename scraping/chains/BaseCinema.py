@@ -39,6 +39,9 @@ class BaseCinema:
         self.sleep = time.sleep
         self.sleep = lambda ms: time.sleep(ms / 1000)
 
+        self.trying_names = []
+        self.trying_hrefs = []
+
         self.items = {
             "hrefs": [],
             "titles": [],
