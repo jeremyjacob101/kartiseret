@@ -4,7 +4,10 @@
 # SECRET KEYS
 keys.py
 
+# INIT PY
 __init__.py
 
-__pycache__
-/__pycache__
+# PYCACHE
+__pycache__/
+*.py[cod]
+*$py.class
