@@ -1,4 +1,4 @@
-from .BaseCinema import BaseCinema
+from scraping.chains.BaseCinema import BaseCinema
 
 
 class YesPlanet(BaseCinema):
