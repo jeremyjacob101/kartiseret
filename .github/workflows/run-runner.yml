@@ -1,0 +1,68 @@
+name: Run runner.py
+
+on:
+  workflow_dispatch:
+    inputs:
+      args:
+        description: "Arguments to pass to runner.py (optional)"
+        required: false
+        default: ""
+      debug:
+        description: "Enable verbose logging (set -x)"
+        type: boolean
+        required: false
+        default: false
+  # Enable later if/when you want a schedule (GitHub Actions uses UTC):
+  # schedule:
+  #   - cron: "0 05 * * *"  # 05:00 UTC daily (08:00 Asia/Jerusalem during DST, 07:00 in winter)
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: run-runner-${{ github.ref }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          elif [ -f pyproject.toml ]; then
+            pip install .
+          else
+            echo "No requirements.txt or pyproject.toml found; skipping installs."
+          fi
+
+      - name: Run runner.py
+        # Add any secrets your script needs here (example below)
+        env:
+          # EXAMPLE: replace/remove if not needed
+          MY_API_KEY: ${{ secrets.MY_API_KEY }}
+        run: |
+          set -e
+          if [ "${{ github.event.inputs.debug }}" = "true" ]; then
+            set -x
+          fi
+          python runner.py ${{ github.event.inputs.args }}
+
+      # Optional: collect outputs/logs your script writes
+      # - name: Upload artifacts
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: run-output
+      #     path: |
+      #       **/*.log
+      #       output/**
