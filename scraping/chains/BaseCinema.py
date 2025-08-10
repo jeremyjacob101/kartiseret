@@ -25,7 +25,7 @@ from settings import (
 )
 
 from utils.logger import logger
-
+from imdbInfo import getImdbInfo
 
 class BaseCinema:
     URL: str
@@ -44,57 +44,24 @@ class BaseCinema:
         self.trying_names = []
         self.trying_hrefs = []
 
-        self.items = {
-            "hrefs": [],
-            "titles": [],
-            "runtimes": [],
-            "posters": [],
-            "years": [],
-            "popularity": [],
-            "imdbIDs": [],
-            "imdbScores": [],
-            "imdbVotes": [],
-            "rtScores": [],
-            "dubbedOrNot": [],
-        }
+        self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "imdbScores": [], "imdbVotes": [], "rtScores": [], "dubbedOrNot": []}
 
-    def elementCSS(self, css: str):
-        return self.driver.find_element(By.CSS_SELECTOR, css)
+    def element(self, path: str):
+        if path.startswith(("/", ".//")):
+            return self.driver.find_element(By.XPATH, path)
+        return self.driver.find_element(By.CSS_SELECTOR, path)
 
-    def elementXPATH(self, xpath: str):
-        return self.driver.find_element(By.XPATH, xpath)
-
-    def elementsCSS(self, css: str, contains: str | None = None) -> int:
-        elems = self.driver.find_elements(By.CSS_SELECTOR, css)
+    def elements(self, path: str, contains: str | None = None) -> int:
+        if path.startswith(("/", ".//")):
+            elems = self.driver.find_elements(By.XPATH, path)
+        else:
+            elems = self.driver.find_elements(By.CSS_SELECTOR, path)
 
         if contains is None:
             return len(elems)
 
         needle = contains.lower()
-        return sum(
-            1
-            for el in elems
-            if any(
-                needle in (el.get_attribute(attr) or "").lower()
-                for attr in ("alt", "class", "id")
-            )
-        )
-
-    def elementsXPATH(self, xpath: str, contains: str | None = None) -> int:
-        elems = self.driver.find_elements(By.XPATH, xpath)
-
-        if contains is None:
-            return len(elems)
-
-        needle = contains.lower()
-        return sum(
-            1
-            for el in elems
-            if any(
-                needle in (el.get_attribute(attr) or "").lower()
-                for attr in ("alt", "class", "id")
-            )
-        )
+        return sum(1 for el in elems if any(needle in (el.get_attribute(attr) or "").lower() for attr in ("alt", "class", "id")))
 
     def navigate(self):
         self.driver.get(self.URL)
@@ -102,10 +69,14 @@ class BaseCinema:
     def logic(self):
         raise NotImplementedError("Each cinema must implement its own logic()")
 
+    def getImdbInfo(self):
+        getImdbInfo()
+
     def scrape(self):
         try:
-            self.navigate()
-            self.logic()
+            self.navigate()     # Navigate to website
+            self.logic()        # Scraping logic
+            self.getImdbInfo()  # Get ImdbInfo
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
