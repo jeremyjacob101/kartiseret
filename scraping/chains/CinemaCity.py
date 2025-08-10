@@ -5,5 +5,5 @@ class CinemaCity(BaseCinema):
     NAME = "Cinema City"
     URL = "https://www.cinema-city.co.il/"
 
-    def logic(self, items):
+    def logic(self):
         print(f"scraping cinema city")

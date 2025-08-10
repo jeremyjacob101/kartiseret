@@ -55,6 +55,7 @@ class BaseCinema:
             "imdbScores": [],
             "imdbVotes": [],
             "rtScores": [],
+            "dubbedOrNot": [],
         }
 
     def elementCSS(self, css: str):
@@ -104,7 +105,7 @@ class BaseCinema:
     def scrape(self):
         try:
             self.navigate()
-            self.logic(self.items)
+            self.logic()
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",

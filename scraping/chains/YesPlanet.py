@@ -5,5 +5,5 @@ class YesPlanet(BaseCinema):
     NAME = "Yes Planet"
     URL = "https://www.planetcinema.co.il/?lang=en_GB#/"
 
-    def logic(self, items):
+    def logic(self):
         print(f"scraping yes planet")
