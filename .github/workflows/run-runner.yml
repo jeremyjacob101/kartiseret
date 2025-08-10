@@ -23,6 +23,8 @@ jobs:
     concurrency:
       group: run-runner-${{ github.ref }}
       cancel-in-progress: false
+    env:
+      LOG_LEVEL: DEBUG
 
     steps:
       - name: Check out repo

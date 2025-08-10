@@ -24,6 +24,8 @@ from settings import (
     timedelta,
 )
 
+from utils.logger import logger
+
 
 class BaseCinema:
     URL: str
@@ -56,16 +58,72 @@ class BaseCinema:
         }
 
     def elementXPATH(self, xpath: str):
-        return self.driver.find_element(By.XPATH, xpath)
+        try:
+            return self.driver.find_element(By.XPATH, xpath)
+        except Exception:
+            logger.debug(
+                "elementXPATH failed xpath=%r url=%s",
+                xpath,
+                getattr(self.driver, "current_url", "?"),
+                exc_info=True,
+                stacklevel=2,
+            )
+        raise
 
     def elementsXPATH(self, xpath: str):
-        return len(self.driver.find_elements(By.XPATH, xpath))
+        try:
+            els = self.driver.find_elements(By.XPATH, xpath)
+            logger.debug(
+                "elementsXPATH xpath=%r -> %d url=%s",
+                xpath,
+                len(els),
+                getattr(self.driver, "current_url", "?"),
+                stacklevel=2,
+            )
+            return len(els)
+        except Exception:
+            logger.debug(
+                "elementsXPATH crashed xpath=%r url=%s",
+                xpath,
+                getattr(self.driver, "current_url", "?"),
+                exc_info=True,
+                stacklevel=2,
+            )
+            return 0
 
     def elementCSS(self, css: str):
-        return self.driver.find_element(By.CSS_SELECTOR, css)
+        try:
+            return self.driver.find_element(By.CSS_SELECTOR, css)
+        except Exception:
+            logger.debug(
+                "elementCSS failed css=%r url=%s",
+                css,
+                getattr(self.driver, "current_url", "?"),
+                exc_info=True,
+                stacklevel=2,
+            )
+            raise
 
     def elementsCSS(self, css: str):
-        return len(self.driver.find_elements(By.CSS_SELECTOR, css))
+        try:
+            els = self.driver.find_elements(By.CSS_SELECTOR, css)
+            logger.debug(
+                "elementsCSS css=%r -> %d url=%s",
+                css,
+                len(els),
+                getattr(self.driver, "current_url", "?"),
+                stacklevel=2,
+            )
+            return len(els)
+        except Exception:
+            logger.debug(
+                "elementsCSS crashed css=%r url=%s",
+                css,
+                getattr(self.driver, "current_url", "?"),
+                exc_info=True,
+                stacklevel=2,
+            )
+            return 0
 
     def navigate(self):
         self.driver.get(self.URL)
