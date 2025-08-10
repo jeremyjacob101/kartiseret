@@ -1,31 +1,8 @@
-from settings import (
-    webdriver,
-    headless_options,
-    By,
-    WebDriverWait,
-    ActionChains,
-    EC,
-    TimeoutException,
-    WebDriverException,
-    NoSuchElementException,
-    ElementClickInterceptedException,
-    StaleElementReferenceException,
-    current_year,
-    current_date,
-    name_present_day,
-    new_formatted_date,
-    threading,
-    time,
-    csv,
-    requests,
-    pd,
-    re,
-    datetime,
-    timedelta,
-)
+from settings import headless_options, webdriver, By, WebDriverWait, ActionChains, time
 
 from utils.logger import logger
 from imdbInfo import getImdbInfo
+
 
 class BaseCinema:
     URL: str
@@ -69,14 +46,17 @@ class BaseCinema:
     def logic(self):
         raise NotImplementedError("Each cinema must implement its own logic()")
 
-    def getImdbInfo(self):
-        getImdbInfo()
+    def imdbInfo(self):
+        getImdbInfo(self.items)
 
     def scrape(self):
         try:
-            self.navigate()     # Navigate to website
-            self.logic()        # Scraping logic
-            self.getImdbInfo()  # Get ImdbInfo
+            self.navigate()  # Navigate to website
+            self.logic()  # Scraping logic
+            self.imdbInfo()  # Get imdbInfo
+            print(f"\n\nprinting final info\n\n")
+            for href in self.items["hrefs"]:
+                print(href)
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",

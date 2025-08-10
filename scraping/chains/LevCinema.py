@@ -33,3 +33,6 @@ class LevCinema(BaseCinema):
                     for time in range(1, self.elements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div") + 1):
                         showtime = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").text
                         print(f"{self.trying_names[film]:30} - {release_year:12} - {audio_language:10} - {screening_city:15} - {date_of_showing:12} - {showtime:5}")
+            
+            self.items["hrefs"].append(href)
+            self.items["titles"].append(self.trying_names[film])
