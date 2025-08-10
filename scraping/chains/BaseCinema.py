@@ -57,73 +57,43 @@ class BaseCinema:
             "rtScores": [],
         }
 
-    def elementXPATH(self, xpath: str):
-        try:
-            return self.driver.find_element(By.XPATH, xpath)
-        except Exception:
-            logger.debug(
-                "elementXPATH failed xpath=%r url=%s",
-                xpath,
-                getattr(self.driver, "current_url", "?"),
-                exc_info=True,
-                stacklevel=2,
-            )
-        raise
-
-    def elementsXPATH(self, xpath: str):
-        try:
-            els = self.driver.find_elements(By.XPATH, xpath)
-            logger.debug(
-                "elementsXPATH xpath=%r -> %d url=%s",
-                xpath,
-                len(els),
-                getattr(self.driver, "current_url", "?"),
-                stacklevel=2,
-            )
-            return len(els)
-        except Exception:
-            logger.debug(
-                "elementsXPATH crashed xpath=%r url=%s",
-                xpath,
-                getattr(self.driver, "current_url", "?"),
-                exc_info=True,
-                stacklevel=2,
-            )
-            return 0
-
     def elementCSS(self, css: str):
-        try:
-            return self.driver.find_element(By.CSS_SELECTOR, css)
-        except Exception:
-            logger.debug(
-                "elementCSS failed css=%r url=%s",
-                css,
-                getattr(self.driver, "current_url", "?"),
-                exc_info=True,
-                stacklevel=2,
-            )
-            raise
+        return self.driver.find_element(By.CSS_SELECTOR, css)
 
-    def elementsCSS(self, css: str):
-        try:
-            els = self.driver.find_elements(By.CSS_SELECTOR, css)
-            logger.debug(
-                "elementsCSS css=%r -> %d url=%s",
-                css,
-                len(els),
-                getattr(self.driver, "current_url", "?"),
-                stacklevel=2,
+    def elementXPATH(self, xpath: str):
+        return self.driver.find_element(By.XPATH, xpath)
+
+    def elementsCSS(self, css: str, contains: str | None = None) -> int:
+        elems = self.driver.find_elements(By.CSS_SELECTOR, css)
+
+        if contains is None:
+            return len(elems)
+
+        needle = contains.lower()
+        return sum(
+            1
+            for el in elems
+            if any(
+                needle in (el.get_attribute(attr) or "").lower()
+                for attr in ("alt", "class", "id")
             )
-            return len(els)
-        except Exception:
-            logger.debug(
-                "elementsCSS crashed css=%r url=%s",
-                css,
-                getattr(self.driver, "current_url", "?"),
-                exc_info=True,
-                stacklevel=2,
+        )
+
+    def elementsXPATH(self, xpath: str, contains: str | None = None) -> int:
+        elems = self.driver.find_elements(By.XPATH, xpath)
+
+        if contains is None:
+            return len(elems)
+
+        needle = contains.lower()
+        return sum(
+            1
+            for el in elems
+            if any(
+                needle in (el.get_attribute(attr) or "").lower()
+                for attr in ("alt", "class", "id")
             )
-            return 0
+        )
 
     def navigate(self):
         self.driver.get(self.URL)
@@ -132,5 +102,15 @@ class BaseCinema:
         raise NotImplementedError("Each cinema must implement its own logic()")
 
     def scrape(self):
-        self.navigate()
-        self.logic(self.items)
+        try:
+            self.navigate()
+            self.logic(self.items)
+        except Exception:
+            logger.error(
+                "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
+                getattr(self, "NAME", "?"),
+                getattr(self.driver, "current_url", "?"),
+                exc_info=True,
+            )
+
+        self.driver.quit()

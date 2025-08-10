@@ -24,7 +24,7 @@ jobs:
       group: run-runner-${{ github.ref }}
       cancel-in-progress: false
     env:
-      LOG_LEVEL: DEBUG
+      LOG_LEVEL: ERROR
 
     steps:
       - name: Check out repo
