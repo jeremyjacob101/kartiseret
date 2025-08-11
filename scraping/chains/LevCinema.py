@@ -47,12 +47,12 @@ class LevCinema(BaseCinema):
                         data_to_push = {
                             "showtime_id": secure_random_hash(),
                             "title": self.trying_names[film],
-                            "cinema_name": "Lev Cinema",
-                            "release_year": int(release_year) if release_year else None,
-                            "audio_language": audio_language,
-                            "screening_city": screening_city,
-                            "date_of_showing": str(date_of_showing),
-                            "time_of_showing": str(showtime),
+                            "cinema": "Lev Cinema",
+                            "year": int(release_year) if release_year else None,
+                            "audio": audio_language,
+                            "city": screening_city,
+                            "date": str(date_of_showing),
+                            "showing": str(showtime),
                         }
 
                         supabase.table("testingMovies").insert(data_to_push).execute()
