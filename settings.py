@@ -10,7 +10,7 @@ import threading
 import time
 import csv
 import requests
-import pandas as pd
+# import pandas as pd
 
 current_year = datetime.now().year
 current_date = datetime.now()
