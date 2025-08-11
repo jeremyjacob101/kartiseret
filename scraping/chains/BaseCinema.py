@@ -1,6 +1,8 @@
 from settings import headless_options, webdriver, By, WebDriverWait, ActionChains, time
 
 from utils.logger import logger
+import os
+from supabase import create_client
 from imdbInfo import getImdbInfo
 
 
@@ -23,6 +25,8 @@ class BaseCinema:
 
         self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "imdbScores": [], "imdbVotes": [], "rtScores": [], "dubbedOrNot": []}
 
+        self.supabase = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
+
     def element(self, path: str):
         if path.startswith(("/", ".//")):
             return self.driver.find_element(By.XPATH, path)
@@ -40,6 +44,13 @@ class BaseCinema:
         needle = contains.lower()
         return sum(1 for el in elems if any(needle in (el.get_attribute(attr) or "").lower() for attr in ("alt", "class", "id")))
 
+    # def setup_supabase(self):
+    #     url = os.environ.get("SUPABASE_URL")
+    #     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    #     if not url or not key:
+    #         raise RuntimeError(f"Missing env vars: SUPABASE_URL={url!r}, SUPABASE_SERVICE_ROLE_KEY={key!r}")
+    #     return create_client(url, key)
+
     def navigate(self):
         self.driver.get(self.URL)
 
@@ -51,6 +62,7 @@ class BaseCinema:
 
     def scrape(self):
         try:
+            # self.setup_supabase()
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
             self.imdbInfo()  # Get imdbInfo

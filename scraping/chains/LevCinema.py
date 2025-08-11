@@ -1,14 +1,10 @@
 from scraping.chains.BaseCinema import BaseCinema
 
 from functions import secure_random_hash
-from supabase import create_client
 
 from datetime import datetime
 import os
 import re
-
-SUPABASE_URL = os.environ["SUPABASE_URL"]
-SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 
 
 class LevCinema(BaseCinema):
@@ -16,8 +12,6 @@ class LevCinema(BaseCinema):
     URL = "https://www.lev.co.il/en/"
 
     def logic(self):
-        supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
-
         print(f"scraping lev cinema")
 
         for tab_view in (1, 2):
@@ -57,4 +51,4 @@ class LevCinema(BaseCinema):
                             "time": str(showtime),
                         }
 
-                        supabase.table("testingMovies").insert(data_to_push).execute()
+                        self.supabase.table("testingMovies").insert(data_to_push).execute()
