@@ -54,9 +54,6 @@ class BaseCinema:
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
             self.imdbInfo()  # Get imdbInfo
-            print(f"\n\nprinting final info\n\n")
-            for href in self.items["hrefs"]:
-                print(href)
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",

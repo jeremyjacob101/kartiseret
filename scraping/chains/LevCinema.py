@@ -1,5 +1,14 @@
 from scraping.chains.BaseCinema import BaseCinema
+
+from functions import secure_random_hash
+from supabase import create_client, Client
+
+from keys import SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+
+from datetime import datetime
 import re
+
+supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 
 class LevCinema(BaseCinema):
@@ -29,10 +38,21 @@ class LevCinema(BaseCinema):
                 screening_city = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text
                 for day in range(1, self.elements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div") + 1):
                     date_of_showing = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/span").text
-                    date_of_showing = m.group(1) if (m := re.search(r"^\s*(\d{1,2}/\d{1,2})", date_of_showing)) else ""
+                    date_of_showing = re.search(r"\d{1,2}/\d{1,2}", date_of_showing).group(0)
+                    date_of_showing = datetime.strptime(f"2025/{date_of_showing}", "%Y/%d/%m")
+                    date_of_showing = date_of_showing.date().isoformat()
                     for time in range(1, self.elements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div") + 1):
                         showtime = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").text
-                        print(f"{self.trying_names[film]:30} - {release_year:12} - {audio_language:10} - {screening_city:15} - {date_of_showing:12} - {showtime:5}")
-            
-            self.items["hrefs"].append(href)
-            self.items["titles"].append(self.trying_names[film])
+
+                        data_to_push = {
+                            "showtime_id": secure_random_hash(),
+                            "title": self.trying_names[film],
+                            "cinema_name": "Lev Cinema",
+                            "release_year": int(release_year) if release_year else None,
+                            "audio_language": audio_language,
+                            "screening_city": screening_city,
+                            "date_of_showing": str(date_of_showing),
+                            "time_of_showing": str(showtime),
+                        }
+
+                        supabase.table("testingMovies").insert(data_to_push).execute()

@@ -2,10 +2,7 @@ from keys import OMDB_API_KEY
 
 
 def getImdbInfo(items):
-    print(f"\n\ngetting imdb info\n\n")
-    for href in items["hrefs"]:
-        print(href)
-
+    print()
     # for i, href in enumerate(self):
     #     try:
     #         current_href_count += 1
