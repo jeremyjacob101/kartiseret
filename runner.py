@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
+
 import threading
 from utils.logger import setup_logging
 

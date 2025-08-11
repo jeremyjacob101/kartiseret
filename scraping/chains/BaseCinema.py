@@ -50,10 +50,15 @@ class BaseCinema:
         needle = contains.lower()
         return sum(1 for el in elems if any(needle in (el.get_attribute(attr) or "").lower() for attr in ("alt", "class", "id")))
 
+
     def setup_supabase(self):
-        url = get_env("SUPABASE_URL")
-        key = get_env("SUPABASE_SERVICE_ROLE_KEY")
-        self.supabase = create_client(url, key)
+        url = os.environ.get("SUPABASE_URL")
+        key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+        print(f"DEBUG: SUPABASE_URL={url!r}")  # REMOVE after debugging
+        print(f"DEBUG: SUPABASE_SERVICE_ROLE_KEY is set? {'yes' if key else 'no'}")
+        if not url or not key:
+            raise RuntimeError("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment")
+        self.supabase = create_client(url.strip(), key.strip())
 
     def navigate(self):
         self.driver.get(self.URL)
