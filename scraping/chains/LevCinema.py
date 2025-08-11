@@ -3,7 +3,6 @@ from scraping.chains.BaseCinema import BaseCinema
 from functions import secure_random_hash
 
 from datetime import datetime
-import os
 import re
 
 

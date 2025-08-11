@@ -3,7 +3,6 @@ from settings import headless_options, webdriver, By, WebDriverWait, ActionChain
 from utils.logger import logger
 import os
 from supabase import create_client
-from dotenv import load_dotenv
 from imdbInfo import getImdbInfo
 
 
