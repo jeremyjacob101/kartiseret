@@ -1,4 +1,4 @@
-from keys import OMDB_API_KEY
+# from keys import OMDB_API_KEY
 
 
 def getImdbInfo(items):

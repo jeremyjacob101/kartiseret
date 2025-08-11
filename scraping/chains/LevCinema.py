@@ -1,13 +1,14 @@
 from scraping.chains.BaseCinema import BaseCinema
 
 from functions import secure_random_hash
-from supabase import create_client, Client
-
-from keys import SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+from supabase import create_client
 
 from datetime import datetime
+import os
 import re
 
+SUPABASE_URL = os.environ["SUPABASE_URL"]
+SUPABASE_SERVICE_ROLE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 
@@ -52,7 +53,7 @@ class LevCinema(BaseCinema):
                             "audio": audio_language,
                             "city": screening_city,
                             "date": str(date_of_showing),
-                            "showing": str(showtime),
+                            "time": str(showtime),
                         }
 
                         supabase.table("testingMovies").insert(data_to_push).execute()

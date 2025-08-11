@@ -36,7 +36,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Cache your virtualenv (fastest)
       - name: Cache .venv
         id: cache-venv
         uses: actions/cache@v4
@@ -46,7 +45,6 @@ jobs:
           restore-keys: |
             venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
 
-      # Create venv & install deps only on cache miss
       - name: Create venv and install deps (if needed)
         if: steps.cache-venv.outputs.cache-hit != 'true'
         run: |
@@ -59,7 +57,6 @@ jobs:
             pip install --prefer-binary .
           fi
 
-      # Cache Selenium drivers used by Selenium Manager (~/.cache/selenium)
       - name: Detect Chrome version
         id: chrome
         shell: bash
@@ -80,20 +77,14 @@ jobs:
           path: ~/.cache/selenium
           key: selenium-${{ runner.os }}-${{ steps.chrome.outputs.version }}
 
-      - name: Run runner.py
+      - name: Run runner.py (with secrets)
         env:
-          MY_API_KEY: ${{ secrets.MY_API_KEY }}
+          OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           set -e
           if [ "${{ github.event.inputs.debug }}" = "true" ]; then set -x; fi
           . .venv/bin/activate
           python runner.py ${{ github.event.inputs.args }}
-
-      # - name: Upload artifacts
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: run-output
-      #     path: |
-      #       **/*.log
-      #       output/**

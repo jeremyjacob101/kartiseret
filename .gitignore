@@ -18,3 +18,10 @@ venv/
 
 # .VSCODE
 .vscode/
+
+# .env
+.env
+/.env
+env
+env/
+/env
