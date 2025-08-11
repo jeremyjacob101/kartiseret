@@ -21,8 +21,8 @@ class LevCinema(BaseCinema):
 
         for tab_view in (1, 2):
             for i in range(1, self.elements(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li", "featureItem") + 1):
-                name = self.element(f"{f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li"}[{i}]/div/a[1]/img").get_attribute("alt")
-                href = self.element(f"{f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li"}[{i}]/div/a[1]").get_attribute("href")
+                name = self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li[{i}]/div/a[1]/img").get_attribute("alt")
+                href = self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li[{i}]/div/a[1]").get_attribute("href")
                 self.trying_names.append(name)
                 self.trying_hrefs.append(href)
 
