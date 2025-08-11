@@ -3,8 +3,16 @@ from settings import headless_options, webdriver, By, WebDriverWait, ActionChain
 from utils.logger import logger
 import os
 from supabase import create_client
+from dotenv import load_dotenv
 from imdbInfo import getImdbInfo
 
+def get_env(name: str) -> str:
+    # Load .env locally, has no effect in Actions if already set
+    load_dotenv()
+    val = os.environ.get(name)
+    if not val:
+        raise RuntimeError(f"Missing environment variable: {name}")
+    return val
 
 class BaseCinema:
     URL: str
@@ -43,10 +51,8 @@ class BaseCinema:
         return sum(1 for el in elems if any(needle in (el.get_attribute(attr) or "").lower() for attr in ("alt", "class", "id")))
 
     def setup_supabase(self):
-        url = os.environ.get("SUPABASE_URL")
-        key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-        if not url or not key:
-            raise RuntimeError(f"Missing env vars")
+        url = get_env("SUPABASE_URL")
+        key = get_env("SUPABASE_SERVICE_ROLE_KEY")
         self.supabase = create_client(url, key)
 
     def navigate(self):
