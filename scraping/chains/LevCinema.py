@@ -3,6 +3,7 @@ from scraping.chains.BaseCinema import BaseCinema
 from functions import secure_random_hash
 
 from datetime import datetime
+import pytz
 import re
 
 
@@ -48,8 +49,7 @@ class LevCinema(BaseCinema):
                             "city": screening_city,
                             "date": str(date_of_showing),
                             "time": str(showtime),
+                            "created_at": datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat(),
                         }
 
                         self.supabase.table("testingMovies").insert(data_to_push).execute()
-
-        self.supabase.table("change_to_jeru_time").select("*").execute()
