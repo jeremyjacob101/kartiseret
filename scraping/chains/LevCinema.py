@@ -1,14 +1,11 @@
 from scraping.chains.BaseCinema import BaseCinema
 
-from functions import secure_random_hash
-
 from datetime import datetime
-import pytz
 import re
 
 
 class LevCinema(BaseCinema):
-    NAME = "Lev Cinema"
+    CINEMA_NAME = "Lev Cinema"
     URL = "https://www.lev.co.il/en/"
 
     def logic(self):
@@ -24,11 +21,13 @@ class LevCinema(BaseCinema):
         for film, href in enumerate(self.trying_hrefs):
             self.driver.get(self.trying_hrefs[film])
 
+            title = self.trying_names[film]
+
             release_year = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[1]").text
-            release_year = m.group(0) if (m := re.search(r"\b(19|20)\d{2}\b", release_year)) else ""
+            release_year = int(m.group(0)) if (m := re.search(r"\b(19|20)\d{2}\b", release_year)) else None
 
             audio_language = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[2]").text
-            audio_language = m.group(1) if (m := re.search(r"^\s*([A-Za-z]+)", audio_language)) else ""
+            audio_language = str(m.group(1)) if (m := re.search(r"^\s*([A-Za-z]+)", audio_language)) else ""
 
             for city in range(1, self.elements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                 screening_city = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text
@@ -36,20 +35,23 @@ class LevCinema(BaseCinema):
                     date_of_showing = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/span").text
                     date_of_showing = re.search(r"\d{1,2}/\d{1,2}", date_of_showing).group(0)
                     date_of_showing = datetime.strptime(f"2025/{date_of_showing}", "%Y/%d/%m")
-                    date_of_showing = date_of_showing.date().isoformat()
+                    date_of_showing = str(date_of_showing.date().isoformat())
                     for time in range(1, self.elements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div") + 1):
-                        showtime = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").text
+                        showtime = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").text)
+                        showtime_href = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").get_attribute("href")
 
                         data_to_push = {
-                            "showtime_id": secure_random_hash(),
-                            "title": self.trying_names[film],
-                            "cinema": "Lev Cinema",
-                            "year": int(release_year) if release_year else None,
+                            "showtime_id": self.getRandomHash(),
+                            "title": title,
+                            "cinema": self.CINEMA_NAME,
+                            "year": release_year,
                             "audio": audio_language,
+                            "href": showtime_href,
                             "city": screening_city,
-                            "date": str(date_of_showing),
-                            "time": str(showtime),
-                            "created_at": datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat(),
+                            "date": date_of_showing,
+                            "time": showtime,
+                            "created_at": self.getJlemTimeNow(),
                         }
 
+                        print(f"{str(self.getRandomHash()):15} - {str(title):24} - {str(self.CINEMA_NAME):12} - {str(release_year):4} - {str(audio_language):10} - {str(showtime_href):.20} - {str(screening_city):15} - {str(date_of_showing):10} - {str(showtime):5} - {str(self.getJlemTimeNow()):.10}")
                         self.supabase.table("testingMovies").insert(data_to_push).execute()

@@ -1,20 +1,31 @@
-from settings import headless_options, webdriver, By, WebDriverWait, ActionChains, time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 
 from utils.logger import logger
-import os
 from supabase import create_client
-from imdbInfo import getImdbInfo
+
+from datetime import datetime
+import os, time, pytz, secrets, string
 
 
 class BaseCinema:
+    CINEMA_NAME: str
     URL: str
-    NAME: str
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
 
     def __init__(self):
-        self.driver = webdriver.Chrome(options=headless_options)
+        driver_options = webdriver.ChromeOptions()
+        driver_options.add_argument("--headless")
+        driver_options.add_argument("--disable-gpu")
+        driver_options.add_argument("--no-sandbox")
+        driver_options.add_argument("--disable-dev-shm-usage")
+        driver_options.add_argument("--window-size=1920,1080")
+        driver_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.0 Safari/537.36")
+        self.driver = webdriver.Chrome(options=driver_options)
         self.wait = WebDriverWait(self.driver, 10)
         self.action = ActionChains(self.driver)
         self.sleep = time.sleep
@@ -23,7 +34,7 @@ class BaseCinema:
         self.trying_names = []
         self.trying_hrefs = []
 
-        self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "imdbScores": [], "imdbVotes": [], "rtScores": [], "dubbedOrNot": []}
+        self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "dubbedOrNot": []}
 
     def element(self, path: str):
         if path.startswith(("/", ".//")):
@@ -32,21 +43,28 @@ class BaseCinema:
 
     def elements(self, path: str, contains: str | None = None) -> int:
         if path.startswith(("/", ".//")):
-            elems = self.driver.find_elements(By.XPATH, path)
+            elements = self.driver.find_elements(By.XPATH, path)
         else:
-            elems = self.driver.find_elements(By.CSS_SELECTOR, path)
+            elements = self.driver.find_elements(By.CSS_SELECTOR, path)
 
         if contains is None:
-            return len(elems)
+            return len(elements)
 
         needle = contains.lower()
-        return sum(1 for el in elems if any(needle in (el.get_attribute(attr) or "").lower() for attr in ("alt", "class", "id")))
+        count = sum(1 for element in elements if any(needle in (element.get_attribute(attribute) or "").lower() for attribute in ("alt", "class", "id")))
+        return count
 
-    def setup_supabase(self):
+    def getJlemTimeNow(self):
+        return datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat()
+
+    def getRandomHash(self):
+        return "".join(secrets.choice(string.digits) for _ in range(15))
+
+    def setUpSupabase(self):
         url = os.environ.get("SUPABASE_URL")
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         if not url or not key:
-            raise RuntimeError("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment")
+            raise RuntimeError("Missing  in environment")
         self.supabase = create_client(url, key)
 
     def navigate(self):
@@ -55,19 +73,15 @@ class BaseCinema:
     def logic(self):
         raise NotImplementedError("Each cinema must implement its own logic()")
 
-    def imdbInfo(self):
-        getImdbInfo(self.items)
-
     def scrape(self):
         try:
-            self.setup_supabase()  # Sets up supabase client for each cinema
+            self.setUpSupabase()  # Sets up supabase client for each cinema
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
-            self.imdbInfo()  # Get imdbInfo
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
-                getattr(self, "NAME", "?"),
+                getattr(self, "CINEMA_NAME", "?"),
                 getattr(self.driver, "current_url", "?"),
                 exc_info=True,
             )
