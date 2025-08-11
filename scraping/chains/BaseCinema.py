@@ -6,13 +6,6 @@ from supabase import create_client
 from dotenv import load_dotenv
 from imdbInfo import getImdbInfo
 
-def get_env(name: str) -> str:
-    # Load .env locally, has no effect in Actions if already set
-    load_dotenv()
-    val = os.environ.get(name)
-    if not val:
-        raise RuntimeError(f"Missing environment variable: {name}")
-    return val
 
 class BaseCinema:
     URL: str
@@ -50,15 +43,12 @@ class BaseCinema:
         needle = contains.lower()
         return sum(1 for el in elems if any(needle in (el.get_attribute(attr) or "").lower() for attr in ("alt", "class", "id")))
 
-
     def setup_supabase(self):
         url = os.environ.get("SUPABASE_URL")
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-        print(f"DEBUG: SUPABASE_URL={url!r}")  # REMOVE after debugging
-        print(f"DEBUG: SUPABASE_SERVICE_ROLE_KEY is set? {'yes' if key else 'no'}")
         if not url or not key:
             raise RuntimeError("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment")
-        self.supabase = create_client(url.strip(), key.strip())
+        self.supabase = create_client(url, key)
 
     def navigate(self):
         self.driver.get(self.URL)
@@ -71,7 +61,7 @@ class BaseCinema:
 
     def scrape(self):
         try:
-            self.setup_supabase()
+            self.setup_supabase()  # Sets up supabase client for each cinema
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
             self.imdbInfo()  # Get imdbInfo

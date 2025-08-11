@@ -51,6 +51,4 @@ class LevCinema(BaseCinema):
                             "time": str(showtime),
                         }
 
-                        print("pushing to supabase")
                         self.supabase.table("testingMovies").insert(data_to_push).execute()
-                        print("pushed to supabase")
