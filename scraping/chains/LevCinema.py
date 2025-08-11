@@ -52,4 +52,4 @@ class LevCinema(BaseCinema):
 
                         self.supabase.table("testingMovies").insert(data_to_push).execute()
 
-        self.supabase.table("change_to_jeru").select("*").execute()
+        self.supabase.table("change_to_jeru_time").select("*").execute()
