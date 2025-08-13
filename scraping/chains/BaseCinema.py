@@ -58,7 +58,7 @@ class BaseCinema:
         return datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat()
 
     def getRandomHash(self):
-        return "".join(secrets.choice(string.digits) for _ in range(15))
+        return "".join(secrets.choice(string.digits) for _ in range(20))
 
     def setUpSupabase(self):
         url = os.environ.get("SUPABASE_URL")
