@@ -9,6 +9,8 @@ from supabase import create_client
 from datetime import datetime
 import os, time, pytz, secrets, string
 
+jerusalem_tz = pytz.timezone("Asia/Jerusalem")
+
 
 class BaseCinema:
     CINEMA_NAME: str
@@ -34,6 +36,12 @@ class BaseCinema:
         self.trying_names = []
         self.trying_hrefs = []
 
+        self.current_year = datetime.now(jerusalem_tz).year
+
+        self.is_december = datetime.now(jerusalem_tz).month == 12
+        
+        self.is_now_december_check = False
+
         self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "dubbedOrNot": []}
 
     def element(self, path: str):
@@ -58,7 +66,7 @@ class BaseCinema:
         return datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat()
 
     def getRandomHash(self):
-        return "".join(secrets.choice(string.digits) for _ in range(20))
+        return "".join(secrets.choice(string.ascii_lowercase) for _ in range(9))
 
     def setUpSupabase(self):
         url = os.environ.get("SUPABASE_URL")
