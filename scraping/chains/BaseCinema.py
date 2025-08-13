@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -21,7 +22,7 @@ class BaseCinema:
 
     def __init__(self):
         driver_options = webdriver.ChromeOptions()
-        driver_options.add_argument("--headless")
+        # driver_options.add_argument("--headless")
         driver_options.add_argument("--disable-gpu")
         driver_options.add_argument("--no-sandbox")
         driver_options.add_argument("--disable-dev-shm-usage")
@@ -30,7 +31,7 @@ class BaseCinema:
         self.driver = webdriver.Chrome(options=driver_options)
         self.wait = WebDriverWait(self.driver, 10)
         self.action = ActionChains(self.driver)
-        self.sleep = lambda ms: time.sleep(ms / 1000)
+        self.sleep = lambda s=None: time.sleep(float("inf") if s is None else s)
 
         self.trying_names = []
         self.trying_hrefs = []
@@ -74,15 +75,10 @@ class BaseCinema:
         self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "dubbedOrNot": []}
 
     def element(self, path: str):
-        if path.startswith(("/", ".//")):
-            return self.driver.find_element(By.XPATH, path)
-        return self.driver.find_element(By.CSS_SELECTOR, path)
+        return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
 
     def elements(self, path: str, contains: str | None = None) -> int:
-        if path.startswith(("/", ".//")):
-            elements = self.driver.find_elements(By.XPATH, path)
-        else:
-            elements = self.driver.find_elements(By.CSS_SELECTOR, path)
+        elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
 
         if contains is None:
             return elements
@@ -92,10 +88,7 @@ class BaseCinema:
         return filtered
 
     def lenElements(self, path: str, contains: str | None = None) -> int:
-        if path.startswith(("/", ".//")):
-            elements = self.driver.find_elements(By.XPATH, path)
-        else:
-            elements = self.driver.find_elements(By.CSS_SELECTOR, path)
+        elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
 
         if contains is None:
             return len(elements)
@@ -104,14 +97,19 @@ class BaseCinema:
         count = sum(1 for element in elements if any(needle in (element.get_attribute(attribute) or "").lower() for attribute in ("alt", "class", "id")))
         return count
 
-    def formatYMDtime(self, dd, mm, yyyy):
-        return
+    def click(self, path: str):
+        self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path).click()
+
+    def waitAndClick(self, path: str):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path))).click()
+        self.sleep(1)
+
+    def zoomOut(self, percentage: int):
+        self.driver.execute_script(f"document.body.style.zoom='{percentage}%'")
+        self.sleep(1)
 
     def getJlemTimeNow(self):
         return datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat()
-
-    def switchSupabaseCreatedAtToJlem(self):
-        return
 
     def getRandomHash(self):
         return "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(9))
@@ -119,8 +117,6 @@ class BaseCinema:
     def setUpSupabase(self):
         url = os.environ.get("SUPABASE_URL")
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-        if not url or not key:
-            raise RuntimeError("Missing  in environment")
         self.supabase = create_client(url, key)
 
     def appendToGatheringInfo(self):

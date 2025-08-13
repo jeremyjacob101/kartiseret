@@ -9,8 +9,6 @@ class LevCinema(BaseCinema):
     URL = "https://www.lev.co.il/en/"
 
     def logic(self):
-        print(f"scraping lev cinema")
-
         for tab_view in (1, 2):
             lis = self.elements(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li", "featureItem")
             hrefs = [self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li[{i}]/div/a[1]").get_attribute("href") for i in range(1, len(lis) + 1)]
@@ -36,18 +34,19 @@ class LevCinema(BaseCinema):
 
                 for city in range(1, self.lenElements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)
+                    self.crossed_year = False
                     for day in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div") + 1):
                         self.date_of_showing = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/span").text
                         self.date_of_showing = re.search(r"\d{1,2}/\d{1,2}", self.date_of_showing).group(0)
 
                         dd, mm = re.search(r"(\d{1,2})/(\d{1,2})", self.date_of_showing).groups()
                         yyyy = str(self.current_year)
-
                         if self.current_month == "12" and not self.crossed_year and str(mm) == "1":
                             self.crossed_year = True
                             yyyy = str(int(yyyy) + 1)
 
                         self.date_of_showing = datetime.strptime(f"{yyyy}/{dd}/{mm}", "%Y/%d/%m").date().isoformat()
+
                         for time in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div") + 1):
                             self.showtime = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").text)
                             self.english_href = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").get_attribute("href") + "?lang=en")
