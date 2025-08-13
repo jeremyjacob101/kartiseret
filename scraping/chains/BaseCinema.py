@@ -35,6 +35,11 @@ class BaseCinema:
         self.trying_names = []
         self.trying_hrefs = []
 
+        self.current_year = str(datetime.now(jerusalem_tz).year)
+        self.current_month = str(datetime.now(jerusalem_tz).month)
+
+        self.crossed_year = False
+
         self.showtime_id = None
         self.english_title = None
         self.hebrew_title = None
@@ -65,11 +70,6 @@ class BaseCinema:
             "dubbed_or_not": [],
             "scraped_at": [],
         }
-
-        self.current_year = datetime.now(jerusalem_tz).year
-
-        self.is_december = datetime.now(jerusalem_tz).month == 12
-        self.is_now_december_check = bool
 
         self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "dubbedOrNot": []}
 
@@ -103,6 +103,9 @@ class BaseCinema:
         needle = contains.lower()
         count = sum(1 for element in elements if any(needle in (element.get_attribute(attribute) or "").lower() for attribute in ("alt", "class", "id")))
         return count
+
+    def formatYMDtime(self, dd, mm, yyyy):
+        return
 
     def getJlemTimeNow(self):
         return datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat()
