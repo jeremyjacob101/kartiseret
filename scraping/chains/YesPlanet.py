@@ -75,6 +75,11 @@ class YesPlanet(BaseCinema):
                         date_name = date_name.split(" ", 1)[1]
 
                         print(f"\t{date_name}")
-                        for i in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
+                        for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
                             print("implement per day logic")
                             self.sleep()
+                            skip_pre_order = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4").text
+                            if skip_pre_order == "PRE-ORDER YOUR TICKETS NOW":
+                                continue
+                            checking_name = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
+                            
