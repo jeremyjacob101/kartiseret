@@ -22,24 +22,19 @@ class BaseCinema:
 
     def __init__(self):
         driver_options = webdriver.ChromeOptions()
-        # driver_options.add_argument("--headless")
+        driver_options.add_argument("--headless")
         driver_options.add_argument("--disable-gpu")
         driver_options.add_argument("--no-sandbox")
         driver_options.add_argument("--disable-dev-shm-usage")
         driver_options.add_argument("--window-size=1920,1080")
         driver_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.0 Safari/537.36")
         self.driver = webdriver.Chrome(options=driver_options)
-        self.wait = WebDriverWait(self.driver, 10)
-        self.action = ActionChains(self.driver)
-        self.sleep = lambda s=None: time.sleep(float("inf") if s is None else s)
+        self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
 
-        self.trying_names = []
-        self.trying_hrefs = []
+        self.trying_names, self.trying_hebrew_names, self.trying_hrefs, self.audio_languages, self.ratings, self.release_years = [], [], [], [], [], []
 
         self.current_year = str(datetime.now(jerusalem_tz).year)
         self.current_month = str(datetime.now(jerusalem_tz).month)
-
-        self.crossed_year = False
 
         self.showtime_id = None
         self.english_title = None
@@ -54,6 +49,7 @@ class BaseCinema:
         self.release_year = None
         self.dubbed_or_not = None
         self.scraped_at = None
+        self.rating = None
 
         self.gathering_info = {
             "cinema": [],
@@ -70,9 +66,8 @@ class BaseCinema:
             "release_year": [],
             "dubbed_or_not": [],
             "scraped_at": [],
+            "rating": [],
         }
-
-        self.items = {"hrefs": [], "titles": [], "runtimes": [], "posters": [], "years": [], "popularity": [], "imdbIDs": [], "dubbedOrNot": []}
 
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
@@ -134,6 +129,7 @@ class BaseCinema:
         self.gathering_info["release_year"].append(self.release_year)
         self.gathering_info["dubbed_or_not"].append(self.dubbed_or_not)
         self.gathering_info["scraped_at"].append(self.scraped_at)
+        self.gathering_info["rating"].append(self.rating)
 
     def navigate(self):
         self.driver.get(self.URL)

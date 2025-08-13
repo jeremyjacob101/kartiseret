@@ -10,10 +10,9 @@ class LevCinema(BaseCinema):
 
     def logic(self):
         for tab_view in (1, 2):
-            lis = self.elements(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li", "featureItem")
-            hrefs = [self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li[{i}]/div/a[1]").get_attribute("href") for i in range(1, len(lis) + 1)]
+            stale_hrefs = self.elements(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li", "featureItem")
 
-            for href in hrefs:
+            for href in [self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li[{i}]/div/a[1]").get_attribute("href") for i in range(1, len(stale_hrefs) + 1)]:
                 hebrew_title_href = re.sub(r"(/)en(/)", r"\1", href)
                 self.driver.get(hebrew_title_href)
                 self.hebrew_title = str(self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text)
@@ -32,17 +31,23 @@ class LevCinema(BaseCinema):
                 self.audio_language = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[2]").text
                 self.audio_language = str(m.group(1)) if (m := re.search(r"^\s*([A-Za-z]+)", self.audio_language)) else "Hebrew"
 
+                self.rating = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[3]").text
+                self.rating = str(self.rating.split(":", 1)[1].strip())
+                if self.rating == "Allowed for all ages":
+                    self.rating = "All Ages"
+
                 for city in range(1, self.lenElements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)
-                    self.crossed_year = False
+
+                    crossed_year = False
                     for day in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div") + 1):
                         self.date_of_showing = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/span").text
                         self.date_of_showing = re.search(r"\d{1,2}/\d{1,2}", self.date_of_showing).group(0)
 
                         dd, mm = re.search(r"(\d{1,2})/(\d{1,2})", self.date_of_showing).groups()
                         yyyy = str(self.current_year)
-                        if self.current_month == "12" and not self.crossed_year and str(mm) == "1":
-                            self.crossed_year = True
+                        if self.current_month == "12" and not crossed_year and str(mm) == "1":
+                            crossed_year = True
                             yyyy = str(int(yyyy) + 1)
 
                         self.date_of_showing = datetime.strptime(f"{yyyy}/{dd}/{mm}", "%Y/%d/%m").date().isoformat()
@@ -56,9 +61,7 @@ class LevCinema(BaseCinema):
                             self.screening_type = "Regular"
 
                             self.appendToGatheringInfo()
-                            print(
-                                f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}"
-                            )
+                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
