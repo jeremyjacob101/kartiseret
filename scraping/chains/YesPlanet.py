@@ -88,7 +88,7 @@ class YesPlanet(BaseCinema):
                             try:
                                 checking_film_name = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text).lower()
                             except:
-                                print(f"COULDN'T FIND FILM NAME H3")
+                                continue
                             for checking_film in range(len(self.trying_names)):
                                 if checking_film_name == str(self.trying_names[checking_film]).lower():
                                     try:
@@ -116,7 +116,7 @@ class YesPlanet(BaseCinema):
 
                                             self.appendToGatheringInfo()
 
-                                            print(f"{self.showtime_id:9} - {self.english_title:.24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
+                                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
