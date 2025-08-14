@@ -6,4 +6,4 @@ class CinemaCity(BaseCinema):
     URL = "https://www.cinema-city.co.il/"
 
     def logic(self):
-        print()
+        print("scraping cinema city")

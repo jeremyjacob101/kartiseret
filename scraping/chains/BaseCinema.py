@@ -131,6 +131,41 @@ class BaseCinema:
         self.gathering_info["scraped_at"].append(self.scraped_at)
         self.gathering_info["rating"].append(self.rating)
 
+    def fixCinemaNames(self):
+        replace = {
+            "Lev Smadar": "Jerusalem",
+            "Lev Omer": "Omer",
+            "Even Yehuda": "Even Yehuda",
+            "Ramat Hasharon": "Ramat Hasharon",
+            "Lev Raanana": "Raanana",
+            "Lev Shoham": "Shoham",
+            "Lev Daniel": "Herziliya",
+            "לוח הקרנות ב רב חן גבעתיים": "Givatayim",
+            "לוח הקרנות ב רב חן דיזינגוף": "Tel Aviv",
+            "לוח הקרנות ב רב חן קרית אונו": "Kiryat Ono",
+            "SCREENINGS FOR PLANET BEER SHEVA": "Beer Sheva",
+            "SCREENINGS FOR PLANET AYALON": "Ayalon",
+            "SCREENINGS FOR PLANET RISHON LETZIYON": "Rishon Letzion",
+            "SCREENINGS FOR PLANET ZICHRON YAAKOV": "Zichron Yaakov",
+            "SCREENINGS FOR PLANET JERUSALEM": "Jerusalem",
+            "SCREENINGS FOR PLANET HAIFA": "Haifa",
+            "כרמיאל": "Carmiel",
+            "חיפה": "Haifa",
+            "נתניה": "Netanya",
+            'הצוק ת"א': "Glilot",
+            "HOT CINEMA כרמיאל": "Carmiel",
+            "HOT CINEMA נהריה": "Nahariya",
+            "HOT CINEMA קריון": "Kiryat Bialik",
+            "HOT CINEMA חיפה": "Haifa",
+            "HOT CINEMA כפר סבא": "Kfar Saba",
+            "HOT CINEMA פתח תקווה": "Petach Tikvah",
+            "HOT CINEMA מודיעין": "Modiin",
+            "HOT CINEMA רחובות": "Rehovot",
+            "HOT CINEMA אשדוד": "Ashdod",
+            "HOT CINEMA אשקלון": "Ashkelon",
+        }
+        self.screening_city = replace.get(self.screening_city, self.screening_city)
+
     def navigate(self):
         self.driver.get(self.URL)
 

@@ -38,6 +38,7 @@ class LevCinema(BaseCinema):
 
                 for city in range(1, self.lenElements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)
+                    self.fixCinemaNames()
 
                     crossed_year = False
                     for day in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div") + 1):
