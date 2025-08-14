@@ -31,10 +31,16 @@ class BaseCinema:
         self.driver = webdriver.Chrome(options=driver_options)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
 
-        self.trying_names, self.trying_hebrew_names, self.trying_hrefs, self.original_languages, self.ratings, self.release_years, self.directed_bys = [], [], [], [], [], [], []
-
         self.current_year = str(datetime.now(jerusalem_tz).year)
         self.current_month = str(datetime.now(jerusalem_tz).month)
+
+        self.trying_names = []
+        self.trying_hebrew_names = []
+        self.trying_hrefs = []
+        self.original_languages = []
+        self.ratings = []
+        self.release_years = []
+        self.directed_bys = []
 
         self.showtime_id = None
         self.english_title = None
@@ -117,8 +123,11 @@ class BaseCinema:
         self.supabase = create_client(url, key)
 
     def appendToGatheringInfo(self):
+        self.fixScreeningType()
+        self.fixCinemaNames()
+
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
-        self.gathering_info["showtime_id"].append(self.showtime_id)
+        self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
         self.gathering_info["english_title"].append(self.english_title)
         self.gathering_info["hebrew_title"].append(self.hebrew_title)
         self.gathering_info["showtime"].append(self.showtime)
@@ -130,7 +139,7 @@ class BaseCinema:
         self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
         self.gathering_info["dubbed_or_not"].append(self.dubbed_or_not)
-        self.gathering_info["scraped_at"].append(self.scraped_at)
+        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
 
@@ -168,6 +177,15 @@ class BaseCinema:
             "HOT CINEMA אשקלון": "Ashkelon",
         }
         self.screening_city = replace.get(self.screening_city, self.screening_city)
+
+    def fixScreeningType(self):
+        replace = {
+            "VIP LIGHT": "VIP Light",
+        }
+        self.screening_type = replace.get(self.screening_type, self.screening_type)
+
+    def printShowtime(self):
+        print(f"{self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.original_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:10}")
 
     def navigate(self):
         self.driver.get(self.URL)

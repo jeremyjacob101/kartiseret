@@ -21,6 +21,7 @@ class YesPlanet(BaseCinema):
         for i in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
             self.trying_names.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a/p").text))
             self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a").get_attribute("href")))
+
         for href in self.trying_hrefs:
             self.driver.get(href)
 
@@ -53,7 +54,6 @@ class YesPlanet(BaseCinema):
             self.zoomOut(30)
 
             self.screening_city = self.element("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(1) > div > h2").text
-            self.fixCinemaNames()
 
             found_first_day_of_next_month = False
             for calendar_month in range(1, 3):
@@ -83,8 +83,9 @@ class YesPlanet(BaseCinema):
                         self.click(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({w}) > td:nth-child({d}) > button")
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
-
                         self.sleep(0.3)
+
+                        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_names)}
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
                             try:
                                 skip_pre_order = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4").text
@@ -96,34 +97,35 @@ class YesPlanet(BaseCinema):
                                 checking_film_name = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text).lower()
                             except:
                                 continue
-                            for checking_film in range(len(self.trying_names)):
-                                if checking_film_name == str(self.trying_names[checking_film]).lower():
-                                    try:
-                                        self.dubbed_or_not = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[2]/div/ul[2]/li[4]/span").text == "DUB"
-                                    except:
-                                        self.dubbed_or_not = False
-                                    for showtype in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
-                                        self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
-                                        if self.screening_type == "2D":
-                                            self.screening_type = "Regular"
-                                        for showtime in range(1, self.lenElements(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a")):
-                                            self.showtime = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime + 1})").text
-                                            self.english_href = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime + 1})").get_attribute("data-url").replace("/api", "")
-                                            self.hebrew_href = self.english_href.replace("lang=en", "lang=he")
 
-                                            self.showtime_id = str(self.getRandomHash())
-                                            self.scraped_at = str(self.getJlemTimeNow())
+                            checking_film = name_to_idx.get(checking_film_name)
+                            if checking_film is None:
+                                continue
+                            try:
+                                self.dubbed_or_not = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[2]/div/ul[2]/li[4]/span").text == "DUB"
+                            except:
+                                self.dubbed_or_not = False
 
-                                            self.release_year = self.release_years[checking_film]
-                                            self.original_language = self.original_languages[checking_film]
-                                            self.rating = self.ratings[checking_film]
+                            for showtype in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
+                                self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
+                                if self.screening_type == "2D":
+                                    self.screening_type = "Regular"
 
-                                            self.english_title = self.trying_names[checking_film]
-                                            self.hebrew_title = self.trying_hebrew_names[checking_film]
+                                for showtime in range(1, self.lenElements(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a") + 1):
+                                    self.showtime = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime + 1})").text
+                                    self.english_href = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime + 1})").get_attribute("data-url").replace("/api", "")
+                                    self.hebrew_href = self.english_href.replace("lang=en", "lang=he")
 
-                                            self.appendToGatheringInfo()
+                                    self.original_language = self.original_languages[checking_film]
+                                    self.release_year = self.release_years[checking_film]
+                                    self.directed_by = self.directed_bys[checking_film]
+                                    self.rating = self.ratings[checking_film]
 
-                                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.original_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
+                                    self.english_title = self.trying_names[checking_film]
+                                    self.hebrew_title = self.trying_hebrew_names[checking_film]
+
+                                    self.appendToGatheringInfo()
+                                    self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

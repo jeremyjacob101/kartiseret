@@ -38,7 +38,6 @@ class LevCinema(BaseCinema):
 
                 for city in range(1, self.lenElements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)
-                    self.fixCinemaNames()
 
                     crossed_year = False
                     for day in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div") + 1):
@@ -57,12 +56,10 @@ class LevCinema(BaseCinema):
                             self.showtime = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").text)
                             self.english_href = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").get_attribute("href") + "?lang=en")
                             self.hebrew_href = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").get_attribute("href") + "?lang=he")
-                            self.showtime_id = str(self.getRandomHash())
-                            self.scraped_at = str(self.getJlemTimeNow())
                             self.screening_type = "Regular"
 
                             self.appendToGatheringInfo()
-                            print(f"{self.showtime_id:9} - {self.english_title:.24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.original_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
+                            self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
