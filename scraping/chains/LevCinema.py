@@ -32,9 +32,9 @@ class LevCinema(BaseCinema):
                 self.audio_language = str(m.group(1)) if (m := re.search(r"^\s*([A-Za-z]+)", self.audio_language)) else "Hebrew"
 
                 self.rating = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[3]").text
-                self.rating = str(self.rating.split(":", 1)[1].strip())
+                self.rating = str(self.rating.split(":", 1)[1].strip()) if self.rating else "All"
                 if self.rating == "Allowed for all ages":
-                    self.rating = "All Ages"
+                    self.rating = "All"
 
                 for city in range(1, self.lenElements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)

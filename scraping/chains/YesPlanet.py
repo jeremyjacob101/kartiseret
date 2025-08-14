@@ -31,7 +31,7 @@ class YesPlanet(BaseCinema):
             self.audio_languages.append(str(language_dictionary.get(audio, audio)))
             rating = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(7) > dd").text
             if rating == "No limit":
-                rating = "All Ages"
+                rating = "All"
             if rating == "Other":
                 rating = "14+"
             self.ratings.append(str(rating))
