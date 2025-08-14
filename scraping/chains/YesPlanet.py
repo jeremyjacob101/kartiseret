@@ -20,7 +20,7 @@ class YesPlanet(BaseCinema):
 
         for i in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
             self.trying_names.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a/p").text))
-            self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a").text))
+            self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a").get_attribute("href")))
         for href in self.trying_hrefs:
             self.driver.get(href)
 
