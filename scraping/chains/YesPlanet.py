@@ -25,7 +25,7 @@ class YesPlanet(BaseCinema):
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
             self.release_years.append(int(re.search(r"\b\d{4}\b", self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()).group(0)))
             audio = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text
-            if "HE" in audio:
+            if "HE" in audio or audio == "":
                 audio = "HE"
             language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew"}
             self.audio_languages.append(str(language_dictionary.get(audio, audio)))
@@ -116,7 +116,7 @@ class YesPlanet(BaseCinema):
 
                                             self.appendToGatheringInfo()
 
-                                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
+                                            print(f"{self.showtime_id:9} - {self.english_title:.24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

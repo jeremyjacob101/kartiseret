@@ -62,7 +62,7 @@ class LevCinema(BaseCinema):
                             self.screening_type = "Regular"
 
                             self.appendToGatheringInfo()
-                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
+                            print(f"{self.showtime_id:9} - {self.english_title:.24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
