@@ -31,7 +31,7 @@ class BaseCinema:
         self.driver = webdriver.Chrome(options=driver_options)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
 
-        self.trying_names, self.trying_hebrew_names, self.trying_hrefs, self.original_languages, self.ratings, self.release_years = [], [], [], [], [], []
+        self.trying_names, self.trying_hebrew_names, self.trying_hrefs, self.original_languages, self.ratings, self.release_years, self.directed_bys = [], [], [], [], [], [], []
 
         self.current_year = str(datetime.now(jerusalem_tz).year)
         self.current_month = str(datetime.now(jerusalem_tz).month)
@@ -50,6 +50,7 @@ class BaseCinema:
         self.dubbed_or_not = None
         self.scraped_at = None
         self.rating = None
+        self.directed_by = None
 
         self.gathering_info = {
             "cinema": [],
@@ -67,6 +68,7 @@ class BaseCinema:
             "dubbed_or_not": [],
             "scraped_at": [],
             "rating": [],
+            "directed_by": [],
         }
 
     def element(self, path: str):
@@ -130,6 +132,7 @@ class BaseCinema:
         self.gathering_info["dubbed_or_not"].append(self.dubbed_or_not)
         self.gathering_info["scraped_at"].append(self.scraped_at)
         self.gathering_info["rating"].append(self.rating)
+        self.gathering_info["directed_by"].append(self.directed_by)
 
     def fixCinemaNames(self):
         replace = {

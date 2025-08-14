@@ -26,11 +26,14 @@ class YesPlanet(BaseCinema):
 
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
             self.release_years.append(int(re.search(r"\b\d{4}\b", self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()).group(0)))
-            audio = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text
-            if "HE" in audio or audio == "":
-                audio = "HE"
+            self.directed_bys.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(4) > dd").text))
+
+            self.original_language = str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text)
+            if "HE" in self.original_language or self.original_language == "":
+                self.original_language = "HE"
             language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew"}
-            self.original_languages.append(str(language_dictionary.get(audio, audio)))
+            self.original_languages.append(str(language_dictionary.get(self.original_language, self.original_language)))
+
             rating = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(7) > dd").text
             if rating == "No limit":
                 rating = "All"
