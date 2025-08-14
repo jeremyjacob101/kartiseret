@@ -30,7 +30,7 @@ class YesPlanet(BaseCinema):
             if "HE" in audio or audio == "":
                 audio = "HE"
             language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew"}
-            self.audio_languages.append(str(language_dictionary.get(audio, audio)))
+            self.original_languages.append(str(language_dictionary.get(audio, audio)))
             rating = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(7) > dd").text
             if rating == "No limit":
                 rating = "All"
@@ -110,7 +110,7 @@ class YesPlanet(BaseCinema):
                                             self.scraped_at = str(self.getJlemTimeNow())
 
                                             self.release_year = self.release_years[checking_film]
-                                            self.audio_language = self.audio_languages[checking_film]
+                                            self.original_language = self.original_languages[checking_film]
                                             self.rating = self.ratings[checking_film]
 
                                             self.english_title = self.trying_names[checking_film]
@@ -118,7 +118,7 @@ class YesPlanet(BaseCinema):
 
                                             self.appendToGatheringInfo()
 
-                                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.audio_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
+                                            print(f"{self.showtime_id:9} - {self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.original_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:.10}")
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

@@ -31,7 +31,7 @@ class BaseCinema:
         self.driver = webdriver.Chrome(options=driver_options)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
 
-        self.trying_names, self.trying_hebrew_names, self.trying_hrefs, self.audio_languages, self.ratings, self.release_years = [], [], [], [], [], []
+        self.trying_names, self.trying_hebrew_names, self.trying_hrefs, self.original_languages, self.ratings, self.release_years = [], [], [], [], [], []
 
         self.current_year = str(datetime.now(jerusalem_tz).year)
         self.current_month = str(datetime.now(jerusalem_tz).month)
@@ -43,7 +43,7 @@ class BaseCinema:
         self.english_href = None
         self.hebrew_href = None
         self.screening_type = None
-        self.audio_language = None
+        self.original_language = None
         self.screening_city = None
         self.date_of_showing = None
         self.release_year = None
@@ -60,7 +60,7 @@ class BaseCinema:
             "english_href": [],
             "hebrew_href": [],
             "screening_type": [],
-            "audio_language": [],
+            "original_language": [],
             "screening_city": [],
             "date_of_showing": [],
             "release_year": [],
@@ -123,7 +123,7 @@ class BaseCinema:
         self.gathering_info["english_href"].append(self.english_href)
         self.gathering_info["hebrew_href"].append(self.hebrew_href)
         self.gathering_info["screening_type"].append(self.screening_type)
-        self.gathering_info["audio_language"].append(self.audio_language)
+        self.gathering_info["original_language"].append(self.original_language)
         self.gathering_info["screening_city"].append(self.screening_city)
         self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
