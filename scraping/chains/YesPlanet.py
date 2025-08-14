@@ -18,7 +18,6 @@ class YesPlanet(BaseCinema):
         self.driver.get(self.URL)
         self.sleep(2)
 
-        i = 1
         for href in [element.get_attribute("href") for element in self.elements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/a")]:
             self.driver.get(href)
 
@@ -36,9 +35,6 @@ class YesPlanet(BaseCinema):
             if rating == "Other":
                 rating = "14+"
             self.ratings.append(str(rating))
-            i += 1
-            if i >= 8:
-                break
 
         for cinema in range(1, 7):
             if cinema == 1:
