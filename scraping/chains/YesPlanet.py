@@ -18,10 +18,12 @@ class YesPlanet(BaseCinema):
         self.driver.get(self.URL)
         self.sleep(2)
 
-        for href in [element.get_attribute("href") for element in self.elements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div/a")]:
+        for i in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
+            self.trying_names.append(str(self.element("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a/p").text))
+            self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{i}]/a").text))
+        for href in self.trying_hrefs:
             self.driver.get(href)
 
-            self.trying_names.append(str(self.element("/html/body/div[5]/section[1]/div/div[1]/div/p/span").text))
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
             self.release_years.append(int(re.search(r"\b\d{4}\b", self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()).group(0)))
             audio = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text
@@ -112,7 +114,7 @@ class YesPlanet(BaseCinema):
                                             self.rating = self.ratings[checking_film]
 
                                             self.english_title = self.trying_names[checking_film]
-                                            self.hebrew_title_title = self.trying_hebrew_names[checking_film]
+                                            self.hebrew_title = self.trying_hebrew_names[checking_film]
 
                                             self.appendToGatheringInfo()
 
