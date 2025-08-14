@@ -29,8 +29,10 @@ class YesPlanet(BaseCinema):
             self.directed_bys.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(4) > dd").text))
 
             self.original_language = str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text)
-            if "HE" in self.original_language or self.original_language == "":
+            if "HE" in self.original_language:
                 self.original_language = "HE"
+            if self.original_language == "":
+                self.original_language = None
             language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew"}
             self.original_languages.append(str(language_dictionary.get(self.original_language, self.original_language)))
 
