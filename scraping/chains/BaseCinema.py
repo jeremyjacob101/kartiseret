@@ -103,6 +103,10 @@ class BaseCinema:
     def click(self, path: str):
         self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path).click()
 
+    def jsClick(self, path: str):
+        self.driver.execute_script("arguments[0].click();", self.element(path))
+        self.sleep(0.05)
+
     def waitAndClick(self, path: str):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path))).click()
         self.sleep(1)
