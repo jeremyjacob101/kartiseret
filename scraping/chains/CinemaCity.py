@@ -55,4 +55,4 @@ class CinemaCity(BaseCinema):
                             self.element("/html/body/div[4]/div[2]/div/div/div[2]/div/div[6]/button"),
                         )
 
-                        print(f"{cinema_name:20} - {day_name:15} - {title_name:15} - {time_name:10} - {event_id:8}")
+                        print(f"{cinema_name:20} - {day_name:15} - {title_name:35} - {time_name:10} - {event_id:8}")
