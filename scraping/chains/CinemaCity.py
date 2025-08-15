@@ -30,7 +30,8 @@ class CinemaCity(BaseCinema):
         self.sleep(3)
         self.zoomOut(50)
         self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a")
-        for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
+        for cinema in range(1, 2):
+            # for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
             self.screening_type = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
 
@@ -59,3 +60,6 @@ class CinemaCity(BaseCinema):
 
                         self.appendToGatheringInfo()
                         self.printShowtime()
+
+        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
+        self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
