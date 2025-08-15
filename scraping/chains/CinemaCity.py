@@ -1,16 +1,4 @@
 from scraping.chains.BaseCinema import BaseCinema
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-import json, re, time
-
-
-def pfx(label, obj):
-    try:
-        print(f"[{label}] {json.dumps(obj, ensure_ascii=False, indent=2)[:2000]}")
-    except Exception as e:
-        print(f"[{label}] <non-serializable> {e}")
 
 
 class CinemaCity(BaseCinema):
@@ -24,7 +12,6 @@ class CinemaCity(BaseCinema):
         self.driver.execute_script("var el=document.querySelector('#popupVSChat');if(el){el.remove();}")
         self.sleep(3)
         self.zoomOut(50)
-        print(f"about to start looping")
         self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a")
         for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
