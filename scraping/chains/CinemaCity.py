@@ -29,9 +29,23 @@ class CinemaCity(BaseCinema):
         self.driver.execute_script("var el=document.querySelector('#popupVSChat');if(el){el.remove();}")
         self.sleep(3)
         self.zoomOut(50)
+
+        for i in range(10):
+            element = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            self.sleep(1)
+            try:
+                element.click()
+            except:
+                break
+            self.sleep(3)
+
+        for cinema_block in range(1, self.lenElements("#moviesContainer > div", "row mainThumbWrapper") + 1):
+            for film_card in range(1, self.lenElements(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div") + 1):
+                print(f"\t", self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[1]/div/h2").get_attribute("textContent"))
+
         self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a")
-        for cinema in range(1, 2):
-            # for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
+        for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
             self.screening_type = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
 
