@@ -179,17 +179,53 @@ class BaseCinema:
             "HOT CINEMA רחובות": "Rehovot",
             "HOT CINEMA אשדוד": "Ashdod",
             "HOT CINEMA אשקלון": "Ashkelon",
+            "סינמה סיטי גלילות": "Glilot",
+            "סינמה סיטי גלילות": "Glilot",
+            "סינמה סיטי גלילות (ONYX)": "Glilot",
+            "סינמה סיטי גלילות (VIP)": "Glilot",
+            'סינמה סיטי ראשל"צ': "Rishon Letzion",
+            'סינמה סיטי ראשל"צ (VIP)': "Rishon Letzion",
+            'סינמה סיטי ראשל"צ (VIP לייט)': "Rishon Letzion",
+            "סינמה סיטי ירושלים": "Jerusalem",
+            "סינמה סיטי ירושלים (VIP)": "Jerusalem",
+            "סינמה סיטי כפר-סבא": "Kfar Saba",
+            "סינמה סיטי כפר סבא (Prime)": "Kfar Saba",
+            "סינמה סיטי נתניה": "Netanya",
+            "סינמה סיטי נתניה (Prime)": "Netanya",
+            "סינמה סיטי באר שבע": "Beer Sheva",
+            "סינמה סיטי באר שבע (VIP)": "Beer Sheva",
+            "סינמה סיטי אשדוד": "Ashdod",
+            "סינמה סיטי חדרה": "Chadera",
+            "סינמה סיטי חדרה (Prime)": "Chadera",
         }
         self.screening_city = replace.get(self.screening_city, self.screening_city)
 
     def fixScreeningType(self):
         replace = {
             "VIP LIGHT": "VIP Light",
+            "סינמה סיטי גלילות": "Regular",
+            "סינמה סיטי גלילות (Lounge)": "Lounge",
+            "סינמה סיטי גלילות (ONYX)": "4DX",
+            "סינמה סיטי גלילות (VIP)": "VIP",
+            'סינמה סיטי ראשל"צ': "Regular",
+            'סינמה סיטי ראשל"צ (VIP)': "VIP",
+            'סינמה סיטי ראשל"צ (VIP לייט)': "VIP Light",
+            "סינמה סיטי ירושלים": "Regular",
+            "סינמה סיטי ירושלים (VIP)": "VIP",
+            "סינמה סיטי כפר-סבא": "Regular",
+            "סינמה סיטי כפר סבא (Prime)": "Prime",
+            "סינמה סיטי נתניה": "Regular",
+            "סינמה סיטי נתניה (Prime)": "Prime",
+            "סינמה סיטי באר שבע": "Regular",
+            "סינמה סיטי באר שבע (VIP)": "VIP",
+            "סינמה סיטי אשדוד": "Regular",
+            "סינמה סיטי חדרה": "Regular",
+            "סינמה סיטי חדרה (Prime)": "Prime",
         }
         self.screening_type = replace.get(self.screening_type, self.screening_type)
 
     def printShowtime(self):
-        print(f"{self.english_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.original_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:10}")
+        print(f"{self.english_title:24} - {self.hebrew_title:24} - {self.CINEMA_NAME:12} - {(self.release_year if self.release_year is not None else '----'):4} - {self.original_language:10} - {self.english_href:.26} - {self.screening_city:15} - {self.date_of_showing:10} - {self.showtime:5} - {self.screening_type:10}")
 
     def navigate(self):
         self.driver.get(self.URL)
