@@ -1,9 +1,26 @@
 from scraping.chains.BaseCinema import BaseCinema
 
+from datetime import datetime
+import re
+
 
 class CinemaCity(BaseCinema):
     CINEMA_NAME = "Cinema City"
     URL = "https://www.cinema-city.co.il/"
+
+    def getEventId(self, path: str):
+        self.driver.execute_script(
+            """
+                            return (function(node){
+                                if (!window.ko) return null;
+                                var data = ko.dataFor(node) || {};
+                                var h2 = (data.selected && typeof data.selected.hour2 === "function" && data.selected.hour2())
+                                        || (data.selected && typeof data.selected.hour === "function" && data.selected.hour());
+                                return h2 && (h2.EventId || h2.EventID || h2.EventID1) || null;
+                            })(arguments[0]);
+                            """,
+            self.element(path),
+        )
 
     def logic(self):
         self.sleep(3)
@@ -16,34 +33,29 @@ class CinemaCity(BaseCinema):
         for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
             self.screening_type = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
+
             self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a")
             self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dt/a")
             for day in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li") + 1):
                 self.date_of_showing = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a").get_attribute("textContent")
+                self.date_of_showing = datetime.strptime(re.search(r"\d{1,2}/\d{1,2}/\d{4}", self.date_of_showing).group(), "%d/%m/%Y").date().isoformat()
                 # FIX DATE FORMAT
+
                 self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a")
                 self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a")
                 for title in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li") + 1):
                     self.hebrew_title = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{title}]/a").get_attribute("textContent")
                     # FIRST GRAB ALL ENG/HEB NAMES ABOVE IN TRYING_NAMES, TRYING_HEBREW_NAMES, THEN MATCH
+
                     self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{title}]/a")
                     self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dt/a")
                     for time in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li") + 1):
                         self.showtime = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a").get_attribute("textContent")
-                        self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a")
 
-                        self.english_href = self.driver.execute_script(
-                            """
-                            return (function(node){
-                                if (!window.ko) return null;
-                                var data = ko.dataFor(node) || {};
-                                var h2 = (data.selected && typeof data.selected.hour2 === "function" && data.selected.hour2())
-                                        || (data.selected && typeof data.selected.hour === "function" && data.selected.hour());
-                                return h2 && (h2.EventId || h2.EventID || h2.EventID1) || null;
-                            })(arguments[0]);
-                            """,
-                            self.element("/html/body/div[4]/div[2]/div/div/div[2]/div/div[6]/button"),
-                        )
+                        self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a")
+                        event_id = self.getEventId("/html/body/div[4]/div[2]/div/div/div[2]/div/div[6]/button")
+                        self.english_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=en"
+                        self.hebrew_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=he"
 
                         self.appendToGatheringInfo()
                         self.printShowtime()

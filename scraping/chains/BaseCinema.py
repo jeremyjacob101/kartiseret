@@ -225,7 +225,7 @@ class BaseCinema:
         self.screening_type = replace.get(self.screening_type, self.screening_type)
 
     def printShowtime(self):
-        print(f"{self.english_title!s:24} - {self.hebrew_title!s:24} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.english_href!s:.26} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:10}")
+        print(f"{self.english_title!s:24} - {self.hebrew_title!s:24} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.english_href!s:.26} - {self.screening_city!s:12} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9}")
 
     def navigate(self):
         self.driver.get(self.URL)
