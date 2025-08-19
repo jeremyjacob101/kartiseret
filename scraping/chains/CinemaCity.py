@@ -88,16 +88,5 @@ class CinemaCity(BaseCinema):
                         self.appendToGatheringInfo()
                         self.printShowtime()
 
-        keys = list(self.gathering_info.keys())
-        print("Keys:", keys)
-
-        # Step 2: Get the values
-        values_list = list(self.gathering_info.values())
-        print("Values list:", values_list)
-
-        # Step 3: Transpose the values (zip with unpacking *)
-        zipped_values = list(zip(*values_list))
-        print("Zipped values:", zipped_values)
-
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
