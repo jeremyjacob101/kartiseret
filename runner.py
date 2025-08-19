@@ -21,8 +21,9 @@ def run_chains():
     threads, runtimes = [], {}
 
     for cinema in cinemas:
+        start = time.time()
         thread = threading.Thread(target=partial(cinema().scrape), name=cinema.__name__)
-        threads.append(thread)
+        threads.append((cinema.__name__, thread, start))
         thread.start()
 
     for name, thread, start in threads:
@@ -30,10 +31,10 @@ def run_chains():
         duration = time.time() - start
         runtimes[name] = duration
 
-    print("\n\n\n")
+    print("\n\n\n--------------------\n")
     for name, secs in runtimes.items():
         m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s")
+        print(f"{name}: {m}m{s:02d}s\n")
 
 
 def main():
