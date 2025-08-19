@@ -5,6 +5,7 @@ load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 from utils.logger import setup_logging
 from functools import partial
 import threading
+import time
 
 from scraping.chains.CinemaCity import CinemaCity
 from scraping.chains.YesPlanet import YesPlanet
@@ -17,15 +18,22 @@ def run_chains():
         # YesPlanet,
         # LevCinema,
     ]
-    threads = []
+    threads, runtimes = [], {}
 
     for cinema in cinemas:
         thread = threading.Thread(target=partial(cinema().scrape), name=cinema.__name__)
         threads.append(thread)
         thread.start()
 
-    for thread in threads:
+    for name, thread, start in threads:
         thread.join()
+        duration = time.time() - start
+        runtimes[name] = duration
+
+    print("\n\n\n")
+    for name, secs in runtimes.items():
+        m, s = divmod(int(secs), 60)
+        print(f"{name}: {m}m{s:02d}s")
 
 
 def main():

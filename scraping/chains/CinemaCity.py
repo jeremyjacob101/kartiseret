@@ -30,15 +30,15 @@ class CinemaCity(BaseCinema):
         self.sleep(3)
         self.zoomOut(50)
 
-        for _ in range(10):
+        for _ in range(8):
             element = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
             self.sleep(1)
             try:
                 element.click()
+                self.sleep(3)
             except:
                 break
-            self.sleep(3)
 
         for cinema_block in range(1, self.lenElements("#moviesContainer > div", "row mainThumbWrapper") + 1):
             for film_card in range(1, self.lenElements(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div") + 1):
@@ -48,7 +48,8 @@ class CinemaCity(BaseCinema):
                 # add DUBBING (CHANGE SUPABASE TO HANDLE RUSSIAN/HEBREW/FRENCH DUBS)
                 # add logic to convert ratings to 12+/14+/16+/All
 
-        self.sleep()
+        self.driver.execute_script("window.scrollTo(0, 0);")
+
         self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a")
         for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
@@ -63,11 +64,18 @@ class CinemaCity(BaseCinema):
 
                 self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a")
                 self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a")
-                for title in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li") + 1):
-                    self.hebrew_title = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{title}]/a").get_attribute("textContent")
-                    # FIRST GRAB ALL ENG/HEB NAMES ABOVE IN TRYING_NAMES, TRYING_HEBREW_NAMES, THEN MATCH
+                name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_hebrew_names)}
+                for film_index in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li") + 1):
+                    checking_film_name = str(self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a").get_attribute("textContent")).lower()
+                    checking_film = name_to_idx.get(checking_film_name)
+                    if checking_film is None:
+                        continue
 
-                    self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{title}]/a")
+                    self.english_title = self.trying_names[checking_film]
+                    self.hebrew_title = self.trying_hebrew_names[checking_film]
+                    self.rating = self.ratings[checking_film]
+
+                    self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a")
                     self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dt/a")
                     for time in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li") + 1):
                         self.showtime = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a").get_attribute("textContent")
@@ -79,6 +87,17 @@ class CinemaCity(BaseCinema):
 
                         self.appendToGatheringInfo()
                         self.printShowtime()
+
+        keys = list(self.gathering_info.keys())
+        print("Keys:", keys)
+
+        # Step 2: Get the values
+        values_list = list(self.gathering_info.values())
+        print("Values list:", values_list)
+
+        # Step 3: Transpose the values (zip with unpacking *)
+        zipped_values = list(zip(*values_list))
+        print("Zipped values:", zipped_values)
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
