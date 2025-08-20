@@ -38,6 +38,7 @@ class BaseCinema:
         self.trying_hebrew_names = []
         self.trying_hrefs = []
         self.original_languages = []
+        self.dub_languages = []
         self.ratings = []
         self.release_years = []
         self.directed_bys = []
@@ -53,7 +54,7 @@ class BaseCinema:
         self.screening_city = None
         self.date_of_showing = None
         self.release_year = None
-        self.dubbed_or_not = None
+        self.dub_language = None
         self.scraped_at = None
         self.rating = None
         self.directed_by = None
@@ -71,7 +72,7 @@ class BaseCinema:
             "screening_city": [],
             "date_of_showing": [],
             "release_year": [],
-            "dubbed_or_not": [],
+            "dub_language": [],
             "scraped_at": [],
             "rating": [],
             "directed_by": [],
@@ -142,7 +143,7 @@ class BaseCinema:
         self.gathering_info["screening_city"].append(self.screening_city)
         self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
-        self.gathering_info["dubbed_or_not"].append(self.dubbed_or_not)
+        self.gathering_info["dub_language"].append(self.dub_language)
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
@@ -225,7 +226,7 @@ class BaseCinema:
         self.screening_type = replace.get(self.screening_type, self.screening_type)
 
     def printShowtime(self):
-        print(f"{self.english_title!s:24} - {self.hebrew_title!s:24} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.english_href!s:.26} - {self.screening_city!s:12} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}")
+        print(f"{self.english_title!s:29} - {self.hebrew_title!s:29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}")
 
     def navigate(self):
         self.driver.get(self.URL)

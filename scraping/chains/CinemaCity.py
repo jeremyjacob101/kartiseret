@@ -42,12 +42,34 @@ class CinemaCity(BaseCinema):
 
         for cinema_block in range(1, self.lenElements("#moviesContainer > div", "row mainThumbWrapper") + 1):
             for film_card in range(1, self.lenElements(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div") + 1):
-                self.trying_hebrew_names.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent"))
                 self.trying_names.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent"))
-                self.ratings.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent"))
-                # add DUBBING (CHANGE SUPABASE TO HANDLE RUSSIAN/HEBREW/FRENCH DUBS)
-                # add logic to convert ratings to 12+/14+/16+/All
 
+                rating = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent")
+                if rating == "מותר לכל":
+                    rating = "All"
+                if rating == "הותר מגיל 16":
+                    rating = "16+"
+                if rating == "הותר מגיל 14":
+                    rating = "14+"
+                if rating == "הותר מגיל 12":
+                    rating = "12+"
+                if rating == "טרם נקבע" or rating == "" or not rating:
+                    rating = None
+                self.ratings.append(rating)
+
+                try_this_hebrew_name = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
+                if "מדובב לרוסית-" in try_this_hebrew_name:
+                    self.dub_languages.append("Russian")
+                    try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב לרוסית\s*[–—-]?\s*", " ", try_this_hebrew_name)
+                elif "מדובב לצרפתית-" in try_this_hebrew_name:
+                    self.dub_languages.append("French")
+                    try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב לצרפתית\s*[–—-]?\s*", " ", try_this_hebrew_name)
+                elif "מדובב-" in try_this_hebrew_name:
+                    self.dub_languages.append("English")
+                    try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב\s*[–—-]?\s*", " ", try_this_hebrew_name)
+                self.trying_hebrew_names.append(try_this_hebrew_name)
+
+        self.sleep(1)
         self.driver.execute_script("window.scrollTo(0, 0);")
 
         self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a")
@@ -60,7 +82,6 @@ class CinemaCity(BaseCinema):
             for day in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li") + 1):
                 self.date_of_showing = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a").get_attribute("textContent")
                 self.date_of_showing = datetime.strptime(re.search(r"\d{1,2}/\d{1,2}/\d{4}", self.date_of_showing).group(), "%d/%m/%Y").date().isoformat()
-                # FIX DATE FORMAT
 
                 self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a")
                 self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a")

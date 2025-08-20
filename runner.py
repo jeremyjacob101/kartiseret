@@ -15,8 +15,8 @@ from scraping.chains.LevCinema import LevCinema
 def run_chains():
     cinemas = [
         CinemaCity,
-        # YesPlanet,
-        # LevCinema,
+        YesPlanet,
+        LevCinema,
     ]
     threads, runtimes = [], {}
 

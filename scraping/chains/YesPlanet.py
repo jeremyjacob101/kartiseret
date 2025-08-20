@@ -8,6 +8,8 @@ class YesPlanet(BaseCinema):
     CINEMA_NAME = "Yes Planet"
     URL = "https://www.planetcinema.co.il/?lang=en_gb#/"
 
+    language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew", "HEB": "Hebrew", "CZ": "Czech", "KO": "Korean"}
+
     def logic(self):
         self.sleep(5)
         self.waitAndClick("#onetrust-accept-btn-handler")
@@ -26,16 +28,21 @@ class YesPlanet(BaseCinema):
             self.driver.get(href)
 
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
-            self.release_years.append(int(re.search(r"\b\d{4}\b", self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()).group(0)))
+            trying_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
+
+            if re.search(r"\b\d{4}\b", trying_year):
+                self.release_years.append(int(re.search(r"\b\d{4}\b", trying_year).group(0)))
+            else:
+                self.release_years.append(None)
+
             self.directed_bys.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(4) > dd").text))
 
             self.original_language = str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text)
-            if "HE" in self.original_language:
-                self.original_language = "HE"
+            if "HEB" in self.original_language:
+                self.original_language = "HEB"
             if self.original_language == "":
                 self.original_language = None
-            language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew"}
-            self.original_languages.append(str(language_dictionary.get(self.original_language, self.original_language)))
+            self.original_languages.append(str(self.language_dictionary.get(self.original_language, self.original_language)))
 
             rating = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(7) > dd").text
             if rating == "No limit":
@@ -102,9 +109,17 @@ class YesPlanet(BaseCinema):
                             if checking_film is None:
                                 continue
                             try:
-                                self.dubbed_or_not = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[2]/div/ul[2]/li[4]/span").text == "DUB"
+                                is_it_dubbed_1 = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/ul[2]/li[2]/span").text == "DUB"
+                                is_it_dubbed_1_lang = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/ul[2]/li[4]/span").text
                             except:
-                                self.dubbed_or_not = False
+                                is_it_dubbed_1 = None
+                            try:
+                                is_it_dubbed_2 = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[2]/div/ul[2]/li[4]/span").text == "DUB"
+                                is_it_dubbed_2_lang = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/ul[2]/li[6]/span").text
+                            except:
+                                is_it_dubbed_2 = None
+                            if is_it_dubbed_1 or is_it_dubbed_2:
+                                self.dub_language = "Hebrew"
 
                             for showtype in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
                                 self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)

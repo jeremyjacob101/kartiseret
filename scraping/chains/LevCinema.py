@@ -20,10 +20,10 @@ class LevCinema(BaseCinema):
                 self.driver.get(href)
 
                 self.english_title = str(self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text)
-                self.dubbed_or_not = "dubbed" in self.english_title.lower()
-                if self.dubbed_or_not:
+                if "dubbed" in self.english_title.lower():
                     self.english_title = re.sub(r"\b[dD]ubbed\b", "", self.english_title).strip()
                     self.hebrew_title = self.hebrew_title.replace("מדובב", "").strip()
+                    self.dub_language = "Hebrew"
 
                 self.release_year = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[1]").text
                 self.release_year = int(m.group(0)) if (m := re.search(r"\b(19|20)\d{2}\b", self.release_year)) else None
