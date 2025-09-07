@@ -17,6 +17,7 @@ class YesPlanet(BaseCinema):
         "KO": "Korean",
         "GER": "German",
         "JAP": "Japanese",
+        "DAN": "Danish",
     }
 
     def logic(self):
