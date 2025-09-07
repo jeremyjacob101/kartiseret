@@ -10,13 +10,15 @@ import time
 from scraping.chains.CinemaCity import CinemaCity
 from scraping.chains.YesPlanet import YesPlanet
 from scraping.chains.LevCinema import LevCinema
+from scraping.chains.RavHen import RavHen
 
 
 def run_chains():
     cinemas = [
-        CinemaCity,
-        YesPlanet,
-        LevCinema,
+        # CinemaCity,
+        # YesPlanet,
+        # LevCinema,
+        RavHen,
     ]
     threads, runtimes = [], {}
 
