@@ -9,12 +9,6 @@ class RavHen(BaseCinema):
     URL = "https://www.rav-hen.co.il/#/"
 
     language_dictionary = {
-        "EN": "English",
-        "FR": "French",
-        "HE": "Hebrew",
-        "HEB": "Hebrew",
-        "CZ": "Czech",
-        "KO": "Korean",
         "עברית": "Hebrew",
         "אנגלית": "English",
     }

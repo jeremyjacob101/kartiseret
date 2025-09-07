@@ -16,9 +16,9 @@ from scraping.chains.RavHen import RavHen
 def run_chains():
     cinemas = [
         # CinemaCity,
-        # YesPlanet,
+        YesPlanet,
         # LevCinema,
-        RavHen,
+        # RavHen,
     ]
     threads, runtimes = [], {}
 

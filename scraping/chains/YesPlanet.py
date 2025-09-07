@@ -8,7 +8,16 @@ class YesPlanet(BaseCinema):
     CINEMA_NAME = "Yes Planet"
     URL = "https://www.planetcinema.co.il/?lang=en_gb#/"
 
-    language_dictionary = {"EN": "English", "FR": "French", "HE": "Hebrew", "HEB": "Hebrew", "CZ": "Czech", "KO": "Korean"}
+    language_dictionary = {
+        "EN": "English",
+        "FR": "French",
+        "HE": "Hebrew",
+        "HEB": "Hebrew",
+        "CZ": "Czech",
+        "KO": "Korean",
+        "GER": "German",
+        "JAP": "Japanese",
+    }
 
     def logic(self):
         self.sleep(5)
