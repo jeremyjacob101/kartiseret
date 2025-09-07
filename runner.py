@@ -46,7 +46,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# fixing now:
-# 1 - hebrew dub language comes in patches, not actually if "DUB"/"מדובב"
-# 2 - looping over too many films in initial film href scan, need to get rid of repeats
