@@ -56,11 +56,11 @@ class RavHen(BaseCinema):
             rating = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(7) > dd").text
             if rating == "No limit" or rating == "מותר לכל הגילאים":
                 rating = "All"
-            if rating == "Other":
+            if rating == "Other" or rating == "אחר":
                 rating = "14+"
             self.ratings.append(str(rating))
 
-        for cinema in range(1, 7):
+        for cinema in range(1, 4):
             if cinema == 1:
                 self.click("/html/body/div[3]/div/div[1]/div[1]/div/div[2]/nav/div/ul/li[1]/div/a[1]")
             else:
@@ -68,6 +68,8 @@ class RavHen(BaseCinema):
                 self.click("body > div.modal.location-picker-modal.fade.search.in > div > div > div > div:nth-child(2) > div:nth-child(3) > div.row.all-cinemas-list > div > div > div > button")
                 self.click(f"body > div.selectpicker-dropdown-container.npm-quickbook > div.bs-container.btn-group.bootstrap-select.qb-.open > div > ul > li:nth-child({cinema}) > a")
             self.zoomOut(30)
+
+            self.sleep(1)
 
             self.screening_city = self.element("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(1) > div > h2").text
 

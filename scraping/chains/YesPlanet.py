@@ -60,6 +60,8 @@ class YesPlanet(BaseCinema):
                 self.click(f"body > div.selectpicker-dropdown-container.npm-quickbook > div.bs-container.btn-group.bootstrap-select.qb-.open > div > ul > li:nth-child({cinema}) > a")
             self.zoomOut(30)
 
+            self.sleep(1)
+
             self.screening_city = self.element("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(1) > div > h2").text
 
             found_first_day_of_next_month = False
