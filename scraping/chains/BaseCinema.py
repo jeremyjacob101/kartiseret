@@ -170,6 +170,8 @@ class BaseCinema:
             "חיפה": "Haifa",
             "נתניה": "Netanya",
             'הצוק ת"א': "Glilot",
+            "עפולה": "Afula",
+            'עזריאלי ת"א Summer Sky': "Azrieli: Summer Sky",
             "HOT CINEMA כרמיאל": "Carmiel",
             "HOT CINEMA נהריה": "Nahariya",
             "HOT CINEMA קריון": "Kiryat Bialik",

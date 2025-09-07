@@ -67,6 +67,8 @@ class CinemaCity(BaseCinema):
                 elif "מדובב-" in try_this_hebrew_name:
                     self.dub_languages.append("English")
                     try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב\s*[–—-]?\s*", " ", try_this_hebrew_name)
+                else:
+                    self.dub_languages.append(None)
                 self.trying_hebrew_names.append(try_this_hebrew_name)
 
         self.sleep(1)

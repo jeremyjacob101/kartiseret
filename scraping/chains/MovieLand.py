@@ -17,34 +17,22 @@ class MovieLand(BaseCinema):
 
         num_movies = self.lenElements(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div")
         for i in range(1, num_movies + 1):
-            text_content = self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block > div > div.o-name").text
-            if "מדובב" in text_content:
-                continue
+            full_hebrew_name = self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block > div > div.o-name").text
+            if "(מדובב)" in full_hebrew_name:
+                full_hebrew_name = full_hebrew_name.replace("(מדובב)", "").strip()
+                self.dub_languages.append("Hebrew")
+            else:
+                self.dub_languages.append(None)
 
-            element = self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block")
-            href = element.get_attribute("href")
-            self.trying_hrefs.append(href)
+            self.trying_hrefs.append(self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block").get_attribute("href"))
 
         for i in range(len(self.trying_hrefs)):
             self.driver.get(self.trying_hrefs[i])
+            self.trying_names.append(self.element(f"#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(3)").text)
+            self.trying_hebrew_names.append(self.element(f"#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(1)").text)
 
-            working_title = self.element(f"#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(3)").text
-            hebrew_title = self.element(f"#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(1)").text
-
-            print(working_title)
-
-                self.items["hrefs"].append(trying_hrefs[i])
-                self.items["runtimes"].append(actual_runtime)
-                self.items["titles"].append(actual_title)
-                self.items["hebrew_titles"].append(hebrew_title)
-                self.items["popularity"].append(sself.ite_popularity)
-                self.items["imdbIDs"].append(imdb_id)
-                self.items["imdbScores"].append(imdb_rating)
-                self.items["imdbVotes"].append(imdb_votes)
-                self.items["rtScores"].append(rt_rating)
-
-        for i in range(1, 5):
-            self.sleep(0.4)
+        for i in range(1, 7):
+            self.sleep(0.5)
             theater_id = self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({i})")
             relative_href = theater_id.get_attribute("href")
             final_url = relative_href.rsplit("/", 1)[0] + "/"
@@ -53,16 +41,9 @@ class MovieLand(BaseCinema):
 
             self.sleep(0.5)
             self.driver.execute_script("document.body.style.zoom='30%'")
-            self.sleep(0.4)
+            self.sleep(0.5)
 
-            theater_name = self.element("#change-bg > div.container-fluid.inner-page-header > div > h1").text
-            theater_replace = {
-                "כרמיאל": "Carmiel",
-                "חיפה": "Haifa",
-                "נתניה": "Netanya",
-                'הצוק ת"א': "Glilot",
-            }
-            theater_name = theater_replace.get(theater_name, theater_name)
+            self.screening_city = self.element("#change-bg > div.container-fluid.inner-page-header > div > h1").text
 
             # open calendar:
             self.element("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div").click()
@@ -131,10 +112,8 @@ class MovieLand(BaseCinema):
                                             time_href = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l})").get_attribute("href")
                                             time_href = time_href.split('eventID=')[1].split('&')[0]
 
-        # In each showtime -
-        # self.appendToGatheringInfo()
-        # self.printShowtime()
+                                            self.appendToGatheringInfo()
+                                            self.printShowtime()
 
-        # At end -
-        # turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        # self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
+        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
+        self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
