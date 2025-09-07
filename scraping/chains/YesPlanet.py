@@ -132,6 +132,8 @@ class YesPlanet(BaseCinema):
                                 is_it_dubbed_2 = None
                             if is_it_dubbed_1 or is_it_dubbed_2:
                                 self.dub_language = "Hebrew"
+                            else:
+                                self.dub_language = None
 
                             for showtype in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
                                 self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
