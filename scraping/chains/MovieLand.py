@@ -17,13 +17,6 @@ class MovieLand(BaseCinema):
 
         num_movies = self.lenElements(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div")
         for i in range(1, num_movies + 1):
-            full_hebrew_name = self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block > div > div.o-name").text
-            if "(מדובב)" in full_hebrew_name:
-                full_hebrew_name = full_hebrew_name.replace("(מדובב)", "").strip()
-                self.dub_languages.append("Hebrew")
-            else:
-                self.dub_languages.append(None)
-
             self.trying_hrefs.append(self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block").get_attribute("href"))
 
         for i in range(len(self.trying_hrefs)):
@@ -32,12 +25,7 @@ class MovieLand(BaseCinema):
             self.trying_hebrew_names.append(self.element(f"#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(1)").text)
 
         for i in range(1, 7):
-            self.sleep(0.5)
-            theater_id = self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({i})")
-            relative_href = theater_id.get_attribute("href")
-            final_url = relative_href.rsplit("/", 1)[0] + "/"
-
-            self.driver.get(final_url)
+            self.driver.get(self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({i})").get_attribute("href").rsplit("/", 1)[0] + "/")
 
             self.sleep(0.5)
             self.driver.execute_script("document.body.style.zoom='30%'")
@@ -45,22 +33,19 @@ class MovieLand(BaseCinema):
 
             self.screening_city = self.element("#change-bg > div.container-fluid.inner-page-header > div > h1").text
 
-            # open calendar:
-            self.element("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div").click()
+            self.click("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div")
             self.sleep(0.5)
             found_first_day_of_next_month = False
             for x in range(0,2):
                 if x == 1:
-                    next_month_click = f"#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div > div > div > div.datepicker-days > table > thead > tr:nth-child(2) > th.next"
-                    self.element(next_month_click).click()
-                    # print(f"CLICKED ON NEXT MONTH")
+                    self.click(f"#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div > div > div > div.datepicker-days > table > thead > tr:nth-child(2) > th.next")
 
                 get_current_year = self.element("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div > div > div > div.datepicker-days > table > thead > tr:nth-child(2) > th.datepicker-switch").text
-                use_this_year = get_current_year.split()[-1]
+                y = get_current_year.split()[-1]
 
                 for w in range(1, self.lenElements(f"#events-list > div > div > div > div > div > div.datepicker-days > table > tbody > tr") + 1):
                     for d in range(1, 8):
-                        self.element("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div").click()
+                        self.click("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div")
                         self.sleep(0.2)
                         date_element = self.element(f"#events-list > div > div > div > div > div > div.datepicker-days > table > tbody > tr:nth-child({w}) > td:nth-child({d})")
                         day_test_num = date_element.text
@@ -70,47 +55,41 @@ class MovieLand(BaseCinema):
                             found_first_day_of_next_month = True
                         date_class_name = date_element.get_attribute("class")
                         if date_class_name == "day":
-                            date_element.click()
+                            self.click(date_element)
                             self.sleep(0.3)
-                            num_films_on_this_day = self.element("#events-list > div.bg-choose > div > div > div.col-12 > a")
-                            # print(f"num_films_on_this_day: {len(num_films_on_this_day)}")
-                            # for film in num_films_on_this_day:
-                            #     print(f"\t{film.text}")
-                            for j in range(1, len(num_films_on_this_day) + 1):
+
+                            for j in range(1, self.lenElements("#events-list > div.bg-choose > div > div > div.col-12 > a") + 1):
                                 try:
-                                    check_if_empty_films_day = f"#events-list > div.bg-choose > div"
-                                    check_if_empty_films_day_div = self.element(check_if_empty_films_day).text
+                                    check_if_empty_films_day_div = self.element(f"#events-list > div.bg-choose > div").text
                                     if "לא נמצאו הקרנות" in check_if_empty_films_day_div:
                                         break
                                 except:
                                     break
                                 movie_names_per_day = f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-12 > a"
                                 movie_name = self.element(movie_names_per_day).text
-                                for k in range(len(self.items["hebrew_titles"])):
-                                    if movie_name == self.items["hebrew_titles"][k]:
+                                for k in range(len(self.trying_hebrew_names)):
+                                    if movie_name == self.trying_hebrew_names[k]:
+                                        self.english_title = self.trying_names[k]
+                                        self.hebrew_title = self.trying_hebrew_names[k]
+
                                         in_movie_date = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div.bg-day-c")
                                         full_text = in_movie_date.text.strip()
                                         date_part = full_text.split()[-1]
-                                        date_part = str(date_part) + "/" + str(use_this_year)
+                                        date_part = str(date_part) + "/" + str(y)
                                         date_part = date_part.replace(".", "/", 1)
-                                        # print(f"    {date_part}")
+                                        self.date_of_showing = datetime.strptime(date_part, "%d/%m/%Y").date().isoformat()
 
-                                        # print(f"        {items['titles'][k]}")
-
-                                        num_showtimes = self.lenElements(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a")
-                                        # print(f"num_showtimes: {num_showtimes}")
-                                        for l in range(1, num_showtimes + 1):
-                                            time_text = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l}) > div > span").text
-                                            type_text = "R"
+                                        for l in range(1, self.lenElements(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a") + 1):
+                                            self.showtime = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l}) > div > span").text
+                                            self.screening_type = "Regular"
                                             try:
                                                 premium_try = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l}) > div > img")
-                                                type_text = "Upgrade"
+                                                self.screening_type = "Upgrade"
                                             except:
                                                 pass
-                                            # print(f"            {time_text} -- {type_text}")
 
-                                            time_href = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l})").get_attribute("href")
-                                            time_href = time_href.split('eventID=')[1].split('&')[0]
+                                            self.english_href = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l})").get_attribute("href")
+                                            self.hebrew_href = self.element(f"#events-list > div.bg-choose > div:nth-child({j}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({l})").get_attribute("href")
 
                                             self.appendToGatheringInfo()
                                             self.printShowtime()
