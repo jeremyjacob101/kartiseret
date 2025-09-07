@@ -108,9 +108,9 @@ class BaseCinema:
         self.driver.execute_script("arguments[0].click();", self.element(path))
         self.sleep(0.1)
 
-    def waitAndClick(self, path: str):
+    def waitAndClick(self, path: str, sleep: float = 0.5):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path))).click()
-        self.sleep(1)
+        self.sleep(sleep)
 
     def zoomOut(self, percentage: int):
         self.driver.execute_script(f"document.body.style.zoom='{percentage}%'")
