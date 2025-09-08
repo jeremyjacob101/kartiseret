@@ -193,6 +193,7 @@ class BaseCinema:
             "סינמה סיטי גלילות": "Glilot",
             "סינמה סיטי גלילות (ONYX)": "Glilot",
             "סינמה סיטי גלילות (VIP)": "Glilot",
+            "סינמה סיטי גלילות (Lounge)": "Glilot",
             'סינמה סיטי ראשל"צ': "Rishon Letzion",
             'סינמה סיטי ראשל"צ (VIP)': "Rishon Letzion",
             'סינמה סיטי ראשל"צ (VIP לייט)': "Rishon Letzion",
