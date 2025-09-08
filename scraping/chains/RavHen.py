@@ -74,6 +74,20 @@ class RavHen(BaseCinema):
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
                         self.sleep(0.5)
 
+                        # Find all film elements first
+                        film_elements = self.elements("/html/body/section[2]/section/div[1]/div/section/div[2]/div")
+
+                        # Print total count
+                        print(f"Found {len(film_elements)} films:")
+
+                        # Print them in a numbered list
+                        for film_index, el in enumerate(film_elements, start=1):
+                            try:
+                                title = self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
+                            except Exception:
+                                title = "<missing title>"
+                            print(f"{film_index}. {title}")
+
                         for film_index in range(1, self.lenElements("/html/body/section[2]/section/div[1]/div/section/div[2]/div") + 1):
                             checking_film_name = str(self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text).lower()
                             checking_film = name_to_idx.get(checking_film_name)
