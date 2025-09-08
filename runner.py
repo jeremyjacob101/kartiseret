@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
-from utils.logger import setup_logging
+from utils.logger import setup_logging, logger, dump_artifacts
 import threading
 import time
 
@@ -15,11 +15,11 @@ from scraping.chains.MovieLand import MovieLand
 
 def run_chains():
     cinemas = [
-        CinemaCity,
-        YesPlanet,
-        LevCinema,
-        RavHen,
-        MovieLand,
+        # CinemaCity,
+        # YesPlanet,
+        # LevCinema,
+        # RavHen,
+        # MovieLand,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
@@ -27,8 +27,21 @@ def run_chains():
 
         def _target(cls=cinema):
             t0 = time.time()
+            inst = None
             try:
-                cls().scrape()
+                inst = cls()  # create once so we can access its driver
+                inst.scrape()
+            except Exception as e:
+                logger.exception("Unhandled error in %s", cls.__name__)
+                try:
+                    if inst and getattr(inst, "driver", None):
+                        png, html = dump_artifacts(inst.driver, prefix=cls.__name__)
+                        print(f"[{cls.__name__}] Saved artifacts:\n  screenshot: {png}\n  html:       {html}")
+                    else:
+                        print(f"[{cls.__name__}] No driver available to capture artifacts.")
+                except Exception as capture_err:
+                    print(f"[{cls.__name__}] Failed to dump artifacts: {capture_err}")
+                raise
             finally:
                 dt = time.time() - t0
                 with lock:

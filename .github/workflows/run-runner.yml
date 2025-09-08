@@ -25,6 +25,7 @@ jobs:
     env:
       LOG_LEVEL: ERROR
       PIP_DISABLE_PIP_VERSION_CHECK: "1"
+      TZ: Asia/Jerusalem
 
     steps:
       - name: Check out repo
@@ -35,6 +36,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Setup Chrome (stable)
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
       - name: Cache .venv
         id: cache-venv
@@ -93,3 +99,10 @@ jobs:
           if [ "${{ github.event.inputs.debug }}" = "true" ]; then set -x; fi
           . .venv/bin/activate
           python runner.py ${{ github.event.inputs.args }}
+      
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-failure-artifacts
+          path: artifacts/

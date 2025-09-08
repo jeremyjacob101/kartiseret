@@ -25,3 +25,7 @@ venv/
 env
 env/
 /env
+
+# debugging artifacts
+/artifacts
+artifacts/
