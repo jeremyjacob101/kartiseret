@@ -96,7 +96,6 @@ class RavHen(BaseCinema):
 
                                     self.original_language = self.original_languages[checking_film]
                                     self.release_year = self.release_years[checking_film]
-                                    self.directed_by = self.directed_bys[checking_film]
                                     self.rating = self.ratings[checking_film]
 
                                     self.english_title = self.trying_names[checking_film]
