@@ -8,20 +8,6 @@ class CinemaCity(BaseCinema):
     CINEMA_NAME = "Cinema City"
     URL = "https://www.cinema-city.co.il/"
 
-    def getEventId(self, path: str):
-        self.driver.execute_script(
-            """
-                            return (function(node){
-                                if (!window.ko) return null;
-                                var data = ko.dataFor(node) || {};
-                                var h2 = (data.selected && typeof data.selected.hour2 === "function" && data.selected.hour2())
-                                        || (data.selected && typeof data.selected.hour === "function" && data.selected.hour());
-                                return h2 && (h2.EventId || h2.EventID || h2.EventID1) || null;
-                            })(arguments[0]);
-                            """,
-            self.element(path),
-        )
-
     def logic(self):
         self.sleep(3)
         self.driver.execute_script("var el=document.querySelector('body > flashy-popup');if(el){el.remove();}")
@@ -43,19 +29,7 @@ class CinemaCity(BaseCinema):
         for cinema_block in range(1, self.lenElements("#moviesContainer > div", "row mainThumbWrapper") + 1):
             for film_card in range(1, self.lenElements(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div") + 1):
                 self.trying_names.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent"))
-
-                rating = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent")
-                if rating == "מותר לכל":
-                    rating = "All"
-                if rating == "הותר מגיל 16":
-                    rating = "16+"
-                if rating == "הותר מגיל 14":
-                    rating = "14+"
-                if rating == "הותר מגיל 12":
-                    rating = "12+"
-                if rating == "טרם נקבע" or rating == "" or not rating:
-                    rating = None
-                self.ratings.append(rating)
+                self.ratings.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent"))
 
                 try_this_hebrew_name = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
                 if "מדובב לרוסית-" in try_this_hebrew_name:
@@ -104,7 +78,19 @@ class CinemaCity(BaseCinema):
                         self.showtime = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a").get_attribute("textContent")
 
                         self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a")
-                        event_id = self.getEventId("/html/body/div[4]/div[2]/div/div/div[2]/div/div[6]/button")
+
+                        event_id = self.driver.execute_script(
+                            """
+                            return (function(node){
+                                if (!window.ko) return null;
+                                var data = ko.dataFor(node) || {};
+                                var h2 = (data.selected && typeof data.selected.hour2 === "function" && data.selected.hour2())
+                                        || (data.selected && typeof data.selected.hour === "function" && data.selected.hour());
+                                return h2 && (h2.EventId || h2.EventID || h2.EventID1) || null;
+                            })(arguments[0]);
+                            """,
+                            self.element("/html/body/div[4]/div[2]/div/div/div[2]/div/div[6]/button"),
+                        )
                         self.english_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=en"
                         self.hebrew_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=he"
 

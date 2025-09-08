@@ -19,8 +19,8 @@ def run_chains():
         # CinemaCity,
         # YesPlanet,
         # LevCinema,
-        # RavHen,
-        MovieLand,
+        RavHen,
+        # MovieLand,
     ]
     threads, runtimes = [], {}
 
@@ -50,4 +50,8 @@ if __name__ == "__main__":
     main()
 
 # make sure cinema city has proper dub_language integration/working-logic
-#   - movieland: make the matching hebrew title efficient like yes planet, unlike o(n^2) it is currently
+#
+# yes planet special pre screening grabber causing crash
+#
+# rav hen and yes planet i readjusted the trying_names/trying_hebrew_names logic so
+# make sure it's grabbing ALL showtimes on the cinema pages and make sure it has both english/hebrew title as needed

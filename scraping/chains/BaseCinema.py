@@ -22,7 +22,7 @@ class BaseCinema:
 
     def __init__(self):
         driver_options = webdriver.ChromeOptions()
-        # driver_options.add_argument("--headless")
+        driver_options.add_argument("--headless")
         driver_options.add_argument("--disable-gpu")
         driver_options.add_argument("--no-sandbox")
         driver_options.add_argument("--disable-dev-shm-usage")
@@ -117,7 +117,7 @@ class BaseCinema:
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path))).click()
         self.sleep(sleepafter)
 
-    def zoomOut(self, percentage: int, sleepafter: float = 0.5):
+    def zoomOut(self, percentage: int, sleepafter: float = 0.2):
         self.driver.execute_script(f"document.body.style.zoom='{percentage}%'")
         self.sleep(sleepafter)
 
@@ -134,7 +134,9 @@ class BaseCinema:
 
     def appendToGatheringInfo(self):
         self.fixScreeningType()
-        self.fixCinemaNames()
+        self.fixCinemaName()
+        self.fixLanguage()
+        self.fixRating()
 
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
         self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
@@ -153,7 +155,7 @@ class BaseCinema:
         self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
 
-    def fixCinemaNames(self):
+    def fixCinemaName(self):
         replace = {
             "Lev Smadar": "Jerusalem",
             "Lev Omer": "Omer",
@@ -176,7 +178,7 @@ class BaseCinema:
             "נתניה": "Netanya",
             'הצוק ת"א': "Glilot",
             "עפולה": "Afula",
-            'עזריאלי ת"א Summer Sky': "Azrieli: Summer Sky",
+            'עזריאלי ת"א Summer Sky': "Azrieli Rooftop",
             "HOT CINEMA כרמיאל": "Carmiel",
             "HOT CINEMA נהריה": "Nahariya",
             "HOT CINEMA קריון": "Kiryat Bialik",
@@ -232,8 +234,44 @@ class BaseCinema:
         }
         self.screening_type = replace.get(self.screening_type, self.screening_type)
 
+    def fixLanguage(self):
+        replace = {
+            "EN": "English",
+            "FR": "French",
+            "HE": "Hebrew",
+            "HEB": "Hebrew",
+            "CZ": "Czech",
+            "KO": "Korean",
+            "GER": "German",
+            "JAP": "Japanese",
+            "DAN": "Danish",
+            "אנגלית": "English",
+            "עברית": "Hebrew",
+            "דנית": "Danish",
+            "צרפתית": "French",
+            "גרמנית": "German",
+            "הינדי": "Hindi",
+        }
+        self.original_language = replace.get(self.original_language, self.original_language)
+
+    def fixRating(self):
+        replace = {
+            "No limit": "All",
+            "Other": "14+",
+            "מותר לכל": "All",
+            "אחר": "14+",
+            "מותר לכל הגילאים": "All",
+            "Allowed for all ages": "All",
+            "הותר מגיל 16": "16+",
+            "הותר מגיל 14": "14+",
+            "הותר מגיל 12": "12+",
+            "טרם נקבע": None,
+            "": None,
+        }
+        self.rating = replace.get(self.rating, self.rating)
+
     def printShowtime(self):
-        print(f"{self.english_title!s:29} - {self.hebrew_title!s:29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}")
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
 
     def navigate(self):
         self.driver.get(self.URL)
