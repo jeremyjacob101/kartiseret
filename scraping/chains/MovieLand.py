@@ -29,7 +29,7 @@ class MovieLand(BaseCinema):
 
         for cinema in range(1, 7):
             self.driver.get(self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({cinema})").get_attribute("href").rsplit("/", 1)[0] + "/")
-            self.sleep(0.5)
+            self.sleep(1)
             self.zoomOut(30)
 
             self.screening_city = self.element("#change-bg > div.container-fluid.inner-page-header > div > h1").text
@@ -53,14 +53,15 @@ class MovieLand(BaseCinema):
                         date_class_name = date_element.get_attribute("class")
                         if date_class_name == "day":
                             date_element.click()
-                            self.sleep(0.3)
+                            self.sleep(0.5)
 
                             for film_index in range(1, self.lenElements("#events-list > div.bg-choose > div > div > div.col-12 > a") + 1):
                                 elems = self.elements("#events-list > div.bg-choose > div")
                                 if not elems or "לא נמצאו הקרנות" in elems[0].text:
                                     break
 
-                                checking_film = name_to_idx.get(self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-12 > a").text)
+                                film_name = self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-12 > a").text
+                                checking_film = name_to_idx.get(film_name)
                                 if checking_film is None:
                                     continue
 
