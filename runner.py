@@ -17,9 +17,9 @@ def run_chains():
     cinemas = [
         # CinemaCity,
         # YesPlanet,
-        LevCinema,
+        # LevCinema,
         # RavHen,
-        # MovieLand,
+        MovieLand,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
