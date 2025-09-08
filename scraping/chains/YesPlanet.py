@@ -9,14 +9,14 @@ class YesPlanet(BaseCinema):
     URL = "https://www.planetcinema.co.il/?lang=en_gb#/"
 
     def logic(self):
-        self.sleep(5)
+        self.sleep(10)
         self.waitAndClick("#onetrust-accept-btn-handler", 1)
 
         self.click("#header-select-location")
         self.click("body > div.modal.location-picker-modal.fade.search.in > div > div > div > div:nth-child(2) > div:nth-child(3) > div.row.all-cinemas-list > div > div > div > button")
         self.click(f"/html/body/div[12]/div[2]/div/ul/li[1]/a")
         self.driver.get(self.URL)
-        self.sleep(2)
+        self.sleep(3)
 
         for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
             self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
