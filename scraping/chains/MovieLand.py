@@ -9,14 +9,12 @@ class MovieLand(BaseCinema):
     URL = "https://movieland.co.il/"
 
     def logic(self):
-        print(f"\nMovieland\n")
-
         self.sleep(5)
         self.waitAndClick("#sbuzz-confirm", 2)
-        self.waitAndClick("#chooseTheaterModalCenter > div > div > a", 2)
+        self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2)
+        self.click("#branch-1293", 1)
 
-        num_movies = self.lenElements(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div")
-        for i in range(1, num_movies + 1):
+        for i in range(1, self.lenElements(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div") + 1):
             self.trying_hrefs.append(self.element(f"#change-bg > div.container-fluid.pb-5.px-0.px-md-4 > div > div > div:nth-child({i}) > div > div > div > div.front > a.d-block").get_attribute("href"))
 
         for i in range(len(self.trying_hrefs)):
@@ -28,25 +26,24 @@ class MovieLand(BaseCinema):
             self.driver.get(self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({i})").get_attribute("href").rsplit("/", 1)[0] + "/")
 
             self.sleep(0.5)
-            self.driver.execute_script("document.body.style.zoom='30%'")
+            self.zoomOut(30)
             self.sleep(0.5)
 
             self.screening_city = self.element("#change-bg > div.container-fluid.inner-page-header > div > h1").text
 
-            self.click("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div")
-            self.sleep(0.5)
+            self.click("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div", 0.5)
             found_first_day_of_next_month = False
             for x in range(0,2):
                 if x == 1:
-                    self.click(f"#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div > div > div > div.datepicker-days > table > thead > tr:nth-child(2) > th.next")
+                    self.click(f"#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div > div > div > div.datepicker-days > table > thead > tr:nth-child(2) > th.next", 0.5)
 
                 get_current_year = self.element("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div > div > div > div.datepicker-days > table > thead > tr:nth-child(2) > th.datepicker-switch").text
+                print(f"\n\n\n\n{get_current_year}\n\n\n\n")
                 y = get_current_year.split()[-1]
 
                 for w in range(1, self.lenElements(f"#events-list > div > div > div > div > div > div.datepicker-days > table > tbody > tr") + 1):
                     for d in range(1, 8):
-                        self.click("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div")
-                        self.sleep(0.2)
+                        self.click("#events-list > div.bd-days.br-v2.nav.nav-tabs.d-flex.d-md-block.justify-content-center > div > div", 0.2)
                         date_element = self.element(f"#events-list > div > div > div > div > div > div.datepicker-days > table > tbody > tr:nth-child({w}) > td:nth-child({d})")
                         day_test_num = date_element.text
                         if day_test_num != "1" and found_first_day_of_next_month == False and x == 1:
@@ -55,7 +52,7 @@ class MovieLand(BaseCinema):
                             found_first_day_of_next_month = True
                         date_class_name = date_element.get_attribute("class")
                         if date_class_name == "day":
-                            self.click(date_element)
+                            date_element.click()
                             self.sleep(0.3)
 
                             for j in range(1, self.lenElements("#events-list > div.bg-choose > div > div > div.col-12 > a") + 1):

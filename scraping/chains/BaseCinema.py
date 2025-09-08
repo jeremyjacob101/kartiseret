@@ -22,7 +22,7 @@ class BaseCinema:
 
     def __init__(self):
         driver_options = webdriver.ChromeOptions()
-        driver_options.add_argument("--headless")
+        # driver_options.add_argument("--headless")
         driver_options.add_argument("--disable-gpu")
         driver_options.add_argument("--no-sandbox")
         driver_options.add_argument("--disable-dev-shm-usage")
@@ -101,20 +101,25 @@ class BaseCinema:
         count = sum(1 for element in elements if any(needle in (element.get_attribute(attribute) or "").lower() for attribute in ("alt", "class", "id")))
         return count
 
-    def click(self, path: str):
+    def click(self, path: str, sleepafter: float = 0.0):
         self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path).click()
+        self.sleep(sleepafter)
 
-    def jsClick(self, path: str):
+    def jsClick(self, path: str, sleepafter: float = 0.1):
         self.driver.execute_script("arguments[0].click();", self.element(path))
-        self.sleep(0.1)
+        self.sleep(sleepafter)
 
-    def waitAndClick(self, path: str, sleep: float = 0.5):
+    def jsRemove(self, path: str, sleepafter: float = 0.5):
+        self.driver.execute_script("document.querySelector(arguments[0]).remove();", path)
+        self.sleep(sleepafter)
+
+    def waitAndClick(self, path: str, sleepafter: float = 0.5):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path))).click()
-        self.sleep(sleep)
+        self.sleep(sleepafter)
 
-    def zoomOut(self, percentage: int):
+    def zoomOut(self, percentage: int, sleepafter: float = 0.5):
         self.driver.execute_script(f"document.body.style.zoom='{percentage}%'")
-        self.sleep(1)
+        self.sleep(sleepafter)
 
     def getJlemTimeNow(self):
         return datetime.now(pytz.timezone("Asia/Jerusalem")).isoformat()
