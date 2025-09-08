@@ -16,9 +16,9 @@ from scraping.chains.MovieLand import MovieLand
 def run_chains():
     cinemas = [
         # CinemaCity,
-        # YesPlanet,
+        YesPlanet,
         # LevCinema,
-        RavHen,
+        # RavHen,
         # MovieLand,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
