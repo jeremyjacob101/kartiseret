@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
 from utils.logger import setup_logging
-from functools import partial
 import threading
 import time
 
@@ -16,24 +15,31 @@ from scraping.chains.MovieLand import MovieLand
 
 def run_chains():
     cinemas = [
-        CinemaCity,
-        YesPlanet,
+        # CinemaCity,
+        # YesPlanet,
         LevCinema,
-        RavHen,
-        MovieLand,
+        # RavHen,
+        # MovieLand,
     ]
-    threads, runtimes = [], {}
+    threads, runtimes, lock = [], {}, threading.Lock()
 
     for cinema in cinemas:
-        start = time.time()
-        thread = threading.Thread(target=partial(cinema().scrape), name=cinema.__name__)
-        threads.append((cinema.__name__, thread, start))
+
+        def _target(cls=cinema):
+            t0 = time.time()
+            try:
+                cls().scrape()
+            finally:
+                dt = time.time() - t0
+                with lock:
+                    runtimes[cls.__name__] = dt
+
+        thread = threading.Thread(target=_target, name=cinema.__name__)
+        threads.append(thread)
         thread.start()
 
-    for name, thread, start in threads:
+    for thread in threads:
         thread.join()
-        duration = time.time() - start
-        runtimes[name] = duration
 
     print("\n\n\n--------------------\n")
     for name, secs in runtimes.items():
@@ -48,3 +54,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# maybe split up cinema city into three threads
