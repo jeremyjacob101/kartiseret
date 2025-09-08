@@ -17,7 +17,7 @@ def run_chains():
     cinemas = [
         # CinemaCity,
         # YesPlanet,
-        # LevCinema,
+        LevCinema,
         # RavHen,
         # MovieLand,
     ]
@@ -27,20 +27,11 @@ def run_chains():
 
         def _target(cls=cinema):
             t0 = time.time()
-            inst = None
             try:
-                inst = cls()  # create once so we can access its driver
+                inst = cls()
                 inst.scrape()
-            except Exception as e:
+            except Exception:
                 logger.exception("Unhandled error in %s", cls.__name__)
-                try:
-                    if inst and getattr(inst, "driver", None):
-                        png, html = dump_artifacts(inst.driver, prefix=cls.__name__)
-                        print(f"[{cls.__name__}] Saved artifacts:\n  screenshot: {png}\n  html:       {html}")
-                    else:
-                        print(f"[{cls.__name__}] No driver available to capture artifacts.")
-                except Exception as capture_err:
-                    print(f"[{cls.__name__}] Failed to dump artifacts: {capture_err}")
                 raise
             finally:
                 dt = time.time() - t0

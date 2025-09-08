@@ -284,6 +284,7 @@ class BaseCinema:
         raise NotImplementedError("Each cinema must implement its own logic()")
 
     def scrape(self):
+        had_error = False
         try:
             self.setUpSupabase()  # Sets up supabase client for each cinema
             self.navigate()  # Navigate to website
@@ -296,17 +297,13 @@ class BaseCinema:
                 exc_info=True,
             )
 
-        try:
-            from utils.logger import dump_artifacts  # local import to avoid changing module imports
+            try:
+                from utils.logger import dump_artifacts  # local import to avoid changing module imports
 
-            png, html = dump_artifacts(getattr(self, "driver", None), prefix=getattr(self, "CINEMA_NAME", self.__class__.__name__))
-            print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Saved artifacts:\n" f"  screenshot: {png}\n" f"  html:       {html}")
-        except Exception as capture_err:
-            print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Failed to dump artifacts: {capture_err}")
-
-        # By default, re-raise so CI fails loudly and runner.py can also react if needed.
-        # Set RAISE_ON_ERROR=0 to keep going without raising.
-        if os.getenv("RAISE_ON_ERROR", "1") == "1":
+                png, html = dump_artifacts(getattr(self, "driver", None), prefix=getattr(self, "CINEMA_NAME", self.__class__.__name__))
+                print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Saved artifacts:\n" f"  screenshot: {png}\n" f"  html:       {html}")
+            except Exception as capture_err:
+                print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Failed to dump artifacts: {capture_err}")
             raise
 
         self.driver.quit()
