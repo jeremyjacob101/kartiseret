@@ -97,7 +97,7 @@ class CinemaCity(BaseCinema):
                         self.hebrew_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=he"
 
                         self.appendToGatheringInfo()
-                        self.printShowtime()
+                        # self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

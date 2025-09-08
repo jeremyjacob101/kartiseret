@@ -57,7 +57,7 @@ class LevCinema(BaseCinema):
                             self.screening_type = "Regular"
 
                             self.appendToGatheringInfo()
-                            self.printShowtime()
+                            # self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

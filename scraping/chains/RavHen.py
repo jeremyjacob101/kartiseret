@@ -102,7 +102,7 @@ class RavHen(BaseCinema):
                                     self.hebrew_title = self.trying_hebrew_names[checking_film]
 
                                     self.appendToGatheringInfo()
-                                    self.printShowtime()
+                                    # self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

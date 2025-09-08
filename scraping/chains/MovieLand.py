@@ -85,7 +85,7 @@ class MovieLand(BaseCinema):
                                     self.hebrew_href = self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({screening_time})").get_attribute("href")
 
                                     self.appendToGatheringInfo()
-                                    self.printShowtime()
+                                    # self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
