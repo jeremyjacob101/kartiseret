@@ -78,11 +78,11 @@ class MovieLand(BaseCinema):
                                 date_part = full_text.split()[-1].replace(".", "/", 1) + f"/{checking_year}"
                                 self.date_of_showing = datetime.strptime(date_part, "%d/%m/%Y").date().isoformat()
 
-                                for screening_time in range(1, self.lenElements(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a") + 1):
-                                    self.showtime = self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({screening_time}) > div > span").text
-                                    self.screening_type = "Upgrade" if self.lenElements(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({screening_time}) > div > img") else "Regular"
-                                    self.english_href = self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({screening_time})").get_attribute("href")
-                                    self.hebrew_href = self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div:nth-child(2) > div > div.bg-hours2.bg-hours2-a > a:nth-child({screening_time})").get_attribute("href")
+                                for screening_time in range(1, self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a") + 1):
+                                    self.showtime = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]/div/span").text
+                                    self.screening_type = "Upgrade" if self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]/div/img") else "Regular"
+                                    self.english_href = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]").get_attribute("href")
+                                    self.hebrew_href = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]").get_attribute("href")
 
                                     self.appendToGatheringInfo()
                                     # self.printShowtime()
