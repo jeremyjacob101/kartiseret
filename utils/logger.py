@@ -6,17 +6,20 @@ logger = logging.getLogger("sel")
 
 def dump_artifacts(driver, prefix: str = "fail", note: str | None = None) -> tuple[str, str]:
     """
-    Saves a screenshot and page_source into ./artifacts/.
+    Saves a screenshot and page_source into utils/logger_artifacts/.
     Returns (png_path, html_path).
-    Safe to call even if driver is closed/missing; it will just do nothing.
     """
-    pathlib.Path("artifacts").mkdir(exist_ok=True)
+    artifact_dir = pathlib.Path("utils/logger_artifacts")
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+
     ts = time.strftime("%Y%m%d-%H%M%S")
     thread_name = threading.current_thread().name.replace(" ", "_")
     safe_prefix = prefix.replace(" ", "_")
-    base = f"artifacts/{safe_prefix}-{thread_name}-{ts}"
+    base = artifact_dir / f"{safe_prefix}-{thread_name}-{ts}"
     if note:
-        base += f"-{note}"
+        base = str(base) + f"-{note}"
+    else:
+        base = str(base)
 
     png_path = f"{base}.png"
     html_path = f"{base}.html"

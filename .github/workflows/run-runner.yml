@@ -105,4 +105,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: selenium-failure-artifacts
-          path: artifacts/
+          path: utils/logger_artifacts/
