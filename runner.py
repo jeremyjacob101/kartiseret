@@ -18,8 +18,8 @@ def run_chains():
         # CinemaCity,
         # YesPlanet,
         # LevCinema,
-        # RavHen,
-        MovieLand,
+        RavHen,
+        # MovieLand,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
