@@ -101,7 +101,7 @@ jobs:
           python runner.py ${{ github.event.inputs.args }}
       
       - name: Upload failure artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: selenium-failure-artifacts
