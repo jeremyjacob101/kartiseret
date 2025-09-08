@@ -32,17 +32,6 @@ class CinemaCity(BaseCinema):
                 self.ratings.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent"))
 
                 try_this_hebrew_name = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
-                if "מדובב לרוסית-" in try_this_hebrew_name:
-                    self.dub_languages.append("Russian")
-                    try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב לרוסית\s*[–—-]?\s*", " ", try_this_hebrew_name)
-                elif "מדובב לצרפתית-" in try_this_hebrew_name:
-                    self.dub_languages.append("French")
-                    try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב לצרפתית\s*[–—-]?\s*", " ", try_this_hebrew_name)
-                elif "מדובב-" in try_this_hebrew_name:
-                    self.dub_languages.append("English")
-                    try_this_hebrew_name = re.sub(r"\s*[–—-]?\s*מדובב\s*[–—-]?\s*", " ", try_this_hebrew_name)
-                else:
-                    self.dub_languages.append(None)
                 self.trying_hebrew_names.append(try_this_hebrew_name)
 
         self.sleep(1)
@@ -61,16 +50,29 @@ class CinemaCity(BaseCinema):
 
                 self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a")
                 self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a")
-                name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_hebrew_names)}
+                name_to_idx = {str(name): i for i, name in enumerate(self.trying_hebrew_names)}
                 for film_index in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li") + 1):
-                    checking_film_name = str(self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a").get_attribute("textContent")).lower()
+                    checking_film_name = str(self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a").get_attribute("textContent"))
                     checking_film = name_to_idx.get(checking_film_name)
                     if checking_film is None:
                         continue
 
-                    self.english_title = self.trying_names[checking_film]
-                    self.hebrew_title = self.trying_hebrew_names[checking_film]
-                    self.rating = self.ratings[checking_film]
+                    self.rating = str(self.ratings[checking_film]).strip()
+
+                    self.english_title = str(self.trying_names[checking_film]).strip()
+                    self.hebrew_title = str(self.trying_hebrew_names[checking_film]).strip()
+
+                    if "מדובב לרוסית" in self.hebrew_title:
+                        self.dub_language = "Russian"
+                        self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב לרוסית\s*[-–—־]?\s*", "", self.hebrew_title).strip()
+
+                    elif "מדובב לצרפתית" in self.hebrew_title:
+                        self.dub_language = "French"
+                        self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב לצרפתית\s*[-–—־]?\s*", "", self.hebrew_title).strip()
+
+                    elif "מדובב" in self.hebrew_title:
+                        self.dub_language = "Hebrew"
+                        self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב\s*[-–—־]?\s*", "", self.hebrew_title).strip()
 
                     self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a")
                     self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dt/a")

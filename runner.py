@@ -16,10 +16,10 @@ from scraping.chains.MovieLand import MovieLand
 
 def run_chains():
     cinemas = [
-        # CinemaCity,
+        CinemaCity,
         # YesPlanet,
         # LevCinema,
-        RavHen,
+        # RavHen,
         # MovieLand,
     ]
     threads, runtimes = [], {}
@@ -50,8 +50,11 @@ if __name__ == "__main__":
     main()
 
 # make sure cinema city has proper dub_language integration/working-logic
+# cinema city year logic?
 #
 # yes planet special pre screening grabber causing crash
 #
 # rav hen and yes planet i readjusted the trying_names/trying_hebrew_names logic so
 # make sure it's grabbing ALL showtimes on the cinema pages and make sure it has both english/hebrew title as needed
+#
+# CC not converting ratings dictionary and not taking out meduvav
