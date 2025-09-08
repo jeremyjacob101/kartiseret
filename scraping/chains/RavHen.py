@@ -23,6 +23,8 @@ class RavHen(BaseCinema):
 
         for href in self.trying_hrefs:
             self.driver.get(href)
+            self.sleep(1)
+            
             self.trying_names.append(str(self.element("/html/body/div[5]/section[1]/div/div[2]/div[1]/div/ul/li/h1").text))
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
             trying_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
