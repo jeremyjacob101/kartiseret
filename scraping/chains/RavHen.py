@@ -12,7 +12,7 @@ class RavHen(BaseCinema):
         self.sleep(5)
         self.waitAndClick("#onetrust-accept-btn-handler", 1)
 
-        self.click("#header-select-locddation")
+        self.click("#header-select-location")
         self.click("body > div.modal.location-picker-modal.fade.search.in > div > div > div > div:nth-child(2) > div:nth-child(3) > div.row.all-cinemas-list > div > div > div > button")
         self.click(f"/html/body/div[12]/div[2]/div/ul/li[1]/a")
         self.driver.get(self.URL)
