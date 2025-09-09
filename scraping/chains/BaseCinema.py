@@ -42,6 +42,7 @@ class BaseCinema:
         self.ratings = []
         self.release_years = []
         self.directed_bys = []
+        self.runtimes = []
 
         self.showtime_id = None
         self.english_title = None
@@ -58,6 +59,7 @@ class BaseCinema:
         self.scraped_at = None
         self.rating = None
         self.directed_by = None
+        self.runtime = None
 
         self.gathering_info = {
             "cinema": [],
@@ -76,6 +78,7 @@ class BaseCinema:
             "scraped_at": [],
             "rating": [],
             "directed_by": [],
+            "runtime": [],
         }
 
     def element(self, path: str):
@@ -261,14 +264,19 @@ class BaseCinema:
             "מותר לכל": "All",
             "הותר לכל": "All",
             "מותר לכל הגילאים": "All",
+            "הגבלת גיל: הותר לכל הגילאים": "All",
             "Allowed for all ages": "All",
             "הותר מגיל 18": "18+",
+            "הגבלת גיל: הותר מגיל 16 בהצגת תעודה מזהה": "16+",
             "הותר מגיל 16": "16+",
+            "הגבלת גיל: הותר מגיל 14": "14+",
             "הותר מגיל 14": "14+",
+            "הגבלת גיל: הותר מגיל 12": "12+",
             "הותר מגיל 12": "12+",
             "הותר מגיל 9": "9+",
             "Other": "14+",
             "אחר": "14+",
+            "הגבלת גיל: טרם נקבע": None,
             "טרם נקבע": None,
             "": None,
         }

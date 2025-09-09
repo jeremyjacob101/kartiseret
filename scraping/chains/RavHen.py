@@ -49,25 +49,25 @@ class RavHen(BaseCinema):
             self.screening_city = self.element("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(1) > div > h2").text
 
             found_first_day_of_next_month = False
-            for calendar_month in range(1, 3):
-                if found_first_day_of_next_month == False and calendar_month == 2:
+            for checking_month in range(1, 3):
+                if found_first_day_of_next_month == False and checking_month == 2:
                     continue
 
                 self.click("/html/body/section[2]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]")
                 for w in range(1, self.lenElements("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr") + 1):
                     for d in range(1, 8):
-                        if found_first_day_of_next_month == True and calendar_month == 1:
+                        if found_first_day_of_next_month == True and checking_month == 1:
                             continue
 
                         self.click("/html/body/section[2]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]")
 
-                        if calendar_month == 2:
+                        if checking_month == 2:
                             self.click("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > thead > tr:nth-child(1) > th.next")
 
                         day_number = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({w}) > td:nth-child({d})").get_attribute("class")
-                        if day_number == "disabled highlighted day disabled" or day_number == "old disabled highlighted day disabled" or day_number == "old day active selected" or day_number == "old day active" or day_number == "old day disabled" or day_number == "day disabled" or (day_number == "new day disabled" and calendar_month == 2):
+                        if day_number == "disabled highlighted day disabled" or day_number == "old disabled highlighted day disabled" or day_number == "old day active selected" or day_number == "old day active" or day_number == "old day disabled" or day_number == "day disabled" or (day_number == "new day disabled" and checking_month == 2):
                             continue
-                        if (day_number == "new day active" or day_number == "new day disabled") and (found_first_day_of_next_month == False) and (calendar_month == 1):
+                        if (day_number == "new day active" or day_number == "new day disabled") and (found_first_day_of_next_month == False) and (checking_month == 1):
                             found_first_day_of_next_month = True
                             continue
 
