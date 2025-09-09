@@ -84,6 +84,20 @@ class YesPlanet(BaseCinema):
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
 
+                        # Find all film elements first
+                        film_elements = self.elements("/html/body/section[2]/section/div[1]/div/section/div[2]/div")
+
+                        # Print total count
+                        print(f"Found {len(film_elements)} films:")
+
+                        # Print them in a numbered list
+                        for film_index, el in enumerate(film_elements, start=1):
+                            try:
+                                title = self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
+                            except Exception:
+                                title = "<missing title>"
+                            print(f"{film_index}. {title}")
+
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
                             selector = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
                             if self.lenElements(selector) and self.element(selector).text == "PRE-ORDER YOUR TICKETS NOW":
@@ -102,6 +116,17 @@ class YesPlanet(BaseCinema):
                                 self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
                                 if self.screening_type == "2D":
                                     self.screening_type = "Regular"
+
+                                # Find all showtime elements first
+                                showtime_selector = f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a"
+                                showtime_elements = self.elements(showtime_selector)
+                                print(f"Found {len(showtime_elements)} showtimes for film_index={film_index}, showtype={showtype}:")
+                                for idx in range(1, len(showtime_elements) + 1):
+                                    try:
+                                        title = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({idx + 1})").text
+                                    except Exception:
+                                        title = "<missing showtime>"
+                                    print(f"{idx}. {title}")
 
                                 for showtime in range(1, self.lenElements(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a") + 1):
                                     self.showtime = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime + 1})")
