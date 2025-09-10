@@ -110,8 +110,9 @@ class YesPlanet(BaseCinema):
                                     self.screening_type = "Regular"
 
                                 for showtime in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a") + 1):
-                                    self.showtime = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").text
-                                    self.english_href = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").get_attribute("data-url").replace("/api", "")
+                                    showtime_element = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]")
+                                    self.showtime = showtime_element.text
+                                    self.english_href = showtime_element.get_attribute("data-url").replace("/api", "")
                                     self.hebrew_href = self.english_href.replace("lang=en", "lang=he")
 
                                     self.original_language = self.original_languages[checking_film]
