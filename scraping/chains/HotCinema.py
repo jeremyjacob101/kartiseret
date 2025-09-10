@@ -13,15 +13,25 @@ class HotCinema(BaseCinema):
         self.click("/html/body/div[7]/div/button", 1)
         self.click("/html/body/div[3]/div/div/div[1]/a", 1)
 
-        for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
+        for film_card in range(1, 5):
+            # for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
             self.trying_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
         for href in self.trying_hrefs:
             self.driver.get(href)
             self.sleep(0.1)
 
+            try:
+                raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
+                last_token = raw_text.split()[-1] if raw_text else ""
+                if last_token.isdigit() and len(last_token) == 4:
+                    self.release_years.append(last_token)
+                else:
+                    self.release_years.append(None)
+            except:
+                self.release_years.append(None)
+
             self.trying_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip())
             self.trying_hebrew_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip())
-            self.release_years.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text.split()[-1].strip())
             self.ratings.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[2]/div[2]/span").text.strip())
             try:
                 self.runtimes.append(int(re.sub(r"\D", "", self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[1]/div[2]/span").text.strip())))
@@ -29,7 +39,8 @@ class HotCinema(BaseCinema):
                 self.runtimes.append(None)
         name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_hebrew_names)}
 
-        for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
+        for cinema in range(1, 2):
+            # for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
             self.driver.get(self.element(f"/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a[{cinema}]").get_attribute("href"))
             self.sleep(1.5)
             self.zoomOut(50)
@@ -121,9 +132,28 @@ class HotCinema(BaseCinema):
 
                                 self.release_year = self.release_years[checking_film]
                                 self.rating = self.ratings[checking_film]
+                                self.runtime = self.runtimes[checking_film]
 
                                 self.appendToGatheringInfo()
                                 self.printShowtime()
+
+        print("---- Debugging self.gathering_info ----")
+
+        # Print the keys
+        print("Keys in gathering_info:", list(self.gathering_info.keys()))
+
+        # Print the values
+        for key, values in self.gathering_info.items():
+            print(f"Key: {key}")
+            print(f"Values ({len(values)}): {values}")
+
+        # Print zipped values to see how they align
+        print("---- Zipped values ----")
+        zipped = list(zip(*self.gathering_info.values()))
+        for i, row in enumerate(zipped):
+            print(f"Row {i}: {row}")
+
+        print("---- End Debugging ----")
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

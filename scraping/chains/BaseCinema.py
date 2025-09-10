@@ -157,6 +157,7 @@ class BaseCinema:
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
+        self.gathering_info["runtime"].append(self.runtime)
 
     def fixCinemaName(self):
         replace = {
