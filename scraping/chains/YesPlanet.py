@@ -109,11 +109,15 @@ class YesPlanet(BaseCinema):
                                 if self.screening_type == "2D":
                                     self.screening_type = "Regular"
 
+                                self.sleep(0.1)
                                 for showtime in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a") + 1):
                                     self.sleep(0.1)
                                     self.showtime = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").text
+                                    self.sleep(0.1)
                                     self.english_href = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").get_attribute("data-url").replace("/api", "")
+                                    self.sleep(0.1)
                                     self.hebrew_href = self.english_href.replace("lang=en", "lang=he")
+                                    self.sleep(0.1)
 
                                     self.original_language = self.original_languages[checking_film]
                                     self.release_year = self.release_years[checking_film]
