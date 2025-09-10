@@ -90,10 +90,11 @@ class YesPlanet(BaseCinema):
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
 
-                        self.sleep(0.5)
+                        self.sleep(1.5)
                         num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"\t{self.date_of_showing} | Number of films - {num_films}")
                         i = 1
+                        self.sleep(1.5)
                         num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"\t{self.date_of_showing} | Number of films - {num_films}")
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
