@@ -17,8 +17,8 @@ from scraping.chains.HotCinema import HotCinema
 def run_chains():
     cinemas = [
         # CinemaCity,
-        # YesPlanet,
-        HotCinema,
+        YesPlanet,
+        # HotCinema,
         # LevCinema,
         # RavHen,
         # MovieLand,
