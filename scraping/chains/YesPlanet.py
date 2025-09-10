@@ -23,7 +23,7 @@ class YesPlanet(BaseCinema):
             self.trying_names.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
         for href in self.trying_hrefs:
             self.driver.get(href)
-            self.sleep(1)
+            self.sleep(0.1)
 
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
             trying_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
@@ -62,16 +62,16 @@ class YesPlanet(BaseCinema):
                 if found_first_day_of_next_month == False and checking_month == 2:
                     continue
 
-                self.click("/html/body/section[3]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]")
+                self.click("/html/body/section[3]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]", 0.5)
                 for week in range(1, self.lenElements("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr") + 1):
                     for day in range(1, 8):
                         if found_first_day_of_next_month == True and checking_month == 1:
                             continue
 
-                        self.click("/html/body/section[3]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]")
+                        self.click("/html/body/section[3]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]", 0.1)
 
                         if checking_month == 2:
-                            self.click("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > thead > tr:nth-child(1) > th.next")
+                            self.click("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > thead > tr:nth-child(1) > th.next", 0.1)
 
                         day_number = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({week}) > td:nth-child({day})").get_attribute("class")
                         if day_number == "disabled highlighted day disabled" or day_number == "old disabled highlighted day disabled" or day_number == "old day active selected" or day_number == "old day active" or day_number == "old day disabled" or day_number == "day disabled" or (day_number == "new day disabled" and checking_month == 2):
@@ -80,23 +80,26 @@ class YesPlanet(BaseCinema):
                             found_first_day_of_next_month = True
                             continue
 
-                        self.click(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({week}) > td:nth-child({day}) > button", 1)
+                        self.click(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({week}) > td:nth-child({day}) > button", 0.3)
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
 
-                        # Find all film elements first
                         film_elements = self.elements("/html/body/section[2]/section/div[1]/div/section/div[2]/div")
-
-                        # Print total count
+                        film_elements_2 = self.elements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"Found {len(film_elements)} films:")
-
-                        # Print them in a numbered list
+                        print(f"Found {len(film_elements_2)} films:")
                         for film_index, el in enumerate(film_elements, start=1):
                             try:
                                 title = self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
                             except Exception:
                                 title = "<missing title>"
-                            print(f"{film_index}. {title}")
+                            print(f"\t1 - {film_index}. {title}")
+                        for film_index, el in enumerate(film_elements, start=1):
+                            try:
+                                title = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
+                            except Exception:
+                                title = "<missing title>"
+                            print(f"\t2 - {film_index}. {title}")
 
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
                             selector = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
@@ -116,17 +119,6 @@ class YesPlanet(BaseCinema):
                                 self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
                                 if self.screening_type == "2D":
                                     self.screening_type = "Regular"
-
-                                # Find all showtime elements first
-                                showtime_selector = f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a"
-                                showtime_elements = self.elements(showtime_selector)
-                                print(f"Found {len(showtime_elements)} showtimes for film_index={film_index}, showtype={showtype}:")
-                                for idx in range(1, len(showtime_elements) + 1):
-                                    try:
-                                        title = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({idx + 1})").text
-                                    except Exception:
-                                        title = "<missing showtime>"
-                                    print(f"{idx}. {title}")
 
                                 for showtime in range(1, self.lenElements(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a") + 1):
                                     self.showtime = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime + 1})")
