@@ -46,7 +46,7 @@ class YesPlanet(BaseCinema):
                 self.ratings.append(str(rating))
 
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
-            if runtime and (m := re.search(r'\d+', runtime)):
+            if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtimes.append(int(m.group()))
 
             name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_names)}
@@ -109,12 +109,14 @@ class YesPlanet(BaseCinema):
                                 if self.screening_type == "2D":
                                     self.screening_type = "Regular"
 
-                                print(f"num_showtimes: {self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a")}")
+                                num_showtimes = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a"
+                                print(f"num_showtimes: {self.lenElements(num_showtimes)}")
                                 for showtime in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a") + 1):
-                                    print(f"going to grab - {self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").text}")
-                                    self.showtime = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").text
-                                    print(f"going to grab - {self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").get_attribute("data-url").replace("/api", "")}")
-                                    self.english_href = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").get_attribute("data-url").replace("/api", "")
+                                    elem = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]"
+                                    print(f"going to grab - {self.element(elem).text}")
+                                    self.showtime = self.element(elem).text
+                                    print(f"going to grab - {self.element(elem).get_attribute("data-url").replace("/api", "")}")
+                                    self.english_href = self.element(elem).get_attribute("data-url").replace("/api", "")
                                     self.hebrew_href = self.english_href.replace("lang=en", "lang=he")
 
                                     self.original_language = self.original_languages[checking_film]
