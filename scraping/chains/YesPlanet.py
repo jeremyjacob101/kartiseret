@@ -86,7 +86,7 @@ class YesPlanet(BaseCinema):
                             found_first_day_of_next_month = True
                             continue
 
-                        self.click(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({week}) > td:nth-child({day}) > button", 0.4)
+                        self.click(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child({week}) > td:nth-child({day}) > button", 0.5)
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
 
@@ -94,10 +94,8 @@ class YesPlanet(BaseCinema):
                         num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"\t{self.date_of_showing} | Number of films - {num_films}")
                         i = 1
-                        self.sleep(5.5)
                         num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"\t{self.date_of_showing} | Number of films - {num_films}")
-                        self.sleep(0.5)
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
                             num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                             print(f"\t{self.date_of_showing} | Number of films - {num_films}")
