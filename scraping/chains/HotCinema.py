@@ -13,8 +13,7 @@ class HotCinema(BaseCinema):
         self.click("/html/body/div[7]/div/button", 1)
         self.click("/html/body/div[3]/div/div/div[1]/a", 1)
 
-        for film_card in range(1, 13):
-            # for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
+        for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
             self.trying_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
         for href in self.trying_hrefs:
             self.driver.get(href)
@@ -37,11 +36,14 @@ class HotCinema(BaseCinema):
             self.screening_city = self.element("/html/body/div[2]/div[4]/div[1]/div/div/div/div[2]/h1").text.strip()
 
             for checking_month in range(1, 3):
+                if checking_month == 2:
+                    self.driver.execute_script("$('.datepicker-wrapper input').datepicker('show')")
+                    self.jsClick("/html/body/div[6]/div[1]/table/thead/tr[2]/th[3]")
                 for week in range(1, 7):
                     for day in range(1, 8):
                         self.driver.execute_script("$('.datepicker-wrapper input').datepicker('show')")
                         day_class_label = self.element(f"/html/body/div[6]/div[1]/table/tbody/tr[{week}]/td[{day}]").get_attribute("class").strip()
-                        if day_class_label == "day disabled" or day_class_label == "old day" or day_class_label == "old day disabled":
+                        if day_class_label == "day disabled" or day_class_label == "old day" or day_class_label == "old day disabled" or day_class_label == "old active day" or day_class_label == "new day disabled" or day_class_label == "new day":
                             continue
                         self.click(f"/html/body/div[6]/div[1]/table/tbody/tr[{week}]/td[{day}]", 0.25)
                         self.date_of_showing = self.element("/html/body/div[2]/div[4]/div[2]/div/div[3]/div/div/div/div[1]/div").get_attribute("innerHTML").strip().split("\n")[0].strip()
@@ -63,7 +65,7 @@ class HotCinema(BaseCinema):
                                 self.hebrew_title = self.hebrew_title.replace("מדובב לרוסית", "").strip()
 
                             row_xpath = f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]"
-                            row_el = self.element(row_xpath)
+                            row_element = self.element(row_xpath)
 
                             time_to_event = self.driver.execute_script(
                                 r"""
@@ -97,11 +99,10 @@ class HotCinema(BaseCinema):
                             return map;
                             })(arguments[0]);
                             """,
-                                row_el,
+                                row_element,
                             )
 
-                            # for showtime in range(1, self.lenElements(f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]/td[5]/a") + 1):
-                            for showtime in range(1, self.lenElements(f"{row_xpath}/td[5]/a") + 1):
+                            for showtime in range(1, self.lenElements(f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]/td[5]/a") + 1):
                                 showtime_element = self.element(f"{row_xpath}/td[5]/a[{showtime}]")
                                 full_showtime_text = str(showtime_element.get_attribute("innerHTML"))
                                 self.screening_type = "Premium" if "PREMIUM" in full_showtime_text else "Regular"
@@ -111,9 +112,8 @@ class HotCinema(BaseCinema):
                                 href_index = re.search(r"/theater/(\d+)", self.element(f"/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a[{cinema}]").get_attribute("href"))
                                 href_index = int(href_index.group(1)) if href_index else None
 
-                                idToTix = {16: 1197, 14: 1194, 1: 1183, 17: 1191, 9: 1195, 2: 1184, 15: 1192, 6: 1181, 8: 1193, 5: 1182, 3: 1196, 22: 1198}
-
-                                href_index = idToTix.get(href_index)
+                                theater_to_href_map = {16: 1197, 14: 1194, 1: 1183, 17: 1191, 9: 1195, 2: 1184, 15: 1192, 6: 1181, 8: 1193, 5: 1182, 3: 1196, 22: 1198}
+                                href_index = theater_to_href_map.get(href_index)
 
                                 use_this_href = f"tickets.hotcinema.co.il/site/{href_index}/tickets?code={href_index}-{event_id}"
                                 self.english_href = use_this_href + "&languageid=en_gb"

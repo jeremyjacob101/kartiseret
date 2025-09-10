@@ -11,12 +11,12 @@ def dump_artifacts(driver, prefix: str = "fail", note: str | None = None) -> tup
     """
     artifact_dir = pathlib.Path("utils/logger_artifacts")
     # Clean up old artifacts on each run
-    # if artifact_dir.exists():
-    #     for f in artifact_dir.glob("*"):
-    #         try:
-    #             f.unlink()
-    #         except Exception:
-    #             pass
+    if artifact_dir.exists():
+        for f in artifact_dir.glob("*"):
+            try:
+                f.unlink()
+            except Exception:
+                pass
     artifact_dir.mkdir(parents=True, exist_ok=True)
 
     ts = time.strftime("%Y%m%d-%H%M%S")
