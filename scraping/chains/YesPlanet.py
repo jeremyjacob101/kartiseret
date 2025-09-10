@@ -92,7 +92,10 @@ class YesPlanet(BaseCinema):
 
                         num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"\t{self.date_of_showing} | Number of films - {num_films}")
+                        i = 1
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
+                            print(f"\t\t{i}")
+                            i += 1
                             selector = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
                             if self.lenElements(selector) and self.element(selector).text == "PRE-ORDER YOUR TICKETS NOW":
                                 continue
@@ -107,7 +110,7 @@ class YesPlanet(BaseCinema):
                             self.dub_language = "Hebrew" if is_it_dubbed_1 or is_it_dubbed_2 else None
 
                             num_showtypes = self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div")
-                            print(f"\t\t{checking_film} | Number of showtypes for {self.trying_names[checking_film]} - {num_showtypes}")
+                            print(f"\t\tNumber of showtypes for {self.trying_names[checking_film]} - {num_showtypes}")
                             for showtype in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
                                 self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
                                 if self.screening_type == "2D":
