@@ -13,22 +13,16 @@ class HotCinema(BaseCinema):
         self.click("/html/body/div[7]/div/button", 1)
         self.click("/html/body/div[3]/div/div/div[1]/a", 1)
 
-        for film_card in range(1, 5):
-            # for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
+        for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
             self.trying_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
         for href in self.trying_hrefs:
             self.driver.get(href)
             self.sleep(0.1)
 
-            try:
-                raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
-                last_token = raw_text.split()[-1] if raw_text else ""
-                if last_token.isdigit() and len(last_token) == 4:
-                    self.release_years.append(last_token)
-                else:
-                    self.release_years.append(None)
-            except:
-                self.release_years.append(None)
+            raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
+            last_token = raw_text.split()[-1] if raw_text else ""
+            if last_token.isdigit() and len(last_token) == 4:
+                self.release_years.append(int(last_token))
 
             self.trying_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip())
             self.trying_hebrew_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip())
@@ -39,8 +33,7 @@ class HotCinema(BaseCinema):
                 self.runtimes.append(None)
         name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_hebrew_names)}
 
-        for cinema in range(1, 2):
-            # for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
+        for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
             self.driver.get(self.element(f"/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a[{cinema}]").get_attribute("href"))
             self.sleep(1.5)
             self.zoomOut(50)
@@ -58,6 +51,7 @@ class HotCinema(BaseCinema):
                             continue
                         self.click(f"/html/body/div[6]/div[1]/table/tbody/tr[{week}]/td[{day}]", 0.25)
                         self.date_of_showing = self.element("/html/body/div[2]/div[4]/div[2]/div/div[3]/div/div/div/div[1]/div").get_attribute("innerHTML").strip().split("\n")[0].strip()
+                        self.date_of_showing = datetime.strptime(self.date_of_showing, "%d/%m/%Y").date().isoformat()
 
                         for film_index in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr") + 1):
                             checking_film_name = str(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]/td[1]").text)
@@ -135,25 +129,7 @@ class HotCinema(BaseCinema):
                                 self.runtime = self.runtimes[checking_film]
 
                                 self.appendToGatheringInfo()
-                                self.printShowtime()
-
-        print("---- Debugging self.gathering_info ----")
-
-        # Print the keys
-        print("Keys in gathering_info:", list(self.gathering_info.keys()))
-
-        # Print the values
-        for key, values in self.gathering_info.items():
-            print(f"Key: {key}")
-            print(f"Values ({len(values)}): {values}")
-
-        # Print zipped values to see how they align
-        print("---- Zipped values ----")
-        zipped = list(zip(*self.gathering_info.values()))
-        for i, row in enumerate(zipped):
-            print(f"Row {i}: {row}")
-
-        print("---- End Debugging ----")
+                                # self.printShowtime()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
