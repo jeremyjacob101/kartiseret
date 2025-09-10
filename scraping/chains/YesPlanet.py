@@ -18,6 +18,7 @@ class YesPlanet(BaseCinema):
         self.driver.get(self.URL)
         self.sleep(3)
 
+        # for film_card in range(1, 2):
         for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
             self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
             self.trying_names.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
@@ -48,8 +49,7 @@ class YesPlanet(BaseCinema):
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
             if runtime and (m := re.search(r'\d+', runtime)):
                 self.runtimes.append(int(m.group()))
-
-            name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_names)}
+        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_names)}
 
         for cinema in range(1, 7):
             if cinema == 1:
@@ -74,7 +74,7 @@ class YesPlanet(BaseCinema):
                         if found_first_day_of_next_month == True and checking_month == 1:
                             continue
 
-                        self.click("/html/body/section[3]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]", 0.2)
+                        self.click("/html/body/section[3]/section/div[1]/div/div/div[2]/div[1]/div/div[1]/button[8]", 0.5)
 
                         if checking_month == 2:
                             self.click("body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > thead > tr:nth-child(1) > th.next", 0.25)
@@ -90,10 +90,17 @@ class YesPlanet(BaseCinema):
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
 
+                        self.sleep(0.5)
                         num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
                         print(f"\t{self.date_of_showing} | Number of films - {num_films}")
                         i = 1
+                        self.sleep(5.5)
+                        num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
+                        print(f"\t{self.date_of_showing} | Number of films - {num_films}")
+                        self.sleep(0.5)
                         for film_index in range(1, self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div") + 1):
+                            num_films = self.lenElements("/html/body/section[3]/section/div[1]/div/section/div[2]/div")
+                            print(f"\t{self.date_of_showing} | Number of films - {num_films}")
                             print(f"\t\t{i}")
                             i += 1
                             selector = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
