@@ -24,7 +24,7 @@ class RavHen(BaseCinema):
         for href in self.trying_hrefs:
             self.driver.get(href)
             self.sleep(1)
-            
+
             self.trying_names.append(str(self.element("/html/body/div[5]/section[1]/div/div[2]/div[1]/div/ul/li/h1").text))
             self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
             trying_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
@@ -75,6 +75,8 @@ class RavHen(BaseCinema):
                         date_name = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.col-xs-12.mb-sm > h5").text
                         self.date_of_showing = datetime.strptime(date_name.split(" ", 1)[1], "%d/%m/%Y").date().isoformat()
 
+                        num_films = self.lenElements("/html/body/section[2]/section/div[1]/div/section/div[2]/div")
+                        print(f"\t{self.date_of_showing} | Number of films - {num_films}")
                         for film_index in range(1, self.lenElements("/html/body/section[2]/section/div[1]/div/section/div[2]/div") + 1):
                             checking_film_name = self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
                             checking_film = name_to_idx.get(checking_film_name)
@@ -85,11 +87,15 @@ class RavHen(BaseCinema):
                             is_it_dubbed_2 = self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[2]/div/ul[2]/li[4]/span") > 0 and self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[2]/div/ul[2]/li[4]/span").text == "מדובב"
                             self.dub_language = "Hebrew" if is_it_dubbed_1 or is_it_dubbed_2 else None
 
+                            num_showtypes = self.lenElements(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div")
+                            print(f"\t\tNumber of showtypes for {self.trying_names[checking_film]} - {num_showtypes}")
                             for showtype in range(1, self.lenElements(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
                                 self.screening_type = str(self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
                                 if self.screening_type == "2D":
                                     self.screening_type = "Regular"
 
+                                num_showtimes = self.lenElements(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a")
+                                print(f"\t\t\tNumer of showtimes for showtype - {num_showtimes}")
                                 for showtime in range(1, self.lenElements(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a") + 1):
                                     self.showtime = self.element(f"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > section > div.container > div:nth-child({film_index}) > div > div > div:nth-child(2) > div > div.events.col-xs-12 > div:nth-child({showtype}) > div > a:nth-child({showtime})")
                                     self.showtime = self.showtime.text
