@@ -13,7 +13,7 @@ class CinemaCity(BaseCinema):
         self.driver.execute_script("var el=document.querySelector('body > flashy-popup');if(el){el.remove();}")
         self.sleep(3)
         self.driver.execute_script("var el=document.querySelector('#popupVSChat');if(el){el.remove();}")
-        self.sleep(3)
+        self.sleep(5)
         self.zoomOut(50)
 
         for _ in range(8):
