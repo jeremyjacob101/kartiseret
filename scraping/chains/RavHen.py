@@ -86,7 +86,7 @@ class RavHen(BaseCinema):
 
                         self.sleep(3)
                         for film_index in range(1, self.lenElements("/html/body/section[2]/section/div[1]/div/section/div[2]/div") + 1):
-                            selector = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
+                            selector = f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
                             if self.lenElements(selector) and self.element(selector).text == "להזמנת כרטיסים במכירה מוקדמת בחרו בתאריך ההקרנה הרצוי":
                                 continue
 
