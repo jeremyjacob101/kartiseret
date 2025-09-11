@@ -23,6 +23,8 @@ class HotCinema(BaseCinema):
             last_token = raw_text.split()[-1] if raw_text else ""
             if last_token.isdigit() and len(last_token) == 4:
                 self.release_years.append(int(last_token))
+            else:
+                self.release_years.append(None)
 
             self.trying_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip())
             self.trying_hebrew_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip())
