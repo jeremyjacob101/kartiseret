@@ -9,7 +9,7 @@ class RavHen(BaseCinema):
     URL = "https://www.rav-hen.co.il/#/"
 
     def logic(self):
-        self.sleep(5)
+        self.sleep(10)
         self.waitAndClick("#onetrust-accept-btn-handler", 1)
 
         self.click("#header-select-location")
