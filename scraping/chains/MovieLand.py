@@ -23,7 +23,11 @@ class MovieLand(BaseCinema):
             self.trying_hebrew_names.append(hebrew_name)
             self.trying_names.append(self.element("#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(3)").text.strip() or hebrew_name)
             self.original_languages.append(str(self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[16]").text.split(":", 1)[-1].strip()))
-            self.release_years.append(str(self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text))
+            trying_year = self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text
+            if re.search(r"\b\d{4}\b", trying_year):
+                self.release_years.append(int(re.search(r"\b\d{4}\b", trying_year).group(0)))
+            else:
+                self.release_years.append(None)
             self.ratings.append(str(self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[10]").text))
         name_to_idx = {str(name): i for i, name in enumerate(self.trying_hebrew_names)}
 
