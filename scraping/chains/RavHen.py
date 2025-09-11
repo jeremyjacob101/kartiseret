@@ -39,6 +39,8 @@ class RavHen(BaseCinema):
                 self.ratings.append(str(rating))
 
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
+            if runtime and runtime == "יעודכן בקרוב":
+                runtime = None
             if runtime and (m := re.search(r'\d+', runtime)):
                 self.runtimes.append(int(m.group()))
         name_to_idx = {str(name): i for i, name in enumerate(self.trying_hebrew_names)}
@@ -84,6 +86,10 @@ class RavHen(BaseCinema):
 
                         self.sleep(3)
                         for film_index in range(1, self.lenElements("/html/body/section[2]/section/div[1]/div/section/div[2]/div") + 1):
+                            selector = f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div/div/h4"
+                            if self.lenElements(selector) and self.element(selector).text == "להזמנת כרטיסים במכירה מוקדמת בחרו בתאריך ההקרנה הרצוי":
+                                continue
+
                             checking_film_name = self.element(f"/html/body/section[2]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[1]/a/h3").text
                             checking_film = name_to_idx.get(checking_film_name)
                             if checking_film is None:

@@ -256,6 +256,7 @@ class BaseCinema:
             "צרפתית": "French",
             "גרמנית": "German",
             "הינדי": "Hindi",
+            "יעודכן בקרוב": None,
         }
         self.original_language = replace.get(self.original_language, self.original_language)
 
