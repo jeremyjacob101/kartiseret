@@ -13,6 +13,8 @@ from scraping.chains.RavHen import RavHen
 from scraping.chains.MovieLand import MovieLand
 from scraping.chains.HotCinema import HotCinema
 
+from scraping.comingsoons.CCsoon import CCsoon
+
 
 def run_chains():
     cinemas = [
@@ -22,6 +24,40 @@ def run_chains():
         LevCinema,
         RavHen,
         MovieLand,
+    ]
+    threads, runtimes, lock = [], {}, threading.Lock()
+
+    for cinema in cinemas:
+
+        def _target(cls=cinema):
+            t0 = time.time()
+            try:
+                inst = cls()
+                inst.scrape()
+            except Exception:
+                logger.exception("Unhandled error in %s", cls.__name__)
+                raise
+            finally:
+                dt = time.time() - t0
+                with lock:
+                    runtimes[cls.__name__] = dt
+
+        thread = threading.Thread(target=_target, name=cinema.__name__)
+        threads.append(thread)
+        thread.start()
+
+    for thread in threads:
+        thread.join()
+
+    print("\n\n\n--------------------\n")
+    for name, secs in runtimes.items():
+        m, s = divmod(int(secs), 60)
+        print(f"{name}: {m}m{s:02d}s\n")
+
+
+def run_soons():
+    cinemas = [
+        CCsoon,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 

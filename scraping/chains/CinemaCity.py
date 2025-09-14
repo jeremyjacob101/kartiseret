@@ -30,6 +30,7 @@ class CinemaCity(BaseCinema):
             for film_card in range(1, self.lenElements(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div") + 1):
                 self.trying_names.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent"))
                 self.ratings.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent"))
+                self.runtimes.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[2]/span").get_attribute("textContent").strip())
 
                 try_this_hebrew_name = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
                 self.trying_hebrew_names.append(try_this_hebrew_name)
@@ -58,6 +59,7 @@ class CinemaCity(BaseCinema):
                         continue
 
                     self.rating = str(self.ratings[checking_film]).strip()
+                    self.runtime = int(self.runtimes[checking_film])
 
                     self.english_title = str(self.trying_names[checking_film]).strip()
                     self.hebrew_title = str(self.trying_hebrew_names[checking_film]).strip()
