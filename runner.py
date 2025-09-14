@@ -17,11 +17,11 @@ from scraping.chains.HotCinema import HotCinema
 def run_chains():
     cinemas = [
         CinemaCity,
-        # YesPlanet,
-        # HotCinema,
-        # LevCinema,
-        # RavHen,
-        # MovieLand,
+        YesPlanet,
+        HotCinema,
+        LevCinema,
+        RavHen,
+        MovieLand,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
