@@ -17,7 +17,7 @@ class CCsoon(BaseSoon):
         self.zoomOut(50)
 
         for _ in range(10):
-            element = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
+            element = self.element("#change-bg > div > div > div > div.movies.row > div > p > a")
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
             self.sleep(1)
             try:
@@ -41,4 +41,4 @@ class CCsoon(BaseSoon):
         self.sleep()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
+        self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()
