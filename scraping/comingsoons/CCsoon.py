@@ -4,7 +4,7 @@ from datetime import datetime
 import re
 
 
-class CCSoon(BaseSoon):
+class CCsoon(BaseSoon):
     SOON_CINEMA_NAME = "Cinema City"
     URL = "https://www.cinema-city.co.il/comingsoon"
 
@@ -33,9 +33,12 @@ class CCSoon(BaseSoon):
 
                 try_this_hebrew_name = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
                 self.trying_hebrew_names.append(try_this_hebrew_name)
+                print(try_this_hebrew_name)
 
         # self.appendToGatheringInfo()
         # self.printShowtime()
+
+        self.sleep()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()

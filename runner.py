@@ -91,8 +91,8 @@ def run_soons():
 
 def main():
     setup_logging("ERROR")
-    run_chains()
-
+    # run_chains()
+    run_soons()
 
 if __name__ == "__main__":
     main()
