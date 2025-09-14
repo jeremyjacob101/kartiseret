@@ -75,6 +75,9 @@ class CinemaCity(BaseCinema):
                     elif "מדובב" in self.hebrew_title:
                         self.dub_language = "Hebrew"
                         self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב\s*[-–—־]?\s*", "", self.hebrew_title).strip()
+                    
+                    else:
+                        self.dub_language = None
 
                     self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a", 0.1)
                     self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dt/a", 0.01)
