@@ -52,8 +52,8 @@ class BaseSoon:
         self.directed_by = None
         self.runtime = None
         self.release_date = None
-        self.helper_href = None
         self.helper_id = None
+        self.helper_type = None
 
         self.gathering_info = {
             "cinema": [],
@@ -67,8 +67,8 @@ class BaseSoon:
             "directed_by": [],
             "runtime": [],
             "release_date": [],
-            "helper_href": [],
             "helper_id": [],
+            "helper_type": [],
         }
 
     def element(self, path: str):
@@ -140,8 +140,8 @@ class BaseSoon:
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
         self.gathering_info["release_date"].append(self.release_date)
-        self.gathering_info["helper_href"].append(self.helper_href)
         self.gathering_info["helper_id"].append(self.helper_id)
+        self.gathering_info["helper_type"].append(self.helper_type)
 
     def fixLanguage(self):
         replace = {
