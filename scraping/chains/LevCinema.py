@@ -34,6 +34,10 @@ class LevCinema(BaseCinema):
                 self.rating = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[3]").text
                 self.rating = str(self.rating.split(":", 1)[1].strip()) if self.rating else "All"
 
+                runtime = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[3]").text
+                if runtime and runtime.isdigit():
+                    self.runtime = runtime
+
                 for city in range(1, self.lenElements("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div") + 1):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)
 

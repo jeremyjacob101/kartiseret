@@ -15,6 +15,7 @@ from scraping.chains.HotCinema import HotCinema
 
 from scraping.comingsoons.CCsoon import CCsoon
 from scraping.comingsoons.HCsoon import HCsoon
+from scraping.comingsoons.LCsoon import LCsoon
 
 
 def run_chains():
@@ -59,7 +60,8 @@ def run_chains():
 def run_soons():
     cinemas = [
         # CCsoon,
-        HCsoon,
+        # HCsoon,
+        LCsoon,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
@@ -95,6 +97,7 @@ def main():
     setup_logging("ERROR")
     # run_chains()
     run_soons()
+
 
 if __name__ == "__main__":
     main()

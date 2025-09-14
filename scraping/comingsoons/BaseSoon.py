@@ -41,6 +41,7 @@ class BaseSoon:
         self.release_years = []
         self.directed_bys = []
         self.runtimes = []
+        self.release_dates = []
 
         self.coming_soon_id = None
         self.english_title = None
