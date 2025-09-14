@@ -21,7 +21,7 @@ class BaseSoon:
 
     def __init__(self):
         driver_options = webdriver.ChromeOptions()
-        driver_options.add_argument("--headless")
+        # driver_options.add_argument("--headless")
         driver_options.add_argument("--disable-gpu")
         driver_options.add_argument("--no-sandbox")
         driver_options.add_argument("--disable-dev-shm-usage")
@@ -37,47 +37,38 @@ class BaseSoon:
         self.trying_hebrew_names = []
         self.trying_hrefs = []
         self.original_languages = []
-        self.dub_languages = []
         self.ratings = []
         self.release_years = []
         self.directed_bys = []
         self.runtimes = []
 
-        self.showtime_id = None
+        self.coming_soon_id = None
         self.english_title = None
         self.hebrew_title = None
-        self.showtime = None
-        self.english_href = None
-        self.hebrew_href = None
-        self.screening_type = None
         self.original_language = None
-        self.screening_city = None
-        self.date_of_showing = None
         self.release_year = None
-        self.dub_language = None
         self.scraped_at = None
         self.rating = None
         self.directed_by = None
         self.runtime = None
+        self.release_date = None
+        self.helper_href = None
+        self.helper_id = None
 
         self.gathering_info = {
             "cinema": [],
-            "showtime_id": [],
+            "coming_soon_id": [],
             "english_title": [],
             "hebrew_title": [],
-            "showtime": [],
-            "english_href": [],
-            "hebrew_href": [],
-            "screening_type": [],
             "original_language": [],
-            "screening_city": [],
-            "date_of_showing": [],
             "release_year": [],
-            "dub_language": [],
             "scraped_at": [],
             "rating": [],
             "directed_by": [],
             "runtime": [],
+            "release_date": [],
+            "helper_href": [],
+            "helper_id": [],
         }
 
     def element(self, path: str):
@@ -135,108 +126,22 @@ class BaseSoon:
         self.supabase = create_client(url, key)
 
     def appendToGatheringInfo(self):
-        self.fixScreeningType()
-        self.fixCinemaName()
         self.fixLanguage()
         self.fixRating()
 
         self.gathering_info["cinema"].append(self.SOON_CINEMA_NAME)
-        self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
+        self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
         self.gathering_info["english_title"].append(self.english_title)
         self.gathering_info["hebrew_title"].append(self.hebrew_title)
-        self.gathering_info["showtime"].append(self.showtime)
-        self.gathering_info["english_href"].append(self.english_href)
-        self.gathering_info["hebrew_href"].append(self.hebrew_href)
-        self.gathering_info["screening_type"].append(self.screening_type)
         self.gathering_info["original_language"].append(self.original_language)
-        self.gathering_info["screening_city"].append(self.screening_city)
-        self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
-        self.gathering_info["dub_language"].append(self.dub_language)
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
-
-    def fixCinemaName(self):
-        replace = {
-            "Lev Smadar": "Jerusalem",
-            "Lev Omer": "Omer",
-            "Even Yehuda": "Even Yehuda",
-            "Ramat Hasharon": "Ramat Hasharon",
-            "Lev Raanana": "Raanana",
-            "Lev Shoham": "Shoham",
-            "Lev Daniel": "Herziliya",
-            "לוח הקרנות ב רב חן גבעתיים": "Givatayim",
-            "לוח הקרנות ב רב חן דיזינגוף": "Tel Aviv",
-            "לוח הקרנות ב רב חן קרית אונו": "Kiryat Ono",
-            "SCREENINGS FOR PLANET BEER SHEVA": "Beer Sheva",
-            "SCREENINGS FOR PLANET AYALON": "Ayalon",
-            "SCREENINGS FOR PLANET RISHON LETZIYON": "Rishon Letzion",
-            "SCREENINGS FOR PLANET ZICHRON YAAKOV": "Zichron Yaakov",
-            "SCREENINGS FOR PLANET JERUSALEM": "Jerusalem",
-            "SCREENINGS FOR PLANET HAIFA": "Haifa",
-            "כרמיאל": "Carmiel",
-            "חיפה": "Haifa",
-            "נתניה": "Netanya",
-            'הצוק ת"א': "Glilot",
-            "עפולה": "Afula",
-            'עזריאלי ת"א Summer Sky': "Azrieli Rooftop",
-            "HOT CINEMA כרמיאל": "Carmiel",
-            "HOT CINEMA נהריה": "Nahariya",
-            "HOT CINEMA קריון": "Kiryat Bialik",
-            "HOT CINEMA חיפה": "Haifa",
-            "HOT CINEMA כפר סבא": "Kfar Saba",
-            "HOT CINEMA פתח תקווה": "Petach Tikvah",
-            "HOT CINEMA מודיעין": "Modiin",
-            "HOT CINEMA רחובות": "Rehovot",
-            "HOT CINEMA אשדוד": "Ashdod",
-            "HOT CINEMA אשקלון": "Ashkelon",
-            "סינמה סיטי גלילות": "Glilot",
-            "סינמה סיטי גלילות": "Glilot",
-            "סינמה סיטי גלילות (ONYX)": "Glilot",
-            "סינמה סיטי גלילות (VIP)": "Glilot",
-            "סינמה סיטי גלילות (Lounge)": "Glilot",
-            'סינמה סיטי ראשל"צ': "Rishon Letzion",
-            'סינמה סיטי ראשל"צ (VIP)': "Rishon Letzion",
-            'סינמה סיטי ראשל"צ (VIP לייט)': "Rishon Letzion",
-            "סינמה סיטי ירושלים": "Jerusalem",
-            "סינמה סיטי ירושלים (VIP)": "Jerusalem",
-            "סינמה סיטי כפר-סבא": "Kfar Saba",
-            "סינמה סיטי כפר סבא (Prime)": "Kfar Saba",
-            "סינמה סיטי נתניה": "Netanya",
-            "סינמה סיטי נתניה (Prime)": "Netanya",
-            "סינמה סיטי באר שבע": "Beer Sheva",
-            "סינמה סיטי באר שבע (VIP)": "Beer Sheva",
-            "סינמה סיטי אשדוד": "Ashdod",
-            "סינמה סיטי חדרה": "Chadera",
-            "סינמה סיטי חדרה (Prime)": "Chadera",
-        }
-        self.screening_city = replace.get(self.screening_city, self.screening_city)
-
-    def fixScreeningType(self):
-        replace = {
-            "VIP LIGHT": "VIP Light",
-            "סינמה סיטי גלילות": "Regular",
-            "סינמה סיטי גלילות (Lounge)": "Lounge",
-            "סינמה סיטי גלילות (ONYX)": "4DX",
-            "סינמה סיטי גלילות (VIP)": "VIP",
-            'סינמה סיטי ראשל"צ': "Regular",
-            'סינמה סיטי ראשל"צ (VIP)': "VIP",
-            'סינמה סיטי ראשל"צ (VIP לייט)': "VIP Light",
-            "סינמה סיטי ירושלים": "Regular",
-            "סינמה סיטי ירושלים (VIP)": "VIP",
-            "סינמה סיטי כפר-סבא": "Regular",
-            "סינמה סיטי כפר סבא (Prime)": "Prime",
-            "סינמה סיטי נתניה": "Regular",
-            "סינמה סיטי נתניה (Prime)": "Prime",
-            "סינמה סיטי באר שבע": "Regular",
-            "סינמה סיטי באר שבע (VIP)": "VIP",
-            "סינמה סיטי אשדוד": "Regular",
-            "סינמה סיטי חדרה": "Regular",
-            "סינמה סיטי חדרה (Prime)": "Prime",
-        }
-        self.screening_type = replace.get(self.screening_type, self.screening_type)
+        self.gathering_info["release_date"].append(self.release_date)
+        self.gathering_info["helper_href"].append(self.helper_href)
+        self.gathering_info["helper_id"].append(self.helper_id)
 
     def fixLanguage(self):
         replace = {
@@ -275,6 +180,7 @@ class BaseSoon:
             "הגבלת גיל: הותר מגיל 12": "12+",
             "הותר מגיל 12": "12+",
             "הותר מגיל 9": "9+",
+            "עד גיל 8 בליווי מבוגר": "9+",
             "Other": None,
             "אחר": None,
             "יעודכן בקרוב": None,
@@ -284,8 +190,8 @@ class BaseSoon:
         }
         self.rating = replace.get(self.rating, self.rating)
 
-    def printShowtime(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.SOON_CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
+    def printComingSoon(self):
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.SOON_CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.rating!s:9}".rstrip())
 
     def navigate(self):
         self.driver.get(self.URL)

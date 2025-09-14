@@ -75,6 +75,9 @@ class CinemaCity(BaseCinema):
                     elif "מדובב" in self.hebrew_title:
                         self.dub_language = "Hebrew"
                         self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב\s*[-–—־]?\s*", "", self.hebrew_title).strip()
+                    elif "אנגלית" in self.hebrew_title:
+                        self.dub_language = None
+                        self.hebrew_title = re.sub(r"\s*[-–—־]?\s*אנגלית\s*[-–—־]?\s*", "", self.hebrew_title).strip()
                     else:
                         self.dub_language = None
 
