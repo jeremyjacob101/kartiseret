@@ -191,7 +191,7 @@ class BaseSoon:
         self.rating = replace.get(self.rating, self.rating)
 
     def printComingSoon(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.SOON_CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.rating!s:9}".rstrip())
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.SOON_CINEMA_NAME!s:12} - {self.release_date!s:4}")
 
     def navigate(self):
         self.driver.get(self.URL)

@@ -1,0 +1,44 @@
+from scraping.comingsoons.BaseSoon import BaseSoon
+
+from datetime import datetime
+import re
+
+
+class HCsoon(BaseSoon):
+    SOON_CINEMA_NAME = "Hot Cinema"
+    URL = "https://hotcinema.co.il/ComingSoon"
+
+    def logic(self):
+        self.sleep(3)
+        self.waitAndClick("/html/body/div[7]/div/div/button", 3)
+        self.waitAndClick("/html/body/div[3]/div/div/div[1]/a", 3)
+        self.zoomOut(50)
+
+        for film_block in range(2, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div") + 1, 2):
+            for film_card in range(1, self.lenElements(f"/html/body/div[2]/div[4]/div[2]/div/div/div[{film_block}]/div/h4")):
+                self.trying_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[{film_block}]/div[{film_card}]/div[1]/a").get_attribute("href"))
+        for href in self.trying_hrefs:
+            self.driver.get(href)
+
+            self.english_title = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip()
+            self.hebrew_title = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip()
+
+            raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
+            last_token = raw_text.split()[-1] if raw_text else ""
+            if last_token.isdigit() and len(last_token) == 4:
+                self.release_year = int(last_token)
+            else:
+                self.release_year = None
+
+            self.ratings = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[2]/div[2]/span").text.strip()
+
+            try:
+                self.runtime = int(re.sub(r"\D", "", self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[1]/div[2]/span").text.strip()))
+            except:
+                self.runtime = None
+
+            self.appendToGatheringInfo()
+            self.printComingSoon()
+
+        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
+        self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()
