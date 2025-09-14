@@ -33,7 +33,7 @@ class CCsoon(BaseSoon):
                 self.rating = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent").strip()
                 self.helper_href = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/ul/li[1]/a").get_attribute("href")
                 release_date = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[3]/span").get_attribute("textContent").strip()
-                self.release_date = datetime.strptime(release_date, "%m/%d/%Y").date().isoformat()
+                self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 
                 self.appendToGatheringInfo()
                 self.printComingSoon()
