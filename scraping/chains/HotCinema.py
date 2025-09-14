@@ -9,9 +9,9 @@ class HotCinema(BaseCinema):
     URL = "https://hotcinema.co.il/ShowingNow"
 
     def logic(self):
-        self.sleep(2)
-        self.click("/html/body/div[7]/div/button", 1)
-        self.click("/html/body/div[3]/div/div/div[1]/a", 1)
+        self.sleep(3)
+        self.waitAndClick("/html/body/div[7]/div/button", 3)
+        self.waitAndClick("/html/body/div[3]/div/div/div[1]/a", 3)
 
         for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
             self.trying_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
