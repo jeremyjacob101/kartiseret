@@ -59,9 +59,9 @@ def run_chains():
 
 def run_soons():
     cinemas = [
-        CCsoon,
+        # CCsoon,
         HCsoon,
-        LCsoon,
+        # LCsoon,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
