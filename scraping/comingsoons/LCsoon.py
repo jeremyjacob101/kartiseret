@@ -42,7 +42,7 @@ class LCsoon(BaseSoon):
                 self.runtime = runtime
 
             self.appendToGatheringInfo()
-            self.printComingSoon()
+            # self.printComingSoon()
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()
