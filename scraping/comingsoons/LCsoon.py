@@ -23,10 +23,12 @@ class LCsoon(BaseSoon):
         for href in self.trying_hrefs:
             hebrew_href = str(href).replace("/en", "")
             self.driver.get(hebrew_href)
+            self.sleep(0.5)
 
             self.hebrew_title = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text.strip()
 
             self.driver.get(href)
+            self.sleep(0.5)
 
             self.english_title = str(self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text)
             if "dubbed" in self.english_title.lower():
