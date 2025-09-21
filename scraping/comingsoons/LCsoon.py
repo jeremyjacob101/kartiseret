@@ -10,15 +10,16 @@ class LCsoon(BaseSoon):
 
     def logic(self):
         self.sleep(3)
+        self.jsClick("/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/ul/li[2]")
         for film_card in range(1, self.lenElements("/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li")):
             self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]").get_attribute("href"))
 
             release_date = self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]/div/div[2]").text
             if release_date is not None and release_date != "":
                 release_date = release_date.split(":", 1)[1].strip()
-                self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
+                self.release_dates.append(datetime.strptime(release_date, "%d/%m/%Y").date().isoformat())
 
-        for href in self.trying_hrefs:
+        for idx, href in enumerate(self.trying_hrefs):
             hebrew_href = str(href).replace("/en", "")
             self.driver.get(hebrew_href)
             self.sleep(0.5)
@@ -27,6 +28,8 @@ class LCsoon(BaseSoon):
 
             self.driver.get(href)
             self.sleep(0.5)
+
+            self.release_date = self.release_dates[idx]
 
             self.english_title = str(self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text)
             if "dubbed" in self.english_title.lower():
