@@ -5,7 +5,7 @@ import re
 
 
 class MLsoon(BaseSoon):
-    CINEMA_NAME = "MovieLand"
+    SOON_CINEMA_NAME = "MovieLand"
     URL = "https://www.movieland.co.il/soon"
 
     def logic(self):
@@ -26,6 +26,8 @@ class MLsoon(BaseSoon):
             self.english_title = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[2]").text.strip()
             if "3D" in self.english_title:
                 self.english_title = self.english_title.replace("3D", "").strip()
+            if not self.english_title:
+                self.english_title = self.hebrew_title
 
             release_date = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[4]").text.strip()
             self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
@@ -38,7 +40,8 @@ class MLsoon(BaseSoon):
 
             self.release_year = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text.strip()
             original_language = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[16]").text.strip()
-            self.original_language = original_language.split(":", 1)[1].strip()
+            if original_language != "יעודכן בקרוב":
+                self.original_language = original_language.split(":", 1)[1].strip()
 
             self.helper_id = href
             self.helper_type = "href"
