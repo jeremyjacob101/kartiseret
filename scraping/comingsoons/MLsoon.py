@@ -32,7 +32,7 @@ class MLsoon(BaseSoon):
 
             self.rating = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[10]").text.strip()
             runtime = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[13]").text.strip()
-            runtime = int(re.sub(r"\D", "", runtime))
+            runtime = re.sub(r"\D", "", runtime)
             if runtime and runtime.isdigit():
                 self.runtime = runtime
 
