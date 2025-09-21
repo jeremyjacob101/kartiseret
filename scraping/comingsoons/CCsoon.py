@@ -37,12 +37,15 @@ class CCsoon(BaseSoon):
                 self.english_title = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent").strip()
                 if not self.english_title:
                     self.english_title = self.hebrew_title
+                
                 self.runtime = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[2]/span").get_attribute("textContent").strip()
                 self.rating = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent").strip()
-                self.helper_id = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/ul/li[1]/a").get_attribute("href")
-                self.helper_type = "href"
+                
                 release_date = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[3]/span").get_attribute("textContent").strip()
                 self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
+
+                self.helper_id = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/ul/li[1]/a").get_attribute("href")
+                self.helper_type = "href"
 
                 self.appendToGatheringInfo()
                 # self.printComingSoon()

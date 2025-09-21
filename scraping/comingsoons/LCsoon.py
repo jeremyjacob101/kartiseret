@@ -14,10 +14,8 @@ class LCsoon(BaseSoon):
             self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]").get_attribute("href"))
 
             release_date = self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]/div/div[2]").text
-            print(release_date)
             if release_date is not "" and release_date is not None:
                 release_date = release_date.split(":", 1)[1].strip()
-                print(f"split: {release_date}")
                 self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 
         for href in self.trying_hrefs:
@@ -47,6 +45,9 @@ class LCsoon(BaseSoon):
             runtime = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[3]").text
             if runtime and runtime.isdigit():
                 self.runtime = runtime
+
+            self.helper_id = href
+            self.helper_type = "href"
 
             self.appendToGatheringInfo()
             # self.printComingSoon()

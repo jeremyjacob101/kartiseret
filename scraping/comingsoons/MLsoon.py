@@ -27,16 +27,22 @@ class MovieLand(BaseSoon):
             self.english_title = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[2]").text.strip()
             if "3D" in self.english_title:
                 self.english_title = self.english_title.replace("3D", "").strip()
+
             release_date = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[4]").text.strip()
             self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
+
             self.rating = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[10]").text.strip()
             runtime = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[13]").text.strip()
             runtime = int(re.sub(r"\D", "", runtime))
             if runtime and runtime.isdigit():
                 self.runtime = runtime
+
             self.release_year = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text.strip()
             original_language = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[16]").text.strip()
             self.original_language = original_language.split(":", 1)[1].strip()
+
+            self.helper_id = href
+            self.helper_type = "href"
 
             self.appendToGatheringInfo()
             # self.printComingSoon()
