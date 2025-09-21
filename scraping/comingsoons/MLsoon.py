@@ -20,7 +20,6 @@ class MLsoon(BaseSoon):
 
             self.hebrew_title = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[1]").text.strip()
             if "(מדובב)" in self.hebrew_title:
-                self.dub_language = "Hebrew"
                 self.hebrew_title = self.hebrew_title.replace("(מדובב)", "").strip()
             if "3D" in self.hebrew_title:
                 self.hebrew_title = self.hebrew_title.replace("3D", "").strip()
