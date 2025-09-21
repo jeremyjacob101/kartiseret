@@ -14,7 +14,7 @@ class LCsoon(BaseSoon):
             self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]").get_attribute("href"))
 
             release_date = self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]/div/div[2]").text
-            if release_date is not "" and release_date is not None:
+            if release_date is not None and release_date != "":
                 release_date = release_date.split(":", 1)[1].strip()
                 self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 

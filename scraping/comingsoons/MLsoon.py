@@ -4,7 +4,7 @@ from datetime import datetime
 import re
 
 
-class MovieLand(BaseSoon):
+class MLsoon(BaseSoon):
     CINEMA_NAME = "MovieLand"
     URL = "https://www.movieland.co.il/soon"
 
