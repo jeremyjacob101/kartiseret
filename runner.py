@@ -60,8 +60,8 @@ def run_chains():
 
 def run_soons():
     cinemas = [
-        CCsoon,
-        # HCsoon,
+        # CCsoon,
+        HCsoon,
         # LCsoon,
         # MLsoon,
     ]
@@ -106,3 +106,4 @@ if __name__ == "__main__":
 
 # handle 3D / 3D HDR in titles (remove from coming soons, handle in now playings)
 # get rid of duplicates in comingsoons that only differ by coming_soon_id
+# skip russian titles throughout?

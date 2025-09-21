@@ -10,7 +10,13 @@ class HCsoon(BaseSoon):
 
     def logic(self):
         self.sleep(3)
-        self.waitAndClick("/html/body/div[7]/div/button", 3)
+        try:
+            self.waitAndClick("/html/body/div[7]/div/button", 3)
+        except:
+            try:
+                self.waitAndClick("/html/body/div[7]/div/div/button", 3)
+            except:
+                pass
         self.waitAndClick("/html/body/div[3]/div/div/div[1]/a", 3)
         self.zoomOut(50)
 
