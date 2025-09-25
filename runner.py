@@ -65,7 +65,7 @@ def run_soons():
         # HCsoon,
         # LCsoon,
         # MLsoon,
-        YPsoon,f
+        YPsoon,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
