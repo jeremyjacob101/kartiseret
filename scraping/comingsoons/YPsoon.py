@@ -42,6 +42,9 @@ class YPsoon(BaseSoon):
             if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtime = int(m.group())
 
+            self.helper_id = href
+            self.helper_type = "href"
+
             self.appendToGatheringInfo()
             # self.printComingSoon()
 
