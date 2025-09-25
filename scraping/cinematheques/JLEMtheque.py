@@ -11,9 +11,10 @@ class JLEMtheque(BaseTheque):
     def logic(self):
         self.sleep(3)
 
-        for _ in range(1,45):
+        for _ in range(1, 45):
+            self.sleep(1)
+            print(self.element("/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[2]/div[3]/div[3]/a").text.strip())
             today_element = self.element("#calender-filter > p.active")
-            
             today_element.self.element("following-sibling::p").click()
 
         self.appendToGatheringInfo()
