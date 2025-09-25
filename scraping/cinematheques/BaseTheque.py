@@ -43,7 +43,7 @@ class BaseTheque:
         self.directed_bys = []
         self.runtimes = []
 
-        self.showtime_id = None
+        self.theque_showtime_id = None
         self.english_title = None
         self.hebrew_title = None
         self.showtime = None
@@ -74,6 +74,9 @@ class BaseTheque:
             "release_date": [],
             "helper_id": [],
             "helper_type": [],
+            "showtime": [],
+            "screening_city": [],
+            "screening_type": [],
         }
 
     def element(self, path: str):
