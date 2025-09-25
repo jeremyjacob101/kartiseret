@@ -99,8 +99,8 @@ def run_soons():
 
 def main():
     setup_logging("ERROR")
-    # run_chains()
-    run_soons()
+    run_chains()
+    # run_soons()
 
 
 if __name__ == "__main__":
