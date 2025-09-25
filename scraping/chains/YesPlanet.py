@@ -35,9 +35,7 @@ class YesPlanet(BaseCinema):
             self.directed_bys.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(4) > dd").text))
 
             original_language = str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text)
-            if "HEB" in original_language:
-                original_language = "HEB"
-            if original_language == "":
+            if "HEB" in original_language or original_language == "":
                 original_language = "HEB"
             self.original_languages.append(original_language)
 
@@ -46,7 +44,7 @@ class YesPlanet(BaseCinema):
                 self.ratings.append(str(rating))
 
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
-            if runtime and (m := re.search(r'\d+', runtime)):
+            if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtimes.append(int(m.group()))
         name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_names)}
 
