@@ -17,6 +17,7 @@ class MLsoon(BaseSoon):
             self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
         for href in self.trying_hrefs:
             self.driver.get(href)
+            self.sleep(0.5)
 
             self.hebrew_title = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[1]").text.strip()
             if "(מדובב)" in self.hebrew_title:
@@ -38,7 +39,9 @@ class MLsoon(BaseSoon):
             if runtime and runtime.isdigit():
                 self.runtime = runtime
 
-            self.release_year = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text.strip()
+            release_year = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text.strip()
+            if release_year and release_year.isdigit():
+                self.release_year = release_year
             original_language = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[16]").text.strip()
             if original_language != "יעודכן בקרוב":
                 self.original_language = original_language.split(":", 1)[1].strip()
