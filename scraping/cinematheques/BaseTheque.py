@@ -37,24 +37,28 @@ class BaseTheque:
         self.trying_hebrew_names = []
         self.trying_hrefs = []
         self.original_languages = []
+        self.dub_languages = []
         self.ratings = []
         self.release_years = []
         self.directed_bys = []
         self.runtimes = []
-        self.release_dates = []
 
-        self.theque_showtime_id = None
+        self.showtime_id = None
         self.english_title = None
         self.hebrew_title = None
+        self.showtime = None
+        self.english_href = None
+        self.hebrew_href = None
+        self.screening_type = None
         self.original_language = None
+        self.screening_city = None
+        self.date_of_showing = None
         self.release_year = None
+        self.dub_language = None
         self.scraped_at = None
         self.rating = None
         self.directed_by = None
         self.runtime = None
-        self.release_date = None
-        self.helper_id = None
-        self.helper_type = None
 
         self.gathering_info = {
             "cinema": [],

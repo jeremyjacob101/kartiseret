@@ -3,6 +3,8 @@ from scraping.cinematheques.BaseTheque import BaseTheque
 from datetime import datetime
 import re
 
+from selenium.webdriver.common.by import By
+
 
 class JLEMtheque(BaseTheque):
     SOON_CINEMA_NAME = "JLMCT"
@@ -12,13 +14,18 @@ class JLEMtheque(BaseTheque):
         self.sleep(3)
 
         for _ in range(1, 45):
+            date_of_showing = self.element("/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[1]/p").text.strip()
+            self.date_of_showing = date_of_showing.split("|")[1].strip()
+            for film_block in range(1, self.lenElements("/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div", "lobby-container") + 1):
+                self.showtime = self.element(f"/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[{film_block}]/div[1]/div/div[1]").text.strip()
+                self.english_title = self.element(f"/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[{film_block}]/div[3]/div[3]/a").text.strip()
+            self.element("#calender-filter > p.active").find_element(By.XPATH, "following-sibling::p").click()
             self.sleep(1)
-            print(self.element("/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[2]/div[3]/div[3]/a").text.strip())
-            today_element = self.element("#calender-filter > p.active")
-            today_element.self.element("following-sibling::p").click()
 
-        self.appendToGatheringInfo()
-        # self.printCinmathequeShowtime()
+            self.appendToGatheringInfo()
+            # self.printCinmathequeShowtime()
+
+        URL_2 = "https://jer-cin.org.il/he/article/4285"
 
         turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
         self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()
