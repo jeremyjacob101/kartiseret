@@ -41,10 +41,10 @@ class CCsoon(BaseSoon):
                 self.english_title = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent").strip()
                 if self.english_title == "" or self.english_title == None:
                     self.english_title = self.hebrew_title
-                
+
                 self.runtime = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[2]/span").get_attribute("textContent").strip()
                 self.rating = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent").strip()
-                
+
                 release_date = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[3]/span").get_attribute("textContent").strip()
                 self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 
@@ -53,6 +53,3 @@ class CCsoon(BaseSoon):
 
                 self.appendToGatheringInfo()
                 # self.printComingSoon()
-
-        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()

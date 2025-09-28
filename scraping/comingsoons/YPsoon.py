@@ -21,9 +21,9 @@ class YPsoon(BaseSoon):
             self.english_title = self.element("/html/body/div[5]/section[1]/div/div[2]/div[1]/div/ul/li/h1").text.strip()
             self.hebrew_title = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[1]/dd").text.strip()
 
-            trying_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
-            if re.search(r"\b\d{4}\b", trying_year):
-                self.release_year = int(re.search(r"\b\d{4}\b", trying_year).group(0))
+            release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
+            if re.search(r"\b\d{4}\b", release_year):
+                self.release_year = int(re.search(r"\b\d{4}\b", release_year).group(0))
             else:
                 self.release_years = None
 

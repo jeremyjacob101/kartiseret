@@ -11,13 +11,14 @@ import os, time, pytz, secrets, string
 from datetime import datetime
 
 from scraping.utils.scrapedFixes import fixLanguage, fixRating, fixCinemaName, fixScreeningType
-
-jerusalem_tz = pytz.timezone("Asia/Jerusalem")
+from scraping.utils.initializeBases import build_chrome, initialize_fields
 
 
 class BaseCinema:
     CINEMA_NAME: str
     URL: str
+    SUPABASE_TABLE_NAME = "testingMovies"
+    CINEMA_TYPE = "nowPlaying"
 
     fixLanguage = fixLanguage
     fixRating = fixRating
@@ -28,62 +29,8 @@ class BaseCinema:
         super().__init_subclass__(**kwargs)
 
     def __init__(self):
-        driver_options = webdriver.ChromeOptions()
-        driver_options.add_argument("--headless")
-        driver_options.add_argument("--disable-gpu")
-        driver_options.add_argument("--no-sandbox")
-        driver_options.add_argument("--disable-dev-shm-usage")
-        driver_options.add_argument("--window-size=1920,1080")
-        driver_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.0 Safari/537.36")
-        self.driver = webdriver.Chrome(options=driver_options)
-        self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
-
-        self.current_year = str(datetime.now(jerusalem_tz).year)
-        self.current_month = str(datetime.now(jerusalem_tz).month)
-
-        self.trying_names = []
-        self.trying_hebrew_names = []
-        self.trying_hrefs = []
-        self.original_languages = []
-        self.ratings = []
-        self.release_years = []
-        self.directed_bys = []
-        self.runtimes = []
-
-        self.showtime = None
-        self.english_title = None
-        self.hebrew_title = None
-        self.english_href = None
-        self.hebrew_href = None
-        self.screening_type = None
-        self.original_language = None
-        self.dub_language = None
-        self.date_of_showing = None
-        self.release_year = None
-        self.directed_by = None
-        self.runtime = None
-        self.rating = None
-        self.screening_city = None
-
-        self.gathering_info = {
-            "showtime": [],
-            "english_title": [],
-            "hebrew_title": [],
-            "english_href": [],
-            "hebrew_href": [],
-            "screening_type": [],
-            "original_language": [],
-            "dub_language": [],
-            "date_of_showing": [],
-            "release_year": [],
-            "directed_by": [],
-            "runtime": [],
-            "rating": [],
-            "scraped_at": [],
-            "showtime_id": [],
-            "cinema": [],
-            "screening_city": [],
-        }
+        self.driver = build_chrome()
+        initialize_fields()
 
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
@@ -139,7 +86,7 @@ class BaseCinema:
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         self.supabase = create_client(url, key)
 
-    def appendToGatheringInfo(self):
+    def appendToGatheringInfo(self, cinema_type=CINEMA_TYPE):
         self.fixScreeningType()
         self.fixCinemaName()
         self.fixLanguage()
@@ -155,13 +102,54 @@ class BaseCinema:
         self.gathering_info["dub_language"].append(self.dub_language)
         self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
+        self.gathering_info["release_date"].append(self.release_date)
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
         self.gathering_info["rating"].append(self.rating)
-        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
-        self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
-        self.gathering_info["cinema"].append(self.CINEMA_NAME)
         self.gathering_info["screening_city"].append(self.screening_city)
+        self.gathering_info["helper_id"].append(self.helper_id)
+        self.gathering_info["helper_type"].append(self.helper_type)
+        if cinema_type == "cinematheque":
+            self.gathering_info["theque_showtime_id"].append(str(self.getRandomHash()))
+        if cinema_type == "comingSoon":
+            self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
+        if cinema_type == "nowPlaying":
+            self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
+        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
+        self.gathering_info["cinema"].append(self.CINEMA_NAME)
+
+    def formatAndUpload(self, table_name=SUPABASE_TABLE_NAME):
+        info = getattr(self, "gathering_info", None)
+        if not isinstance(info, dict) or not info:
+            return None
+
+        keys = list(info.keys())
+
+        def _is_empty(x):
+            if x is None:
+                return True
+            if isinstance(x, str):
+                return x.strip() == ""
+            try:
+                return len(x) == 0
+            except TypeError:
+                return False
+
+        rows = []
+        for values in zip(*(info[k] for k in keys)):
+            row = {}
+            for k, v in zip(keys, values):
+                if not _is_empty(v):
+                    row[k] = v.strip() if isinstance(v, str) else v
+            rows.append(row)
+
+        if not rows:
+            return None  # nothing to insert
+
+        if not hasattr(self, "supabase"):
+            self.setUpSupabase()
+
+        return self.supabase.table(table_name).insert(rows).execute()
 
     def printShowtime(self):
         print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
@@ -178,6 +166,7 @@ class BaseCinema:
             self.setUpSupabase()  # Sets up supabase client for each cinema
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
+            self.formatAndUpload()  # Formatting and uploading to supabase
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",

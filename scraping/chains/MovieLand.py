@@ -15,21 +15,21 @@ class MovieLand(BaseCinema):
         self.click("#branch-1293", 1)
 
         for film_card in range(1, self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div/div/div") + 1):
-            self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
+            self.hebrew_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
 
-        for href in range(len(self.trying_hrefs)):
-            self.driver.get(self.trying_hrefs[href])
+        for href in range(len(self.hebrew_hrefs)):
+            self.driver.get(self.hebrew_hrefs[href])
             hebrew_name = self.element("#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(1)").text.strip()
-            self.trying_hebrew_names.append(hebrew_name)
-            self.trying_names.append(self.element("#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(3)").text.strip() or hebrew_name)
+            self.hebrew_titles.append(hebrew_name)
+            self.english_titles.append(self.element("#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(3)").text.strip() or hebrew_name)
             self.original_languages.append(str(self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[16]").text.split(":", 1)[-1].strip()))
-            trying_year = self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text
-            if re.search(r"\b\d{4}\b", trying_year):
-                self.release_years.append(int(re.search(r"\b\d{4}\b", trying_year).group(0)))
+            release_year = self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[15]").text
+            if re.search(r"\b\d{4}\b", release_year):
+                self.release_years.append(int(re.search(r"\b\d{4}\b", release_year).group(0)))
             else:
                 self.release_years.append(None)
             self.ratings.append(str(self.element(f"/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[10]").text))
-        name_to_idx = {str(name): i for i, name in enumerate(self.trying_hebrew_names)}
+        name_to_idx = {str(name): i for i, name in enumerate(self.hebrew_titles)}
 
         for cinema in range(1, 7):
             self.driver.get(self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({cinema})").get_attribute("href").rsplit("/", 1)[0] + "/")
@@ -69,8 +69,8 @@ class MovieLand(BaseCinema):
                                 if checking_film is None:
                                     continue
 
-                                self.english_title = self.trying_names[checking_film]
-                                self.hebrew_title = self.trying_hebrew_names[checking_film]
+                                self.english_title = self.english_titles[checking_film]
+                                self.hebrew_title = self.hebrew_titles[checking_film]
                                 self.release_year = self.release_years[checking_film]
                                 self.rating = self.ratings[checking_film]
 

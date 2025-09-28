@@ -28,12 +28,12 @@ class CinemaCity(BaseCinema):
 
         for cinema_block in range(1, self.lenElements("#moviesContainer > div", "row mainThumbWrapper") + 1):
             for film_card in range(1, self.lenElements(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div") + 1):
-                self.trying_names.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent"))
+                self.english_titles.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/p[1]").get_attribute("textContent"))
                 self.ratings.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[4]/span").get_attribute("textContent"))
                 self.runtimes.append(self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/div[1]/p[2]/span").get_attribute("textContent").strip())
 
-                try_this_hebrew_name = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
-                self.trying_hebrew_names.append(try_this_hebrew_name)
+                hebrew_title = self.element(f"/html/body/div[4]/div[3]/div[2]/div[1]/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/h4").get_attribute("textContent")
+                self.hebrew_titles.append(hebrew_title)
 
         self.sleep(1)
         self.driver.execute_script("window.scrollTo(0, 0);")
@@ -51,7 +51,7 @@ class CinemaCity(BaseCinema):
 
                 self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li[{day}]/a", 0.2)
                 self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a", 0.1)
-                name_to_idx = {str(name): i for i, name in enumerate(self.trying_hebrew_names)}
+                name_to_idx = {str(name): i for i, name in enumerate(self.hebrew_titles)}
                 for film_index in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li") + 1):
                     checking_film_name = str(self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a").get_attribute("textContent"))
                     checking_film = name_to_idx.get(checking_film_name)
@@ -61,8 +61,8 @@ class CinemaCity(BaseCinema):
                     self.rating = str(self.ratings[checking_film]).strip()
                     self.runtime = int(self.runtimes[checking_film])
 
-                    self.english_title = str(self.trying_names[checking_film]).strip()
-                    self.hebrew_title = str(self.trying_hebrew_names[checking_film]).strip()
+                    self.english_title = str(self.english_titles[checking_film]).strip()
+                    self.hebrew_title = str(self.hebrew_titles[checking_film]).strip()
                     if self.english_title == "" or self.english_title == None:
                         self.english_title = self.hebrew_title
 

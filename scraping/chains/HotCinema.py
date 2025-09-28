@@ -20,8 +20,8 @@ class HotCinema(BaseCinema):
         self.waitAndClick("/html/body/div[3]/div/div/div[1]/a", 3)
 
         for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
-            self.trying_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
-        for href in self.trying_hrefs:
+            self.hebrew_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
+        for href in self.hebrew_hrefs:
             self.driver.get(href)
             self.sleep(0.1)
 
@@ -32,14 +32,14 @@ class HotCinema(BaseCinema):
             else:
                 self.release_years.append(None)
 
-            self.trying_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip())
-            self.trying_hebrew_names.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip())
+            self.english_titles.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip())
+            self.hebrew_titles.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip())
             self.ratings.append(self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[2]/div[2]/span").text.strip())
             try:
                 self.runtimes.append(int(re.sub(r"\D", "", self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[1]/div[2]/span").text.strip())))
             except:
                 self.runtimes.append(None)
-        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_hebrew_names)}
+        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.hebrew_titles)}
 
         for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
             self.driver.get(self.element(f"/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a[{cinema}]").get_attribute("href"))
@@ -67,8 +67,8 @@ class HotCinema(BaseCinema):
                             if checking_film is None:
                                 continue
 
-                            self.english_title = str(self.trying_names[checking_film])
-                            self.hebrew_title = str(self.trying_hebrew_names[checking_film])
+                            self.english_title = str(self.english_titles[checking_film])
+                            self.hebrew_title = str(self.hebrew_titles[checking_film])
 
                             if "מדובב לעברית" in self.hebrew_title:
                                 self.dub_language = "Hebrew"

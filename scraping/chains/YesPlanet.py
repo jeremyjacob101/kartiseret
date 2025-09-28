@@ -19,16 +19,16 @@ class YesPlanet(BaseCinema):
         self.sleep(3)
 
         for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
-            self.trying_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
-            self.trying_names.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
-        for href in self.trying_hrefs:
+            self.english_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
+            self.english_titles.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
+        for href in self.english_hrefs:
             self.driver.get(href)
             self.sleep(0.1)
 
-            self.trying_hebrew_names.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
-            trying_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
-            if re.search(r"\b\d{4}\b", trying_year):
-                self.release_years.append(int(re.search(r"\b\d{4}\b", trying_year).group(0)))
+            self.hebrew_titles.append(str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(1) > dd").text))
+            release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
+            if re.search(r"\b\d{4}\b", release_year):
+                self.release_years.append(int(re.search(r"\b\d{4}\b", release_year).group(0)))
             else:
                 self.release_years.append(None)
 
@@ -46,7 +46,7 @@ class YesPlanet(BaseCinema):
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
             if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtimes.append(int(m.group()))
-        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.trying_names)}
+        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.english_titles)}
 
         for cinema in range(1, 7):
             if cinema == 1:
@@ -118,8 +118,8 @@ class YesPlanet(BaseCinema):
                                     self.rating = self.ratings[checking_film]
                                     self.runtime = self.runtimes[checking_film]
 
-                                    self.english_title = self.trying_names[checking_film]
-                                    self.hebrew_title = self.trying_hebrew_names[checking_film]
+                                    self.english_title = self.english_titles[checking_film]
+                                    self.hebrew_title = self.hebrew_titles[checking_film]
 
                                     self.appendToGatheringInfo()
                                     # self.printShowtime()

@@ -9,71 +9,28 @@ from supabase import create_client
 import os, time, pytz, secrets, string
 from datetime import datetime
 
-from scraping.utils.scrapedFixes import fixLanguage, fixRating
-
-jerusalem_tz = pytz.timezone("Asia/Jerusalem")
+from scraping.utils.scrapedFixes import fixLanguage, fixRating, fixCinemaName, fixScreeningType
+from scraping.utils.initializeBases import build_chrome, initialize_fields
 
 
 class BaseSoon:
-    SOON_CINEMA_NAME: str
+    CINEMA_NAME: str
     URL: str
+    SUPABASE_TABLE_NAME = "testingSoons"
+    CINEMA_TYPE = "comingSoon"
 
     fixLanguage = fixLanguage
     fixRating = fixRating
+    fixCinemaName = fixCinemaName
+    fixScreeningType = fixScreeningType
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
 
     def __init__(self):
-        driver_options = webdriver.ChromeOptions()
-        driver_options.add_argument("--headless")
-        driver_options.add_argument("--disable-gpu")
-        driver_options.add_argument("--no-sandbox")
-        driver_options.add_argument("--disable-dev-shm-usage")
-        driver_options.add_argument("--window-size=1920,1080")
-        driver_options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.0 Safari/537.36")
-        self.driver = webdriver.Chrome(options=driver_options)
-        self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
+        self.driver = build_chrome()
 
-        self.current_year = str(datetime.now(jerusalem_tz).year)
-        self.current_month = str(datetime.now(jerusalem_tz).month)
-
-        self.english_titles = []
-        self.hebrew_titles = []
-        self.english_hrefs = []
-        self.original_languages = []
-        self.release_dates = []
-        self.release_years = []
-        self.directed_bys = []
-        self.runtimes = []
-        self.ratings = []
-
-        self.english_title = None
-        self.hebrew_title = None
-        self.original_language = None
-        self.release_date = None
-        self.release_year = None
-        self.directed_by = None
-        self.runtime = None
-        self.rating = None
-        self.helper_id = None
-        self.helper_type = None
-
-        self.gathering_info = {
-            "english_title": [],
-            "hebrew_title": [],
-            "original_language": [],
-            "release_date": [],
-            "release_year": [],
-            "directed_by": [],
-            "runtime": [],
-            "rating": [],
-            "helper_id": [],
-            "helper_type": [],
-            "scraped_at": [],
-            "coming_soon_id": [],
-            "cinema": [],
-        }
+        initialize_fields()
 
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
@@ -129,26 +86,71 @@ class BaseSoon:
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         self.supabase = create_client(url, key)
 
-    def appendToGatheringInfo(self):
+    def appendToGatheringInfo(self, cinema_type=CINEMA_TYPE):
+        self.fixScreeningType()
+        self.fixCinemaName()
         self.fixLanguage()
         self.fixRating()
 
+        self.gathering_info["showtime"].append(self.showtime)
         self.gathering_info["english_title"].append(self.english_title)
         self.gathering_info["hebrew_title"].append(self.hebrew_title)
+        self.gathering_info["english_href"].append(self.english_href)
+        self.gathering_info["hebrew_href"].append(self.hebrew_href)
+        self.gathering_info["screening_type"].append(self.screening_type)
         self.gathering_info["original_language"].append(self.original_language)
-        self.gathering_info["release_date"].append(self.release_date)
+        self.gathering_info["dub_language"].append(self.dub_language)
+        self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
+        self.gathering_info["release_date"].append(self.release_date)
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
         self.gathering_info["rating"].append(self.rating)
+        self.gathering_info["screening_city"].append(self.screening_city)
         self.gathering_info["helper_id"].append(self.helper_id)
         self.gathering_info["helper_type"].append(self.helper_type)
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
-        self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
-        self.gathering_info["cinema"].append(self.SOON_CINEMA_NAME)
+        self.gathering_info["cinema"].append(self.CINEMA_NAME)
+
+        if cinema_type == "cinematheque":
+            self.gathering_info["theque_showtime_id"].append(str(self.getRandomHash()))
+        if cinema_type == "comingSoon":
+            self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
+        if cinema_type == "nowPlaying":
+            self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
 
     def printComingSoon(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.SOON_CINEMA_NAME!s:12} - {self.release_date!s:4}")
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_date!s:4}")
+
+    def formatAndUpload(self, table_name=SUPABASE_TABLE_NAME):
+        info = getattr(self, "gathering_info", None)
+        if not isinstance(info, dict) or not info:
+            return None
+
+        keys = list(info.keys())
+
+        def _is_empty(x):
+            if x is None:
+                return True
+            if isinstance(x, str):
+                return x.strip() == ""
+            try:
+                return len(x) == 0
+            except TypeError:
+                return False
+
+        rows = []
+        for values in zip(*(info[k] for k in keys)):
+            row = {}
+            for k, v in zip(keys, values):
+                if not _is_empty(v):
+                    row[k] = v.strip() if isinstance(v, str) else v
+            rows.append(row)
+
+        if not rows:
+            return None
+
+        return self.supabase.table(table_name).insert(rows).execute()
 
     def navigate(self):
         self.driver.get(self.URL)
@@ -162,10 +164,11 @@ class BaseSoon:
             self.setUpSupabase()  # Sets up supabase client for each cinema
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
+            self.formatAndUpload()  # Formatting and uploading to supabase
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
-                getattr(self, "SOON_CINEMA_NAME", "?"),
+                getattr(self, "CINEMA_NAME", "?"),
                 getattr(self.driver, "current_url", "?"),
                 exc_info=True,
             )
@@ -173,10 +176,10 @@ class BaseSoon:
             try:
                 from utils.logger import dump_artifacts  # local import to avoid changing module imports
 
-                png, html = dump_artifacts(getattr(self, "driver", None), prefix=getattr(self, "SOON_CINEMA_NAME", self.__class__.__name__))
-                print(f"[{getattr(self, 'SOON_CINEMA_NAME', self.__class__.__name__)}] Saved artifacts:\n" f"  screenshot: {png}\n" f"  html:       {html}")
+                png, html = dump_artifacts(getattr(self, "driver", None), prefix=getattr(self, "CINEMA_NAME", self.__class__.__name__))
+                print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Saved artifacts:\n" f"  screenshot: {png}\n" f"  html:       {html}")
             except Exception as capture_err:
-                print(f"[{getattr(self, 'SOON_CINEMA_NAME', self.__class__.__name__)}] Failed to dump artifacts: {capture_err}")
+                print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Failed to dump artifacts: {capture_err}")
             raise
 
         self.driver.quit()
