@@ -52,9 +52,8 @@ class AppendToInfo:
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
 
-        id_field = self.ID_FIELD_BY_TYPE.get(getattr(self, "cinema_type", None))
-        if id_field:
-            self.gathering_info.setdefault(id_field, []).append(str(self.getRandomHash()))
+        id_field = self.ID_FIELD_BY_TYPE.get(self.cinema_type)
+        self.gathering_info[id_field].append(str(self.getRandomHash()))
 
         if print:
             self.printRow()
