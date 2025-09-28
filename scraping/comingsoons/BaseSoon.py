@@ -33,43 +33,41 @@ class BaseSoon:
         self.current_year = str(datetime.now(jerusalem_tz).year)
         self.current_month = str(datetime.now(jerusalem_tz).month)
 
-        self.trying_names = []
-        self.trying_hebrew_names = []
-        self.trying_hrefs = []
+        self.english_titles = []
+        self.hebrew_titles = []
+        self.english_hrefs = []
         self.original_languages = []
-        self.ratings = []
+        self.release_dates = []
         self.release_years = []
         self.directed_bys = []
         self.runtimes = []
-        self.release_dates = []
+        self.ratings = []
 
-        self.coming_soon_id = None
         self.english_title = None
         self.hebrew_title = None
         self.original_language = None
+        self.release_date = None
         self.release_year = None
-        self.scraped_at = None
-        self.rating = None
         self.directed_by = None
         self.runtime = None
-        self.release_date = None
+        self.rating = None
         self.helper_id = None
         self.helper_type = None
 
         self.gathering_info = {
-            "cinema": [],
-            "coming_soon_id": [],
             "english_title": [],
             "hebrew_title": [],
             "original_language": [],
+            "release_date": [],
             "release_year": [],
-            "scraped_at": [],
-            "rating": [],
             "directed_by": [],
             "runtime": [],
-            "release_date": [],
+            "rating": [],
             "helper_id": [],
             "helper_type": [],
+            "scraped_at": [],
+            "coming_soon_id": [],
+            "cinema": [],
         }
 
     def element(self, path: str):
@@ -130,19 +128,19 @@ class BaseSoon:
         self.fixLanguage()
         self.fixRating()
 
-        self.gathering_info["cinema"].append(self.SOON_CINEMA_NAME)
-        self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
         self.gathering_info["english_title"].append(self.english_title)
         self.gathering_info["hebrew_title"].append(self.hebrew_title)
         self.gathering_info["original_language"].append(self.original_language)
+        self.gathering_info["release_date"].append(self.release_date)
         self.gathering_info["release_year"].append(self.release_year)
-        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
-        self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
-        self.gathering_info["release_date"].append(self.release_date)
+        self.gathering_info["rating"].append(self.rating)
         self.gathering_info["helper_id"].append(self.helper_id)
         self.gathering_info["helper_type"].append(self.helper_type)
+        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
+        self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
+        self.gathering_info["cinema"].append(self.SOON_CINEMA_NAME)
 
     def fixLanguage(self):
         replace = {

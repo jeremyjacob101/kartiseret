@@ -14,8 +14,8 @@ class MLsoon(BaseSoon):
         self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2)
 
         for film_card in range(1, self.lenElements("/html/body/div[1]/div[10]/div[2]/div/div/div") + 1):
-            self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
-        for href in self.trying_hrefs:
+            self.english_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
+        for href in self.english_hrefs:
             self.driver.get(href)
             self.sleep(0.5)
 

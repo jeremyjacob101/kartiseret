@@ -12,14 +12,14 @@ class LCsoon(BaseSoon):
         self.sleep(3)
         self.jsClick("/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/ul/li[2]")
         for film_card in range(1, self.lenElements("/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li")):
-            self.trying_hrefs.append(self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]").get_attribute("href"))
+            self.english_hrefs.append(self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]").get_attribute("href"))
 
             release_date = self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[2]/div/ul/li[{film_card}]/div/a[1]/div/div[2]").text
             if release_date is not None and release_date != "":
                 release_date = release_date.split(":", 1)[1].strip()
                 self.release_dates.append(datetime.strptime(release_date, "%d/%m/%Y").date().isoformat())
 
-        for idx, href in enumerate(self.trying_hrefs):
+        for idx, href in enumerate(self.english_hrefs):
             hebrew_href = str(href).replace("/en", "")
             self.driver.get(hebrew_href)
             self.sleep(0.5)

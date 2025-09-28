@@ -38,47 +38,44 @@ class BaseCinema:
         self.trying_hebrew_names = []
         self.trying_hrefs = []
         self.original_languages = []
-        self.dub_languages = []
         self.ratings = []
         self.release_years = []
         self.directed_bys = []
         self.runtimes = []
 
-        self.showtime_id = None
+        self.showtime = None
         self.english_title = None
         self.hebrew_title = None
-        self.showtime = None
         self.english_href = None
         self.hebrew_href = None
         self.screening_type = None
         self.original_language = None
-        self.screening_city = None
+        self.dub_language = None
         self.date_of_showing = None
         self.release_year = None
-        self.dub_language = None
-        self.scraped_at = None
-        self.rating = None
         self.directed_by = None
         self.runtime = None
+        self.rating = None
+        self.screening_city = None
 
         self.gathering_info = {
-            "cinema": [],
-            "showtime_id": [],
+            "showtime": [],
             "english_title": [],
             "hebrew_title": [],
-            "showtime": [],
             "english_href": [],
             "hebrew_href": [],
             "screening_type": [],
             "original_language": [],
-            "screening_city": [],
+            "dub_language": [],
             "date_of_showing": [],
             "release_year": [],
-            "dub_language": [],
-            "scraped_at": [],
-            "rating": [],
             "directed_by": [],
             "runtime": [],
+            "rating": [],
+            "scraped_at": [],
+            "showtime_id": [],
+            "cinema": [],
+            "screening_city": [],
         }
 
     def element(self, path: str):
@@ -141,23 +138,23 @@ class BaseCinema:
         self.fixLanguage()
         self.fixRating()
 
-        self.gathering_info["cinema"].append(self.CINEMA_NAME)
-        self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
+        self.gathering_info["showtime"].append(self.showtime)
         self.gathering_info["english_title"].append(self.english_title)
         self.gathering_info["hebrew_title"].append(self.hebrew_title)
-        self.gathering_info["showtime"].append(self.showtime)
         self.gathering_info["english_href"].append(self.english_href)
         self.gathering_info["hebrew_href"].append(self.hebrew_href)
         self.gathering_info["screening_type"].append(self.screening_type)
         self.gathering_info["original_language"].append(self.original_language)
-        self.gathering_info["screening_city"].append(self.screening_city)
+        self.gathering_info["dub_language"].append(self.dub_language)
         self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
-        self.gathering_info["dub_language"].append(self.dub_language)
-        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
-        self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
+        self.gathering_info["rating"].append(self.rating)
+        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
+        self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
+        self.gathering_info["cinema"].append(self.CINEMA_NAME)
+        self.gathering_info["screening_city"].append(self.screening_city)
 
     def fixCinemaName(self):
         replace = {

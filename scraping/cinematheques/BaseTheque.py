@@ -14,6 +14,7 @@ jerusalem_tz = pytz.timezone("Asia/Jerusalem")
 
 class BaseTheque:
     CINEMATHEQUE_NAME: str
+    SCREENING_CITY: str
     URL: str
 
     def __init_subclass__(cls, **kwargs):
@@ -33,50 +34,48 @@ class BaseTheque:
         self.current_year = str(datetime.now(jerusalem_tz).year)
         self.current_month = str(datetime.now(jerusalem_tz).month)
 
-        self.trying_names = []
-        self.trying_hebrew_names = []
-        self.trying_hrefs = []
+        self.showtimes = []
+        self.english_titles = []
+        self.hebrew_titles = []
+        self.english_hrefs = []
+        self.hebrew_hrefs = []
+        self.screening_types = []
         self.original_languages = []
-        self.dub_languages = []
-        self.ratings = []
+        self.date_of_showings = []
         self.release_years = []
         self.directed_bys = []
         self.runtimes = []
 
-        self.theque_showtime_id = None
+        self.showtime = None
         self.english_title = None
         self.hebrew_title = None
-        self.showtime = None
         self.english_href = None
         self.hebrew_href = None
         self.screening_type = None
         self.original_language = None
-        self.screening_city = None
+        self.dub_language = None
         self.date_of_showing = None
         self.release_year = None
-        self.dub_language = None
-        self.scraped_at = None
-        self.rating = None
         self.directed_by = None
         self.runtime = None
 
         self.gathering_info = {
-            "cinema": [],
-            "theque_showtime_id": [],
+            "showtime": [],
             "english_title": [],
             "hebrew_title": [],
+            "english_href": [],
+            "hebrew_href": [],
+            "screening_type": [],
             "original_language": [],
+            "dub_language": [],
+            "date_of_showing": [],
             "release_year": [],
-            "scraped_at": [],
-            "rating": [],
             "directed_by": [],
             "runtime": [],
-            "release_date": [],
-            "helper_id": [],
-            "helper_type": [],
-            "showtime": [],
+            "scraped_at": [],
+            "theque_showtime_id": [],
+            "cinema": [],
             "screening_city": [],
-            "screening_type": [],
         }
 
     def element(self, path: str):
@@ -137,19 +136,22 @@ class BaseTheque:
         self.fixLanguage()
         self.fixRating()
 
-        self.gathering_info["cinema"].append(self.CINEMATHEQUE_NAME)
-        self.gathering_info["theque_showtime_id"].append(str(self.getRandomHash()))
+        self.gathering_info["showtime"].append(self.showtime)
         self.gathering_info["english_title"].append(self.english_title)
         self.gathering_info["hebrew_title"].append(self.hebrew_title)
+        self.gathering_info["english_href"].append(self.english_href)
+        self.gathering_info["hebrew_href"].append(self.hebrew_href)
+        self.gathering_info["screening_type"].append(self.screening_type)
         self.gathering_info["original_language"].append(self.original_language)
+        self.gathering_info["dub_language"].append(self.dub_language)
+        self.gathering_info["date_of_showing"].append(self.date_of_showing)
         self.gathering_info["release_year"].append(self.release_year)
-        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
-        self.gathering_info["rating"].append(self.rating)
         self.gathering_info["directed_by"].append(self.directed_by)
         self.gathering_info["runtime"].append(self.runtime)
-        self.gathering_info["release_date"].append(self.release_date)
-        self.gathering_info["helper_id"].append(self.helper_id)
-        self.gathering_info["helper_type"].append(self.helper_type)
+        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
+        self.gathering_info["theque_showtime_id"].append(str(self.getRandomHash()))
+        self.gathering_info["cinema"].append(self.CINEMATHEQUE_NAME)
+        self.gathering_info["screening_city"].append(self.SCREENING_CITY)
 
     def fixLanguage(self):
         replace = {
@@ -199,7 +201,7 @@ class BaseTheque:
         self.rating = replace.get(self.rating, self.rating)
 
     def printCinmathequeShowtime(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMATHEQUE_NAME!s:12} - {self.release_date!s:4}")
+        print(f"{(self.english_title or '')!s:29.29} - {(self.directed_by or '')!s:29.29} - {self.CINEMATHEQUE_NAME!s:12} - {self.date_of_showing!s:4} - {self.showtime!s:5} - {self.runtime!s:3}")
 
     def navigate(self):
         self.driver.get(self.URL)
