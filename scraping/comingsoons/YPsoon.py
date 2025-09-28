@@ -1,10 +1,10 @@
-from scraping.comingsoons.BaseSoon import BaseSoon
+from scraping import BaseCinema
 
 from datetime import datetime
 import re
 
 
-class YPsoon(BaseSoon):
+class YPsoon(BaseCinema):
     SOON_CINEMA_NAME = "Yes Planet"
     URL = "https://www.planetcinema.co.il/?lang=en_gb#/"
 
@@ -46,7 +46,4 @@ class YPsoon(BaseSoon):
             self.helper_type = "href"
 
             self.appendToGatheringInfo()
-            # self.printComingSoon()
-
-        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()
+            # self.printRow()

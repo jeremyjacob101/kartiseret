@@ -15,6 +15,7 @@ import threading, time
 # from scraping.comingsoons.CCsoon import CCsoon
 # from scraping.comingsoons.HCsoon import HCsoon
 from scraping.comingsoons.LCsoon import LCsoon
+
 # from scraping.comingsoons.MLsoon import MLsoon
 # from scraping.comingsoons.YPsoon import YPsoon
 
@@ -52,6 +53,7 @@ ID_FIELD_BY_MODE = {
     "comingSoon": "coming_soon_id",
     "cinematheque": "theque_showtime_id",
 }
+
 
 def run(mode: str):
     setup_logging("ERROR")
@@ -97,6 +99,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Finish remodularizing
+# Make sure one from each works
+# Finish coming soons
+# Finish cinematheques
 
 # handle 3D / 3D HDR in titles (remove from coming soons, handle in now playings)
 # get rid of duplicates in comingsoons that only differ by coming_soon_id

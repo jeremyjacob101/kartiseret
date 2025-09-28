@@ -1,10 +1,10 @@
-from scraping.comingsoons.BaseSoon import BaseSoon
+from scraping import BaseCinema
 
 from datetime import datetime
 import re
 
 
-class LCsoon(BaseSoon):
+class LCsoon(BaseCinema):
     CINEMA_NAME = "Lev Cinema"
     URL = "https://www.lev.co.il/en/"
 
@@ -56,4 +56,4 @@ class LCsoon(BaseSoon):
             self.helper_type = "href"
 
             self.appendToGatheringInfo()
-            # self.printComingSoon()
+            # self.printRow()

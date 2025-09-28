@@ -6,7 +6,7 @@ from scraping.utils.SelfFunctions import SelfFunctions
 from scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload
 
 
-class BaseTheque(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
+class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
     CINEMA_NAME: str
     SCREENING_CITY: str
     URL: str
@@ -18,8 +18,8 @@ class BaseTheque(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
         self.supabase_table_name = supabase_table_name
         self.id_name = id_name
 
-    def printShowtime(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
+    def printRow(self):
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5}".rstrip())
 
     def logic(self):
         raise NotImplementedError("Each cinema must implement its own logic()")

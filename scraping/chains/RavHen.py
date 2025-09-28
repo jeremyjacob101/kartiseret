@@ -1,4 +1,4 @@
-from scraping.chains.BaseCinema import BaseCinema
+from scraping import BaseCinema
 
 from datetime import datetime
 import re
@@ -41,7 +41,7 @@ class RavHen(BaseCinema):
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
             if runtime and runtime == "יעודכן בקרוב":
                 runtime = None
-            if runtime and (m := re.search(r'\d+', runtime)):
+            if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtimes.append(int(m.group()))
         name_to_idx = {str(name): i for i, name in enumerate(self.hebrew_titles)}
 
@@ -117,7 +117,4 @@ class RavHen(BaseCinema):
                                     self.hebrew_title = self.hebrew_titles[checking_film]
 
                                     self.appendToGatheringInfo()
-                                    # self.printShowtime()
-
-        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
+                                    # self.printRow()

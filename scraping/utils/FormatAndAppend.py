@@ -16,8 +16,7 @@ def formatAndUpload(self):
                 row_data[column_name] = value
         rows.append(row_data)
 
-    table_name = getattr(self, "SUPABASE_TABLE_NAME", None)
-    return self.supabase.table(table_name).insert(rows).execute()
+    return self.supabase.table(self.supabase_table_name).insert(rows).execute()
 
 
 class AppendToInfo:

@@ -1,4 +1,4 @@
-from scraping.chains.BaseCinema import BaseCinema
+from scraping import BaseCinema
 
 from datetime import datetime
 import re
@@ -65,4 +65,4 @@ class LevCinema(BaseCinema):
                             self.screening_type = "Regular"
 
                             self.appendToGatheringInfo()
-                            # self.printShowtime()
+                            # self.printRow()

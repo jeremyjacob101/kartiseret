@@ -1,4 +1,4 @@
-from scraping.chains.BaseCinema import BaseCinema
+from scraping import BaseCinema
 
 from datetime import datetime
 import re
@@ -137,7 +137,4 @@ class HotCinema(BaseCinema):
                                 self.runtime = self.runtimes[checking_film]
 
                                 self.appendToGatheringInfo()
-                                # self.printShowtime()
-
-        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        self.supabase.table("testingMovies").insert(turn_info_into_dictionaries).execute()
+                                # self.printRow()
