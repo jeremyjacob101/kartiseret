@@ -9,12 +9,17 @@ from supabase import create_client
 import os, time, pytz, secrets, string
 from datetime import datetime
 
+from scraping.utils.scrapedFixes import fixLanguage, fixRating
+
 jerusalem_tz = pytz.timezone("Asia/Jerusalem")
 
 
 class BaseSoon:
     SOON_CINEMA_NAME: str
     URL: str
+
+    fixLanguage = fixLanguage
+    fixRating = fixRating
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -141,53 +146,6 @@ class BaseSoon:
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
         self.gathering_info["cinema"].append(self.SOON_CINEMA_NAME)
-
-    def fixLanguage(self):
-        replace = {
-            "EN": "English",
-            "FR": "French",
-            "HE": "Hebrew",
-            "HEB": "Hebrew",
-            "CZ": "Czech",
-            "KO": "Korean",
-            "GER": "German",
-            "JAP": "Japanese",
-            "DAN": "Danish",
-            "אנגלית": "English",
-            "עברית": "Hebrew",
-            "דנית": "Danish",
-            "צרפתית": "French",
-            "גרמנית": "German",
-            "הינדי": "Hindi",
-            "יעודכן בקרוב": None,
-        }
-        self.original_language = replace.get(self.original_language, self.original_language)
-
-    def fixRating(self):
-        replace = {
-            "No limit": "All",
-            "מותר לכל": "All",
-            "הותר לכל": "All",
-            "מותר לכל הגילאים": "All",
-            "הגבלת גיל: הותר לכל הגילאים": "All",
-            "Allowed for all ages": "All",
-            "הותר מגיל 18": "18+",
-            "הגבלת גיל: הותר מגיל 16 בהצגת תעודה מזהה": "16+",
-            "הותר מגיל 16": "16+",
-            "הגבלת גיל: הותר מגיל 14": "14+",
-            "הותר מגיל 14": "14+",
-            "הגבלת גיל: הותר מגיל 12": "12+",
-            "הותר מגיל 12": "12+",
-            "הותר מגיל 9": "9+",
-            "עד גיל 8 בליווי מבוגר": "9+",
-            "Other": None,
-            "אחר": None,
-            "יעודכן בקרוב": None,
-            "הגבלת גיל: טרם נקבע": None,
-            "טרם נקבע": None,
-            "": None,
-        }
-        self.rating = replace.get(self.rating, self.rating)
 
     def printComingSoon(self):
         print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.SOON_CINEMA_NAME!s:12} - {self.release_date!s:4}")

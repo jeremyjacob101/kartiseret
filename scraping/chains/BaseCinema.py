@@ -10,12 +10,19 @@ from supabase import create_client
 import os, time, pytz, secrets, string
 from datetime import datetime
 
+from scraping.utils.scrapedFixes import fixLanguage, fixRating, fixCinemaName, fixScreeningType
+
 jerusalem_tz = pytz.timezone("Asia/Jerusalem")
 
 
 class BaseCinema:
     CINEMA_NAME: str
     URL: str
+
+    fixLanguage = fixLanguage
+    fixRating = fixRating
+    fixCinemaName = fixCinemaName
+    fixScreeningType = fixScreeningType
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -155,133 +162,6 @@ class BaseCinema:
         self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
         self.gathering_info["screening_city"].append(self.screening_city)
-
-    def fixCinemaName(self):
-        replace = {
-            "Lev Smadar": "Jerusalem",
-            "Lev Omer": "Omer",
-            "Even Yehuda": "Even Yehuda",
-            "Ramat Hasharon": "Ramat Hasharon",
-            "Lev Raanana": "Raanana",
-            "Lev Shoham": "Shoham",
-            "Lev Daniel": "Herziliya",
-            "לוח הקרנות ב רב חן גבעתיים": "Givatayim",
-            "לוח הקרנות ב רב חן דיזינגוף": "Tel Aviv",
-            "לוח הקרנות ב רב חן קרית אונו": "Kiryat Ono",
-            "SCREENINGS FOR PLANET BEER SHEVA": "Beer Sheva",
-            "SCREENINGS FOR PLANET AYALON": "Ayalon",
-            "SCREENINGS FOR PLANET RISHON LETZIYON": "Rishon Letzion",
-            "SCREENINGS FOR PLANET ZICHRON YAAKOV": "Zichron Yaakov",
-            "SCREENINGS FOR PLANET JERUSALEM": "Jerusalem",
-            "SCREENINGS FOR PLANET HAIFA": "Haifa",
-            "כרמיאל": "Carmiel",
-            "חיפה": "Haifa",
-            "נתניה": "Netanya",
-            'הצוק ת"א': "Glilot",
-            "עפולה": "Afula",
-            'עזריאלי ת"א Summer Sky': "Azrieli Rooftop",
-            "HOT CINEMA כרמיאל": "Carmiel",
-            "HOT CINEMA נהריה": "Nahariya",
-            "HOT CINEMA קריון": "Kiryat Bialik",
-            "HOT CINEMA חיפה": "Haifa",
-            "HOT CINEMA כפר סבא": "Kfar Saba",
-            "HOT CINEMA פתח תקווה": "Petach Tikvah",
-            "HOT CINEMA מודיעין": "Modiin",
-            "HOT CINEMA רחובות": "Rehovot",
-            "HOT CINEMA אשדוד": "Ashdod",
-            "HOT CINEMA אשקלון": "Ashkelon",
-            "סינמה סיטי גלילות": "Glilot",
-            "סינמה סיטי גלילות": "Glilot",
-            "סינמה סיטי גלילות (ONYX)": "Glilot",
-            "סינמה סיטי גלילות (VIP)": "Glilot",
-            "סינמה סיטי גלילות (Lounge)": "Glilot",
-            'סינמה סיטי ראשל"צ': "Rishon Letzion",
-            'סינמה סיטי ראשל"צ (VIP)': "Rishon Letzion",
-            'סינמה סיטי ראשל"צ (VIP לייט)': "Rishon Letzion",
-            "סינמה סיטי ירושלים": "Jerusalem",
-            "סינמה סיטי ירושלים (VIP)": "Jerusalem",
-            "סינמה סיטי כפר-סבא": "Kfar Saba",
-            "סינמה סיטי כפר סבא (Prime)": "Kfar Saba",
-            "סינמה סיטי נתניה": "Netanya",
-            "סינמה סיטי נתניה (Prime)": "Netanya",
-            "סינמה סיטי באר שבע": "Beer Sheva",
-            "סינמה סיטי באר שבע (VIP)": "Beer Sheva",
-            "סינמה סיטי אשדוד": "Ashdod",
-            "סינמה סיטי חדרה": "Chadera",
-            "סינמה סיטי חדרה (Prime)": "Chadera",
-        }
-        self.screening_city = replace.get(self.screening_city, self.screening_city)
-
-    def fixScreeningType(self):
-        replace = {
-            "VIP LIGHT": "VIP Light",
-            "סינמה סיטי גלילות": "Regular",
-            "סינמה סיטי גלילות (Lounge)": "Lounge",
-            "סינמה סיטי גלילות (ONYX)": "4DX",
-            "סינמה סיטי גלילות (VIP)": "VIP",
-            'סינמה סיטי ראשל"צ': "Regular",
-            'סינמה סיטי ראשל"צ (VIP)': "VIP",
-            'סינמה סיטי ראשל"צ (VIP לייט)': "VIP Light",
-            "סינמה סיטי ירושלים": "Regular",
-            "סינמה סיטי ירושלים (VIP)": "VIP",
-            "סינמה סיטי כפר-סבא": "Regular",
-            "סינמה סיטי כפר סבא (Prime)": "Prime",
-            "סינמה סיטי נתניה": "Regular",
-            "סינמה סיטי נתניה (Prime)": "Prime",
-            "סינמה סיטי באר שבע": "Regular",
-            "סינמה סיטי באר שבע (VIP)": "VIP",
-            "סינמה סיטי אשדוד": "Regular",
-            "סינמה סיטי חדרה": "Regular",
-            "סינמה סיטי חדרה (Prime)": "Prime",
-        }
-        self.screening_type = replace.get(self.screening_type, self.screening_type)
-
-    def fixLanguage(self):
-        replace = {
-            "EN": "English",
-            "FR": "French",
-            "HE": "Hebrew",
-            "HEB": "Hebrew",
-            "CZ": "Czech",
-            "KO": "Korean",
-            "GER": "German",
-            "JAP": "Japanese",
-            "DAN": "Danish",
-            "אנגלית": "English",
-            "עברית": "Hebrew",
-            "דנית": "Danish",
-            "צרפתית": "French",
-            "גרמנית": "German",
-            "הינדי": "Hindi",
-            "יעודכן בקרוב": None,
-        }
-        self.original_language = replace.get(self.original_language, self.original_language)
-
-    def fixRating(self):
-        replace = {
-            "No limit": "All",
-            "מותר לכל": "All",
-            "הותר לכל": "All",
-            "מותר לכל הגילאים": "All",
-            "הגבלת גיל: הותר לכל הגילאים": "All",
-            "Allowed for all ages": "All",
-            "הותר מגיל 18": "18+",
-            "הגבלת גיל: הותר מגיל 16 בהצגת תעודה מזהה": "16+",
-            "הותר מגיל 16": "16+",
-            "הגבלת גיל: הותר מגיל 14": "14+",
-            "הותר מגיל 14": "14+",
-            "הגבלת גיל: הותר מגיל 12": "12+",
-            "הותר מגיל 12": "12+",
-            "הותר מגיל 9": "9+",
-            "עד גיל 8 בליווי מבוגר": "9+",
-            "Other": None,
-            "אחר": None,
-            "יעודכן בקרוב": None,
-            "הגבלת גיל: טרם נקבע": None,
-            "טרם נקבע": None,
-            "": None,
-        }
-        self.rating = replace.get(self.rating, self.rating)
 
     def printShowtime(self):
         print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
