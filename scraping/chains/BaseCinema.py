@@ -84,6 +84,9 @@ class BaseCinema:
         key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         self.supabase = create_client(url, key)
 
+    def printShowtime(self):
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
+
     def appendToGatheringInfo(self, cinema_type=CINEMA_TYPE):
         self.fixScreeningType()
         self.fixCinemaName()
@@ -107,50 +110,35 @@ class BaseCinema:
         self.gathering_info["screening_city"].append(self.screening_city)
         self.gathering_info["helper_id"].append(self.helper_id)
         self.gathering_info["helper_type"].append(self.helper_type)
+        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
+        self.gathering_info["cinema"].append(self.CINEMA_NAME)
+
         if cinema_type == "cinematheque":
             self.gathering_info["theque_showtime_id"].append(str(self.getRandomHash()))
         if cinema_type == "comingSoon":
             self.gathering_info["coming_soon_id"].append(str(self.getRandomHash()))
         if cinema_type == "nowPlaying":
             self.gathering_info["showtime_id"].append(str(self.getRandomHash()))
-        self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
-        self.gathering_info["cinema"].append(self.CINEMA_NAME)
 
     def formatAndUpload(self, table_name=SUPABASE_TABLE_NAME):
-        info = getattr(self, "gathering_info", None)
-        if not isinstance(info, dict) or not info:
+        info = getattr(self, "gathering_info", {})
+        if not isinstance(info, dict):
             return None
 
-        keys = list(info.keys())
-
-        def _is_empty(x):
-            if x is None:
-                return True
-            if isinstance(x, str):
-                return x.strip() == ""
-            try:
-                return len(x) == 0
-            except TypeError:
-                return False
+        active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
+        max_rows = max((len(info[name]) for name in active_columns), default=0)
 
         rows = []
-        for values in zip(*(info[k] for k in keys)):
-            row = {}
-            for k, v in zip(keys, values):
-                if not _is_empty(v):
-                    row[k] = v.strip() if isinstance(v, str) else v
-            rows.append(row)
-
-        if not rows:
-            return None  # nothing to insert
-
-        if not hasattr(self, "supabase"):
-            self.setUpSupabase()
+        for row_index in range(max_rows):
+            row_data = {}
+            for column_name in active_columns:
+                column_values = info[column_name]
+                value = column_values[row_index] if row_index < len(column_values) else None
+                if (isinstance(value, str) and (value := value.strip())) or (value is not None and (not hasattr(value, "__len__") or len(value) > 0)):
+                    row_data[column_name] = value
+            rows.append(row_data)
 
         return self.supabase.table(table_name).insert(rows).execute()
-
-    def printShowtime(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.release_year!s:4} - {self.original_language!s:10} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5} - {self.screening_type!s:9} - {self.rating!s:9}".rstrip())
 
     def navigate(self):
         self.driver.get(self.URL)
