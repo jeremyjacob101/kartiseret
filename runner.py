@@ -2,125 +2,75 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
-from utils.logger import setup_logging, logger, dump_artifacts
-import threading
-import time
+from utils.logger import setup_logging, logger
+import threading, time
 
-from scraping.chains.CinemaCity import CinemaCity
-from scraping.chains.YesPlanet import YesPlanet
-from scraping.chains.LevCinema import LevCinema
-from scraping.chains.RavHen import RavHen
-from scraping.chains.MovieLand import MovieLand
-from scraping.chains.HotCinema import HotCinema
+# from scraping.chains.CinemaCity import CinemaCity
+# from scraping.chains.YesPlanet import YesPlanet
+# from scraping.chains.LevCinema import LevCinema
+# from scraping.chains.RavHen import RavHen
+# from scraping.chains.MovieLand import MovieLand
+# from scraping.chains.HotCinema import HotCinema
 
-from scraping.comingsoons.CCsoon import CCsoon
-from scraping.comingsoons.HCsoon import HCsoon
+# from scraping.comingsoons.CCsoon import CCsoon
+# from scraping.comingsoons.HCsoon import HCsoon
 from scraping.comingsoons.LCsoon import LCsoon
-from scraping.comingsoons.MLsoon import MLsoon
-from scraping.comingsoons.YPsoon import YPsoon
+# from scraping.comingsoons.MLsoon import MLsoon
+# from scraping.comingsoons.YPsoon import YPsoon
 
-from scraping.cinematheques.JLEMtheque import JLEMtheque
+# from scraping.cinematheques.JLEMtheque import JLEMtheque
 
-
-def run_chains():
-    cinemas = [
+REGISTRY = {
+    "nowPlaying": [
         # CinemaCity,
         # YesPlanet,
-        # HotCinema,
         # LevCinema,
         # RavHen,
         # MovieLand,
-    ]
-    threads, runtimes, lock = [], {}, threading.Lock()
-
-    for cinema in cinemas:
-
-        def _target(cls=cinema):
-            t0 = time.time()
-            try:
-                inst = cls()
-                inst.scrape()
-            except Exception:
-                logger.exception("Unhandled error in %s", cls.__name__)
-                raise
-            finally:
-                dt = time.time() - t0
-                with lock:
-                    runtimes[cls.__name__] = dt
-
-        thread = threading.Thread(target=_target, name=cinema.__name__)
-        threads.append(thread)
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
-    print("\n\n\n--------------------\n")
-    for name, secs in runtimes.items():
-        m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s\n")
-
-
-def run_soons():
-    cinemas = [
+        # HotCinema,
+    ],
+    "comingSoon": [
         # CCsoon,
         # HCsoon,
         LCsoon,
         # MLsoon,
         # YPsoon,
-    ]
-    threads, runtimes, lock = [], {}, threading.Lock()
-
-    for cinema in cinemas:
-
-        def _target(cls=cinema):
-            t0 = time.time()
-            try:
-                inst = cls()
-                inst.scrape()
-            except Exception:
-                logger.exception("Unhandled error in %s", cls.__name__)
-                raise
-            finally:
-                dt = time.time() - t0
-                with lock:
-                    runtimes[cls.__name__] = dt
-
-        thread = threading.Thread(target=_target, name=cinema.__name__)
-        threads.append(thread)
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
-    print("\n\n\n--------------------\n")
-    for name, secs in runtimes.items():
-        m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s\n")
-
-
-def run_theques():
-    cinemas = [
+    ],
+    "cinematheque": [
         # JLEMtheque,
-    ]
+    ],
+}
+
+TABLE_BY_MODE = {
+    "nowPlaying": "testingMovies",
+    "comingSoon": "testingSoons",
+    "cinematheque": "testingTheques",
+}
+
+
+def run(mode: str):
+    setup_logging("ERROR")
+    classes = REGISTRY.get(mode, [])
+    table_name = TABLE_BY_MODE.get(mode)
+
     threads, runtimes, lock = [], {}, threading.Lock()
 
-    for cinema in cinemas:
+    for cls in classes:
 
-        def _target(cls=cinema):
+        def _target(c=cls):
             t0 = time.time()
             try:
-                inst = cls()
+                inst = c(cinema_type=mode, supabase_table_name=table_name)
                 inst.scrape()
             except Exception:
-                logger.exception("Unhandled error in %s", cls.__name__)
+                logger.exception("Unhandled error in %s", c.__name__)
                 raise
             finally:
                 dt = time.time() - t0
                 with lock:
-                    runtimes[cls.__name__] = dt
+                    runtimes[c.__name__] = dt
 
-        thread = threading.Thread(target=_target, name=cinema.__name__)
+        thread = threading.Thread(target=_target, name=cls.__name__)
         threads.append(thread)
         thread.start()
 
@@ -134,10 +84,9 @@ def run_theques():
 
 
 def main():
-    setup_logging("ERROR")
-    # run_chains()
-    run_soons()
-    # run_theques()
+    # run("nowPlaying")
+    # run("cinematheque")
+    run("comingSoon")
 
 
 if __name__ == "__main__":
@@ -146,4 +95,3 @@ if __name__ == "__main__":
 # handle 3D / 3D HDR in titles (remove from coming soons, handle in now playings)
 # get rid of duplicates in comingsoons that only differ by coming_soon_id
 # skip russian titles throughout?
-    

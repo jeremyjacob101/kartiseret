@@ -9,7 +9,7 @@ import os, pytz, secrets, string
 from datetime import datetime
 
 from scraping.utils.scrapedFixes import fixLanguage, fixRating, fixCinemaName, fixScreeningType
-from scraping.utils.initializeBases import build_chrome, initialize_fields
+from scraping.utils.initializeBase import build_chrome, initialize_fields
 
 
 class BaseCinema:
