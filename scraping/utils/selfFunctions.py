@@ -6,7 +6,6 @@ from datetime import datetime
 import pytz, secrets, string
 
 
-
 class SelfFunctions:
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
@@ -56,3 +55,6 @@ class SelfFunctions:
 
     def getRandomHash(self):
         return "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(9))
+
+    def printRow(self):
+        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5}".rstrip())
