@@ -6,6 +6,7 @@ from datetime import datetime
 import pytz, secrets, string
 
 
+
 class SelfFunctions:
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)

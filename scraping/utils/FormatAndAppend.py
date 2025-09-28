@@ -1,4 +1,27 @@
-class AppendFormatSend:
+def formatAndUpload(self, table_name=None):
+    info = getattr(self, "gathering_info", {})
+    if not isinstance(info, dict):
+        return None
+
+    active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
+    max_rows = max((len(info[name]) for name in active_columns), default=0)
+
+    rows = []
+    for row_index in range(max_rows):
+        row_data = {}
+        for column_name in active_columns:
+            column_values = info[column_name]
+            value = column_values[row_index] if row_index < len(column_values) else None
+            if (isinstance(value, str) and (value := value.strip())) or (value is not None and (not hasattr(value, "__len__") or len(value) > 0)):
+                row_data[column_name] = value
+        rows.append(row_data)
+
+    table_name = getattr(self, "SUPABASE_TABLE_NAME", None)
+
+    return self.supabase.table(table_name).insert(rows).execute()
+
+
+class AppendToInfo:
     ID_FIELD_BY_TYPE = {
         "cinematheque": "theque_showtime_id",
         "comingSoon": "coming_soon_id",
@@ -34,25 +57,3 @@ class AppendFormatSend:
         id_field = self.ID_FIELD_BY_TYPE.get(getattr(self, "cinema_type", None))
         if id_field:
             self.gathering_info.setdefault(id_field, []).append(str(self.getRandomHash()))
-
-    def formatAndUpload(self, table_name=None):
-        info = getattr(self, "gathering_info", {})
-        if not isinstance(info, dict):
-            return None
-
-        active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
-        max_rows = max((len(info[name]) for name in active_columns), default=0)
-
-        rows = []
-        for row_index in range(max_rows):
-            row_data = {}
-            for column_name in active_columns:
-                column_values = info[column_name]
-                value = column_values[row_index] if row_index < len(column_values) else None
-                if (isinstance(value, str) and (value := value.strip())) or (value is not None and (not hasattr(value, "__len__") or len(value) > 0)):
-                    row_data[column_name] = value
-            rows.append(row_data)
-
-        table_name = getattr(self, "SUPABASE_TABLE_NAME", None)
-
-        return self.supabase.table(table_name).insert(rows).execute()

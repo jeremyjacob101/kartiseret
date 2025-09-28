@@ -1,6 +1,17 @@
 from selenium import webdriver
-import time, pytz
 from datetime import datetime
+import time, pytz, os
+from supabase import create_client
+
+
+def setUpSupabase(self):
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    self.supabase = create_client(url, key)
+
+
+def navigate(self):
+    self.driver.get(self.URL)
 
 
 def build_chrome(headless: bool = True):
@@ -14,8 +25,8 @@ def build_chrome(headless: bool = True):
     options.add_argument(f"user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.0 Safari/537.36")
     return webdriver.Chrome(options=options)
 
-class InitializeBase:
 
+class InitializeBase:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)

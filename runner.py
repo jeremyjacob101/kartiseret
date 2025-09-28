@@ -18,7 +18,7 @@ from scraping.comingsoons.LCsoon import LCsoon
 # from scraping.comingsoons.MLsoon import MLsoon
 # from scraping.comingsoons.YPsoon import YPsoon
 
-# from scraping.cinematheques.JLEMtheque import JLEMtheque
+from scraping.cinematheques.JLEMtheque import JLEMtheque
 
 REGISTRY = {
     "nowPlaying": [
@@ -37,7 +37,7 @@ REGISTRY = {
         # YPsoon,
     ],
     "cinematheque": [
-        # JLEMtheque,
+        JLEMtheque,
     ],
 }
 
@@ -47,11 +47,17 @@ TABLE_BY_MODE = {
     "cinematheque": "testingTheques",
 }
 
+ID_FIELD_BY_MODE = {
+    "nowPlaying": "showtime_id",
+    "comingSoon": "coming_soon_id",
+    "cinematheque": "theque_showtime_id",
+}
 
 def run(mode: str):
     setup_logging("ERROR")
     classes = REGISTRY.get(mode, [])
     table_name = TABLE_BY_MODE.get(mode)
+    id_field_name = ID_FIELD_BY_MODE.get(mode)
 
     threads, runtimes, lock = [], {}, threading.Lock()
 
@@ -60,7 +66,7 @@ def run(mode: str):
         def _target(c=cls):
             t0 = time.time()
             try:
-                inst = c(cinema_type=mode, supabase_table_name=table_name)
+                inst = c(cinema_type=mode, supabase_table_name=table_name, id_name=id_field_name)
                 inst.scrape()
             except Exception:
                 logger.exception("Unhandled error in %s", c.__name__)
@@ -85,7 +91,7 @@ def run(mode: str):
 
 def main():
     # run("nowPlaying")
-    # run("cinematheque")
+    run("cinematheque")
     run("comingSoon")
 
 
