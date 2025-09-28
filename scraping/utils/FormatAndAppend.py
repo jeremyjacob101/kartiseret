@@ -1,4 +1,4 @@
-def formatAndUpload(self, table_name=None):
+def formatAndUpload(self):
     info = getattr(self, "gathering_info", {})
     if not isinstance(info, dict):
         return None
@@ -17,7 +17,6 @@ def formatAndUpload(self, table_name=None):
         rows.append(row_data)
 
     table_name = getattr(self, "SUPABASE_TABLE_NAME", None)
-
     return self.supabase.table(table_name).insert(rows).execute()
 
 

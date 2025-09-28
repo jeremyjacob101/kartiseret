@@ -27,10 +27,10 @@ class BaseSoon(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
     def scrape(self):
         had_error = False
         try:
-            setUpSupabase()  # Sets up supabase client for each cinema
-            navigate()  # Navigate to website
+            setUpSupabase(self)  # Sets up supabase client for each cinema
+            navigate(self)  # Navigate to website
             self.logic()  # Scraping logic
-            formatAndUpload()  # Formatting and uploading to supabase
+            formatAndUpload(self)  # Formatting and uploading to supabase
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",

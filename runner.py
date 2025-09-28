@@ -18,7 +18,7 @@ from scraping.comingsoons.LCsoon import LCsoon
 # from scraping.comingsoons.MLsoon import MLsoon
 # from scraping.comingsoons.YPsoon import YPsoon
 
-from scraping.cinematheques.JLEMtheque import JLEMtheque
+# from scraping.cinematheques.JLEMtheque import JLEMtheque
 
 REGISTRY = {
     "nowPlaying": [
@@ -37,7 +37,7 @@ REGISTRY = {
         # YPsoon,
     ],
     "cinematheque": [
-        JLEMtheque,
+        # JLEMtheque,
     ],
 }
 
@@ -91,7 +91,7 @@ def run(mode: str):
 
 def main():
     # run("nowPlaying")
-    run("cinematheque")
+    # run("cinematheque")
     run("comingSoon")
 
 
