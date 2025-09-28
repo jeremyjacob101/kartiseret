@@ -5,7 +5,7 @@ import re
 
 
 class LCsoon(BaseSoon):
-    SOON_CINEMA_NAME = "Lev Cinema"
+    CINEMA_NAME = "Lev Cinema"
     URL = "https://www.lev.co.il/en/"
 
     def logic(self):
@@ -57,6 +57,3 @@ class LCsoon(BaseSoon):
 
             self.appendToGatheringInfo()
             # self.printComingSoon()
-
-        turn_info_into_dictionaries = [dict(zip(self.gathering_info.keys(), values)) for values in zip(*self.gathering_info.values())]
-        self.supabase.table("testingSoons").insert(turn_info_into_dictionaries).execute()

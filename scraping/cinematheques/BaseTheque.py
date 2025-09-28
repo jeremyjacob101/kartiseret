@@ -1,4 +1,3 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -6,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from utils.logger import logger
 from supabase import create_client
 
-import os, time, pytz, secrets, string
+import os, pytz, secrets, string
 from datetime import datetime
 
 from scraping.utils.scrapedFixes import fixLanguage, fixRating, fixCinemaName, fixScreeningType
@@ -30,8 +29,7 @@ class BaseTheque:
 
     def __init__(self):
         self.driver = build_chrome()
-
-        initialize_fields()
+        initialize_fields(self)
 
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
@@ -165,7 +163,7 @@ class BaseTheque:
             self.setUpSupabase()  # Sets up supabase client for each cinema
             self.navigate()  # Navigate to website
             self.logic()  # Scraping logic
-            self.formatAndUpload() # Formatting and uploading to supabase
+            self.formatAndUpload()  # Formatting and uploading to supabase
         except Exception:
             logger.error(
                 "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",

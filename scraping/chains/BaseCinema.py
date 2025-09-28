@@ -1,13 +1,11 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
 
 from utils.logger import logger
 from supabase import create_client
 
-import os, time, pytz, secrets, string
+import os, pytz, secrets, string
 from datetime import datetime
 
 from scraping.utils.scrapedFixes import fixLanguage, fixRating, fixCinemaName, fixScreeningType
@@ -30,7 +28,7 @@ class BaseCinema:
 
     def __init__(self):
         self.driver = build_chrome()
-        initialize_fields()
+        initialize_fields(self)
 
     def element(self, path: str):
         return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)

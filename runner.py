@@ -27,7 +27,7 @@ def run_chains():
         # CinemaCity,
         # YesPlanet,
         # HotCinema,
-        # LevCinema,
+        LevCinema,
         # RavHen,
         # MovieLand,
     ]
@@ -65,7 +65,7 @@ def run_soons():
     cinemas = [
         # CCsoon,
         # HCsoon,
-        # LCsoon,
+        LCsoon,
         # MLsoon,
         # YPsoon,
     ]
@@ -101,7 +101,7 @@ def run_soons():
 
 def run_theques():
     cinemas = [
-        JLEMtheque,
+        # JLEMtheque,
     ]
     threads, runtimes, lock = [], {}, threading.Lock()
 
@@ -135,9 +135,9 @@ def run_theques():
 
 def main():
     setup_logging("ERROR")
-    # run_chains()
-    # run_soons()
-    run_theques()
+    run_chains()
+    run_soons()
+    # run_theques()
 
 
 if __name__ == "__main__":
