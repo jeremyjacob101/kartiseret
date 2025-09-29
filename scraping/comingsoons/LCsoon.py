@@ -1,4 +1,4 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
@@ -56,4 +56,3 @@ class LCsoon(BaseCinema):
             self.helper_type = "href"
 
             self.appendToGatheringInfo(True)
-            # self.printRow()

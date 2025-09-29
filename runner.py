@@ -5,21 +5,20 @@ load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 from utils.logger import setup_logging, logger
 import threading, time
 
-# from scraping.chains.CinemaCity import CinemaCity
-# from scraping.chains.YesPlanet import YesPlanet
-# from scraping.chains.LevCinema import LevCinema
-# from scraping.chains.RavHen import RavHen
-# from scraping.chains.MovieLand import MovieLand
-# from scraping.chains.HotCinema import HotCinema
+from scraping.chains.CinemaCity import CinemaCity
+from scraping.chains.YesPlanet import YesPlanet
+from scraping.chains.LevCinema import LevCinema
+from scraping.chains.RavHen import RavHen
+from scraping.chains.MovieLand import MovieLand
+from scraping.chains.HotCinema import HotCinema
 
-# from scraping.comingsoons.CCsoon import CCsoon
-# from scraping.comingsoons.HCsoon import HCsoon
+from scraping.comingsoons.CCsoon import CCsoon
+from scraping.comingsoons.HCsoon import HCsoon
 from scraping.comingsoons.LCsoon import LCsoon
+from scraping.comingsoons.MLsoon import MLsoon
+from scraping.comingsoons.YPsoon import YPsoon
 
-# from scraping.comingsoons.MLsoon import MLsoon
-# from scraping.comingsoons.YPsoon import YPsoon
-
-# from scraping.cinematheques.JLEMtheque import JLEMtheque
+from scraping.cinematheques.JLEMtheque import JLEMtheque
 
 REGISTRY = {
     "nowPlaying": [
@@ -33,9 +32,9 @@ REGISTRY = {
     "comingSoon": [
         # CCsoon,
         # HCsoon,
-        LCsoon,
+        # LCsoon,
         # MLsoon,
-        # YPsoon,
+        YPsoon,
     ],
     "cinematheque": [
         # JLEMtheque,

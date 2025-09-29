@@ -57,4 +57,4 @@ class SelfFunctions:
         return "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(9))
 
     def printRow(self):
-        print(f"{(self.english_title or '')!s:29.29} - {(self.hebrew_title or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5}".rstrip())
+        print(f"{(self.english_title or '')!s:29.29} - {(self.release_date or '')!s:29.29} - {self.CINEMA_NAME!s:12} - {self.screening_city!s:15} - {self.date_of_showing!s:10} - {self.showtime!s:5}".rstrip())

@@ -1,12 +1,14 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
 
 
 class YPsoon(BaseCinema):
-    SOON_CINEMA_NAME = "Yes Planet"
+    CINEMA_NAME = "Yes Planet"
     URL = "https://www.planetcinema.co.il/?lang=en_gb#/"
+
+    month_mapping = {"January": "01", "February": "02", "March": "03", "April": "04", "May": "05", "June": "06", "July": "07", "August": "08", "September": "09", "October": "10", "November": "11", "December": "12"}
 
     def logic(self):
         self.sleep(10)
@@ -42,8 +44,12 @@ class YPsoon(BaseCinema):
             if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtime = int(m.group())
 
+            release_date = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[1]/p").text.strip()
+            d, m, y = release_date.split()
+            release_date = f"{d}/{self.month_mapping[m]}/{y}"
+            self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
+
             self.helper_id = href
             self.helper_type = "href"
 
-            self.appendToGatheringInfo()
-            # self.printRow()
+            self.appendToGatheringInfo(True)

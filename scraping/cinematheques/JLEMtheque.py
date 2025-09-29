@@ -1,4 +1,4 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 
 class JLEMtheque(BaseCinema):
-    CINEMATHEQUE_NAME = "JLMCT"
+    CINEMA_NAME = "JLMCT"
     SCREENING_CITY = "Jerusalem"
     URL = "https://jer-cin.org.il/en/article/4284"
 
@@ -23,8 +23,7 @@ class JLEMtheque(BaseCinema):
                 self.runtime = self.element(f"/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[{film_block}]/div[3]/div[4]/span[2]").text.strip().split(" ")[0].strip()
                 self.english_href = self.element(f"/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[{film_block}]/div[1]/div/div[3]/div/div/div/div/button").get_attribute("data-url")
 
-                self.appendToGatheringInfo()
-                # self.printRow()
+                self.appendToGatheringInfo(True)
 
             self.element("#calender-filter > p.active").find_element(By.XPATH, "following-sibling::p").click()
             self.sleep(1)

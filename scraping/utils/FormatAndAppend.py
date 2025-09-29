@@ -26,7 +26,7 @@ class AppendToInfo:
         "nowPlaying": "showtime_id",
     }
 
-    def appendToGatheringInfo(self, print=False):
+    def appendToGatheringInfo(self, print_info=False):
         self.fixScreeningType()
         self.fixCinemaName()
         self.fixLanguage()
@@ -55,5 +55,5 @@ class AppendToInfo:
         id_field = self.ID_FIELD_BY_TYPE.get(self.cinema_type)
         self.gathering_info[id_field].append(str(self.getRandomHash()))
 
-        if print:
+        if print_info:
             self.printRow()

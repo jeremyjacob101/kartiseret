@@ -1,4 +1,4 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
@@ -103,4 +103,3 @@ class CinemaCity(BaseCinema):
                         self.hebrew_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=he"
 
                         self.appendToGatheringInfo()
-                        # self.printRow()

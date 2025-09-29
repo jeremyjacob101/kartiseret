@@ -1,11 +1,11 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
 
 
 class CCsoon(BaseCinema):
-    SOON_CINEMA_NAME = "Cinema City"
+    CINEMA_NAME = "Cinema City"
     URL = "https://www.cinema-city.co.il/comingsoon"
 
     def logic(self):
@@ -52,4 +52,3 @@ class CCsoon(BaseCinema):
                 self.helper_type = "href"
 
                 self.appendToGatheringInfo()
-                # self.printRow()

@@ -1,9 +1,9 @@
-from utils.logger import logger
+from utils.logger import logger, dump_artifacts
 
 from scraping.utils.InitializeBase import InitializeBase, build_chrome, setUpSupabase, navigate
+from scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload
 from scraping.utils.ScrapedFixes import ScrapedFixes
 from scraping.utils.SelfFunctions import SelfFunctions
-from scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload
 
 
 class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
@@ -37,8 +37,6 @@ class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
             )
 
             try:
-                from utils.logger import dump_artifacts  # local import to avoid changing module imports
-
                 png, html = dump_artifacts(getattr(self, "driver", None), prefix=getattr(self, "CINEMA_NAME", self.__class__.__name__))
                 print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Saved artifacts:\n" f"  screenshot: {png}\n" f"  html:       {html}")
             except Exception as capture_err:

@@ -1,4 +1,4 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
@@ -90,4 +90,3 @@ class MovieLand(BaseCinema):
                                     self.hebrew_href = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]").get_attribute("href")
 
                                     self.appendToGatheringInfo()
-                                    # self.printRow()

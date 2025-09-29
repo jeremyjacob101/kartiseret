@@ -1,4 +1,4 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
@@ -122,4 +122,3 @@ class YesPlanet(BaseCinema):
                                     self.hebrew_title = self.hebrew_titles[checking_film]
 
                                     self.appendToGatheringInfo()
-                                    # self.printRow()

@@ -1,11 +1,11 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
 
 
 class MLsoon(BaseCinema):
-    SOON_CINEMA_NAME = "MovieLand"
+    CINEMA_NAME = "MovieLand"
     URL = "https://www.movieland.co.il/soon"
 
     def logic(self):
@@ -50,4 +50,3 @@ class MLsoon(BaseCinema):
             self.helper_type = "href"
 
             self.appendToGatheringInfo()
-            # self.printRow()

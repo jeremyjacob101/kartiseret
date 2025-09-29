@@ -1,11 +1,11 @@
-from scraping import BaseCinema
+from scraping.BaseCinema import BaseCinema
 
 from datetime import datetime
 import re
 
 
 class HCsoon(BaseCinema):
-    SOON_CINEMA_NAME = "Hot Cinema"
+    CINEMA_NAME = "Hot Cinema"
     URL = "https://hotcinema.co.il/ComingSoon"
 
     def logic(self):
@@ -51,4 +51,3 @@ class HCsoon(BaseCinema):
             self.helper_type = "href"
 
             self.appendToGatheringInfo()
-            # self.printRow()
