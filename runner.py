@@ -12,53 +12,55 @@ from scraping.chains.RavHen import RavHen
 from scraping.chains.MovieLand import MovieLand
 from scraping.chains.HotCinema import HotCinema
 
+from scraping.cinematheques.JLEMtheque import JLEMtheque
+from scraping.cinematheques.SSCtheque import SSCtheque
+
 from scraping.comingsoons.CCsoon import CCsoon
 from scraping.comingsoons.HCsoon import HCsoon
 from scraping.comingsoons.LCsoon import LCsoon
 from scraping.comingsoons.MLsoon import MLsoon
 from scraping.comingsoons.YPsoon import YPsoon
 
-from scraping.cinematheques.JLEMtheque import JLEMtheque
-
 REGISTRY = {
     "nowPlaying": [
         # CinemaCity,
         # YesPlanet,
-        LevCinema,
+        # LevCinema,
         # RavHen,
         # MovieLand,
         # HotCinema,
+    ],
+    "cinematheque": [
+        # JLEMtheque,
+        SSCtheque,
     ],
     "comingSoon": [
         # CCsoon,
         # HCsoon,
         # LCsoon,
         # MLsoon,
-        YPsoon,
-    ],
-    "cinematheque": [
-        JLEMtheque,
+        # YPsoon,
     ],
 }
 
-TABLE_BY_MODE = {
+TABLE_BY_TYPE = {
     "nowPlaying": "testingMovies",
     "comingSoon": "testingSoons",
     "cinematheque": "testingTheques",
 }
 
-ID_FIELD_BY_MODE = {
+ID_FIELD_BY_TYPE = {
     "nowPlaying": "showtime_id",
     "comingSoon": "coming_soon_id",
     "cinematheque": "theque_showtime_id",
 }
 
 
-def run(mode: str):
+def run(type: str):
     setup_logging("ERROR")
-    classes = REGISTRY.get(mode, [])
-    table_name = TABLE_BY_MODE.get(mode)
-    id_field_name = ID_FIELD_BY_MODE.get(mode)
+    classes = REGISTRY.get(type, [])
+    table_name = TABLE_BY_TYPE.get(type)
+    id_field_name = ID_FIELD_BY_TYPE.get(type)
 
     threads, runtimes, lock = [], {}, threading.Lock()
 
@@ -67,7 +69,7 @@ def run(mode: str):
         def _target(c=cls):
             t0 = time.time()
             try:
-                inst = c(cinema_type=mode, supabase_table_name=table_name, id_name=id_field_name)
+                inst = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
                 inst.scrape()
             except Exception:
                 logger.exception("Unhandled error in %s", c.__name__)
@@ -100,7 +102,6 @@ if __name__ == "__main__":
     main()
 
 # Finish cinematheques:
-#   JLEM hebrew logic
 #   SSCtheque
 #   TLVtheque
 #   JAFCtheque

@@ -46,16 +46,15 @@ class LevCinema(BaseCinema):
                     self.screening_city = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/h3").text)
 
                     crossed_year = False
+                    trying_year = self.current_year
                     for day in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div") + 1):
                         self.date_of_showing = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/span").text
                         self.date_of_showing = re.search(r"\d{1,2}/\d{1,2}", self.date_of_showing).group(0)
-
                         dd, mm = re.search(r"(\d{1,2})/(\d{1,2})", self.date_of_showing).groups()
-                        yyyy = str(self.current_year)
-                        if self.current_month == "12" and not crossed_year and str(mm) == "1":
+                        if self.current_month == "12" and not crossed_year and (str(mm) == "1" or str(mm) == "01"):
                             crossed_year = True
-                            yyyy = str(int(yyyy) + 1)
-
+                            trying_year = str(int(trying_year) + 1)
+                        yyyy = str(trying_year)
                         self.date_of_showing = datetime.strptime(f"{yyyy}/{dd}/{mm}", "%Y/%d/%m").date().isoformat()
 
                         for time in range(1, self.lenElements(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div") + 1):
