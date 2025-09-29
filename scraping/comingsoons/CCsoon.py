@@ -17,12 +17,12 @@ class CCsoon(BaseCinema):
         self.zoomOut(50)
 
         for _ in range(10):
-            element = self.element("#change-bg > div > div > div > div.movies.row > div > p > a")
+            element = self.element("/html/body/div[4]/div[3]/div[2]/div[2]/div/p/a")
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
-            self.sleep(2)
+            self.sleep(1)
             try:
                 element.click()
-                self.sleep(5)
+                self.sleep(3)
             except:
                 break
 
