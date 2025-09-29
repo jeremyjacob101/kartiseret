@@ -24,7 +24,7 @@ REGISTRY = {
     "nowPlaying": [
         # CinemaCity,
         # YesPlanet,
-        # LevCinema,
+        LevCinema,
         # RavHen,
         # MovieLand,
         # HotCinema,
@@ -37,7 +37,7 @@ REGISTRY = {
         YPsoon,
     ],
     "cinematheque": [
-        # JLEMtheque,
+        JLEMtheque,
     ],
 }
 
@@ -92,16 +92,15 @@ def run(mode: str):
 
 def main():
     # run("nowPlaying")
-    # run("cinematheque")
-    run("comingSoon")
+    run("cinematheque")
+    # run("comingSoon")
 
 
 if __name__ == "__main__":
     main()
 
-# Make sure one from each works
 # Finish cinematheques
 
-# handle 3D / 3D HDR in titles (remove from coming soons, handle in now playings)
-# get rid of duplicates in comingsoons that only differ by coming_soon_id
-# skip russian titles throughout?
+# Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
+# ComingSoons - Get rid of duplicates in comingsoons that only differ by id
+# Skip russian titles throughout?
