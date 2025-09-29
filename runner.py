@@ -93,9 +93,9 @@ def run(type: str):
 
 
 def main():
-    # run("nowPlaying")
+    run("nowPlaying")
     run("cinematheque")
-    # run("comingSoon")
+    run("comingSoon")
 
 
 if __name__ == "__main__":

@@ -55,4 +55,4 @@ class LCsoon(BaseCinema):
             self.helper_id = href
             self.helper_type = "href"
 
-            self.appendToGatheringInfo(True)
+            self.appendToGatheringInfo()
