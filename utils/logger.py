@@ -60,3 +60,32 @@ def setup_logging(level: str | int = None) -> None:
         force=True,
     )
     logger.setLevel(level)
+
+
+def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
+    try:
+        name = prefix or (getattr(obj, "CINEMA_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
+    except Exception:
+        name = "Unknown"
+
+    drv = driver or (getattr(obj, "driver", None) if obj is not None else None)
+    if url is None:
+        try:
+            url = getattr(drv, "current_url", "?")
+        except Exception:
+            url = "?"
+
+    logger.error(
+        "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
+        name,
+        url,
+        exc_info=True,
+    )
+
+    try:
+        png, html = dump_artifacts(drv, prefix=name, note=note)
+        print(f"[{name}] Saved artifacts:\n  screenshot: {png}\n  html:       {html}")
+        return png, html
+    except Exception as capture_err:
+        print(f"[{name}] Failed to dump artifacts: {capture_err}")
+        return None, None

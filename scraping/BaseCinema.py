@@ -1,4 +1,4 @@
-from utils.logger import logger, dump_artifacts
+from utils.logger import logger, dump_artifacts, artifactPrinting
 
 from scraping.utils.InitializeBase import InitializeBase, build_chrome, setUpSupabase, navigate
 from scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload
@@ -10,10 +10,11 @@ class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
     CINEMA_NAME: str
     SCREENING_CITY: str
     URL: str
+    HEADLESS: bool = True
 
     def __init__(self, cinema_type, supabase_table_name, id_name, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.driver = build_chrome()
+        self.driver = build_chrome(self.HEADLESS)
         self.cinema_type = cinema_type
         self.supabase_table_name = supabase_table_name
         self.id_name = id_name
@@ -22,25 +23,13 @@ class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
         raise NotImplementedError("Each cinema must implement its own logic()")
 
     def scrape(self):
-        had_error = False
         try:
             setUpSupabase(self)  # Sets up supabase client for each cinema
             navigate(self)  # Navigate to website
             self.logic()  # Scraping logic
             formatAndUpload(self)  # Formatting and uploading to supabase
         except Exception:
-            logger.error(
-                "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
-                getattr(self, "CINEMA_NAME", "?"),
-                getattr(self.driver, "current_url", "?"),
-                exc_info=True,
-            )
-
-            try:
-                png, html = dump_artifacts(getattr(self, "driver", None), prefix=getattr(self, "CINEMA_NAME", self.__class__.__name__))
-                print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Saved artifacts:\n" f"  screenshot: {png}\n" f"  html:       {html}")
-            except Exception as capture_err:
-                print(f"[{getattr(self, 'CINEMA_NAME', self.__class__.__name__)}] Failed to dump artifacts: {capture_err}")
+            artifactPrinting(self)
             raise
 
         self.driver.quit()
