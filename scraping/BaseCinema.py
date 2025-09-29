@@ -2,8 +2,8 @@ from utils.logger import logger, dump_artifacts, artifactPrinting
 
 from scraping.utils.InitializeBase import InitializeBase, build_chrome, setUpSupabase, navigate
 from scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload
-from scraping.utils.sScrapedFixes import ScrapedFixes
-from scraping.utils.sSelfFunctions import SelfFunctions
+from scraping.utils.ScrapedFixes import ScrapedFixes
+from scraping.utils.SelfFunctions import SelfFunctions
 
 
 class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
