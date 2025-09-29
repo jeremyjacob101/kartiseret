@@ -23,7 +23,7 @@ from scraping.comingsoons.YPsoon import YPsoon
 
 REGISTRY = {
     "nowPlaying": [
-        CinemaCity,
+        # CinemaCity,
         YesPlanet,
         LevCinema,
         RavHen,
@@ -35,7 +35,7 @@ REGISTRY = {
         SSCtheque,
     ],
     "comingSoon": [
-        CCsoon,
+        # CCsoon,
         HCsoon,
         LCsoon,
         MLsoon,
