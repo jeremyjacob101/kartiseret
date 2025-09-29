@@ -19,10 +19,10 @@ class CCsoon(BaseCinema):
         for _ in range(10):
             element = self.element("#change-bg > div > div > div > div.movies.row > div > p > a")
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
-            self.sleep(1)
+            self.sleep(2)
             try:
                 element.click()
-                self.sleep(3)
+                self.sleep(5)
             except:
                 break
 
