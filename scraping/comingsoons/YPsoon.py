@@ -23,28 +23,36 @@ class YPsoon(BaseCinema):
             self.english_title = self.element("/html/body/div[5]/section[1]/div/div[2]/div[1]/div/ul/li/h1").text.strip()
             self.hebrew_title = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[1]/dd").text.strip()
 
-            release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text
+            release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()
             if re.search(r"\b\d{4}\b", release_year):
                 self.release_year = int(re.search(r"\b\d{4}\b", release_year).group(0))
             else:
-                self.release_years = None
+                self.release_year = None
 
-            self.directed_by = str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(4) > dd").text.strip())
+            directed_by = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[4]/dd").text.strip())
+            if directed_by:
+                self.directed_by = directed_by
+            else:
+                self.directed_by = None
 
-            original_language = str(self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(6) > dd").text)
+            original_language = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[6]/dd").text.strip())
             if "HEB" in original_language or original_language == "":
                 original_language = "HEB"
-            self.original_languages = original_language
+            self.original_language = original_language
 
-            rating = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(7) > dd").text
+            rating = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[7]/dd").text.strip()
             if rating:
-                self.ratings = str(rating)
+                self.rating = str(rating)
+            else:
+                self.rating = None
 
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
             if runtime and (m := re.search(r"\d+", runtime)):
                 self.runtime = int(m.group())
+            else:
+                self.runtime = None
 
-            release_date = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[1]/p").text.strip()
+            release_date = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[1]/p").text.strip())
             d, m, y = release_date.split()
             release_date = f"{d}/{self.month_mapping[m]}/{y}"
             self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
@@ -52,4 +60,4 @@ class YPsoon(BaseCinema):
             self.helper_id = href
             self.helper_type = "href"
 
-            self.appendToGatheringInfo(True)
+            self.appendToGatheringInfo()

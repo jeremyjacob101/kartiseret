@@ -99,9 +99,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Finish remodularizing
 # Make sure one from each works
-# Finish coming soons
 # Finish cinematheques
 
 # handle 3D / 3D HDR in titles (remove from coming soons, handle in now playings)
