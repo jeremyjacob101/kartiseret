@@ -24,9 +24,6 @@ class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
 
     def scrape(self):
         try:
-            print("chromeVersion(capabilities) =", self.driver.capabilities.get("browserVersion"))
-            print("navigator.userAgent =", self.driver.execute_script("return navigator.userAgent"))
-
             setUpSupabase(self)  # Sets up supabase client for each cinema
             navigate(self)  # Navigate to website
             self.logic()  # Scraping logic
