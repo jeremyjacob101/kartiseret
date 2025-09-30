@@ -14,6 +14,7 @@ from scraping.chains.HotCinema import HotCinema
 
 from scraping.cinematheques.JLEMtheque import JLEMtheque
 from scraping.cinematheques.SSCtheque import SSCtheque
+from scraping.cinematheques.JAFCtheque import JAFCtheque
 
 from scraping.comingsoons.CCsoon import CCsoon
 from scraping.comingsoons.HCsoon import HCsoon
@@ -23,7 +24,7 @@ from scraping.comingsoons.YPsoon import YPsoon
 
 REGISTRY = {
     "nowPlaying": [
-        # CinemaCity,
+        CinemaCity,
         YesPlanet,
         LevCinema,
         RavHen,
@@ -31,11 +32,12 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        JLEMtheque,
-        SSCtheque,
+        # JLEMtheque,
+        # SSCtheque,
+        # JAFCtheque,
     ],
     "comingSoon": [
-        # CCsoon,
+        CCsoon,
         HCsoon,
         LCsoon,
         MLsoon,
@@ -45,14 +47,14 @@ REGISTRY = {
 
 TABLE_BY_TYPE = {
     "nowPlaying": "testingMovies",
-    "comingSoon": "testingSoons",
     "cinematheque": "testingTheques",
+    "comingSoon": "testingSoons",
 }
 
 ID_FIELD_BY_TYPE = {
     "nowPlaying": "showtime_id",
-    "comingSoon": "coming_soon_id",
     "cinematheque": "theque_showtime_id",
+    "comingSoon": "coming_soon_id",
 }
 
 
@@ -93,19 +95,19 @@ def run(type: str):
 
 
 def main():
-    run("nowPlaying")
+    # run("nowPlaying")
     run("cinematheque")
-    run("comingSoon")
+    # run("comingSoon")
 
 
 if __name__ == "__main__":
     main()
 
 # Finish cinematheques:
-#   TLVtheque
 #   JAFCtheque
 #   HAIFtheque
 #   HERZtheque
+#   TLVtheque
 #   HOLONtheque
 #   others?
 
