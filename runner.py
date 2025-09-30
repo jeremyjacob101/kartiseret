@@ -112,6 +112,7 @@ if __name__ == "__main__":
 #   HERZtheque
 #   TLVtheque
 #   HOLONtheque
+#   BEERSHEVAtheque?
 #   others?
 
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
