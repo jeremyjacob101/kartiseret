@@ -17,7 +17,10 @@ class SSCtheque(BaseCinema):
         crossed_year = False
         trying_year = self.current_year
         for film_card in range(1, self.lenElements("/html/body/div[2]/div[3]/div/div/div/div/div") + 1):
-            full_title = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
+            try:
+                full_title = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
+            except:
+                full_title = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[3]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
             title_parts = [part.strip() for part in full_title.split("|")]
             if len(title_parts) >= 3:
                 self.hebrew_title, self.english_title = title_parts[0], title_parts[2]
