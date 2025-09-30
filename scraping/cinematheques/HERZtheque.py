@@ -69,4 +69,4 @@ class HERZtheque(BaseCinema):
             self.screening_type = "Regular"
             self.screening_city = self.SCREENING_CITY
 
-            self.appendToGatheringInfo(True)
+            self.appendToGatheringInfo()
