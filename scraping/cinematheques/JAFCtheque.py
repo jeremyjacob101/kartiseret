@@ -8,7 +8,6 @@ class JAFCtheque(BaseCinema):
     CINEMA_NAME = "Jaffa Cinema"
     SCREENING_CITY = "Jaffa"
     URL = "https://www.jaffacinema.com/"
-    HEADLESS = False
 
     def logic(self):
         self.sleep(2)

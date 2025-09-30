@@ -32,9 +32,9 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        # JLEMtheque,
-        # SSCtheque,
-        # JAFCtheque,
+        JLEMtheque,
+        SSCtheque,
+        JAFCtheque,
     ],
     "comingSoon": [
         CCsoon,
@@ -95,16 +95,15 @@ def run(type: str):
 
 
 def main():
-    # run("nowPlaying")
+    run("nowPlaying")
     run("cinematheque")
-    # run("comingSoon")
+    run("comingSoon")
 
 
 if __name__ == "__main__":
     main()
 
 # Finish cinematheques:
-#   JAFCtheque
 #   HAIFtheque
 #   HERZtheque
 #   TLVtheque
