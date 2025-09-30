@@ -42,6 +42,11 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: Verify Chrome install
+        run: |
+          which google-chrome || true
+          google-chrome --version
+
       - name: Cache .venv
         id: cache-venv
         uses: actions/cache@v4
