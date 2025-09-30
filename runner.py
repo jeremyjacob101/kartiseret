@@ -16,6 +16,7 @@ from scraping.cinematheques.JLEMtheque import JLEMtheque
 from scraping.cinematheques.SSCtheque import SSCtheque
 from scraping.cinematheques.JAFCtheque import JAFCtheque
 from scraping.cinematheques.HAIFtheque import HAIFtheque
+from scraping.cinematheques.HERZtheque import HERZtheque
 
 
 from scraping.comingsoons.CCsoon import CCsoon
@@ -37,7 +38,8 @@ REGISTRY = {
         # JLEMtheque,
         # SSCtheque,
         # JAFCtheque,
-        HAIFtheque,
+        # HAIFtheque,
+        HERZtheque,
     ],
     "comingSoon": [
         CCsoon,
@@ -107,7 +109,6 @@ if __name__ == "__main__":
     main()
 
 # Finish cinematheques:
-#   HAIFtheque
 #   HERZtheque
 #   TLVtheque
 #   HOLONtheque
