@@ -100,8 +100,8 @@ def run(type: str):
 
 
 def main():
-    run("nowPlaying")
-    run("cinematheque")
+    # run("nowPlaying")
+    # run("cinematheque")
     run("comingSoon")
 
 
