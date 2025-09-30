@@ -35,10 +35,10 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        # JLEMtheque,
-        # SSCtheque,
-        # JAFCtheque,
-        # HAIFtheque,
+        JLEMtheque,
+        SSCtheque,
+        JAFCtheque,
+        HAIFtheque,
         HERZtheque,
     ],
     "comingSoon": [
@@ -109,11 +109,12 @@ if __name__ == "__main__":
     main()
 
 # Finish cinematheques:
-#   HERZtheque
 #   TLVtheque
 #   HOLONtheque
 #   BEERSHEVAtheque?
 #   others?
+
+# Cinema City blocking me?!?!
 
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
 # ComingSoons - Get rid of duplicates in comingsoons that only differ by id

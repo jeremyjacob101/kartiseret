@@ -50,7 +50,10 @@ class SSCtheque(BaseCinema):
                     try:
                         full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
                     except:
-                        full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]").get_attribute("textContent").split("\n")[1].strip()
+                        try:
+                            full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]").get_attribute("textContent").split("\n")[1].strip()
+                        except:
+                            full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[5]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
 
             info_parts = [part.strip() for part in full_info.split("|")]
             for part in info_parts:
