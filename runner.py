@@ -15,6 +15,8 @@ from scraping.chains.HotCinema import HotCinema
 from scraping.cinematheques.JLEMtheque import JLEMtheque
 from scraping.cinematheques.SSCtheque import SSCtheque
 from scraping.cinematheques.JAFCtheque import JAFCtheque
+from scraping.cinematheques.HAIFtheque import HAIFtheque
+
 
 from scraping.comingsoons.CCsoon import CCsoon
 from scraping.comingsoons.HCsoon import HCsoon
@@ -32,9 +34,10 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        JLEMtheque,
-        SSCtheque,
-        JAFCtheque,
+        # JLEMtheque,
+        # SSCtheque,
+        # JAFCtheque,
+        HAIFtheque,
     ],
     "comingSoon": [
         CCsoon,
@@ -95,9 +98,9 @@ def run(type: str):
 
 
 def main():
-    run("nowPlaying")
+    # run("nowPlaying")
     run("cinematheque")
-    run("comingSoon")
+    # run("comingSoon")
 
 
 if __name__ == "__main__":
