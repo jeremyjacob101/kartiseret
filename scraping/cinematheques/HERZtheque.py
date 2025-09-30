@@ -19,7 +19,7 @@ class HERZtheque(BaseCinema):
         for film_card in range(1, self.lenElements("/html/body/main/section[1]/div/div")):
             full_title = self.element(f"/html/body/main/section[1]/div/div[{film_card}]/a/div[2]/div[1]").text.strip()
             try:
-                self.english_title = str(full_title.split("-")[1].strip())
+                self.english_title = str(full_title.split("-")[1].strip().removeprefix("!"))
             except:
                 continue
             if "(שלישי זהב)" in self.english_title:
