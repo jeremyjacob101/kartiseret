@@ -17,10 +17,10 @@ class HAIFtheque(BaseCinema):
         for href in self.hebrew_hrefs:
             self.driver.get(href)
             self.sleep(0.25)
-            self.english_title = self.element(f"/html/body/div[4]/section[2]/div[2]/div/div/h1").text.strip()
-            self.hebrew_title = self.element(f"/html/body/div[4]/section[2]/div[2]/div/div/div[2]").text.strip()
+            self.english_title = self.element(f"/html/body/div[4]/section[2]/div[2]/div/div/div[2]").text.strip()
+            self.hebrew_title = self.element(f"/html/body/div[4]/section[2]/div[2]/div/div/h1").text.strip()
             self.english_href = self.element(f"/html/body/div[4]/section[2]/div[2]/div/div/a").get_attribute("href")
-            self.hebrew_href = self.element(f"/html/body/div[4]/section[2]/div[2]/div/div/a").get_attribute("href")
+            self.hebrew_href = self.english_href
             self.showtime = self.element(f"/html/body/div[4]/section[4]/div[3]").text.strip()
             date_of_showing = self.element(f"/html/body/div[4]/section[4]/div[2]").text.strip().split(",")[1].strip()
             self.date_of_showing = datetime.strptime(date_of_showing, "%d.%m.%y").date().isoformat()

@@ -37,9 +37,9 @@ REGISTRY = {
     "cinematheque": [
         # JLEMtheque,
         # SSCtheque,
-        JAFCtheque,
+        # JAFCtheque,
         # HAIFtheque,
-        # HERZtheque,
+        HERZtheque,
     ],
     "comingSoon": [
         CCsoon,
