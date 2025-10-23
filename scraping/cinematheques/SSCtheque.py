@@ -16,11 +16,11 @@ class SSCtheque(BaseCinema):
 
         crossed_year = False
         trying_year = self.current_year
-        for film_card in range(1, self.lenElements("/html/body/div[2]/div[3]/div/div/div/div/div") + 1):
+        for film_card in range(1, self.lenElements("/html/body/div[3]/div[3]/div/div/div/div/div") + 1):
             try:
-                full_title = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
+                full_title = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
             except:
-                full_title = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[3]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
+                full_title = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[3]/div/div/div/div/div[1]/div/div[1]/div/div/div/h1").text.strip()
             title_parts = [part.strip() for part in full_title.split("|")]
             if len(title_parts) >= 3:
                 self.hebrew_title, self.english_title = title_parts[0], title_parts[2]
@@ -29,7 +29,7 @@ class SSCtheque(BaseCinema):
             else:
                 continue
 
-            date_of_showing = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/h2").text.strip()
+            date_of_showing = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/h2").text.strip()
             month_of_showing = date_of_showing.split("/")[1].strip()
             if self.current_month == "12" and not crossed_year and (str(month_of_showing) == "1" or str(month_of_showing) == "01"):
                 crossed_year = True
@@ -38,25 +38,25 @@ class SSCtheque(BaseCinema):
             date_of_showing = date_of_showing + f"/{yyyy}"
             self.date_of_showing = datetime.strptime(date_of_showing, "%d/%m/%Y").date().isoformat()
 
-            self.showtime = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[3]/div/h2").text.strip()
+            self.showtime = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[3]/div/h2").text.strip()
 
-            num_text_blocks = self.lenElements(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p")
+            num_text_blocks = self.lenElements(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p")
             if num_text_blocks == 1:
-                if "|" in self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[0].strip():
-                    full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[0].strip()
-                elif "|" in self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip():
-                    full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip()
+                if "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[0].strip():
+                    full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[0].strip()
+                elif "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip():
+                    full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip()
             elif num_text_blocks >= 2:
-                if "|" in self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[1]").get_attribute("textContent").split("\n")[0].strip():
-                    full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[1]").get_attribute("textContent").split("\n")[0].strip()
+                if "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[1]").get_attribute("textContent").split("\n")[0].strip():
+                    full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[1]").get_attribute("textContent").split("\n")[0].strip()
                 else:
                     try:
-                        full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
+                        full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
                     except:
                         try:
-                            full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]").get_attribute("textContent").split("\n")[1].strip()
+                            full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]").get_attribute("textContent").split("\n")[1].strip()
                         except:
-                            full_info = self.element(f"/html/body/div[2]/div[3]/div/div/div/div/div[{film_card}]/div/div[5]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
+                            full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[5]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
 
             info_parts = [part.strip() for part in full_info.split("|")]
             for part in info_parts:
