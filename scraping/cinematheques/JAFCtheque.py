@@ -37,22 +37,24 @@ class JAFCtheque(BaseCinema):
             self.runtime = hours * 60 + minutes
             self.directed_by = director_part
 
-            try:
-                release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/p[1]").text.strip()
-            except:
+            xpaths = {
+                f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/p[1]": "strip",
+                f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/p[1]/strong": "strip",
+                f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/div/div/div/div/article/div/div/div/div/div/div/p[1]/strong": "strip",
+                f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/article/div/div/div[1]/div/div/div/p[1]": "content",
+                f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/div/div/p[1]/strong": "strip",
+                f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/p[1]": "content",
+            }
+
+            for xpath, mode in xpaths.items():
                 try:
-                    release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/p[1]/strong").text.strip()
+                    if mode == "strip":
+                        release_year = self.element(xpath).text.strip()
+                    elif mode == "content":
+                        release_year = self.element(xpath).get_attribute("textContent")
+                    break
                 except:
-                    try:
-                        release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/div/div/div/div/article/div/div/div/div/div/div/p[1]/strong").text.strip()
-                    except:
-                        try:
-                            release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/article/div/div/div[1]/div/div/div/p[1]").get_attribute("textContent")
-                        except:
-                            try:
-                                release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[2]/div[1]/div/div/div/div/p[1]/strong").text.strip()
-                            except:
-                                release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[10]/div/div[2]/div[1]/div/div/p[1]").get_attribute("textContent")
+                    continue
 
             try:
                 self.release_year = int(re.search(r"\b(\d{4})\b", release_year).group(1))
