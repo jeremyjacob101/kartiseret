@@ -42,11 +42,11 @@ REGISTRY = {
         HERZtheque,
     ],
     "comingSoon": [
-        # CCsoon,
-        # HCsoon,
-        # LCsoon,
+        CCsoon,
+        HCsoon,
+        LCsoon,
         MLsoon,
-        # YPsoon,
+        YPsoon,
     ],
 }
 
