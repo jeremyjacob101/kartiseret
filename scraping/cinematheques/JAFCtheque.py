@@ -23,8 +23,6 @@ class JAFCtheque(BaseCinema):
             self.english_title = re.sub(r"[\s\-\u2013\u2014]*(?:(?:eng(?:lish)?|heb(?:rew)?)\s*(?:subs|subtitles)|(?:eng(?:lish)?|heb(?:rew)?)\s*(?:\+|&|/|and)\s*(?:eng(?:lish)?|heb(?:rew)?)\s*(?:subs|subtitles))[\s\-\u2013\u2014]*$", "", english_title, flags=re.I)
             self.hebrew_title = self.hebrew_titles[film_block - 1]
 
-            print(self.english_title)
-
             run_director_info = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[1]/div/p").text.strip()
             runtime_part, director_part = run_director_info.split("|")
             minutes, hours = 0, 0
@@ -56,12 +54,10 @@ class JAFCtheque(BaseCinema):
                             except:
                                 release_year = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[10]/div/div[2]/div[1]/div/div/p[1]").get_attribute("textContent")
 
-            print(f"\t{release_year}")
             try:
                 self.release_year = int(re.search(r"\b(\d{4})\b", release_year).group(1))
             except:
                 self.release_year = None
-            print(f"\t\t{self.release_year}")
 
             showtime_strings = []
             try:
