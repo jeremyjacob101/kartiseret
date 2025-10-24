@@ -29,10 +29,10 @@ REGISTRY = {
     "nowPlaying": [
         CinemaCity,
         YesPlanet,
-        # LevCinema,
-        # RavHen,
-        # MovieLand,
-        # HotCinema,
+        LevCinema,
+        RavHen,
+        MovieLand,
+        HotCinema,
     ],
     "cinematheque": [
         JLEMtheque,
@@ -101,8 +101,8 @@ def run(type: str):
 
 def main():
     run("nowPlaying")
-    # run("cinematheque")
-    # run("comingSoon")
+    run("cinematheque")
+    run("comingSoon")
 
 
 if __name__ == "__main__":
