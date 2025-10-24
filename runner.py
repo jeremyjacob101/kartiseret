@@ -29,10 +29,10 @@ REGISTRY = {
     "nowPlaying": [
         CinemaCity,
         YesPlanet,
-        LevCinema,
-        RavHen,
-        MovieLand,
-        HotCinema,
+        # LevCinema,
+        # RavHen,
+        # MovieLand,
+        # HotCinema,
     ],
     "cinematheque": [
         JLEMtheque,
@@ -89,7 +89,7 @@ def run(type: str):
         thread = threading.Thread(target=_target, name=cls.__name__)
         threads.append(thread)
         thread.start()
-
+ 
     for thread in threads:
         thread.join()
 
@@ -100,8 +100,8 @@ def run(type: str):
 
 
 def main():
-    # run("nowPlaying")
-    run("cinematheque")
+    run("nowPlaying")
+    # run("cinematheque")
     # run("comingSoon")
 
 

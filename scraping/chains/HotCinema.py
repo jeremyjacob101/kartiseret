@@ -23,7 +23,7 @@ class HotCinema(BaseCinema):
             self.hebrew_hrefs.append(self.element(f"/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div[{film_card}]/div/a").get_attribute("href"))
         for href in self.hebrew_hrefs:
             self.driver.get(href)
-            self.sleep(0.1)
+            self.sleep(0.2)
 
             raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
             last_token = raw_text.split()[-1] if raw_text else ""
@@ -43,8 +43,20 @@ class HotCinema(BaseCinema):
 
         for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
             self.driver.get(self.element(f"/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a[{cinema}]").get_attribute("href"))
-            self.sleep(1.5)
+            self.sleep(2)
             self.zoomOut(50)
+
+            try:
+                self.driver.execute_script("document.querySelector('.pp-backdrop').remove();")
+            except:
+                pass
+            try:
+                self.driver.execute_script("document.querySelector('.pp-backdrop').style.display='none';")
+            except:
+                pass
+
+            self.sleep(2)
+
             self.screening_city = self.element("/html/body/div[2]/div[4]/div[1]/div/div/div/div[2]/h1").text.strip()
 
             for checking_month in range(1, 3):
