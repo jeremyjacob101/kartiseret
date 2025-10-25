@@ -36,10 +36,10 @@ REGISTRY = {
     ],
     "cinematheque": [
         JLEMtheque,
-        SSCtheque,
-        JAFCtheque,
-        HAIFtheque,
-        HERZtheque,
+        # SSCtheque,
+        # JAFCtheque,
+        # HAIFtheque,
+        # HERZtheque,
     ],
     "comingSoon": [
         CCsoon,
@@ -89,7 +89,7 @@ def run(type: str):
         thread = threading.Thread(target=_target, name=cls.__name__)
         threads.append(thread)
         thread.start()
- 
+
     for thread in threads:
         thread.join()
 
@@ -100,9 +100,9 @@ def run(type: str):
 
 
 def main():
-    run("nowPlaying")
+    # run("nowPlaying")
     run("cinematheque")
-    run("comingSoon")
+    # run("comingSoon")
 
 
 if __name__ == "__main__":
@@ -119,3 +119,13 @@ if __name__ == "__main__":
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
 # ComingSoons - Get rid of duplicates in comingsoons that only differ by id
 # Skip russian titles throughout?
+
+#########
+#
+# Finish above comments
+#
+# Add in OMDb logic
+#
+# Hook up to current front end
+#
+# Rewrite front end
