@@ -17,7 +17,7 @@ from scraping.cinematheques.SSCtheque import SSCtheque
 from scraping.cinematheques.JAFCtheque import JAFCtheque
 from scraping.cinematheques.HAIFtheque import HAIFtheque
 from scraping.cinematheques.HERZtheque import HERZtheque
-
+from scraping.cinematheques.TLVtheque import TLVtheque
 
 from scraping.comingsoons.CCsoon import CCsoon
 from scraping.comingsoons.HCsoon import HCsoon
@@ -35,11 +35,12 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        JLEMtheque,
+        # JLEMtheque,
         # SSCtheque,
         # JAFCtheque,
         # HAIFtheque,
         # HERZtheque,
+        TLVtheque
     ],
     "comingSoon": [
         CCsoon,
