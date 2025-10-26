@@ -30,9 +30,7 @@ class HAIFtheque(BaseCinema):
                 release_year = self.element("/html/body/div[4]/section[5]/div[1]/strong[1]").text.strip()
             except:
                 continue
-            try:
-                self.release_year = int(re.search(r"\b(\d{4})\b", release_year).group(1))
-            except:
-                self.release_year = None
+
+            self.release_year = self.tryExceptNone(lambda: int(re.search(r"\b(\d{4})\b", release_year).group(1)))
 
             self.appendToGatheringInfo()

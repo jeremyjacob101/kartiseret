@@ -24,16 +24,10 @@ class YPsoon(BaseCinema):
             self.hebrew_title = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[1]/dd").text.strip()
 
             release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()
-            if re.search(r"\b\d{4}\b", release_year):
-                self.release_year = int(re.search(r"\b\d{4}\b", release_year).group(0))
-            else:
-                self.release_year = None
+            self.release_year = self.ifElseNone(re.search(r"\b\d{4}\b", release_year), int(re.search(r"\b\d{4}\b", release_year).group(0)))
 
             directed_by = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[4]/dd").text.strip())
-            if directed_by:
-                self.directed_by = directed_by
-            else:
-                self.directed_by = None
+            self.directed_by = self.ifElseNone(directed_by, directed_by)
 
             original_language = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[6]/dd").text.strip())
             if "HEB" in original_language or original_language == "":
@@ -41,16 +35,10 @@ class YPsoon(BaseCinema):
             self.original_language = original_language
 
             rating = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[7]/dd").text.strip()
-            if rating:
-                self.rating = str(rating)
-            else:
-                self.rating = None
+            self.rating = self.ifElseNone(rating, str(rating))
 
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
-            if runtime and (m := re.search(r"\d+", runtime)):
-                self.runtime = int(m.group())
-            else:
-                self.runtime = None
+            self.runtime = self.ifElseNone(runtime and (m := re.search(r"\d+", runtime)), int(m.group()))
 
             release_date = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[1]/p").text.strip())
             d, m, y = release_date.split()

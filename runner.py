@@ -34,14 +34,7 @@ REGISTRY = {
         MovieLand,
         HotCinema,
     ],
-    "cinematheque": [
-        # JLEMtheque,
-        # SSCtheque,
-        # JAFCtheque,
-        # HAIFtheque,
-        # HERZtheque,
-        TLVtheque
-    ],
+    "cinematheque": [JLEMtheque, SSCtheque, JAFCtheque, HAIFtheque, HERZtheque, TLVtheque],
     "comingSoon": [
         CCsoon,
         HCsoon,
@@ -110,8 +103,7 @@ if __name__ == "__main__":
     main()
 
 # Finish cinematheques:
-#   TLVtheque
-#   add tryExceptNone lambda changes
+#
 #   HOLONtheque
 #   BEERSHEVAtheque?
 #   others?

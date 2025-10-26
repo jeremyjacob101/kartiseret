@@ -56,10 +56,7 @@ class JAFCtheque(BaseCinema):
                 except:
                     continue
 
-            try:
-                self.release_year = int(re.search(r"\b(\d{4})\b", release_year).group(1))
-            except:
-                self.release_year = None
+            self.release_year = self.tryExceptNone(lambda: int(re.search(r"\b(\d{4})\b", release_year).group(1)))
 
             showtime_strings = []
             try:

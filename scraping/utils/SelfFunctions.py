@@ -39,6 +39,9 @@ class SelfFunctions:
             return func()
         except:
             return None
+        
+    def ifElseNone(self, condition, value):
+        return value if condition else None
 
     def jsClick(self, path: str, sleepafter: float = 0.15):
         self.driver.execute_script("arguments[0].click();", self.element(path))
