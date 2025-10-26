@@ -31,7 +31,9 @@ class TLVtheque(BaseCinema):
                             words = fallback_text.split()
                             english_words = []
                             for word in words:
-                                if re.search(r"[A-Za-z\u2010\u2011\u2012\u2013\u2014\u2212-]", word):
+                                if re.search(r"[A-Za-z]", word):
+                                    english_words.append(word)
+                                elif english_words and re.fullmatch(r"[\u2010\u2011\u2012\u2013\u2014\u2212-]+", word):
                                     english_words.append(word)
                                 elif english_words:
                                     break
