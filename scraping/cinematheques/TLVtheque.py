@@ -37,7 +37,6 @@ class TLVtheque(BaseCinema):
                                     break
                             self.english_title = " ".join(english_words) if english_words else None
 
-                    print(self.english_title)
                     trying_year_1 = self.tryExceptNone(lambda: self.element(f"/html/body/div[5]/div[1]/div[2]/div[4]/div/div/div/div[2]/div[{film_block}]/div[{film_card}]/div[2]/div[1]/p").get_attribute("textContent"))
                     trying_year_2 = self.tryExceptNone(lambda: " ".join(self.element(f"/html/body/div[5]/div[1]/div[2]/div[4]/div/div/div/div[2]/div[{film_block}]/div[{film_card}]/div[2]/div[2]/p").get_attribute("textContent").split()[:50]))
                     for candidate in (trying_year_1, trying_year_2):
