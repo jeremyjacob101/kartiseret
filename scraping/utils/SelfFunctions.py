@@ -34,6 +34,12 @@ class SelfFunctions:
         self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path).click()
         self.sleep(sleepafter)
 
+    def tryExceptNone(self, func):
+        try:
+            return func()
+        except:
+            return None
+
     def jsClick(self, path: str, sleepafter: float = 0.15):
         self.driver.execute_script("arguments[0].click();", self.element(path))
         self.sleep(sleepafter)
