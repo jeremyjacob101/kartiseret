@@ -1,4 +1,4 @@
-from scraping.BaseCinema import BaseCinema
+from backend.scraping.BaseCinema import BaseCinema
 
 from datetime import datetime, timedelta
 import re

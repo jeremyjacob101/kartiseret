@@ -5,26 +5,28 @@ load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 from utils.logger import setup_logging, logger
 import threading, time
 
-from scraping.chains.CinemaCity import CinemaCity
-from scraping.chains.YesPlanet import YesPlanet
-from scraping.chains.LevCinema import LevCinema
-from scraping.chains.RavHen import RavHen
-from scraping.chains.MovieLand import MovieLand
-from scraping.chains.HotCinema import HotCinema
+from backend.scraping.chains.CinemaCity import CinemaCity
+from backend.scraping.chains.YesPlanet import YesPlanet
+from backend.scraping.chains.LevCinema import LevCinema
+from backend.scraping.chains.RavHen import RavHen
+from backend.scraping.chains.MovieLand import MovieLand
+from backend.scraping.chains.HotCinema import HotCinema
 
-from scraping.cinematheques.JLEMtheque import JLEMtheque
-from scraping.cinematheques.SSCtheque import SSCtheque
-from scraping.cinematheques.JAFCtheque import JAFCtheque
-from scraping.cinematheques.HAIFtheque import HAIFtheque
-from scraping.cinematheques.HERZtheque import HERZtheque
-from scraping.cinematheques.TLVtheque import TLVtheque
-from scraping.cinematheques.HOLONtheque import HOLONtheque
+from backend.scraping.cinematheques.JLEMtheque import JLEMtheque
+from backend.scraping.cinematheques.SSCtheque import SSCtheque
+from backend.scraping.cinematheques.JAFCtheque import JAFCtheque
+from backend.scraping.cinematheques.HAIFtheque import HAIFtheque
+from backend.scraping.cinematheques.HERZtheque import HERZtheque
+from backend.scraping.cinematheques.TLVtheque import TLVtheque
+from backend.scraping.cinematheques.HOLONtheque import HOLONtheque
 
-from scraping.comingsoons.CCsoon import CCsoon
-from scraping.comingsoons.HCsoon import HCsoon
-from scraping.comingsoons.LCsoon import LCsoon
-from scraping.comingsoons.MLsoon import MLsoon
-from scraping.comingsoons.YPsoon import YPsoon
+from backend.scraping.comingsoons.CCsoon import CCsoon
+from backend.scraping.comingsoons.HCsoon import HCsoon
+from backend.scraping.comingsoons.LCsoon import LCsoon
+from backend.scraping.comingsoons.MLsoon import MLsoon
+from backend.scraping.comingsoons.YPsoon import YPsoon
+
+from backend.dataflow.comingsoons.ComingSoonsData import find_3d_movies
 
 REGISTRY = {
     "nowPlaying": [
@@ -66,7 +68,7 @@ ID_FIELD_BY_TYPE = {
 }
 
 
-def run(type: str):
+def runCinemaType(type: str):
     setup_logging("ERROR")
     classes = REGISTRY.get(type, [])
     table_name = TABLE_BY_TYPE.get(type)
@@ -79,8 +81,8 @@ def run(type: str):
         def _target(c=cls):
             t0 = time.time()
             try:
-                inst = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
-                inst.scrape()
+                instance = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
+                instance.scrape()
             except Exception:
                 logger.exception("Unhandled error in %s", c.__name__)
                 raise
@@ -102,10 +104,16 @@ def run(type: str):
         print(f"{name}: {m}m{s:02d}s\n")
 
 
+def runDataLogic():
+    find_3d_movies()
+
+
 def main():
-    run("nowPlaying")
-    run("cinematheque")
-    run("comingSoon")
+    runCinemaType("nowPlaying")
+    runCinemaType("cinematheque")
+    runCinemaType("comingSoon")
+
+    runDataLogic()
 
 
 if __name__ == "__main__":
@@ -114,9 +122,7 @@ if __name__ == "__main__":
 # Finish cinematheques:
 #
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
-# ComingSoons - Get rid of duplicates in comingsoons that only differ by id
 # Skip russian titles throughout?
-# Have titles with no english characters not make api calls
 #
 
 #########
@@ -124,8 +130,6 @@ if __name__ == "__main__":
 # Finish above comments
 #
 # Add in OMDb logic
-#
 # Hook up to current front end
-#
 # Rewrite front end
 #

@@ -1,4 +1,4 @@
-from scraping.BaseCinema import BaseCinema
+from backend.scraping.BaseCinema import BaseCinema
 
 from selenium.webdriver.common.by import By
 from datetime import datetime
