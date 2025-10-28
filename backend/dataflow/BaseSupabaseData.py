@@ -5,6 +5,7 @@ import os
 
 from backend.dataflow.utils.SupabaseHelpers import SupabaseHelpers
 
+
 def setUpSupabase(self):
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -12,6 +13,9 @@ def setUpSupabase(self):
 
 
 class BaseSupabaseData(SupabaseHelpers):
+    TABLE_NAME: str
+    PRIMARY_KEY: str
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

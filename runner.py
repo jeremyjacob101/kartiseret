@@ -112,7 +112,6 @@ def runCinemaType(type: str):
 def runDataflows(fail_fast: bool = True):
     setup_logging("ERROR")
 
-    overall_start = time.time()
     step_timings = []
 
     for key, classes in DATAFLOW_REGISTRY.items():
@@ -129,17 +128,15 @@ def runDataflows(fail_fast: bool = True):
                 dt = time.time() - t0
                 step_timings.append((f"{key}:{cls.__name__}", dt))
 
-    total = time.time() - overall_start
+    print("\n\n\n--------------------\n")
     for name, secs in step_timings:
         m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s")
-    M, S = divmod(int(total), 60)
-    print(f"TOTAL: {M}m{S:02d}s\n")
+        print(f"{name}: {m}m{s:02d}s\n")
 
 
 def main():
-    runCinemaType("nowPlaying")
-    runCinemaType("cinematheque")
+    # runCinemaType("nowPlaying")
+    # runCinemaType("cinematheque")
     runCinemaType("comingSoon")
 
     # runDataflows()
