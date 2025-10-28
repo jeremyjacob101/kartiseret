@@ -135,11 +135,11 @@ def runDataflows(fail_fast: bool = True):
 
 
 def main():
-    # runCinemaType("nowPlaying")
-    # runCinemaType("cinematheque")
-    # runCinemaType("comingSoon")
+    runCinemaType("nowPlaying")
+    runCinemaType("cinematheque")
+    runCinemaType("comingSoon")
 
-    runDataflows()
+    # runDataflows()
 
 
 if __name__ == "__main__":
