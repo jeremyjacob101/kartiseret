@@ -24,7 +24,7 @@ class YPsoon(BaseCinema):
             self.hebrew_title = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[1]/dd").text.strip()
 
             release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").text.strip()
-            self.release_year = self.ifElseNone(re.search(r"\b\d{4}\b", release_year), int(re.search(r"\b\d{4}\b", release_year).group(0)))
+            self.release_year = int(m.group(0)) if (m := re.search(r"\b\d{4}\b", release_year)) else None
 
             directed_by = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[4]/dd").text.strip())
             self.directed_by = self.ifElseNone(directed_by, directed_by)
@@ -38,7 +38,7 @@ class YPsoon(BaseCinema):
             self.rating = self.ifElseNone(rating, str(rating))
 
             runtime = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[2]/p").text.strip()
-            self.runtime = self.ifElseNone(runtime and (m := re.search(r"\d+", runtime)), int(m.group()))
+            self.runtime = int(m.group()) if (runtime and (m := re.search(r"\d+", runtime))) else None
 
             release_date = str(self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/div[1]/div[1]/p").text.strip())
             d, m, y = release_date.split()

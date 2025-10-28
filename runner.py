@@ -26,7 +26,8 @@ from backend.scraping.comingsoons.LCsoon import LCsoon
 from backend.scraping.comingsoons.MLsoon import MLsoon
 from backend.scraping.comingsoons.YPsoon import YPsoon
 
-from backend.dataflow.comingsoons.ComingSoonsData import find_3d_movies
+from backend.dataflow.comingsoons.ComingSoonsData import ComingSoonsData
+
 
 REGISTRY = {
     "nowPlaying": [
@@ -67,6 +68,10 @@ ID_FIELD_BY_TYPE = {
     "comingSoon": "coming_soon_id",
 }
 
+DATAFLOW_REGISTRY = {
+    "comingSoonData": [ComingSoonsData],
+}
+
 
 def runCinemaType(type: str):
     setup_logging("ERROR")
@@ -104,8 +109,32 @@ def runCinemaType(type: str):
         print(f"{name}: {m}m{s:02d}s\n")
 
 
-def runDataLogic():
-    find_3d_movies()
+def runDataflows(fail_fast: bool = True):
+    setup_logging("ERROR")
+
+    overall_start = time.time()
+    step_timings = []
+
+    for key, classes in DATAFLOW_REGISTRY.items():
+        for cls in classes:
+            t0 = time.time()
+            try:
+                instance = cls()
+                instance.dataRun()
+            except Exception:
+                logger.exception("Dataflow step failed: %s.%s", key, cls.__name__)
+                if fail_fast:
+                    raise
+            finally:
+                dt = time.time() - t0
+                step_timings.append((f"{key}:{cls.__name__}", dt))
+
+    total = time.time() - overall_start
+    for name, secs in step_timings:
+        m, s = divmod(int(secs), 60)
+        print(f"{name}: {m}m{s:02d}s")
+    M, S = divmod(int(total), 60)
+    print(f"TOTAL: {M}m{S:02d}s\n")
 
 
 def main():
@@ -113,7 +142,7 @@ def main():
     runCinemaType("cinematheque")
     runCinemaType("comingSoon")
 
-    runDataLogic()
+    # runDataflows()
 
 
 if __name__ == "__main__":

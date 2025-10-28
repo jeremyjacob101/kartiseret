@@ -32,7 +32,7 @@ class HCsoon(BaseCinema):
 
             raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
             last_token = raw_text.split()[-1] if raw_text else ""
-            self.release_year = self.ifElseNone(last_token.isdigit() and len(last_token) == 4, int(last_token))
+            self.release_year = int(last_token) if last_token.isdigit() and len(last_token) == 4 else None
 
             self.ratings = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[2]/div[2]/span").text.strip()
             self.runtime = self.tryExceptNone(lambda: int(re.sub(r"\D", "", self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[1]/div[2]/span").text.strip())))
