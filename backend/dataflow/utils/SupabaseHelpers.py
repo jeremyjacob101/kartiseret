@@ -16,9 +16,16 @@ class SupabaseHelpers:
 
         return all_rows
 
-    def removeNonEnglish(self, title: str):
-        if not isinstance(title, str):
-            return True
+    def removeBadTitle(self, title: str) -> bool:
+        if not isinstance(title, str) or title.strip() == "":
+            return True  # Empty
+        if re.search(r"[\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\u1C80-\u1C8F]", title):
+            return True  # Russian
+        if re.search(r"[\u0590-\u05FF\uFB1D-\uFB4F]", title):
+            return True  # Hebrew
+        if "HOT CINEMA" in title:
+            return True  # Cinema
+        return False
 
     def normalizeTitle(self, title: str) -> str:
         if not isinstance(title, str):

@@ -7,25 +7,23 @@ class ComingSoonsData(BaseSupabaseData):
     PRIMARY_KEY = "coming_soon_id"
 
     def logic(self):
-        rows = self.selectAll(self.TABLE_NAME)
+        comingSoons = self.selectAll(self.TABLE_NAME)
 
-        seen = set()
-        delete_ids = []
+        visited_already = set()
+        delete_these = []
 
-        for row in rows:
-            title = row.get("english_title")
-            if not isinstance(title, str) or title.strip() == "" or bool(re.search(r"[\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\u1C80-\u1C8F]", title)):
-                delete_ids.append(row[self.PRIMARY_KEY])
+        for row in comingSoons:
+            english_title = row.get("english_title")
+            if self.removeBadTitle(english_title):
+                delete_these.append(row[self.PRIMARY_KEY])
                 continue
 
-            
-
-            key = self.normalizeTitle(title)
-            if key in seen:
-                delete_ids.append(row[self.PRIMARY_KEY])
+            normalizedTitle = self.normalizeTitle(english_title)
+            if normalizedTitle in visited_already:
+                delete_these.append(row[self.PRIMARY_KEY])
             else:
-                seen.add(key)
+                visited_already.add(normalizedTitle)
 
-        for i in range(0, len(delete_ids), 200):
-            chunk = delete_ids[i : i + 200]
+        for i in range(0, len(delete_these), 200):
+            chunk = delete_these[i : i + 200]
             self.supabase.table(self.TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
