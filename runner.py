@@ -36,12 +36,12 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        # JLEMtheque,
-        # SSCtheque,
-        # JAFCtheque,
-        # HAIFtheque,
-        # HERZtheque,
-        # TLVtheque,
+        JLEMtheque,
+        SSCtheque,
+        JAFCtheque,
+        HAIFtheque,
+        HERZtheque,
+        TLVtheque,
         HOLONtheque,
     ],
     "comingSoon": [
@@ -113,13 +113,11 @@ if __name__ == "__main__":
 
 # Finish cinematheques:
 #
-#   BEERSHEVAtheque?
-#   others?
-
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
 # ComingSoons - Get rid of duplicates in comingsoons that only differ by id
 # Skip russian titles throughout?
 # Have titles with no english characters not make api calls
+#
 
 #########
 #
@@ -130,3 +128,4 @@ if __name__ == "__main__":
 # Hook up to current front end
 #
 # Rewrite front end
+#
