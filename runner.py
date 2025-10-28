@@ -18,6 +18,7 @@ from scraping.cinematheques.JAFCtheque import JAFCtheque
 from scraping.cinematheques.HAIFtheque import HAIFtheque
 from scraping.cinematheques.HERZtheque import HERZtheque
 from scraping.cinematheques.TLVtheque import TLVtheque
+from scraping.cinematheques.HOLONtheque import HOLONtheque
 
 from scraping.comingsoons.CCsoon import CCsoon
 from scraping.comingsoons.HCsoon import HCsoon
@@ -34,7 +35,15 @@ REGISTRY = {
         MovieLand,
         HotCinema,
     ],
-    "cinematheque": [JLEMtheque, SSCtheque, JAFCtheque, HAIFtheque, HERZtheque, TLVtheque],
+    "cinematheque": [
+        # JLEMtheque,
+        # SSCtheque,
+        # JAFCtheque,
+        # HAIFtheque,
+        # HERZtheque,
+        # TLVtheque,
+        HOLONtheque,
+    ],
     "comingSoon": [
         CCsoon,
         HCsoon,
@@ -104,7 +113,6 @@ if __name__ == "__main__":
 
 # Finish cinematheques:
 #
-#   HOLONtheque
 #   BEERSHEVAtheque?
 #   others?
 
