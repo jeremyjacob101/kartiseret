@@ -48,7 +48,11 @@ class YesPlanet(BaseCinema):
                 self.runtimes.append(int(m.group()))
         name_to_idx = {str(name).lower(): i for i, name in enumerate(self.english_titles)}
 
-        for cinema in range(1, 7):
+        self.click("#header-change-location", 1)
+        self.click("body > div.modal.location-picker-modal.fade.search.in > div > div > div > div:nth-child(2) > div:nth-child(3) > div.row.all-cinemas-list > div > div > div > button")
+        num_cinemas = self.lenElements(f"body > div.selectpicker-dropdown-container.npm-quickbook > div.bs-container.btn-group.bootstrap-select.qb-.open > div > ul > li")
+        self.jsClick("body > div.modal.location-picker-modal.fade.search.in > div > div > div > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div > h2 > small", 1)
+        for cinema in range(1, num_cinemas + 1):
             if cinema == 1:
                 self.click("/html/body/div[3]/div/div[1]/div[1]/div/div[2]/nav/div/ul/li[1]/div/a[1]")
             else:
