@@ -77,12 +77,12 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
             url = "?"
 
     exc_type, exc_value, exc_tb = sys.exc_info()
-    tb = traceback.TracebackException(exc_type, exc_value, exc_tb)
-    last_frame = tb.stack[-1] if tb.stack else None
+    tb = traceback.extract_tb(sys.exc_info()[2])
+    f = next((x for x in reversed(tb) if "site-packages" not in x.filename and "lib/python" not in x.filename), tb[-1])
+    filename, lineno = os.path.basename(f.filename), f.lineno
     exc_type_name = exc_type.__name__ if exc_type else "Exception"
     exc_msg = str(exc_value) if exc_value else ""
-    location = f"{last_frame.filename}:{last_frame.lineno}" if last_frame else "?"
-    func = f"in {last_frame.name}()" if last_frame else ""
+    exc_msg = "\n".join(ln for ln in (str(exc_value) if exc_value else "").splitlines() if not any(b in ln.lower() for b in ("stacktrace", "documentation", "<unknown>")))
 
     match = re.search(r'"selector":\s*"([^"]+)"', exc_msg)
     selector = match.group(1) if match else None
@@ -101,7 +101,7 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
                 "---------------------------------------------------------------------------------------------",
                 f"URL:       {url}",
                 f"Exception: {exc_type_name} - {exc_msg}",
-                f"Location:  {os.path.basename(location)} {func}",
+                f"Location: {filename}:{lineno}",
                 *([f"Selector: {selector}"] if selector else []),
             ]
         )
