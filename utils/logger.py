@@ -76,19 +76,20 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
         except Exception:
             url = "?"
 
-    tb = traceback.TracebackException(*sys.exc_info())
+    exc_type, exc_value, exc_tb = sys.exc_info()
+    tb = traceback.TracebackException(exc_type, exc_value, exc_tb)
     last_frame = tb.stack[-1] if tb.stack else None
-    exc_type = tb.exc_type.__name__ if tb.exc_type else "Exception"
-    exc_msg = tb.exc_value or ""
+    exc_type_name = exc_type.__name__ if exc_type else "Exception"
+    exc_msg = str(exc_value) if exc_value else ""
     location = f"{last_frame.filename}:{last_frame.lineno}" if last_frame else "?"
     func = f"in {last_frame.name}()" if last_frame else ""
 
-    match = re.search(r'"selector":\s*"([^"]+)"', str(exc_msg))
+    match = re.search(r'"selector":\s*"([^"]+)"', exc_msg)
     selector = match.group(1) if match else None
 
     logger.error("-------- ERROR --------")
     logger.error(f"[{name}] unhandled error at url={url}")
-    logger.error(f"Exception: {exc_type} - {exc_msg}")
+    logger.error(f"Exception: {exc_type_name} - {exc_msg}")
     logger.error(f"Location: {os.path.basename(location)} {func}")
     if selector:
         logger.error(f"Selector: {selector}")
