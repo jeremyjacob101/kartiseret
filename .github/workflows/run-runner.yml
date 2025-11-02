@@ -100,8 +100,17 @@ jobs:
           . .venv/bin/activate
           python runner.py ${{ github.event.inputs.args }}
       
+      - name: Check for artifacts
+        id: artifacts-exist
+        run: |
+          if [ -d utils/logger_artifacts ] && [ "$(ls -A utils/logger_artifacts)" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Upload failure artifacts
-        if: always()
+        if: steps.artifacts-exist.outputs.found == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: selenium-failure-artifacts
