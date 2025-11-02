@@ -76,7 +76,6 @@ DATAFLOW_REGISTRY = {
 
 
 def runCinemaType(type: str):
-    setup_logging("ERROR")
     classes = REGISTRY.get(type, [])
     table_name = TABLE_BY_TYPE.get(type)
     id_field_name = ID_FIELD_BY_TYPE.get(type)
@@ -112,8 +111,6 @@ def runCinemaType(type: str):
 
 
 def runDataflows(fail_fast: bool = True):
-    setup_logging("ERROR")
-
     step_timings = []
 
     for key, classes in DATAFLOW_REGISTRY.items():
@@ -137,6 +134,8 @@ def runDataflows(fail_fast: bool = True):
 
 
 def main():
+    setup_logging("ERROR")
+
     runCinemaType("nowPlaying")
     runCinemaType("cinematheque")
     runCinemaType("comingSoon")

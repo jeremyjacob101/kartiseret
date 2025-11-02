@@ -10,14 +10,6 @@ def dump_artifacts(driver, prefix: str = "fail", note: str | None = None) -> tup
     Returns (png_path, html_path).
     """
     artifact_dir = pathlib.Path("utils/logger_artifacts")
-    # Clean up old artifacts on each run
-    if artifact_dir.exists():
-        for f in artifact_dir.glob("*"):
-            try:
-                f.unlink()
-            except Exception:
-                pass
-    artifact_dir.mkdir(parents=True, exist_ok=True)
 
     ts = time.strftime("%Y%m%d-%H%M%S")
     thread_name = threading.current_thread().name.replace(" ", "_")
@@ -60,6 +52,16 @@ def setup_logging(level: str | int = None) -> None:
         force=True,
     )
     logger.setLevel(level)
+
+    artifact_dir = pathlib.Path("utils/logger_artifacts")
+    # Clean up old artifacts on each run
+    if artifact_dir.exists():
+        for f in artifact_dir.glob("*"):
+            try:
+                f.unlink()
+            except Exception:
+                pass
+    artifact_dir.mkdir(parents=True, exist_ok=True)
 
 
 def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
