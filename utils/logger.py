@@ -1,5 +1,4 @@
-import logging, os, sys
-import pathlib, time, threading
+import logging, os, sys, traceback, pathlib, time, threading, re
 
 logger = logging.getLogger("sel")
 
@@ -77,12 +76,23 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
         except Exception:
             url = "?"
 
-    logger.error(
-        "\n\n\n\t\t-------- ERROR --------\n\n\n[%s] unhandled error at url=%s\n\n\n\t\t-------- ERROR --------\n\n\n",
-        name,
-        url,
-        exc_info=True,
-    )
+    tb = traceback.TracebackException(*sys.exc_info())
+    last_frame = tb.stack[-1] if tb.stack else None
+    exc_type = tb.exc_type.__name__ if tb.exc_type else "Exception"
+    exc_msg = tb.exc_value or ""
+    location = f"{last_frame.filename}:{last_frame.lineno}" if last_frame else "?"
+    func = f"in {last_frame.name}()" if last_frame else ""
+
+    match = re.search(r'"selector":\s*"([^"]+)"', str(exc_msg))
+    selector = match.group(1) if match else None
+
+    logger.error("-------- ERROR --------")
+    logger.error(f"[{name}] unhandled error at url={url}")
+    logger.error(f"Exception: {exc_type} - {exc_msg}")
+    logger.error(f"Location: {os.path.basename(location)} {func}")
+    if selector:
+        logger.error(f"Selector: {selector}")
+    logger.error("-------- ERROR --------")
 
     try:
         png, html = dump_artifacts(drv, prefix=name, note=note)
