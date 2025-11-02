@@ -159,6 +159,9 @@ if __name__ == "__main__":
 #
 # Finish above comments
 #
+# Rerun cinemas if they fail, try rerunning them 2 additional times
+#     Set up supabase chart of done/not done after each actually finishes cleanly so we can see which didn't
+#     ? Set up chart of how many things scraped vs expected / warn if not expected maybe ?
 # Add in OMDb logic
 # Hook up to current front end
 # Rewrite front end
