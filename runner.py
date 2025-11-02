@@ -91,7 +91,6 @@ def runCinemaType(type: str):
                 instance.scrape()
             except Exception:
                 artifactPrinting(instance)
-                raise
             finally:
                 dt = time.time() - t0
                 with lock:
@@ -121,8 +120,6 @@ def runDataflows(fail_fast: bool = True):
                 instance.dataRun()
             except Exception:
                 artifactPrinting(instance)
-                if fail_fast:
-                    raise
             finally:
                 dt = time.time() - t0
                 step_timings.append((f"{key}:{cls.__name__}", dt))
