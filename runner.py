@@ -95,6 +95,11 @@ def runCinemaType(type: str):
                 dt = time.time() - t0
                 with lock:
                     runtimes[c.__name__] = dt
+                try:
+                    if instance and getattr(instance, "driver", None):
+                        instance.driver.quit()
+                except Exception:
+                    raise
 
         thread = threading.Thread(target=_target, name=cls.__name__)
         threads.append(thread)

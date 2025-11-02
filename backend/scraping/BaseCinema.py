@@ -29,7 +29,4 @@ class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
             self.logic()  # Scraping logic
             formatAndUpload(self)  # Formatting and uploading to supabase
         except Exception:
-            # artifactPrinting(self)
             raise
-
-        self.driver.quit()
