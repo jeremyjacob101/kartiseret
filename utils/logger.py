@@ -90,12 +90,15 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
     logger.error(
         "\n".join(
             [
-                "\n\n\n\n-------- ERROR --------",
+                "-----------------------",
+                "|                     |",
+                "|        ERROR        |",
+                "|                     |",
+                "-----------------------",
                 f"[{name}] unhandled error at url={url}",
                 f"Exception: {exc_type_name} - {exc_msg}",
                 f"Location: {os.path.basename(location)} {func}",
                 *([f"Selector: {selector}"] if selector else []),
-                "-------- ERROR --------",
             ]
         )
     )

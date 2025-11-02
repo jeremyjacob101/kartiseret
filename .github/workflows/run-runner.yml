@@ -115,3 +115,7 @@ jobs:
         with:
           name: selenium-failure-artifacts
           path: utils/logger_artifacts/
+
+      - name: Mark run as warning
+        if: steps.artifacts-exist.outputs.found == 'true'
+        run: echo "::warning::Failure artifacts were saved (see artifact: selenium-failure-artifacts)."
