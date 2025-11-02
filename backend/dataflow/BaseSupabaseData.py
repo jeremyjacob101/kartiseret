@@ -27,5 +27,5 @@ class BaseSupabaseData(SupabaseHelpers):
             setUpSupabase(self)  # Sets up supabase client for each cinema
             self.logic()  # Scraping logic
         except Exception:
-            artifactPrinting(self)
+            # artifactPrinting(self)
             raise

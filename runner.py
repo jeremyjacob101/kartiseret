@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
-from utils.logger import setup_logging, logger
+from utils.logger import setup_logging, artifactPrinting, logger
 import threading, time
 
 from backend.scraping.chains.CinemaCity import CinemaCity
@@ -90,6 +90,7 @@ def runCinemaType(type: str):
                 instance = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
                 instance.scrape()
             except Exception:
+                artifactPrinting(instance)
                 raise
             finally:
                 dt = time.time() - t0
@@ -119,6 +120,7 @@ def runDataflows(fail_fast: bool = True):
                 instance = cls()
                 instance.dataRun()
             except Exception:
+                artifactPrinting(instance)
                 if fail_fast:
                     raise
             finally:
@@ -148,6 +150,7 @@ if __name__ == "__main__":
 #
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
 # Skip russian titles throughout?
+# fail_fast? in runner.py file
 #
 
 #########
