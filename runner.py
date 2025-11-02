@@ -90,7 +90,6 @@ def runCinemaType(type: str):
                 instance = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
                 instance.scrape()
             except Exception:
-                logger.exception("Unhandled error in %s", c.__name__)
                 raise
             finally:
                 dt = time.time() - t0
@@ -120,7 +119,6 @@ def runDataflows(fail_fast: bool = True):
                 instance = cls()
                 instance.dataRun()
             except Exception:
-                logger.exception("Dataflow step failed: %s.%s", key, cls.__name__)
                 if fail_fast:
                     raise
             finally:
