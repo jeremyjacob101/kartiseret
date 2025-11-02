@@ -118,4 +118,5 @@ jobs:
 
       - name: Mark run as warning
         if: steps.artifacts-exist.outputs.found == 'true'
-        run: echo "::warning::Failure artifacts were saved (see artifact: selenium-failure-artifacts)."
+        run: |
+          echo "::warning::Failure artifacts were saved (see artifact: selenium-failure-artifacts)."
