@@ -87,16 +87,18 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
     match = re.search(r'"selector":\s*"([^"]+)"', exc_msg)
     selector = match.group(1) if match else None
 
-    lines = [
-        "-------- ERROR --------",
-        f"[{name}] unhandled error at url={url}",
-        f"Exception: {exc_type_name} - {exc_msg}",
-        f"Location: {os.path.basename(location)} {func}",
-    ]
-    if selector:
-        lines.append(f"Selector: {selector}")
-    lines.append("-------- ERROR --------")
-    logger.error("\n".join(lines))
+    logger.error(
+        "\n".join(
+            [
+                "\n\n\n\n-------- ERROR --------",
+                f"[{name}] unhandled error at url={url}",
+                f"Exception: {exc_type_name} - {exc_msg}",
+                f"Location: {os.path.basename(location)} {func}",
+                *([f"Selector: {selector}"] if selector else []),
+                "-------- ERROR --------",
+            ]
+        )
+    )
 
     try:
         png, html = dump_artifacts(drv, prefix=name, note=note)
