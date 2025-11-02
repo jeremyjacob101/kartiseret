@@ -90,15 +90,18 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
     logger.error(
         "\n".join(
             [
-                "Error:"
+                "Error:",
+                "\n\n",
                 "---------------------------------------------------------------------------------------------",
                 "|                                                                                           |",
                 "|                                           ERROR                                           |",
                 "|                                                                                           |",
+                f"|                                  {name}                               |",
+                "|                                                                                           |",
                 "---------------------------------------------------------------------------------------------",
-                f"[{name}] unhandled error at url={url}",
+                f"URL:       {url}",
                 f"Exception: {exc_type_name} - {exc_msg}",
-                f"Location: {os.path.basename(location)} {func}",
+                f"Location:  {os.path.basename(location)} {func}",
                 *([f"Selector: {selector}"] if selector else []),
             ]
         )
@@ -106,8 +109,8 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
 
     try:
         png, html = dump_artifacts(drv, prefix=name, note=note)
-        print(f"[{name}] Saved artifacts:\n  screenshot: {png}\n  html:       {html}", flush=True)
+        print(f"Screenshot: {png}\nHtml:       {html}", flush=True)
         return png, html
     except Exception as capture_err:
-        print(f"[{name}] Failed to dump artifacts: {capture_err}", flush=True)
+        print(f"    Failed to dump artifacts: {capture_err}", flush=True)
         return None, None
