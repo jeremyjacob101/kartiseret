@@ -100,8 +100,8 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
 
     try:
         png, html = dump_artifacts(drv, prefix=name, note=note)
-        print(f"[{name}] Saved artifacts:\n  screenshot: {png}\n  html:       {html}")
+        print(f"[{name}] Saved artifacts:\n  screenshot: {png}\n  html:       {html}", flush=True)
         return png, html
     except Exception as capture_err:
-        print(f"[{name}] Failed to dump artifacts: {capture_err}")
+        print(f"[{name}] Failed to dump artifacts: {capture_err}", flush=True)
         return None, None

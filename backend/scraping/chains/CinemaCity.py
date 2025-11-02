@@ -17,7 +17,8 @@ class CinemaCity(BaseCinema):
         self.zoomOut(50)
 
         for _ in range(8):
-            element = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
+            # element = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
+            element = self.element("#chanarwerqwerge-bg > div.contaiwerwerner.movies.indwerwerex-movies-mob > div.moviwerwee-more-wrapper > div.r werwe re erwow > div >ewrwerqwer p > werwea")
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
             self.sleep(1)
             try:
