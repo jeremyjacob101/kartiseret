@@ -61,5 +61,6 @@ class JLEMtheque(BaseCinema):
 
                 self.appendToGatheringInfo()
 
-            self.element("#calender-filter > p.active").find_element(By.XPATH, "following-sibling::p").click()
             self.sleep(2)
+            self.element("#calender-filter > p.active").find_element(By.XPATH, "following-sibling::p").click()
+            self.sleep(3)

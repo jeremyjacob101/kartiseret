@@ -13,15 +13,17 @@ class CinemaCity(BaseCinema):
         self.driver.execute_script("var el=document.querySelector('body > flashy-popup');if(el){el.remove();}")
         self.sleep(3)
         self.driver.execute_script("var el=document.querySelector('#popupVSChat');if(el){el.remove();}")
+        self.sleep(3)
+        self.driver.execute_script("var el=document.querySelector('#gdpr-module-message');if(el){el.remove();}")
         self.sleep(5)
         self.zoomOut(50)
 
         for _ in range(8):
-            element = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
-            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            scroll_button = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", scroll_button)
             self.sleep(1)
             try:
-                element.click()
+                scroll_button.click()
                 self.sleep(3)
             except:
                 break
