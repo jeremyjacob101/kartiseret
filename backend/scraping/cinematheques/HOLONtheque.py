@@ -34,7 +34,10 @@ class HOLONtheque(BaseCinema):
                 try:
                     self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/p[1]/strong").text.strip()
                 except:
-                    self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2[2]/b").text.strip()
+                    try:
+                        self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2[2]/b").text.strip()
+                    except:
+                        self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2[2]").text.strip()
             elif self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2") == 1:
                 if self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b") == 6 or self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b") == 5:
                     self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b[5]").text.strip()
