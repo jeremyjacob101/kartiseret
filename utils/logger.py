@@ -76,10 +76,11 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
         except Exception:
             url = "?"
 
-    exc_type, exc_value, exc_tb = sys.exc_info()
-    tb = traceback.extract_tb(sys.exc_info()[2])
-    f = next((x for x in reversed(tb) if "site-packages" not in x.filename and "lib/python" not in x.filename), tb[-1])
-    filename, lineno = os.path.basename(f.filename), f.lineno
+    exc_type, exc_value, tb = sys.exc_info()
+    frames = traceback.extract_tb(tb)
+    tail = frames[-3:]
+    call_chain = " > ".join(f"{os.path.basename(f.filename)}:{f.lineno}" for f in tail)
+
     exc_type_name = exc_type.__name__ if exc_type else "Exception"
     exc_msg = str(exc_value) if exc_value else ""
     exc_msg = "\n".join(ln for ln in (str(exc_value) if exc_value else "").splitlines() if not any(b in ln.lower() for b in ("stacktrace", "documentation", "<unknown>")))
@@ -93,15 +94,15 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
                 "Error:",
                 "\n\n",
                 "---------------------------------------------------------------------------------------------",
-                "|                                                                                           |",
-                "|                                           ERROR                                           |",
-                "|                                                                                           |",
-                f"|                                  {name}                               |",
-                "|                                                                                           |",
+                "                                                                                             ",
+                "                                            ERROR                                            ",
+                "                                                                                             ",
+                f"                                       {name}                                ",
+                "                                                                                             ",
                 "---------------------------------------------------------------------------------------------",
                 f"URL:       {url}",
                 f"Exception: {exc_type_name} - {exc_msg}",
-                f"Location: {filename}:{lineno}",
+                f"Location: {call_chain}",
                 *([f"Selector: {selector}"] if selector else []),
             ]
         )
