@@ -78,12 +78,22 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
 
     exc_type, exc_value, tb = sys.exc_info()
     frames = traceback.extract_tb(tb)
-    tail = frames[-3:]
+
+    filtered = []
+    for f in frames:
+        path = f.filename.replace("\\", "/")
+        if any(s in path for s in ("/site-packages/", "/dist-packages/", "/lib/python", "/.venv/", "/venv/", "/pyenv/", "/conda/", "/selenium/", "selenium")):
+            continue
+        if os.path.basename(path) in {"webdriver.py", "errorhandler.py", "remote_connection.py", "service.py"}:
+            continue
+        filtered.append(f)
+
+    tail = (filtered or frames)[-5:]
     call_chain = " > ".join(f"{os.path.basename(f.filename)}:{f.lineno}" for f in tail)
 
     exc_type_name = exc_type.__name__ if exc_type else "Exception"
     exc_msg = str(exc_value) if exc_value else ""
-    exc_msg = "\n".join(ln for ln in (str(exc_value) if exc_value else "").splitlines() if not any(b in ln.lower() for b in ("stacktrace", "documentation", "<unknown>")))
+    exc_msg = "\n".join(ln for ln in (str(exc_value) if exc_value else "").splitlines() if not any(b in ln.lower() for b in ("stacktrace", "documentation", "<unknown>", "chromedriver", "libsystem_pthread.dylib")))
 
     match = re.search(r'"selector":\s*"([^"]+)"', exc_msg)
     selector = match.group(1) if match else None
@@ -102,15 +112,15 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
                 "---------------------------------------------------------------------------------------------",
                 f"URL:       {url}",
                 f"Exception: {exc_type_name} - {exc_msg}",
-                f"Location: {call_chain}",
-                *([f"Selector: {selector}"] if selector else []),
+                f"Location:  {call_chain}",
+                *([f"Selector:  {selector}"] if selector else []),
             ]
         )
     )
 
     try:
         png, html = dump_artifacts(drv, prefix=name, note=note)
-        print(f"Screenshot: {png}\nHtml:       {html}", flush=True)
+        print(f"  Screenshot: {png}\n  Html:       {html}", flush=True)
         return png, html
     except Exception as capture_err:
         print(f"    Failed to dump artifacts: {capture_err}", flush=True)
