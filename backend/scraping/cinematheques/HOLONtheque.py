@@ -45,7 +45,8 @@ class HOLONtheque(BaseCinema):
                     self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b[4]").text.strip()
             else:
                 self.english_title = self.hebrew_title
-            self.runtime = self.tryExceptNone(lambda: int(re.sub(r"\D", "", self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/ul/li[1]/span").text.strip())))
+
+            self.runtime = self.tryExceptNone(lambda: int(re.findall(r"\d+", self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/ul/li[1]/span").text)[-1]))
             self.release_year = self.tryExceptNone(lambda: re.search(r"\b\d{4}\b", self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/ul/li[2]/span").text.strip()).group(0))
 
             self.click("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/form/div[1]/div[1]", 1)
