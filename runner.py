@@ -39,13 +39,13 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        # JLEMtheque,
+        JLEMtheque,
         SSCtheque,
-        # JAFCtheque,
-        # HAIFtheque,
-        # HERZtheque,
-        # TLVtheque,
-        # HOLONtheque,
+        JAFCtheque,
+        HAIFtheque,
+        HERZtheque,
+        TLVtheque,
+        HOLONtheque,
     ],
     "comingSoon": [
         CCsoon,
@@ -138,9 +138,9 @@ def runDataflows(fail_fast: bool = True):
 def main():
     setup_logging("ERROR")
 
-    # runCinemaType("nowPlaying")
+    runCinemaType("nowPlaying")
     runCinemaType("cinematheque")
-    # runCinemaType("comingSoon")
+    runCinemaType("comingSoon")
 
     # runDataflows()
 
