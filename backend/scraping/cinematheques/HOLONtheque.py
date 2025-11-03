@@ -62,4 +62,8 @@ class HOLONtheque(BaseCinema):
                     self.english_href = self.hebrew_href
                     self.screening_city = self.SCREENING_CITY
                     self.screening_type = "Regular"
+
+                    print(self.english_title - self.release_year)
+                    print(self.date_of_showing - self.showtime)
+                    print(self.runtime)
                     self.appendToGatheringInfo()
