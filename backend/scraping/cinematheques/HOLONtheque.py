@@ -64,7 +64,4 @@ class HOLONtheque(BaseCinema):
                     self.screening_city = self.SCREENING_CITY
                     self.screening_type = "Regular"
 
-                    print(f"{self.english_title} - {self.release_year}")
-                    print(f"\t{self.date_of_showing} - {self.showtime}")
-                    print(f"\t{self.runtime} minutes")
                     self.appendToGatheringInfo()
