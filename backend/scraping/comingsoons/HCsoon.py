@@ -39,6 +39,12 @@ class HCsoon(BaseCinema):
             self.english_title = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/h2").text.strip()
             self.hebrew_title = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/h1").text.strip()
 
+            if "סטנדאפ" in self.english_title or "מדובב לרוסית" in self.hebrew_title:
+                continue
+
+            self.hebrew_title = re.sub(r"\s*מדובב לעברית\s*$", "", self.hebrew_title).strip()
+            self.hebrew_title = re.sub(r"\s*אנגלית\s*$", "", self.hebrew_title).strip()
+
             raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()
             last_token = raw_text.split()[-1] if raw_text else ""
             self.release_year = int(last_token) if last_token.isdigit() and len(last_token) == 4 else None

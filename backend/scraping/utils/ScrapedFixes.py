@@ -10,6 +10,7 @@ class ScrapedFixes:
             "GER": "German",
             "JAP": "Japanese",
             "DAN": "Danish",
+            "RU": "Russian",
             "אנגלית": "English",
             "עברית": "Hebrew",
             "דנית": "Danish",

@@ -111,7 +111,7 @@ def runCinemaType(type: str):
     print("\n\n\n--------------------\n")
     for name, secs in runtimes.items():
         m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s\n")
+        print(f"{name}: {m:02d}m{s:02d}s\n")
 
 
 def runDataflows():
