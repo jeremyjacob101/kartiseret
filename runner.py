@@ -114,7 +114,7 @@ def runCinemaType(type: str):
         print(f"{name}: {m}m{s:02d}s\n")
 
 
-def runDataflows(fail_fast: bool = True):
+def runDataflows():
     step_timings = []
 
     for key, classes in DATAFLOW_REGISTRY.items():
@@ -152,7 +152,6 @@ if __name__ == "__main__":
 #
 # Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
 # Skip russian titles throughout?
-# fail_fast? in runner.py file
 #
 
 #########
