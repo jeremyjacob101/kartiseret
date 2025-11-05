@@ -4,10 +4,6 @@ logger = logging.getLogger("sel")
 
 
 def dump_artifacts(driver, prefix: str = "fail", note: str | None = None) -> tuple[str, str]:
-    """
-    Saves a screenshot and page_source into utils/logger_artifacts/.
-    Returns (png_path, html_path).
-    """
     artifact_dir = pathlib.Path("utils/logger_artifacts")
 
     ts = time.strftime("%Y%m%d-%H%M%S")
@@ -22,18 +18,10 @@ def dump_artifacts(driver, prefix: str = "fail", note: str | None = None) -> tup
     png_path = f"{base}.png"
     html_path = f"{base}.html"
 
-    try:
-        if getattr(driver, "save_screenshot", None):
-            driver.save_screenshot(png_path)
-    except Exception as e:
-        logger.warning("Failed to save screenshot: %s", e)
-
-    try:
-        src = getattr(driver, "page_source", "") or ""
-        with open(html_path, "w", encoding="utf-8") as f:
-            f.write(src)
-    except Exception as e:
-        logger.warning("Failed to save page_source: %s", e)
+    driver.save_screenshot(png_path)
+    src = getattr(driver, "page_source", "") or ""
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(src)
 
     return png_path, html_path
 
@@ -58,7 +46,7 @@ def setup_logging(level: str | int = None) -> None:
         for f in artifact_dir.glob("*"):
             try:
                 f.unlink()
-            except Exception:
+            except:
                 pass
     artifact_dir.mkdir(parents=True, exist_ok=True)
 
@@ -66,14 +54,17 @@ def setup_logging(level: str | int = None) -> None:
 def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
     try:
         name = prefix or (getattr(obj, "CINEMA_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
-    except Exception:
-        name = "Unknown"
+    except:
+        try:
+            name = prefix or (getattr(obj, "TABLE_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
+        except:
+            name = "Unknown"
 
     drv = driver or (getattr(obj, "driver", None) if obj is not None else None)
     if url is None:
         try:
             url = getattr(drv, "current_url", "?")
-        except Exception:
+        except:
             url = "?"
 
     exc_type, exc_value, tb = sys.exc_info()

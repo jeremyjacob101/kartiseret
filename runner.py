@@ -162,6 +162,8 @@ if __name__ == "__main__":
 #
 # Finish above comments
 #
+# See how ComingSoonsData is actually handling data so far (testingSoons vs testingSoons2)
+#
 # Rerun cinemas if they fail, try rerunning them 2 additional times
 #     Set up supabase chart of done/not done after each actually finishes cleanly so we can see which didn't
 #     ? Set up chart of how many things scraped vs expected / warn if not expected maybe ?
