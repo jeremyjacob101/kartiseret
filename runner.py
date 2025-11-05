@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
-from utils.logger import setup_logging, artifactPrinting, logger
+from utils.logger import setup_logging, artifactPrinting
 import threading, time
 
 from backend.scraping.chains.CinemaCity import CinemaCity
