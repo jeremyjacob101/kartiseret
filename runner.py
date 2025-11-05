@@ -86,6 +86,7 @@ def runCinemaType(type: str):
 
         def _target(c=cls):
             t0 = time.time()
+            instance = None
             try:
                 instance = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
                 instance.scrape()
@@ -120,6 +121,7 @@ def runDataflows():
     for key, classes in DATAFLOW_REGISTRY.items():
         for cls in classes:
             t0 = time.time()
+            instance = None
             try:
                 instance = cls()
                 instance.dataRun()
@@ -140,9 +142,11 @@ def main():
 
     # runCinemaType("nowPlaying")
     # runCinemaType("cinematheque")
-    runCinemaType("comingSoon")
+    # runCinemaType("comingSoon")
 
-    # runDataflows()
+    runDataflows()
+
+    print()
 
 
 if __name__ == "__main__":
@@ -163,5 +167,6 @@ if __name__ == "__main__":
 #     ? Set up chart of how many things scraped vs expected / warn if not expected maybe ?
 # Add in OMDb logic
 # Hook up to current front end
+# Add in IMDb/RT logic (scrape every 6 hours)
 # Rewrite front end
 #

@@ -1,7 +1,15 @@
-import re
+from datetime import datetime, date
+from supabase import create_client
+import os, re
 
 
-class SupabaseHelpers:
+def setUpSupabase(self):
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    self.supabase = create_client(url, key)
+
+
+class DataflowHelpers:
     def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:
         all_rows: list[dict] = []
         start = 0
@@ -35,3 +43,15 @@ class SupabaseHelpers:
         title = re.sub(r"[^a-z0-9 ]+", "", title)
         title = re.sub(r"\s+", " ", title).strip()
         return title
+
+    def dateToDate(self, v):
+        if isinstance(v, date):
+            return v
+        return datetime.fromisoformat(str(v)).date()
+
+    def deleteTheseRows(self):
+        for i in range(0, len(self.delete_these), 200):
+            chunk = self.delete_these[i : i + 200]
+            self.supabase.table(self.TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
+        self.table_rows = self.selectAll(self.TABLE_NAME)
+        self.delete_these = []

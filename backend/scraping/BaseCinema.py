@@ -1,5 +1,3 @@
-from utils.logger import artifactPrinting
-
 from backend.scraping.utils.InitializeBase import InitializeBase, build_chrome, setUpSupabase, navigate
 from backend.scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload
 from backend.scraping.utils.ScrapedFixes import ScrapedFixes
