@@ -32,11 +32,11 @@ from backend.dataflow.comingsoons.ComingSoonsData import ComingSoonsData
 REGISTRY = {
     "nowPlaying": [
         CinemaCity,
-        # YesPlanet,
-        # LevCinema,
-        # RavHen,
-        # MovieLand,
-        # HotCinema,
+        YesPlanet,
+        LevCinema,
+        RavHen,
+        MovieLand,
+        HotCinema,
     ],
     "cinematheque": [
         JLEMtheque,
@@ -138,9 +138,9 @@ def runDataflows():
 def main():
     setup_logging("ERROR")
 
-    runCinemaType("nowPlaying")
+    # runCinemaType("nowPlaying")
     # runCinemaType("cinematheque")
-    # runCinemaType("comingSoon")
+    runCinemaType("comingSoon")
 
     # runDataflows()
 
