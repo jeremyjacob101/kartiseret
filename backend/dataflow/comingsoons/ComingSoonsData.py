@@ -3,7 +3,7 @@ from collections import defaultdict
 
 
 class ComingSoonsData(BaseDataflowData):
-    TABLE_NAME = "testingSoodns"
+    TABLE_NAME = "testingSoons"
     PRIMARY_KEY = "coming_soon_id"
 
     def comingSoonsSortKey(self, row):
