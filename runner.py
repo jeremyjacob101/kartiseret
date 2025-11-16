@@ -39,13 +39,13 @@ REGISTRY = {
         HotCinema,
     ],
     "cinematheque": [
-        # JLEMtheque,
+        JLEMtheque,
         SSCtheque,
         JAFCtheque,
-        # HAIFtheque,
-        # HERZtheque,
-        # TLVtheque,
-        # HOLONtheque,
+        HAIFtheque,
+        HERZtheque,
+        TLVtheque,
+        HOLONtheque,
     ],
     "comingSoon": [
         CCsoon,
