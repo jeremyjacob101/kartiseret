@@ -26,7 +26,7 @@ class YPsoon(BaseCinema):
             self.sleep(0.1)
 
             if not self.first_click:
-                try: 
+                try:
                     self.element("/html/body/div[15]/div/div/div/div[2]/div[3]/div[1]/div/h2/small").click()
                 except:
                     pass

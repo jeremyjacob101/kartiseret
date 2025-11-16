@@ -43,7 +43,7 @@ class SSCtheque(BaseCinema):
 
             try:
                 self.showtime = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[3]/div/h2").text.strip()
-            except:    
+            except:
                 self.showtime = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[3]/div/div/div/div/div[1]/div/div[2]/div/div[3]/div/h2").text.strip()
 
             num_text_blocks = self.lenElements(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p")
