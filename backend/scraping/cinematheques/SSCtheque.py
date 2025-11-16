@@ -29,7 +29,10 @@ class SSCtheque(BaseCinema):
             else:
                 continue
 
-            date_of_showing = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/h2").text.strip()
+            try:
+                date_of_showing = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/h2").text.strip()
+            except:
+                date_of_showing = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[3]/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/h2").text.strip()
             month_of_showing = date_of_showing.split("/")[1].strip()
             if self.current_month == "12" and not crossed_year and (str(month_of_showing) == "1" or str(month_of_showing) == "01"):
                 crossed_year = True
