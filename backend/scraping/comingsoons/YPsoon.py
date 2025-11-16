@@ -26,7 +26,10 @@ class YPsoon(BaseCinema):
             self.sleep(0.1)
 
             if not self.first_click:
-                self.element("/html/body/div[15]/div/div/div/div[2]/div[3]/div[1]/div/h2/small").click()
+                try: 
+                    self.element("/html/body/div[15]/div/div/div/div[2]/div[3]/div[1]/div/h2/small").click()
+                except:
+                    pass
                 self.first_click = True
 
             self.english_title = self.element("/html/body/div[5]/section[1]/div/div[2]/div[1]/div/ul/li/h1").get_attribute("textContent").strip()
