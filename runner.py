@@ -48,10 +48,10 @@ REGISTRY = {
         HOLONtheque,
     ],
     "comingSoon": [
-        CCsoon,
-        HCsoon,
-        LCsoon,
-        MLsoon,
+        # CCsoon,
+        # HCsoon,
+        # LCsoon,
+        # MLsoon,
         YPsoon,
     ],
 }
@@ -140,8 +140,8 @@ def runDataflows():
 def main():
     setup_logging("ERROR")
 
-    runCinemaType("nowPlaying")
-    runCinemaType("cinematheque")
+    # runCinemaType("nowPlaying")
+    # runCinemaType("cinematheque")
     runCinemaType("comingSoon")
 
     # runDataflows()
