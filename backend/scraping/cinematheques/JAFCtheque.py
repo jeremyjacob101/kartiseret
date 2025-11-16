@@ -24,11 +24,11 @@ class JAFCtheque(BaseCinema):
             self.hebrew_title = self.hebrew_titles[film_block - 1]
 
             run_director_info = self.element(f"/html/body/main/div/div[1]/section[3]/div/div/div/div[2]/div/div/div/div[{film_block}]/div/div[1]/div/p").text.strip()
-            runtime_part, director_part = run_director_info.split("|")
+
             parts = [p.strip() for p in run_director_info.split("|")]
             runtime_part = parts[0]
             director_part = parts[1] if len(parts) > 1 else ""
-            
+
             if "," in director_part:
                 director_part = director_part.split(",")[0].strip()
             minutes, hours = 0, 0
