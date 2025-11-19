@@ -152,7 +152,9 @@ def main():
 if __name__ == "__main__":
     main()
 
-# Finish cinematheques:
+#########
+#
+# Get rid of all these different "ids" (and all their uses) and just use "id" per table (each makes its own supabase uuid)
 #
 # When AVATAR is now playing -
 # Handle 3D / 3D HDR Titles (specifically also for cinema city, we're already doing screening_type for vip/etc/etc... but now
