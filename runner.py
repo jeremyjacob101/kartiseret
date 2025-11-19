@@ -156,7 +156,10 @@ if __name__ == "__main__":
 #
 # Get rid of all these different "ids" (and all their uses) and just use "id" per table (each makes its own supabase uuid)
 #
-# When AVATAR is now playing -
+# create 6 of each helper_id_[num] and helper_type_[num] so that instead of deleting entries, we can move entries' helpers into the
+# concatenated entry itself, so that we can then move the 'winning' comingSoon into finalSoons and the losing hrefs into soonsHistory
+#
+# When AVATAR is now playing (Dec 16ish) -
 # Handle 3D / 3D HDR Titles (specifically also for cinema city, we're already doing screening_type for vip/etc/etc... but now
 # it can also be "VIP + 3D" or "Prime + HFR" ****** DO WE NEED TO MAKE A NEW SCREENING_TECH ALONGSIDE SCREENING_TYPE? ******)
 #

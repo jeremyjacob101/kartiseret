@@ -52,4 +52,8 @@ class ComingSoonsData(BaseDataflowData):
         # Per-theatre sorting/removing
         comingSoons = self.selectAll(self.TABLE_NAME)
 
+        # Cinema City
+        
+        
+
         normalizedEnglishTitle = self.normalizeTitle(english_title)

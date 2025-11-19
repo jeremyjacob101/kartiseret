@@ -39,7 +39,7 @@ class DataflowHelpers:
         if not isinstance(title, str):
             return ""
         title = title.lower()
-        title = re.sub(r"[-–—:?!]+", " ", title)
+        title = re.sub(r"[-–—:?!&]+", " ", title)
         title = re.sub(r"[^a-z0-9 ]+", "", title)
         title = re.sub(r"\s+", " ", title)
         return title.strip()
