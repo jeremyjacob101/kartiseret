@@ -59,7 +59,7 @@ def center_banner_text(text: str, width: int = 93) -> str:
 
 def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
     name = "Unknown"
-    for attr in ["CINEMA_NAME", "STARTING_TABLE_NAME", "DUPLICATE_TABLE_NAME", "MOVING_TO_TABLE_NAME", "HELPER_TABLE_NAME"]:
+    for attr in ["CINEMA_NAME", "MAIN_TABLE_NAME", "DUPLICATE_TABLE_NAME", "MOVING_TO_TABLE_NAME", "HELPER_TABLE_NAME"]:
         try:
             name = prefix or (getattr(obj, attr, None) or (obj.__class__.__name__ if obj else "Unknown"))
             break
