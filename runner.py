@@ -140,11 +140,11 @@ def runDataflows():
 def main():
     setup_logging("ERROR")
 
-    runCinemaType("nowPlaying")
-    runCinemaType("cinematheque")
-    runCinemaType("comingSoon")
+    # runCinemaType("nowPlaying")
+    # runCinemaType("cinematheque")
+    # runCinemaType("comingSoon")
 
-    # runDataflows()
+    runDataflows()
 
     print()
 
