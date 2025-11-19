@@ -90,9 +90,6 @@ class InitializeBase:
             "screening_city": [],
             "helper_id": [],
             "helper_type": [],
-            "theque_showtime_id": [],
-            "coming_soon_id": [],
-            "showtime_id": [],
             "scraped_at": [],
             "cinema": [],
         }

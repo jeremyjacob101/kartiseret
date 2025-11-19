@@ -10,12 +10,11 @@ class BaseCinema(SelfFunctions, ScrapedFixes, InitializeBase, AppendToInfo):
     URL: str
     HEADLESS: bool = True
 
-    def __init__(self, cinema_type, supabase_table_name, id_name, *args, **kwargs):
+    def __init__(self, cinema_type, supabase_table_name, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.driver = build_chrome(self.HEADLESS)
         self.cinema_type = cinema_type
         self.supabase_table_name = supabase_table_name
-        self.id_name = id_name
 
     def logic(self):
         raise NotImplementedError("Each cinema must implement its own logic()")

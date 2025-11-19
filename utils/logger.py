@@ -56,7 +56,7 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
         name = prefix or (getattr(obj, "CINEMA_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
     except:
         try:
-            name = prefix or (getattr(obj, "TABLE_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
+            name = prefix or (getattr(obj, "STARTING_TABLE_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
         except:
             name = "Unknown"
 

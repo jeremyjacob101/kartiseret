@@ -20,12 +20,6 @@ def formatAndUpload(self):
 
 
 class AppendToInfo:
-    ID_FIELD_BY_TYPE = {
-        "cinematheque": "theque_showtime_id",
-        "comingSoon": "coming_soon_id",
-        "nowPlaying": "showtime_id",
-    }
-
     def appendToGatheringInfo(self, print_info=False):
         self.fixScreeningType()
         self.fixCinemaName()
@@ -51,9 +45,6 @@ class AppendToInfo:
         self.gathering_info["helper_type"].append(self.helper_type)
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
-
-        id_field = self.ID_FIELD_BY_TYPE.get(self.cinema_type)
-        self.gathering_info[id_field].append(str(self.getRandomHash()))
 
         if print_info:
             self.printRow()

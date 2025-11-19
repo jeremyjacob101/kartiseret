@@ -3,8 +3,7 @@ from collections import defaultdict
 
 
 class ComingSoonsData(BaseDataflowData):
-    TABLE_NAME = "testingSoons"
-    PRIMARY_KEY = "coming_soon_id"
+    STARTING_TABLE_NAME = "testingSoons"
 
     def comingSoonsSortKey(self, row):
         d_key = self.dateToDate(row.get("release_date"))
@@ -21,7 +20,7 @@ class ComingSoonsData(BaseDataflowData):
         )
 
     def logic(self):
-        comingSoons = self.selectAll(self.TABLE_NAME)
+        comingSoons = self.selectAll(self.STARTING_TABLE_NAME)
 
         for row in comingSoons:
             english_title = row.get("english_title")
@@ -31,7 +30,7 @@ class ComingSoonsData(BaseDataflowData):
 
         self.deleteTheseRows()
 
-        comingSoons, self.delete_these, groups = self.selectAll(self.TABLE_NAME), [], defaultdict(list)
+        comingSoons, self.delete_these, groups = self.selectAll(self.STARTING_TABLE_NAME), [], defaultdict(list)
         for row in comingSoons:
             key = (row.get("english_title"), row.get("hebrew_title"), row.get("cinema"))
             groups[key].append(row)
@@ -47,13 +46,13 @@ class ComingSoonsData(BaseDataflowData):
 
         for i in range(0, len(self.delete_these), 200):
             chunk = self.delete_these[i : i + 200]
-            self.supabase.table(self.TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
+            self.supabase.table(self.STARTING_TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
 
         # Per-theatre sorting/removing
-        comingSoons = self.selectAll(self.TABLE_NAME)
+        comingSoons = self.selectAll(self.STARTING_TABLE_NAME)
 
         # Cinema City
         
-        
+
 
         normalizedEnglishTitle = self.normalizeTitle(english_title)

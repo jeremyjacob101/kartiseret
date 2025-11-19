@@ -2,175 +2,19 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
-from utils.logger import setup_logging, artifactPrinting
-import threading, time
-
-from backend.scraping.chains.CinemaCity import CinemaCity
-from backend.scraping.chains.YesPlanet import YesPlanet
-from backend.scraping.chains.LevCinema import LevCinema
-from backend.scraping.chains.RavHen import RavHen
-from backend.scraping.chains.MovieLand import MovieLand
-from backend.scraping.chains.HotCinema import HotCinema
-
-from backend.scraping.cinematheques.JLEMtheque import JLEMtheque
-from backend.scraping.cinematheques.SSCtheque import SSCtheque
-from backend.scraping.cinematheques.JAFCtheque import JAFCtheque
-from backend.scraping.cinematheques.HAIFtheque import HAIFtheque
-from backend.scraping.cinematheques.HERZtheque import HERZtheque
-from backend.scraping.cinematheques.TLVtheque import TLVtheque
-from backend.scraping.cinematheques.HOLONtheque import HOLONtheque
-
-from backend.scraping.comingsoons.CCsoon import CCsoon
-from backend.scraping.comingsoons.HCsoon import HCsoon
-from backend.scraping.comingsoons.LCsoon import LCsoon
-from backend.scraping.comingsoons.MLsoon import MLsoon
-from backend.scraping.comingsoons.YPsoon import YPsoon
-
-from backend.dataflow.comingsoons.ComingSoonsData import ComingSoonsData
-
-
-REGISTRY = {
-    "nowPlaying": [
-        CinemaCity,
-        YesPlanet,
-        LevCinema,
-        RavHen,
-        MovieLand,
-        HotCinema,
-    ],
-    "cinematheque": [
-        JLEMtheque,
-        SSCtheque,
-        JAFCtheque,
-        HAIFtheque,
-        HERZtheque,
-        TLVtheque,
-        HOLONtheque,
-    ],
-    "comingSoon": [
-        CCsoon,
-        HCsoon,
-        LCsoon,
-        MLsoon,
-        YPsoon,
-    ],
-}
-
-TABLE_BY_TYPE = {
-    "nowPlaying": "testingMovies",
-    "cinematheque": "testingTheques",
-    "comingSoon": "testingSoons",
-}
-
-ID_FIELD_BY_TYPE = {
-    "nowPlaying": "showtime_id",
-    "cinematheque": "theque_showtime_id",
-    "comingSoon": "coming_soon_id",
-}
-
-DATAFLOW_REGISTRY = {
-    "comingSoonData": [
-        ComingSoonsData,
-    ],
-}
-
-
-def runCinemaType(type: str):
-    classes = REGISTRY.get(type, [])
-    table_name = TABLE_BY_TYPE.get(type)
-    id_field_name = ID_FIELD_BY_TYPE.get(type)
-
-    threads, runtimes, lock = [], {}, threading.Lock()
-
-    for cls in classes:
-
-        def _target(c=cls):
-            t0 = time.time()
-            instance = None
-            try:
-                instance = c(cinema_type=type, supabase_table_name=table_name, id_name=id_field_name)
-                instance.scrape()
-            except Exception:
-                artifactPrinting(instance)
-            finally:
-                dt = time.time() - t0
-                with lock:
-                    runtimes[c.__name__] = dt
-                try:
-                    if instance and getattr(instance, "driver", None):
-                        instance.driver.quit()
-                except Exception:
-                    raise
-
-        thread = threading.Thread(target=_target, name=cls.__name__)
-        threads.append(thread)
-        thread.start()
-
-    for thread in threads:
-        thread.join()
-
-    print("\n\n\n--------------------\n")
-    for name, secs in runtimes.items():
-        m, s = divmod(int(secs), 60)
-        print(f"{name}: {m:02d}m{s:02d}s\n")
-
-
-def runDataflows():
-    step_timings = []
-
-    for key, classes in DATAFLOW_REGISTRY.items():
-        for cls in classes:
-            t0 = time.time()
-            instance = None
-            try:
-                instance = cls()
-                instance.dataRun()
-            except Exception:
-                artifactPrinting(instance)
-            finally:
-                dt = time.time() - t0
-                step_timings.append((f"{key}:{cls.__name__}", dt))
-
-    print("\n\n\n--------------------\n")
-    for name, secs in step_timings:
-        m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s\n")
+from utils.logger import setup_logging
+from backend.config.runners import runCinemaType, runDataflows
 
 
 def main():
     setup_logging("ERROR")
 
-    # runCinemaType("nowPlaying")
-    # runCinemaType("cinematheque")
-    # runCinemaType("comingSoon")
+    # runCinemaType("testingMovies")
+    # runCinemaType("testingTheques")
+    runCinemaType("testingSoons")
 
-    runDataflows()
-
-    print()
+    # runDataflows()
 
 
 if __name__ == "__main__":
     main()
-
-#########
-#
-# Get rid of all these different "ids" (and all their uses) and just use "id" per table (each makes its own supabase uuid)
-#
-# create 6 of each helper_id_[num] and helper_type_[num] so that instead of deleting entries, we can move entries' helpers into the
-# concatenated entry itself, so that we can then move the 'winning' comingSoon into finalSoons and the losing hrefs into soonsHistory
-#
-# When AVATAR is now playing (Dec 16ish) -
-# Handle 3D / 3D HDR Titles (specifically also for cinema city, we're already doing screening_type for vip/etc/etc... but now
-# it can also be "VIP + 3D" or "Prime + HFR" ****** DO WE NEED TO MAKE A NEW SCREENING_TECH ALONGSIDE SCREENING_TYPE? ******)
-#
-
-#########
-#
-# Rerun cinemas if they fail, try rerunning them 2 additional times
-#     Set up supabase chart of done/not done after each actually finishes cleanly so we can see which didn't
-#     ? Set up chart of how many things scraped vs expected / warn if not expected maybe ?
-# Add in OMDb logic
-# Hook up to current front end
-# Add in IMDb/RT logic (scrape every 6 hours)
-# Rewrite front end
-#
