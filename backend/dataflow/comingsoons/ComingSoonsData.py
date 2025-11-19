@@ -5,7 +5,7 @@ from collections import defaultdict
 class ComingSoonsData(BaseDataflowData):
     STARTING_TABLE_NAME = "testingSoons"
 
-    def comingSoonsSortKey(self, row):
+    def comingSoonsFirstSortKey(self, row):
         d_key = self.dateToDate(row.get("release_date"))
         runtime = row.get("runtime")
         good_runtime = (runtime is not None) and (runtime not in getattr(self, "fake_runtimes", set()))
@@ -20,39 +20,39 @@ class ComingSoonsData(BaseDataflowData):
         )
 
     def logic(self):
-        comingSoons = self.selectAll(self.STARTING_TABLE_NAME)
-
-        for row in comingSoons:
+        for row in self.starting_table_rows:
             english_title = row.get("english_title")
             if self.removeBadTitle(english_title):
                 self.delete_these.append(row[self.PRIMARY_KEY])
-                continue
 
-        self.deleteTheseRows()
+        self.deleteTheseRows(self.STARTING_TABLE_NAME)
 
-        comingSoons, self.delete_these, groups = self.selectAll(self.STARTING_TABLE_NAME), [], defaultdict(list)
-        for row in comingSoons:
+        groups = defaultdict(list)
+        for row in self.starting_table_rows:
             key = (row.get("english_title"), row.get("hebrew_title"), row.get("cinema"))
             groups[key].append(row)
 
         for key, rows in groups.items():
             if len(rows) <= 1:
                 continue
-            winner = min(rows, key=self.comingSoonsSortKey)
+            winner = min(rows, key=self.comingSoonsFirstSortKey)
             winner_id = winner[self.PRIMARY_KEY]
             for r in rows:
                 if r[self.PRIMARY_KEY] != winner_id:
                     self.delete_these.append(r[self.PRIMARY_KEY])
 
-        for i in range(0, len(self.delete_these), 200):
-            chunk = self.delete_these[i : i + 200]
-            self.supabase.table(self.STARTING_TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
+        self.deleteTheseRows(self.STARTING_TABLE_NAME)
 
-        # Per-theatre sorting/removing
-        comingSoons = self.selectAll(self.STARTING_TABLE_NAME)
+        ### PER CINEMA
 
         # Cinema City
-        
 
+        # Yes Planet
+        # Rav Hen
+        # Hot Cinema
+        # Movie Land
+        # Lev Cinema
+
+        ### All Cinemas
 
         normalizedEnglishTitle = self.normalizeTitle(english_title)

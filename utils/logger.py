@@ -51,14 +51,20 @@ def setup_logging(level: str | int = None) -> None:
     artifact_dir.mkdir(parents=True, exist_ok=True)
 
 
+def center_banner_text(text: str, width: int = 93) -> str:
+    left_padding = (width - len(text)) // 2
+    right_padding = width - len(text) - left_padding
+    return (" " * left_padding) + text + (" " * right_padding)
+
+
 def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
-    try:
-        name = prefix or (getattr(obj, "CINEMA_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
-    except:
+    name = "Unknown"
+    for attr in ["CINEMA_NAME", "STARTING_TABLE_NAME", "DUPLICATE_TABLE_NAME", "MOVING_TO_TABLE_NAME", "HELPER_TABLE_NAME"]:
         try:
-            name = prefix or (getattr(obj, "STARTING_TABLE_NAME", None) or (obj.__class__.__name__ if obj else "Unknown"))
+            name = prefix or (getattr(obj, attr, None) or (obj.__class__.__name__ if obj else "Unknown"))
+            break
         except:
-            name = "Unknown"
+            pass
 
     drv = driver or (getattr(obj, "driver", None) if obj is not None else None)
     if url is None:
@@ -98,7 +104,7 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
                 "                                                                                             ",
                 "                                            ERROR                                            ",
                 "                                                                                             ",
-                f"                                       {name}                                ",
+                center_banner_text(name),
                 "                                                                                             ",
                 "---------------------------------------------------------------------------------------------",
                 f"URL:       {url}",

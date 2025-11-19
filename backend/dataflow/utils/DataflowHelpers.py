@@ -49,9 +49,9 @@ class DataflowHelpers:
             return v
         return datetime.fromisoformat(str(v)).date()
 
-    def deleteTheseRows(self):
+    def deleteTheseRows(self, table_name: str):
         for i in range(0, len(self.delete_these), 200):
             chunk = self.delete_these[i : i + 200]
-            self.supabase.table(self.TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
-        self.table_rows = self.selectAll(self.TABLE_NAME)
+            self.supabase.table(table_name).delete().in_(self.PRIMARY_KEY, chunk).execute()
+        self.table_rows = self.selectAll(table_name)
         self.delete_these = []
