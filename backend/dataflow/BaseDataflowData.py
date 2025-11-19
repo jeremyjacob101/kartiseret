@@ -29,7 +29,6 @@ class BaseDataflowData(DataflowHelpers):
     def dataRun(self):
         try:
             self.logic()  # Dataflow logic
-            if self.updates:
-                self.upsertUpdates()
+            self.upsertUpdates()
         except Exception:
             raise
