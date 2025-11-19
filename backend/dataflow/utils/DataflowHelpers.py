@@ -11,6 +11,9 @@ def setUpSupabase(self):
 
 class DataflowHelpers:
     def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:
+        if not table:
+            return []
+
         all_rows: list[dict] = []
         start = 0
 

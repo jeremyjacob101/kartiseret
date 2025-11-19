@@ -25,7 +25,7 @@ class ComingSoonsData(BaseDataflowData):
             if not new_helpers:
                 continue
 
-            existing = self.supabase.table(self.HELPER_TABLE_NAME).select("*").eq("id", winner_id).maybe_single().execute()
+            existing = self.supabase.table(self.HELPER_TABLE_NAME).select("*").eq("id", winner_id).execute()
             row = existing.data or {"id": winner_id}
             existing_values = {v for k, v in row.items() if k.startswith("helper_") and v not in (None, "", "null")}
 

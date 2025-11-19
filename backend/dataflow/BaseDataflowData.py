@@ -3,9 +3,9 @@ from backend.dataflow.utils.DataflowHelpers import DataflowHelpers, setUpSupabas
 
 class BaseDataflowData(DataflowHelpers):
     STARTING_TABLE_NAME: str
-    DUPLICATE_TABLE_NAME: str
-    MOVING_TO_TABLE_NAME: str
-    HELPER_TABLE_NAME: str
+    DUPLICATE_TABLE_NAME: str = ""
+    MOVING_TO_TABLE_NAME: str = ""
+    HELPER_TABLE_NAME: str = ""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
