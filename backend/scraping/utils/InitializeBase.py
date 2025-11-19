@@ -51,8 +51,6 @@ class InitializeBase:
         self.runtimes = []
         self.ratings = []
         self.screening_citys = []
-        self.helper_ids = []
-        self.helper_types = []
 
         self.showtime = None
         self.english_title = None
@@ -70,7 +68,6 @@ class InitializeBase:
         self.rating = None
         self.screening_city = None
         self.helper_id = None
-        self.helper_type = None
 
         self.gathering_info = {
             "showtime": [],
@@ -89,7 +86,6 @@ class InitializeBase:
             "rating": [],
             "screening_city": [],
             "helper_id": [],
-            "helper_type": [],
             "scraped_at": [],
             "cinema": [],
         }

@@ -47,6 +47,5 @@ class CCsoon(BaseCinema):
                 self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 
                 self.helper_id = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[2]/div/ul/li[1]/a").get_attribute("href")
-                self.helper_type = "href"
 
                 self.appendToGatheringInfo()

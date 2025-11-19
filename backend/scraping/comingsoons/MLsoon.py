@@ -53,6 +53,5 @@ class MLsoon(BaseCinema):
                 self.original_language = original_language.split(":", 1)[1].strip()
 
             self.helper_id = href
-            self.helper_type = "href"
 
             self.appendToGatheringInfo()

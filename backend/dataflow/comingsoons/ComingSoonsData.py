@@ -43,7 +43,7 @@ class ComingSoonsData(BaseDataflowData):
 
         self.deleteTheseRows(self.STARTING_TABLE_NAME)
 
-        ### PER CINEMA
+        ### PER CINEMA ADDITIONAL TIE-BREAKS
 
         # Cinema City
 
