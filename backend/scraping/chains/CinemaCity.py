@@ -69,8 +69,7 @@ class CinemaCity(BaseCinema):
                         self.english_title = self.hebrew_title
 
                     if "מדובב לרוסית" in self.hebrew_title:
-                        self.dub_language = "Russian"
-                        self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב לרוסית\s*[-–—־]?\s*", "", self.hebrew_title).strip()
+                        continue
                     elif "מדובב לצרפתית" in self.hebrew_title:
                         self.dub_language = "French"
                         self.hebrew_title = re.sub(r"\s*[-–—־]?\s*מדובב לצרפתית\s*[-–—־]?\s*", "", self.hebrew_title).strip()

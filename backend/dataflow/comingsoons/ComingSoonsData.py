@@ -49,4 +49,7 @@ class ComingSoonsData(BaseDataflowData):
             chunk = self.delete_these[i : i + 200]
             self.supabase.table(self.TABLE_NAME).delete().in_(self.PRIMARY_KEY, chunk).execute()
 
+        # Per-theatre sorting/removing
+        comingSoons = self.selectAll(self.TABLE_NAME)
+
         normalizedEnglishTitle = self.normalizeTitle(english_title)

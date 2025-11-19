@@ -154,15 +154,12 @@ if __name__ == "__main__":
 
 # Finish cinematheques:
 #
-# Handle 3D / 3D HDR in titles (remove from ComingSoons, handle in NowPlayings)
-# Skip russian titles throughout?
+# When AVATAR is now playing -
+# Handle 3D / 3D HDR Titles (specifically also for cinema city, we're already doing screening_type for vip/etc/etc... but now
+# it can also be "VIP + 3D" or "Prime + HFR" ****** DO WE NEED TO MAKE A NEW SCREENING_TECH ALONGSIDE SCREENING_TYPE? ******)
 #
 
 #########
-#
-# Finish above comments
-#
-# See how ComingSoonsData is actually handling data so far (testingSoons vs testingSoons2)
 #
 # Rerun cinemas if they fail, try rerunning them 2 additional times
 #     Set up supabase chart of done/not done after each actually finishes cleanly so we can see which didn't

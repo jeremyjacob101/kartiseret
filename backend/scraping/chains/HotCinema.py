@@ -86,8 +86,7 @@ class HotCinema(BaseCinema):
                                 self.dub_language = "Hebrew"
                                 self.hebrew_title = self.hebrew_title.replace("מדובב לעברית", "").strip()
                             if "מדובב לרוסית" in self.hebrew_title:
-                                self.dub_language = "Russian"
-                                self.hebrew_title = self.hebrew_title.replace("מדובב לרוסית", "").strip()
+                                continue
 
                             row_xpath = f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]"
                             row_element = self.element(row_xpath)

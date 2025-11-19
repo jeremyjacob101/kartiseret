@@ -41,8 +41,8 @@ class DataflowHelpers:
         title = title.lower()
         title = re.sub(r"[-–—:?!]+", " ", title)
         title = re.sub(r"[^a-z0-9 ]+", "", title)
-        title = re.sub(r"\s+", " ", title).strip()
-        return title
+        title = re.sub(r"\s+", " ", title)
+        return title.strip()
 
     def dateToDate(self, v):
         if isinstance(v, date):

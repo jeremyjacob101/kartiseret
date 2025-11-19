@@ -32,12 +32,8 @@ class LCsoon(BaseCinema):
             self.release_date = self.release_dates[idx]
 
             self.english_title = str(self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text)
-            if "dubbed" in self.english_title.lower():
-                self.english_title = re.sub(r"\b[dD]ubbed\b", "", self.english_title).strip()
-                self.hebrew_title = self.hebrew_title.replace("מדובב", "").strip()
-            if "dubbded" in self.english_title.lower():
-                self.english_title = re.sub(r"\b[dD]ubbded\b", "", self.english_title).strip()
-                self.hebrew_title = self.hebrew_title.replace("מדובב", "").strip()
+            if "dubbed" in self.english_title.lower() or "dubbded" in self.english_title.lower():
+                continue
 
             self.release_year = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[1]").text
             self.release_year = int(m.group(0)) if (m := re.search(r"\b(19|20)\d{2}\b", self.release_year)) else None
