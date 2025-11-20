@@ -123,7 +123,7 @@ class DataflowHelpers:
         t = t.replace("-", " ")
         t = re.sub(r"\s+", " ", t).strip()
         t = re.sub(r"[^\w\s\u0590-\u05FF]", "", t)
-        t = re.sub(r"שנים$", "שנה", t)
+        t = re.sub(r"\bשנים\b", "שנה", t)
         t = t.replace(" ", "")
 
         return t

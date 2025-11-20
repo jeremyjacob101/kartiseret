@@ -29,7 +29,7 @@ class CCsoon(BaseCinema):
         for cinema_block in range(1, self.lenElements("#moviesContainer > div", "row mainThumbWrapper") + 1):
             for film_card in range(1, self.lenElements(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div") + 1):
                 self.hebrew_title = self.element(f"/html/body/div[4]/div/div/div/div[1]/div[2]/div/div[{cinema_block}]/div[{film_card}]/div/div/div[1]/div/h2").get_attribute("textContent").strip()
-                if "מדובב לרוסית" in self.hebrew_title or "בתרגום לרוסית" in self.hebrew_title or "מדובב לצרפתית" in self.hebrew_title or "בתרגום לצרפתית" in self.hebrew_title or "מדובב" in self.hebrew_title or "HFR" in self.hebrew_title:
+                if "מדובב לרוסית" in self.hebrew_title or "בתרגום לרוסית" in self.hebrew_title or "מדובב לצרפתית" in self.hebrew_title or "בתרגום לצרפתית" in self.hebrew_title or "סינמה קידס" in self.hebrew_title or "סינמה cook" in self.hebrew_title or "מדובב" in self.hebrew_title or "HFR" in self.hebrew_title:
                     continue
                 elif "תלת מימד" in self.hebrew_title:
                     self.hebrew_title = re.sub(r"\s*[-–—־]?\s*תלת מימד\s*[-–—־]?\s*", "", self.hebrew_title).strip()

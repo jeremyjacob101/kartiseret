@@ -34,7 +34,9 @@ class YPsoon(BaseCinema):
 
             self.english_title = self.element("/html/body/div[5]/section[1]/div/div[2]/div[1]/div/ul/li/h1").get_attribute("textContent").strip()
             self.hebrew_title = self.element("/html/body/div[5]/section[2]/div/div[2]/div[1]/dl/div[1]/dd").get_attribute("textContent").strip()
-
+            if "gaming live" in self.hebrew_title.lower():
+                continue
+            
             release_year = self.element("#more-info > div > div:nth-child(2) > div.col-md-8.col-sm-6.col-xs-12 > dl > div:nth-child(5) > dd").get_attribute("textContent").strip()
             self.release_year = int(m.group(0)) if (m := re.search(r"\b\d{4}\b", release_year)) else None
 
