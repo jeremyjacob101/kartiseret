@@ -9,8 +9,8 @@ from backend.config.runners import runCinemaType, runDataflows
 def main():
     setup_logging("ERROR")
 
-    # runCinemaType("testingMovies")
-    # runCinemaType("testingTheques")
+    runCinemaType("testingMovies")
+    runCinemaType("testingTheques")
     # runCinemaType("testingSoons")
 
     # runDataflows()
