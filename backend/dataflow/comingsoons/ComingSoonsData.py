@@ -25,7 +25,6 @@ class ComingSoonsData(BaseDataflowData):
             canon_eng = self.fuzzy_key(row["english_title"], cache=fuzzy_cache)
             canon_heb = self.fuzzy_key(row["hebrew_title"], cache=fuzzy_cache)
             key = (canon_eng, canon_heb)
-            # key = (row.get("english_title"), row.get("hebrew_title"))
             groups[key].append(row)
 
         for key, rows in groups.items():
