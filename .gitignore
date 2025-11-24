@@ -13,7 +13,6 @@ __pycache__/
 *$py.class
 
 # VENV
-/venv/
 venv/
 
 # .VSCODE
@@ -21,12 +20,6 @@ venv/
 
 # .env
 .env
-/.env
-env
-env/
-/env
 
 # debugging artifacts
-/artifacts
-artifacts/
 utils/logger_artifacts/
