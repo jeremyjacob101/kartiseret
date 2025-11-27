@@ -29,7 +29,10 @@ class HOLONtheque(BaseCinema):
 
             self.hebrew_title = self.element("/html/body/div[5]/div[1]/div/h1").text.strip()
             if self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2") == 3:
-                self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2[3]/b").text.strip()
+                try:
+                    self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2[3]/b").text.strip()
+                except:
+                    self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2[3]/strong").text.strip()
             elif self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2") == 2:
                 try:
                     self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/p[1]/strong").text.strip()
