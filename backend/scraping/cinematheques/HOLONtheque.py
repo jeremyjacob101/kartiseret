@@ -45,7 +45,10 @@ class HOLONtheque(BaseCinema):
                 if self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b") == 6 or self.lenElements("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b") == 5:
                     self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b[5]").text.strip()
                 else:
-                    self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b[4]").text.strip()
+                    try:
+                        self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/b[4]").text.strip()
+                    except:
+                        self.english_title = self.element("/html/body/div[5]/div[3]/section[1]/div/div/div[2]/div/div/h2/strong[3]").text.strip()
             else:
                 self.english_title = self.hebrew_title
 
@@ -67,4 +70,5 @@ class HOLONtheque(BaseCinema):
                     self.screening_city = self.SCREENING_CITY
                     self.screening_type = "Regular"
 
+                    self.printRow()
                     self.appendToGatheringInfo()

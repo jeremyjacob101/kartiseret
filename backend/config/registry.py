@@ -33,12 +33,12 @@ REGISTRY = {
     ],
     "testingTheques": [
         # JLEMtheque,
-        SSCtheque,
+        # SSCtheque,
         # JAFCtheque,
         # HAIFtheque,
         # HERZtheque,
         # TLVtheque,
-        # HOLONtheque,
+        HOLONtheque,
     ],
     "testingSoons": [
         CCsoon,
