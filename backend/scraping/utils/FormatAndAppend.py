@@ -1,3 +1,6 @@
+from pprint import pprint
+
+
 def formatAndUpload(self):
     info = getattr(self, "gathering_info", {})
     if not isinstance(info, dict):
@@ -5,6 +8,11 @@ def formatAndUpload(self):
 
     active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
     max_rows = max((len(info[name]) for name in active_columns), default=0)
+
+    print("Supabase table name:", self.supabase_table_name)
+    print("Active columns:", active_columns)
+    print("Max rows:", max_rows)
+    print("Raw gathering_info keys:", list(info.keys()))
 
     rows = []
     for row_index in range(max_rows):
@@ -15,6 +23,11 @@ def formatAndUpload(self):
             if (isinstance(value, str) and (value := value.strip())) or (value is not None and (not hasattr(value, "__len__") or len(value) > 0)):
                 row_data[column_name] = value
         rows.append(row_data)
+
+    print("Rows to insert ({} total):".format(len(rows)))
+    for i, row in enumerate(rows):
+        print(f"Row {i}:")
+        pprint(row)
 
     return self.supabase.table(self.supabase_table_name).insert(rows).execute()
 
