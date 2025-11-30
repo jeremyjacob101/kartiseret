@@ -70,5 +70,4 @@ class HOLONtheque(BaseCinema):
                     self.screening_city = self.SCREENING_CITY
                     self.screening_type = "Regular"
 
-                    self.printRow()
                     self.appendToGatheringInfo()

@@ -37,8 +37,8 @@ REGISTRY = {
         # JAFCtheque,
         # HAIFtheque,
         # HERZtheque,
-        # TLVtheque,
-        HOLONtheque,
+        TLVtheque,
+        # HOLONtheque,
     ],
     "testingSoons": [
         CCsoon,

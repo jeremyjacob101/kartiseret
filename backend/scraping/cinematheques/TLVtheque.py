@@ -17,7 +17,10 @@ class TLVtheque(BaseCinema):
             date_string = current_date.strftime("%Y-%m-%d")
             self.driver.get(f"https://www.cinema.co.il/en/shown/?date={date_string}")
             self.zoomOut(50, 2)
-            self.driver.execute_script("arguments[0].remove();", self.element("/html/body/div[5]/div[1]/div[2]/div[4]/div/div[1]"))
+            try:
+                self.driver.execute_script("arguments[0].remove();", self.element("/html/body/div[5]/div[1]/div[2]/div[4]/div/div[1]"))
+            except:
+                self.driver.execute_script("arguments[0].remove();", self.element("/html/body/div[3]/div[1]/div[2]/div[4]/div/div[1]"))
             self.sleep(1)
 
             for film_block in range(1, self.lenElements("/html/body/div[5]/div[1]/div[2]/div[4]/div/div/div/div[2]/div") + 1):
