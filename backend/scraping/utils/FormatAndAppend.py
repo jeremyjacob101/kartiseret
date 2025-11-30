@@ -9,11 +9,6 @@ def formatAndUpload(self):
     active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
     max_rows = max((len(info[name]) for name in active_columns), default=0)
 
-    print("Supabase table name:", self.supabase_table_name)
-    print("Active columns:", active_columns)
-    print("Max rows:", max_rows)
-    print("Raw gathering_info keys:", list(info.keys()))
-
     rows = []
     for row_index in range(max_rows):
         row_data = {}
@@ -24,7 +19,6 @@ def formatAndUpload(self):
                 row_data[column_name] = value
         rows.append(row_data)
 
-    print("Rows to insert ({} total):".format(len(rows)))
     for i, row in enumerate(rows):
         print(f"Row {i}:")
         pprint(row)
