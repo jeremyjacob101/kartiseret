@@ -1,6 +1,3 @@
-from pprint import pprint
-
-
 def formatAndUpload(self):
     info = getattr(self, "gathering_info", {})
     if not isinstance(info, dict):
@@ -18,10 +15,6 @@ def formatAndUpload(self):
             if (isinstance(value, str) and (value := value.strip())) or (value is not None and (not hasattr(value, "__len__") or len(value) > 0)):
                 row_data[column_name] = value
         rows.append(row_data)
-
-    for i, row in enumerate(rows):
-        print(f"Row {i}:")
-        pprint(row)
 
     return self.supabase.table(self.supabase_table_name).insert(rows).execute()
 
