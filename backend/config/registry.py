@@ -25,11 +25,11 @@ from backend.dataflow.comingsoons.ComingSoonsData import ComingSoonsData
 REGISTRY = {
     "testingMovies": [
         CinemaCity,
-        YesPlanet,
-        LevCinema,
-        RavHen,
-        MovieLand,
-        HotCinema,
+        # YesPlanet,
+        # LevCinema,
+        # RavHen,
+        # MovieLand,
+        # HotCinema,
     ],
     "testingTheques": [
         JLEMtheque,
