@@ -18,11 +18,13 @@ class TLVtheque(BaseCinema):
             self.driver.get(f"https://www.cinema.co.il/en/shown/?date={date_string}")
             self.zoomOut(50, 2)
             try:
-                print("clicked 1")
+                print("clicked 1a")
                 self.driver.execute_script("arguments[0].remove();", self.element("/html/body/div[5]/div[1]/div[2]/div[4]/div/div[1]"))
+                print("clicked 1b")
             except:
-                print("clicked 2")
+                print("clicked 2a")
                 self.driver.execute_script("arguments[0].remove();", self.element("/html/body/div[3]/div[1]/div[2]/div[4]/div/div[1]"))
+                print("clicked 2b")
             self.sleep(1)
 
             for film_block in range(1, self.lenElements("/html/body/div[5]/div[1]/div[2]/div[4]/div/div/div/div[2]/div") + 1):
