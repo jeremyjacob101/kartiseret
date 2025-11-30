@@ -29,6 +29,9 @@ class SSCtheque(BaseCinema):
             else:
                 continue
 
+            if (not re.search(r"[\u0590-\u05FF]", self.hebrew_title) is not None and re.search(r"[A-Za-z]", self.hebrew_title) is not None) and (not re.search(r"[A-Za-z]", self.english_title) is not None and re.search(r"[\u0590-\u05FF]", self.english_title) is not None):
+                self.hebrew_title, self.english_title = self.english_title, self.hebrew_title
+
             try:
                 date_of_showing = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[2]/div/div/div/div/div[1]/div/div[2]/div/div[2]/div/h2").text.strip()
             except:
@@ -50,14 +53,23 @@ class SSCtheque(BaseCinema):
             if num_text_blocks == 1:
                 if "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[0].strip():
                     full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[0].strip()
-                elif "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip():
-                    full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip()
+                else:
+                    try:
+                        full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p").get_attribute("textContent").split("\n")[1].strip()
+                    except:
+                        full_info = ""
             elif num_text_blocks >= 2:
                 if "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[1]").get_attribute("textContent").split("\n")[0].strip():
                     full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[1]").get_attribute("textContent").split("\n")[0].strip()
                 else:
                     try:
-                        full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
+                        if "|" in self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip():
+                            full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[1].strip()
+                        else:
+                            try:
+                                full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]/span").get_attribute("textContent").split("\n")[0].strip()
+                            except:
+                                full_info = ""
                     except:
                         try:
                             full_info = self.element(f"/html/body/div[3]/div[3]/div/div/div/div/div[{film_card}]/div/div[4]/div/p[2]").get_attribute("textContent").split("\n")[1].strip()
@@ -69,7 +81,7 @@ class SSCtheque(BaseCinema):
 
             info_parts = [part.strip() for part in full_info.split("|")]
             for part in info_parts:
-                if "דקות" in part:
+                if "דקות" in part or "דק׳" in part:
                     match = re.search(r"\d+", part)
                     if match:
                         self.runtime = int(match.group())
