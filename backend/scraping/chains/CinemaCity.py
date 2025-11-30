@@ -106,4 +106,4 @@ class CinemaCity(BaseCinema):
                         self.english_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=en"
                         self.hebrew_href = f"https://tickets.cinema-city.co.il/order/{event_id}?lang=he"
 
-                        self.appendToGatheringInfo()
+                        self.appendToGatheringInfo(True)
