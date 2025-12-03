@@ -1,0 +1,61 @@
+class ComingSoonsHelpers:
+    def comingSoonsSortKey(self, row):
+        d_key = self.dateToDate(row.get("release_date"))
+        runtime = row.get("runtime")
+        good_runtime = (runtime is not None) and (runtime not in getattr(self, "fake_runtimes", set()))
+        has_release_year = bool(row.get("release_year"))
+        has_directed_by = bool((row.get("directed_by") or "").strip())
+
+        return (
+            d_key,
+            0 if good_runtime else 1,
+            0 if has_release_year else 1,
+            0 if has_directed_by else 1,
+        )
+
+    def comingSoonsWriteHelpers(self, helpers_by_winner: dict[str, list[str]]) -> None:
+        for winner_id, new_helpers in helpers_by_winner.items():
+            if not new_helpers:
+                continue
+
+            existing = self.supabase.table(self.HELPER_TABLE_NAME).select("*").eq("id", winner_id).execute()
+            data = existing.data or []
+            row = (data[0] if data else None) or {"id": winner_id}
+
+            existing_values = {v for k, v in row.items() if k.startswith("helper_") and v not in (None, "", "null")}
+
+            next_slot = 1
+            while next_slot <= 20 and row.get(f"helper_{next_slot}") not in (None, "", "null"):
+                next_slot += 1
+
+            for helper_id in new_helpers:
+                if helper_id in existing_values:
+                    continue
+                if next_slot > 20:
+                    break
+                row[f"helper_{next_slot}"] = helper_id
+                next_slot += 1
+
+            self.updates.append(row)
+        self.upsertUpdates(self.HELPER_TABLE_NAME)
+
+    def comingSoonsWriteSingleHelpers(self, groups) -> None:
+        existing = self.supabase.table(self.HELPER_TABLE_NAME).select("id").execute().data or []
+        existing_ids = {r.get("id") for r in existing if r.get("id")}
+
+        for _, rows in groups.items():
+            if len(rows) != 1:
+                continue
+
+            r = rows[0]
+            rid = r[self.PRIMARY_KEY]
+            if rid in existing_ids:
+                continue
+
+            payload = {"id": rid}
+            helper = r.get("helper_id")
+            if helper not in (None, "", "null"):
+                payload["helper_1"] = helper
+
+            self.updates.append(payload)
+        self.upsertUpdates(self.HELPER_TABLE_NAME)

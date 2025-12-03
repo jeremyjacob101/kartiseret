@@ -1,7 +1,8 @@
 from backend.dataflow.utils.DataflowHelpers import DataflowHelpers, setUpSupabase, setUpOmdb
+from backend.dataflow.comingsoons.utils.ComingSoonsHelpers import ComingSoonsHelpers
 
 
-class BaseDataflowData(DataflowHelpers):
+class BaseDataflowData(DataflowHelpers, ComingSoonsHelpers):
     MAIN_TABLE_NAME: str = ""
     DUPLICATE_TABLE_NAME: str = ""
     MOVING_TO_TABLE_NAME: str = ""
