@@ -13,6 +13,9 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        setUpSupabase(self)  # Sets up supabase client for each dataflow
+        setUpOmdb(self)
+
         self.main_table_rows = self.selectAll(self.MAIN_TABLE_NAME)
         self.duplicate_table_rows = self.selectAll(self.DUPLICATE_TABLE_NAME)
         self.moving_to_table_rows = self.selectAll(self.MOVING_TO_TABLE_NAME)
@@ -23,8 +26,6 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
 
     def dataRun(self):
         try:
-            setUpSupabase(self)  # Sets up supabase client for each dataflow
-            setUpOmdb(self)
             self.logic()  # Dataflow logic
         except Exception:
             raise

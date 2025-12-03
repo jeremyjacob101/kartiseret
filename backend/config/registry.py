@@ -52,7 +52,7 @@ REGISTRY = {
 
 DATAFLOW_REGISTRY = {
     "comingSoonData": [
-        # ComingSoonsClean,
-        ComingSoonsOmdb,
+        ComingSoonsClean,
+        # ComingSoonsOmdb,
     ],
 }
