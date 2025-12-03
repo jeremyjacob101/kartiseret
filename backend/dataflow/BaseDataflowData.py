@@ -1,8 +1,8 @@
-from backend.dataflow.utils.DataflowHelpers import DataflowHelpers, setUpSupabase
+from backend.dataflow.utils.DataflowHelpers import DataflowHelpers, setUpSupabase, setUpOmdb
 
 
 class BaseDataflowData(DataflowHelpers):
-    MAIN_TABLE_NAME: str
+    MAIN_TABLE_NAME: str = ""
     DUPLICATE_TABLE_NAME: str = ""
     MOVING_TO_TABLE_NAME: str = ""
     HELPER_TABLE_NAME: str = ""
@@ -10,6 +10,7 @@ class BaseDataflowData(DataflowHelpers):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         setUpSupabase(self)  # Sets up supabase client for each dataflow
+        setUpOmdb(self)
 
         self.main_table_rows = self.selectAll(self.MAIN_TABLE_NAME)
         self.duplicate_table_rows = self.selectAll(self.DUPLICATE_TABLE_NAME)
@@ -29,6 +30,5 @@ class BaseDataflowData(DataflowHelpers):
     def dataRun(self):
         try:
             self.logic()  # Dataflow logic
-            self.upsertUpdates()
         except Exception:
             raise

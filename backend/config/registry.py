@@ -19,7 +19,8 @@ from backend.scraping.comingsoons.LCsoon import LCsoon
 from backend.scraping.comingsoons.MLsoon import MLsoon
 from backend.scraping.comingsoons.YPsoon import YPsoon
 
-from backend.dataflow.comingsoons.ComingSoonsData import ComingSoonsData
+from backend.dataflow.comingsoons.ComingSoonsClean import ComingSoonsClean
+from backend.dataflow.comingsoons.ComingSoonsOmdb import ComingSoonsOmdb
 
 
 REGISTRY = {
@@ -51,6 +52,7 @@ REGISTRY = {
 
 DATAFLOW_REGISTRY = {
     "comingSoonData": [
-        ComingSoonsData,
+        # ComingSoonsClean,
+        ComingSoonsOmdb,
     ],
 }

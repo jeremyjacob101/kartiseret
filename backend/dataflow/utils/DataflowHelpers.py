@@ -8,6 +8,8 @@ def setUpSupabase(self):
     key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
     self.supabase = create_client(url, key)
 
+def setUpOmdb(self):
+    self.OMDB_API_KEY = os.environ.get("OMDB_API_KEY")
 
 class DataflowHelpers:
     def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:

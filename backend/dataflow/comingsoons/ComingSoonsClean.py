@@ -2,7 +2,7 @@ from backend.dataflow.BaseDataflowData import BaseDataflowData
 from collections import defaultdict
 
 
-class ComingSoonsData(BaseDataflowData):
+class ComingSoonsClean(BaseDataflowData):
     MAIN_TABLE_NAME = "testingSoons"
     HELPER_TABLE_NAME = "testingSoonsHelpers"
 
