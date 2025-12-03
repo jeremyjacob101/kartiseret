@@ -4,9 +4,11 @@ import requests
 
 class ComingSoonsOmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
+    CHOSEN_IMDB_ID = 0
 
     def logic(self):
         for row in self.main_table_rows:
+            self.CHOSEN_IMDB_ID = 0
             english_title = str(row["english_title"]) if row.get("english_title") not in (None, "", "null") else ""
             release_year = int(row["release_year"]) if row.get("release_year") not in (None, "", "null") else None
             row_director = str(row["directed_by"]) if row.get("directed_by") not in (None, "", "null") else ""
@@ -40,8 +42,8 @@ class ComingSoonsOmdb(BaseDataflow):
                     title_match = first.get("Title", "").lower().strip() == english_title.lower().strip()
                     year_match = release_year is not None and first.get("Year", "").isdigit() and abs(int(first["Year"]) - release_year) <= 0
                     if title_match and year_match:
-                        CHOSEN_IMDB_ID = first.get("imdbID")
-                        print(f"Exact match shortcut: {english_title} ({release_year}) -> {CHOSEN_IMDB_ID}")
+                        self.CHOSEN_IMDB_ID = first.get("imdbID")
+                        print(f"Exact match shortcut: {english_title} ({release_year}) -> {self.CHOSEN_IMDB_ID}")
                         # skip entire rest of the logic for this movie
                         break
 
@@ -69,6 +71,8 @@ class ComingSoonsOmdb(BaseDataflow):
 
             if not potential_imdb_ids:
                 print(f"No OMDb candidates found for {english_title!r}")
+                if self.CHOSEN_IMDB_ID:
+                    print(f"chosen: {self.CHOSEN_IMDB_ID}")
                 continue  # or handle however you want
 
             # ---------- 2) fetch full details for each candidate ----------
@@ -129,6 +133,6 @@ class ComingSoonsOmdb(BaseDataflow):
             if chosen_imdb_id is None:
                 chosen_imdb_id = potential_imdb_ids[0]
                 print(f"No director/runtime hit; falling back to {chosen_imdb_id}")
-            if CHOSEN_IMDB_ID is None:
-                CHOSEN_IMDB_ID = chosen_imdb_id
-            print(f"FINAL CHOSEN_IMDB_ID for {english_title!r}: {CHOSEN_IMDB_ID}")
+            if self.CHOSEN_IMDB_ID is None:
+                self.CHOSEN_IMDB_ID = chosen_imdb_id
+            print(f"FINAL CHOSEN_IMDB_ID for {english_title!r}: {self.CHOSEN_IMDB_ID}")
