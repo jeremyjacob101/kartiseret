@@ -109,6 +109,31 @@ class DataflowHelpers:
 
             self.supabase.table(self.HELPER_TABLE_NAME).upsert(row).execute()
 
+
+    def comingSoonsWriteSingleHelpers(self, groups) -> None:
+        existing = self.supabase.table(self.HELPER_TABLE_NAME).select("id").execute().data or []
+        existing_ids = {r.get("id") for r in existing if r.get("id")}
+
+        to_upsert = []
+        for _, rows in groups.items():
+            if len(rows) != 1:
+                continue
+
+            r = rows[0]
+            rid = r[self.PRIMARY_KEY]
+            if rid in existing_ids:
+                continue
+
+            payload = {"id": rid}
+            helper = r.get("helper_id")
+            if helper not in (None, "", "null"):
+                payload["helper_1"] = helper
+
+            to_upsert.append(payload)
+
+        for i in range(0, len(to_upsert), 500):
+            self.supabase.table(self.HELPER_TABLE_NAME).upsert(to_upsert[i : i + 500]).execute()
+
     def upsertUpdates(self):
         if self.updates:
             self.supabase.table(self.MAIN_TABLE_NAME).upsert(self.updates).execute()

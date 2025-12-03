@@ -45,4 +45,5 @@ class ComingSoonsData(BaseDataflowData):
                 helpers_by_winner[winner_id].append(r.get("helper_id"))
 
         self.comingSoonsWriteHelpers(helpers_by_winner)
+        self.comingSoonsWriteSingleHelpers(groups)
         self.deleteTheseRows(self.MAIN_TABLE_NAME)
