@@ -107,14 +107,13 @@ class DataflowHelpers:
                 row[f"helper_{next_slot}"] = helper_id
                 next_slot += 1
 
-            self.supabase.table(self.HELPER_TABLE_NAME).upsert(row).execute()
-
+            self.updates.append(row)
+        self.upsertUpdates(self.HELPER_TABLE_NAME)
 
     def comingSoonsWriteSingleHelpers(self, groups) -> None:
         existing = self.supabase.table(self.HELPER_TABLE_NAME).select("id").execute().data or []
         existing_ids = {r.get("id") for r in existing if r.get("id")}
 
-        to_upsert = []
         for _, rows in groups.items():
             if len(rows) != 1:
                 continue
@@ -129,14 +128,12 @@ class DataflowHelpers:
             if helper not in (None, "", "null"):
                 payload["helper_1"] = helper
 
-            to_upsert.append(payload)
+            self.updates.append(payload)
+            self.upsertUpdates()
 
-        for i in range(0, len(to_upsert), 500):
-            self.supabase.table(self.HELPER_TABLE_NAME).upsert(to_upsert[i : i + 500]).execute()
-
-    def upsertUpdates(self):
+    def upsertUpdates(self, table_name: str):
         if self.updates:
-            self.supabase.table(self.MAIN_TABLE_NAME).upsert(self.updates).execute()
+            self.supabase.table(table_name).upsert(self.updates).execute()
         self.updates = []
 
     def canonicalize_title(self, title):

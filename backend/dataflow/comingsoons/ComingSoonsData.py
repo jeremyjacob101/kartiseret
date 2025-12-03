@@ -15,7 +15,7 @@ class ComingSoonsData(BaseDataflowData):
 
             self.updates.append({"id": row["id"], "english_title": row["english_title"], "hebrew_title": row.get("hebrew_title")})
 
-        self.upsertUpdates()
+        self.upsertUpdates(self.MAIN_TABLE_NAME)
         self.deleteTheseRows(self.MAIN_TABLE_NAME)
 
         groups, helpers_by_winner = defaultdict(list), defaultdict(list)
