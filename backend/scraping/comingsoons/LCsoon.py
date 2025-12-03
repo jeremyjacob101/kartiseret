@@ -25,6 +25,8 @@ class LCsoon(BaseCinema):
             self.sleep(0.5)
 
             self.hebrew_title = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text.strip()
+            if self.hebrew_title.endswith("אנגלית"):
+                self.hebrew_title = self.hebrew_title[: -len("אנגלית")].rstrip()
 
             self.driver.get(href)
             self.sleep(0.5)

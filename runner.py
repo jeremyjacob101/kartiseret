@@ -9,11 +9,11 @@ from backend.config.runners import runCinemaType, runDataflows
 def main():
     setup_logging("ERROR")
 
-    runCinemaType("testingMovies")
-    runCinemaType("testingTheques")
-    runCinemaType("testingSoons")
+    # runCinemaType("testingMovies")
+    # runCinemaType("testingTheques")
+    # runCinemaType("testingSoons")
 
-    # runDataflows()
+    runDataflows()
 
 
 if __name__ == "__main__":

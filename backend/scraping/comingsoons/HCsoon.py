@@ -43,6 +43,7 @@ class HCsoon(BaseCinema):
                 continue
 
             self.hebrew_title = re.sub(r"^\s*סינמה נוסטלגיה\s*[-–—]\s*", "", self.hebrew_title).strip()
+            self.hebrew_title = re.sub(r"^\s*סינמה נוסטלגי\s*[-–—]\s*", "", self.hebrew_title).strip()
             self.hebrew_title = re.sub(r"\s*אנגלית\s*$", "", self.hebrew_title).strip()
 
             raw_text = (self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[2]").text or "").strip()

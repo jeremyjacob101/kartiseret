@@ -29,10 +29,16 @@ class MLsoon(BaseCinema):
                 continue
             if "3D" in self.hebrew_title:
                 self.hebrew_title = self.hebrew_title.replace("3D", "").strip()
-            
+            if "HFR" in self.hebrew_title:
+                self.hebrew_title = self.hebrew_title.replace("HFR", "").strip()
+            if "תלת מימד" in self.hebrew_title:
+                self.hebrew_title = self.hebrew_title.replace("תלת מימד", "").strip()
+
             self.english_title = self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[2]/span[2]").text.strip()
             if "3D" in self.english_title:
                 self.english_title = self.english_title.replace("3D", "").strip()
+            if "HFR" in self.english_title:
+                self.english_title = self.english_title.replace("HFR", "").strip()
             if not self.english_title:
                 self.english_title = self.hebrew_title
 
