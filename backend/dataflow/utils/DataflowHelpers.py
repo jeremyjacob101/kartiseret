@@ -1,33 +1,12 @@
 from datetime import datetime, date
-from supabase import create_client
-import os, re, unicodedata
+import re, unicodedata
 
-
-def setUpSupabase(self):
-    url = os.environ.get("SUPABASE_URL")
-    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-    self.supabase = create_client(url, key)
-
-def setUpOmdb(self):
-    self.OMDB_API_KEY = os.environ.get("OMDB_API_KEY")
 
 class DataflowHelpers:
-    def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:
-        if not table:
-            return []
-
-        all_rows: list[dict] = []
-        start = 0
-
-        while True:
-            end = start + batch_size - 1
-            rows = self.supabase.table(table).select(select).range(start, end).execute().data or []
-            all_rows.extend(rows)
-            if len(rows) < batch_size:
-                break
-            start += batch_size
-
-        return all_rows
+    def dateToDate(self, v):
+        if isinstance(v, date):
+            return v
+        return datetime.fromisoformat(str(v)).date()
 
     def removeBadTitle(self, title: str) -> bool:
         if not isinstance(title, str) or title.strip() == "":
@@ -53,10 +32,22 @@ class DataflowHelpers:
         title = re.sub(r"\s+", " ", title)
         return title.strip()
 
-    def dateToDate(self, v):
-        if isinstance(v, date):
-            return v
-        return datetime.fromisoformat(str(v)).date()
+    def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:
+        if not table:
+            return []
+
+        all_rows: list[dict] = []
+        start = 0
+
+        while True:
+            end = start + batch_size - 1
+            rows = self.supabase.table(table).select(select).range(start, end).execute().data or []
+            all_rows.extend(rows)
+            if len(rows) < batch_size:
+                break
+            start += batch_size
+
+        return all_rows
 
     def deleteTheseRows(self, table_name: str):
         for i in range(0, len(self.delete_these), 200):

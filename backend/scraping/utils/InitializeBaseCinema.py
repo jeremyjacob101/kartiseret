@@ -27,10 +27,11 @@ def build_chrome(headless: bool = True):
     return webdriver.Chrome(options=options)
 
 
-class InitializeBase:
+class InitializeBaseCinema:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
+
 
         self.today_date = datetime.today()
         self.current_year = str(datetime.now(pytz.timezone("Asia/Jerusalem")).year)

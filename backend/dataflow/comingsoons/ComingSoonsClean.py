@@ -1,8 +1,8 @@
-from backend.dataflow.BaseDataflowData import BaseDataflowData
+from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
 
 
-class ComingSoonsClean(BaseDataflowData):
+class ComingSoonsClean(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
     HELPER_TABLE_NAME = "testingSoonsHelpers"
 
