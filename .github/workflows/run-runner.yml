@@ -98,7 +98,7 @@ jobs:
           set -e
           if [ "${{ github.event.inputs.debug }}" = "true" ]; then set -x; fi
           . .venv/bin/activate
-          python runner.py ${{ github.event.inputs.args }}
+          python backend/config/runner.py ${{ github.event.inputs.args }}
       
       - name: Check for artifacts
         id: artifacts-exist

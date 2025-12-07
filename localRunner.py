@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
 from utils.logger import setup_logging
-from backend.config.runners import runCinemaType, runDataflows
+from localRunners import runCinemaType, runDataflows
 
 
 def main():
