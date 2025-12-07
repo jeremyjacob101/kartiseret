@@ -12,8 +12,8 @@ on:
         type: boolean
         required: false
         default: false
-  # schedule:
-  #   - cron: "0 05 * * *"
+  schedule:
+    - cron: "0 16 * * 2" # Runs every Tuesday at 6pm Israel time
 
 jobs:
   run:
