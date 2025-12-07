@@ -1,5 +1,6 @@
-import os
 from supabase import create_client
+from openai import OpenAI
+import os
 
 
 def setUpSupabase(self):
@@ -10,6 +11,16 @@ def setUpSupabase(self):
 
 def setUpOmdb(self):
     self.OMDB_API_KEY = os.environ.get("OMDB_API_KEY")
+
+def setUpOpenAI(self):
+    self.OPENAI_TEST_KEY_2 = os.environ.get("OPENAI_TEST_KEY_2")
+    self.OPENAI_TEST_ADMIN_KEY_2 = os.environ.get("OPENAI_TEST_ADMIN_KEY_2")
+    
+    key_to_use = self.OPENAI_TEST_KEY_2 or self.OPENAI_TEST_ADMIN_KEY_2
+    if not key_to_use:
+        raise RuntimeError("No OpenAI API key found in environment variables.")
+    
+    self.openAiClient = OpenAI(api_key=key_to_use)
 
 
 class InitializeBaseDataflow:

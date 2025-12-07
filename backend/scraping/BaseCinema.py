@@ -21,9 +21,9 @@ class BaseCinema(ScrapingHelpers, ScrapedFixes, InitializeBaseCinema, AppendToIn
 
     def scrape(self):
         try:
-            setUpSupabase(self)  # Sets up supabase client for each cinema
-            navigate(self)  # Navigate to website
-            self.logic()  # Scraping logic
-            formatAndUpload(self)  # Formatting and uploading to supabase
+            setUpSupabase(self)
+            navigate(self)
+            self.logic()
+            formatAndUpload(self)
         except Exception:
             raise
