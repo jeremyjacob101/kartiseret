@@ -42,7 +42,7 @@ class ComingSoonsOpenAI(BaseDataflow):
 
                     guessed_id = self.guess_imdb_id(desc_parts)
                     self.CHOSEN_IMDB_ID = guessed_id
-                    print(f"{english_title:20}: imdb.com/title/{guessed_id}")
+                    print(f"{english_title:20}: https://www.imdb.com/title/{guessed_id}")
                 except Exception as e:
                     print("Error guessing IMDb ID:", e)
             else:
