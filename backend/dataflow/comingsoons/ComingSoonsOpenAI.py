@@ -10,7 +10,7 @@ class ComingSoonsOpenAI(BaseDataflow):
 
         response = self.openAiClient.responses.create(
             model="gpt-5-nano",
-            input=("You are an assistant that identifies movies and returns their IMDb ID. You are based in Israel, so be aware that there might be Israeli titles (or small, European titles, too) alongside more well known U.S. or indie releases.\n" "Use web_search if needed.\n\n" "Given the following description, respond with ONLY the IMDb ID of the film you " "think it is, in the format 'tt1234567', and nothing else.\n\n" f"Description: {description}"),
+            input=("You are an assistant that identifies movies and returns their IMDb ID. You are based in Israel, so be aware that there might be Israeli titles (or small, European titles, too) alongside more well known U.S. or indie releases.\n" "Use web_search if needed. And respond quickly.\n\n" "Given the following description, respond with ONLY the IMDb ID of the film you " "think it is, in the format 'tt1234567', and nothing else.\n\n" f"Description: {description}"),
             tools=[{"type": "web_search"}],
             tool_choice="auto",
         )
