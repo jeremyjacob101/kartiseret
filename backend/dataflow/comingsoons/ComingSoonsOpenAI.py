@@ -38,7 +38,7 @@ class ComingSoonsOpenAI(BaseDataflow):
                     if row_runtime:
                         desc_parts.append(f"{row_runtime} min")
                     if hebrew_title:
-                        desc_parts.append(f"{hebrew_title} min")
+                        desc_parts.append(f"{hebrew_title}")
 
                     guessed_id = self.guess_imdb_id(desc_parts)
                     self.CHOSEN_IMDB_ID = guessed_id
