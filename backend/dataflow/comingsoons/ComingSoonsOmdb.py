@@ -108,7 +108,7 @@ class ComingSoonsOmdb(BaseDataflow):
 
         deduped = []
         for imdb_id, rows in grouped.items():
-            rows_sorted = sorted(rows, key=self.comingSoonsDedupeSortKey)
+            rows_sorted = sorted(rows, key=self.comingSoonsFinalDedupeSortKey)
             best = rows_sorted[0]
 
             if (best.get("hebrew_title") or "").strip() in ("", "null"):
