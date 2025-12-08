@@ -38,7 +38,7 @@ REGISTRY = {
         SSCtheque,
         JAFCtheque,
         HAIFtheque,
-        HERZtheque,
+        # HERZtheque,
         TLVtheque,
         HOLONtheque,
     ],
