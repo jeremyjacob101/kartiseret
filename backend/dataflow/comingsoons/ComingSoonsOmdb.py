@@ -4,12 +4,13 @@ import requests
 
 class ComingSoonsOmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
+    MOVING_TO_TABLE_NAME = "testingFinalSoons"
     HELPER_TABLE_NAME = "testingIMDbFixes"
 
     def logic(self):
         for row in self.main_table_rows:
-            self.load_row(row)
-            print(f"\n{self.english_title}")
+            self.reset_soon_row_state()
+            self.load_soon_row(row)
 
             for fix_row in self.helper_table_rows:
                 title_fix = (fix_row.get("title_fix") or "").strip().lower()
@@ -21,9 +22,7 @@ class ComingSoonsOmdb(BaseDataflow):
 
             if self.potential_chosen is None:
                 for page in range(1, 5):
-                    url = f"http://www.omdbapi.com/?apikey={self.OMDB_API_KEY}&s={self.english_title}&type=movie&page={page}"
-                    data = requests.get(url).json()
-
+                    data = requests.get(f"http://www.omdbapi.com/?apikey={self.OMDB_API_KEY}&s={self.english_title}&type=movie&page={page}").json()
                     if data.get("Response") == "False":
                         break
 
@@ -100,5 +99,5 @@ class ComingSoonsOmdb(BaseDataflow):
                 if self.potential_chosen is None:
                     self.potential_chosen = self.potential_imdb_ids[0]
 
-            self.CHOSEN_IMDB_ID = self.potential_chosen
-            print(self.CHOSEN_IMDB_ID)
+            self.updates.append({"title_fix": self.english_title, "imdbID": self.potential_chosen})
+        self.upsertUpdates(self.MOVING_TO_TABLE_NAME)

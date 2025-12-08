@@ -59,3 +59,18 @@ class ComingSoonsHelpers:
 
             self.updates.append(payload)
         self.upsertUpdates(self.HELPER_TABLE_NAME)
+
+    def load_soon_row(self, row: dict):
+        def clean_str(v):
+            return str(v) if v not in (None, "", "null") else ""
+
+        def clean_int(v):
+            try:
+                return int(v) if v not in (None, "", "null") else None
+            except:
+                return None
+
+        self.english_title = clean_str(row.get("english_title"))
+        self.directed_by = clean_str(row.get("directed_by"))
+        self.release_year = clean_int(row.get("release_year"))
+        self.runtime = clean_int(row.get("runtime"))
