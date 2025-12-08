@@ -121,3 +121,26 @@ class ComingSoonsOmdb(BaseDataflow):
 
         self.updates = deduped
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+
+        for row in deduped:
+            imdb_id = row.get("imdb_id")
+            if not imdb_id:
+                continue
+
+            new_row = dict(row)
+            data = requests.get(f"http://www.omdbapi.com/?apikey={self.OMDB_API_KEY}&i={imdb_id}").json()
+            if data.get("Response") == "True":
+                new_title = data.get("Title")
+                new_poster = data.get("Poster")
+
+                if new_title and new_title.strip().upper() != "N/A":
+                    new_row["english_title"] = new_title.strip()
+                    self.english_title = new_title.strip()
+
+                if new_poster and new_poster.strip().upper() != "N/A":
+                    new_row["poster"] = new_poster.strip()
+                    self.poster = new_poster.strip()
+
+            self.updates.append(new_row)
+
+        self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
