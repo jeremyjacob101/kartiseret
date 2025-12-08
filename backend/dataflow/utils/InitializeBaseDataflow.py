@@ -37,12 +37,13 @@ class InitializeBaseDataflow:
         self.fake_runtimes = [60, 90, 100, 120, 150, 180, 200, 240, 250]
 
     def reset_soon_row_state(self):
-        self.CHOSEN_IMDB_ID = None
         self.potential_chosen = None
 
         self.english_title = None
-        self.directed_by = None
+        self.hebrew_title = None
+        self.release_date = None
         self.release_year = None
+        self.directed_by = None
         self.runtime = None
 
         self.first_search_result = None

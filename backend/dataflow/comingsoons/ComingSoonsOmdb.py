@@ -15,7 +15,7 @@ class ComingSoonsOmdb(BaseDataflow):
             for fix_row in self.helper_table_rows:
                 title_fix = (fix_row.get("title_fix") or "").strip().lower()
                 if title_fix == self.english_title.lower():
-                    fixed_id = fix_row.get("imdbID")
+                    fixed_id = fix_row.get("imdb_id")
                     if fixed_id:
                         self.potential_chosen = fixed_id
                         break
@@ -99,5 +99,5 @@ class ComingSoonsOmdb(BaseDataflow):
                 if self.potential_chosen is None:
                     self.potential_chosen = self.potential_imdb_ids[0]
 
-            self.updates.append({"title_fix": self.english_title, "imdbID": self.potential_chosen})
+            self.updates.append({"english_title": self.english_title, "hebrew_title": self.hebrew_title, "release_date": self.release_date, "imdb_id": self.potential_chosen})
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)

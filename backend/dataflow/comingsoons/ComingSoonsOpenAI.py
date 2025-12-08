@@ -3,7 +3,6 @@ from backend.dataflow.BaseDataflow import BaseDataflow
 
 class ComingSoonsOpenAI(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
-    CHOSEN_IMDB_ID = 0
 
     def guess_imdb_id(self, eng_desc_parts, heb_desc_parts):
         eng_description = ", ".join(str(p) for p in eng_desc_parts if p)
@@ -65,8 +64,8 @@ class ComingSoonsOpenAI(BaseDataflow):
                         heb_desc_parts.append(f"{hebrew_title}")
 
                     guessed_id = self.guess_imdb_id(eng_desc_parts, heb_desc_parts)
-                    self.CHOSEN_IMDB_ID = guessed_id
-                    print(f"{english_title:30}: https://www.imdb.com/title/{guessed_id}")
+                    self.potential_chosen = guessed_id
+                    print(f"{english_title:30}: https://www.imdb.com/title/{self.potential_chosen}")
                 except Exception as e:
                     print("Error guessing IMDb ID:", e)
             else:

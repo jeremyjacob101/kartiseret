@@ -1,3 +1,6 @@
+from datetime import date
+
+
 class ComingSoonsHelpers:
     def comingSoonsSortKey(self, row):
         d_key = self.dateToDate(row.get("release_date"))
@@ -70,7 +73,19 @@ class ComingSoonsHelpers:
             except:
                 return None
 
+        def clean_date(v):
+            if v in (None, "", "null"):
+                return None
+            if isinstance(v, date):
+                return v
+            try:
+                return date.fromisoformat(str(v))
+            except ValueError:
+                return None
+
         self.english_title = clean_str(row.get("english_title"))
-        self.directed_by = clean_str(row.get("directed_by"))
+        self.hebrew_title = clean_str(row.get("hebrew_title"))
+        self.release_date = clean_date(row.get("release_date"))
         self.release_year = clean_int(row.get("release_year"))
+        self.directed_by = clean_str(row.get("directed_by"))
         self.runtime = clean_int(row.get("runtime"))
