@@ -77,9 +77,9 @@ class ComingSoonsHelpers:
             if v in (None, "", "null"):
                 return None
             if isinstance(v, date):
-                return v
+                return v.isoformat()
             try:
-                return date.fromisoformat(str(v))
+                return date.fromisoformat(str(v)).isoformat()
             except ValueError:
                 return None
 
