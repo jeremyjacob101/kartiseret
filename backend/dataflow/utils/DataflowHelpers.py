@@ -19,6 +19,11 @@ class DataflowHelpers:
             return True  # Cinema
         return False
 
+    def removeRussianHebrewTitle(self, title: str) -> bool:
+        if re.search(r"[\u0400-\u04FF\u0500-\u052F\u2DE0-\u2DFF\uA640-\uA69F\u1C80-\u1C8F]", title):
+            return True  # Russian
+        return False
+
     def normalizeTitle(self, title: str) -> str:
         if not isinstance(title, str):
             return ""
