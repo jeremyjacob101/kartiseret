@@ -42,8 +42,6 @@ class ComingSoonsOpenAI(BaseDataflow):
 
     def logic(self):
         for row in self.main_table_rows:
-            self.CHOSEN_IMDB_ID = 0
-
             english_title = str(row["english_title"]) if row.get("english_title") not in (None, "", "null") else ""
             hebrew_title = str(row["hebrew_title"]) if row.get("hebrew_title") not in (None, "", "null") else ""
             release_year = int(row["release_year"]) if row.get("release_year") not in (None, "", "null") else None

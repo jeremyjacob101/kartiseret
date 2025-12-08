@@ -15,7 +15,6 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
 
         setUpSupabase(self)
         setUpOmdb(self)
-        setUpOpenAI(self)
 
         self.main_table_rows = self.selectAll(self.MAIN_TABLE_NAME)
         self.duplicate_table_rows = self.selectAll(self.DUPLICATE_TABLE_NAME)
