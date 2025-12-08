@@ -26,7 +26,7 @@ const ComingSoons = ({ selectedSnifs }) => {
 
       const filteredMovies = showtimes.filter((movie) => {
         return (
-          movie.datetext && movie.title && isValidShowtimeDate(movie.datetext)
+          movie.release_date && movie.english_title && isValidShowtimeDate(movie.release_date)
         );
       });
 
