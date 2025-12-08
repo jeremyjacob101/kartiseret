@@ -21,7 +21,7 @@ const ComingSoons = ({ selectedSnifs }) => {
   useEffect(() => {
     const loadShowtimeData = async () => {
       const { data: showtimes } = await supabase
-        .from("comingsoons")
+        .from("testingFinalSoons")
         .select("*");
 
       const filteredMovies = showtimes.filter((movie) => {
@@ -60,18 +60,18 @@ const ComingSoons = ({ selectedSnifs }) => {
         <div className="coming-soon-carousel">
           <div className="coming-soon-carousel-inner">
             {movies.map((movie, index) => {
-              const { datetext, title, poster, imdbID } = movie;
+              const { release_date, english_title, poster, imdb_id } = movie;
 
               return (
                 <div key={index} className="coming-soon-card">
                   <a
-                    href={`https://www.imdb.com/title/${imdbID}`}
+                    href={`https://www.imdb.com/title/${imdb_id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
                       src={poster || defaultPoster}
-                      alt={title}
+                      alt={english_title}
                       className="coming-soon-poster"
                       onError={(e) => {
                         e.target.onerror = null;
@@ -81,8 +81,10 @@ const ComingSoons = ({ selectedSnifs }) => {
                   </a>
 
                   <div className="coming-soon-details">
-                    <h3 className="coming-soon-title">{title}</h3>
-                    <p>{datetext.split("-").reverse().slice(0, 2).join(".")}</p>
+                    <h3 className="coming-soon-title">{english_title}</h3>
+                    <p>
+                      {release_date.split("-").reverse().slice(0, 2).join(".")}
+                    </p>
                   </div>
                 </div>
               );
