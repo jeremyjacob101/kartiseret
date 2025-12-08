@@ -26,13 +26,19 @@ const ComingSoons = ({ selectedSnifs }) => {
         .from("testingFinalSoons")
         .select("*");
 
-      const filteredMovies = showtimes.filter((movie) => {
-        return (
-          movie.release_date &&
-          movie.english_title &&
-          isValidShowtimeDate(movie.release_date)
-        );
-      });
+      const filteredMovies = showtimes
+        .filter((movie) => {
+          return (
+            movie.release_date &&
+            movie.english_title &&
+            isValidShowtimeDate(movie.release_date)
+          );
+        })
+        .sort((a, b) => {
+          const da = new Date(a.release_date);
+          const db = new Date(b.release_date);
+          return da - db;
+        });
 
       setMovies(filteredMovies);
     };
