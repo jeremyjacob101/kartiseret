@@ -7,9 +7,11 @@ const defaultPoster = "/images/defposter.jpeg";
 const isValidShowtimeDate = (date) => {
   if (!date) return false;
 
-  const [year, month, day] = date.split("-").map(Number);
-  const showtimeDate = new Date(2000 + year, month - 1, day);
+  const showtimeDate = new Date(date);
+  if (Number.isNaN(showtimeDate.getTime())) return false;
+
   const now = new Date();
+  now.setHours(0, 0, 0, 0);
 
   return showtimeDate >= now;
 };
@@ -26,7 +28,9 @@ const ComingSoons = ({ selectedSnifs }) => {
 
       const filteredMovies = showtimes.filter((movie) => {
         return (
-          movie.release_date && movie.english_title && isValidShowtimeDate(movie.release_date)
+          movie.release_date &&
+          movie.english_title &&
+          isValidShowtimeDate(movie.release_date)
         );
       });
 
