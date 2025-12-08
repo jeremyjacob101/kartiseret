@@ -16,6 +16,15 @@ class ComingSoonsHelpers:
             0 if has_directed_by else 1,
         )
 
+    def comingSoonsFinalDedupeSortKey(self, row):
+        d_key = self.dateToDate(row.get("release_date"))
+        has_hebrew = bool((row.get("hebrew_title") or "").strip())
+
+        return (
+            d_key,
+            0 if has_hebrew else 1,
+        )
+
     def comingSoonsWriteHelpers(self, helpers_by_winner: dict[str, list[str]]) -> None:
         for winner_id, new_helpers in helpers_by_winner.items():
             if not new_helpers:

@@ -1,4 +1,5 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
+from collections import defaultdict
 import requests
 
 
@@ -100,4 +101,23 @@ class ComingSoonsOmdb(BaseDataflow):
                     self.potential_chosen = self.potential_imdb_ids[0]
 
             self.updates.append({"english_title": self.english_title, "hebrew_title": self.hebrew_title, "release_date": self.release_date, "imdb_id": self.potential_chosen})
+
+        grouped = defaultdict(list)
+        for row in self.updates:
+            grouped[row["imdb_id"]].append(row)
+
+        deduped = []
+        for imdb_id, rows in grouped.items():
+            rows_sorted = sorted(rows, key=self.comingSoonsDedupeSortKey)
+            best = rows_sorted[0]
+
+            if (best.get("hebrew_title") or "").strip() in ("", "null"):
+                for r in rows_sorted:
+                    ht = (r.get("hebrew_title") or "").strip()
+                    if ht not in ("", "null"):
+                        best["hebrew_title"] = ht
+                        break
+            deduped.append(best)
+
+        self.updates = deduped
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
