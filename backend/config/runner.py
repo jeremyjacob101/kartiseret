@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
+from utils import logger
 from utils.logger import setup_logging
 from backend.config.runners import runCinemaType, runDataflows
 
@@ -17,4 +18,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        logger.SUPPRESS_ERRORS = True
+        pass

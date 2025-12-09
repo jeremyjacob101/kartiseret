@@ -1,6 +1,7 @@
 import logging, os, sys, traceback, pathlib, time, threading, re
 
 logger = logging.getLogger("sel")
+SUPPRESS_ERRORS = False
 
 
 def dump_artifacts(driver, prefix: str = "fail", note: str | None = None) -> tuple[str, str]:
@@ -58,8 +59,7 @@ def center_banner_text(text: str, width: int = 93) -> str:
 
 
 def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
-    exc_type, exc_value, tb = sys.exc_info()
-    if exc_type is KeyboardInterrupt:
+    if SUPPRESS_ERRORS:
         return
 
     name = "Unknown"
