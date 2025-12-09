@@ -15,6 +15,8 @@ def runCinemaType(type: str):
             try:
                 instance = c(cinema_type=type, supabase_table_name=type)
                 instance.scrape()
+            except KeyboardInterrupt:
+                return
             except Exception:
                 artifactPrinting(instance)
             finally:
@@ -50,6 +52,8 @@ def runDataflows():
             try:
                 instance = cls()
                 instance.dataRun()
+            except KeyboardInterrupt:
+                return
             except Exception:
                 artifactPrinting(instance)
             finally:

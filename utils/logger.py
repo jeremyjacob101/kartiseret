@@ -58,6 +58,10 @@ def center_banner_text(text: str, width: int = 93) -> str:
 
 
 def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str | None = None):
+    exc_type, exc_value, tb = sys.exc_info()
+    if exc_type is KeyboardInterrupt:
+        return
+
     name = "Unknown"
     for attr in ["CINEMA_NAME", "MAIN_TABLE_NAME", "DUPLICATE_TABLE_NAME", "MOVING_TO_TABLE_NAME", "HELPER_TABLE_NAME"]:
         try:
