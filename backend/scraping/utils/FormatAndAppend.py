@@ -6,6 +6,9 @@ def formatAndUpload(self):
     active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
     max_rows = max((len(info[name]) for name in active_columns), default=0)
 
+    if not active_columns or max_rows == 0:
+        raise Exception("Empty gathering_info table")
+
     rows = []
     for row_index in range(max_rows):
         row_data = {}

@@ -34,13 +34,13 @@ REGISTRY = {
         HotCinema,
     ],
     "testingTheques": [
-        JLEMtheque,
-        SSCtheque,
-        JAFCtheque,
+        # JLEMtheque,
+        # SSCtheque,
+        # JAFCtheque,
         # HAIFtheque,
         HERZtheque,
-        TLVtheque,
-        HOLONtheque,
+        # TLVtheque,
+        # HOLONtheque,
     ],
     "testingSoons": [
         CCsoon,

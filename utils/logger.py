@@ -91,6 +91,7 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
     exc_type_name = exc_type.__name__ if exc_type else "Exception"
     exc_msg = str(exc_value) if exc_value else ""
     exc_msg = "\n".join(ln for ln in (str(exc_value) if exc_value else "").splitlines() if not any(b in ln.lower() for b in ("stacktrace", "documentation", "<unknown>", "chromedriver", "libsystem_pthread.dylib")))
+    msg = f"{exc_msg}" if exc_type_name == "Exception" else f"{exc_type_name} - {exc_msg}"
 
     match = re.search(r'"selector":\s*"([^"]+)"', exc_msg)
     selector = match.group(1) if match else None
@@ -108,7 +109,7 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
                 "                                                                                             ",
                 "---------------------------------------------------------------------------------------------",
                 f"URL:       {url}",
-                f"Exception: {exc_type_name} - {exc_msg}",
+                f"Exception: {msg}",
                 f"Location:  {call_chain}",
                 *([f"Selector:  {selector}"] if selector else []),
             ]
