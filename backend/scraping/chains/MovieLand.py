@@ -9,7 +9,7 @@ class MovieLand(BaseCinema):
     URL = "https://movieland.co.il/movies"
 
     def logic(self):
-        self.sleep(5)
+        self.sleep(15)
         self.tryExceptPass(lambda: self.waitAndClick("#sbuzz-confirm", 2))
         self.tryExceptPass(lambda: self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2))
         self.tryExceptPass(lambda: self.waitAndClick("#sbuzz-confirm", 2))
