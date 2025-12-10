@@ -14,7 +14,6 @@ class HotCinema(BaseCinema):
             self.waitAndClick("/html/body/div[7]/div/button", 3)
         except:
             self.tryExceptPass(lambda: self.waitAndClick("/html/body/div[7]/div/div/button", 3))
-            self.tryExceptPass(lambda: self.waitAndClick("/html/body/div[7]/div/div/button", 3))
         self.waitAndClick("/html/body/div[3]/div/div/div[1]/a", 3)
 
         for film_card in range(1, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div[2]/div/div/a") + 1):
