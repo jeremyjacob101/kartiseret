@@ -7,7 +7,6 @@ import re
 class MovieLand(BaseCinema):
     CINEMA_NAME = "MovieLand"
     URL = "https://movieland.co.il/movies"
-    HEADLESS = False
 
     def logic(self):
         self.sleep(5)
