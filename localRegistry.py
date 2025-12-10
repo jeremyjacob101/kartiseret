@@ -28,9 +28,9 @@ REGISTRY = {
     "testingMovies": [
         # CinemaCity,
         # YesPlanet,
-        # LevCinema,
+        LevCinema,
         # RavHen,
-        MovieLand,
+        # MovieLand,
         # HotCinema,
     ],
     "testingTheques": [
