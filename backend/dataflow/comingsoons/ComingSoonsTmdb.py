@@ -9,6 +9,15 @@ class ComingSoonsTmdb(BaseDataflow):
     HELPER_TABLE_NAME = "testingIMDbFixes"
 
     def logic(self):
+        stats = {
+            "imdb_fix": 0,
+            "title_year": 0,
+            "director": 0,
+            "runtime": 0,
+            "fallback_first": 0,
+        }
+        index_stats = {i: 0 for i in range(1, 16)}
+
         for row in self.main_table_rows:
             self.reset_soon_row_state()
             self.load_soon_row(row)
@@ -20,10 +29,10 @@ class ComingSoonsTmdb(BaseDataflow):
             details = {}
 
             # --------------------------------------------------
-            # 1) SEARCH TMDB AND COLLECT FIRST ~30 RESULTS
+            # 1) SEARCH TMDB AND COLLECT FIRST ~15 RESULTS
             # --------------------------------------------------
             page = 1
-            while len(candidates) < 30:
+            while len(candidates) < 15:
                 print(f"TMDB SEARCH | page={page}")
 
                 params = {
@@ -52,7 +61,7 @@ class ComingSoonsTmdb(BaseDataflow):
                         candidates.append(tmdb_id)
                         print(f"  candidate → TMDB {tmdb_id}")
 
-                    if len(candidates) >= 30:
+                    if len(candidates) >= 15:
                         break
 
                 page += 1
@@ -97,6 +106,7 @@ class ComingSoonsTmdb(BaseDataflow):
                     if fix.get("imdb_id") == imdb_id:
                         self.potential_chosen = tmdb_id
                         print(f"IMDB FIX MATCH | IMDb {imdb_id} → TMDB {tmdb_id}")
+                        stats["imdb_fix"] += 1
                         break
 
                 if self.potential_chosen:
@@ -125,6 +135,7 @@ class ComingSoonsTmdb(BaseDataflow):
                     if title_match and year_match:
                         self.potential_chosen = first_id
                         print(f"TITLE+YEAR MATCH → TMDB {first_id}")
+                        stats["title_year"] += 1
 
                 # director match
                 if self.potential_chosen is None and self.directed_by:
@@ -135,6 +146,7 @@ class ComingSoonsTmdb(BaseDataflow):
                         if target in directors:
                             self.potential_chosen = tmdb_id
                             print(f"DIRECTOR MATCH ({self.directed_by}) → TMDB {tmdb_id}")
+                            stats["director"] += 1
                             break
 
                 # runtime match
@@ -143,14 +155,27 @@ class ComingSoonsTmdb(BaseDataflow):
                         if d.get("runtime") == self.runtime:
                             self.potential_chosen = tmdb_id
                             print(f"RUNTIME MATCH ({self.runtime}) → TMDB {tmdb_id}")
+                            stats["runtime"] += 1
                             break
 
                 # last resort
                 if self.potential_chosen is None:
                     self.potential_chosen = candidates[0]
                     print(f"FALLBACK FIRST RESULT → TMDB {self.potential_chosen}")
+                    stats["fallback_first"] += 1
 
-            print(f"CHOSEN → {self.english_title} | TMDB {self.potential_chosen}")
+            chosen_imdb = None
+            if self.potential_chosen:
+                chosen_details = details.get(self.potential_chosen) or {}
+                chosen_imdb = (chosen_details.get("external_ids", {}) or {}).get("imdb_id")
+
+            print(f"CHOSEN → {self.english_title} | TMDB {self.potential_chosen} | IMDb {chosen_imdb}")
+            if self.potential_chosen in candidates:
+                idx = candidates.index(self.potential_chosen) + 1  # 1-based
+                index_stats[idx] += 1
+                print(f"USED ORIGINAL RESULT INDEX: {idx}")
+            else:
+                print("WARNING: CHOSEN TMDB ID NOT IN ORIGINAL CANDIDATES")
 
             self.updates.append(
                 {
@@ -158,6 +183,7 @@ class ComingSoonsTmdb(BaseDataflow):
                     "hebrew_title": self.hebrew_title,
                     "release_date": self.release_date,
                     "tmdb_id": self.potential_chosen,
+                    "imdb_id": chosen_imdb,
                 }
             )
 
@@ -188,6 +214,11 @@ class ComingSoonsTmdb(BaseDataflow):
         # --------------------------------------------------
         # 6) ENRICH TITLE + POSTER
         # --------------------------------------------------
+        enrich_stats = {
+            "title_hit": 0,
+            "title_poster_hit": 0,
+        }
+
         enriched = []
         for row in deduped:
             tmdb_id = row.get("tmdb_id")
@@ -206,13 +237,50 @@ class ComingSoonsTmdb(BaseDataflow):
 
             new_row = dict(row)
 
+            has_title = False
+            has_poster = False
+
             if data.get("title"):
                 new_row["english_title"] = data["title"].strip()
-
+                has_title = True
             if data.get("poster_path"):
                 new_row["poster"] = "https://image.tmdb.org/t/p/w500" + data["poster_path"]
+                has_poster = True
+            if data.get("backdrop_path"):
+                new_row["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"]
+                has_poster = True
+
+            if has_title:
+                enrich_stats["title_hit"] += 1
+            if has_title and has_poster:
+                enrich_stats["title_poster_hit"] += 1
 
             enriched.append(new_row)
 
         self.updates = enriched
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+
+        print("==================================================")
+        print("TMDB MATCHING SUMMARY")
+        print("--------------------------------------------------")
+        print(f"IMDb fix matches        : {stats['imdb_fix']}")
+        print(f"Title + year matches    : {stats['title_year']}")
+        print(f"Director matches        : {stats['director']}")
+        print(f"Runtime matches         : {stats['runtime']}")
+        print(f"Fallback to first result: {stats['fallback_first']}")
+        print("==================================================")
+
+        print("--------------------------------------------------")
+        print("TMDB ENRICHMENT SUMMARY")
+        print(f"Title hits           : {enrich_stats['title_hit']}")
+        print(f"Title + poster hits  : {enrich_stats['title_poster_hit']}")
+        print("--------------------------------------------------")
+
+        print("==================================================")
+        print("TMDB ORIGINAL INDEX USED TIMES")
+        print("--------------------------------------------------")
+
+        for i in range(1, 16):
+            print(f"{i:2d}. : {index_stats[i]}")
+
+        print("==================================================")
