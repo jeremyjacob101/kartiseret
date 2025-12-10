@@ -26,21 +26,21 @@ from backend.dataflow.comingsoons.ComingSoonsOpenAI import ComingSoonsOpenAI
 
 REGISTRY = {
     "testingMovies": [
-        CinemaCity,
-        YesPlanet,
-        LevCinema,
-        RavHen,
+        # CinemaCity,
+        # YesPlanet,
+        # LevCinema,
+        # RavHen,
         MovieLand,
-        HotCinema,
+        # HotCinema,
     ],
     "testingTheques": [
-        # JLEMtheque,
-        # SSCtheque,
-        # JAFCtheque,
-        # HAIFtheque,
+        JLEMtheque,
+        SSCtheque,
+        JAFCtheque,
+        HAIFtheque,
         HERZtheque,
-        # TLVtheque,
-        # HOLONtheque,
+        TLVtheque,
+        HOLONtheque,
     ],
     "testingSoons": [
         CCsoon,
