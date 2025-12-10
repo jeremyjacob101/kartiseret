@@ -5,7 +5,7 @@ import requests
 
 class ComingSoonsOmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
-    MOVING_TO_TABLE_NAME = "testingFinalSoons"
+    MOVING_TO_TABLE_NAME = "testingFinalSoons2"
     HELPER_TABLE_NAME = "testingIMDbFixes"
 
     def logic(self):
@@ -128,18 +128,46 @@ class ComingSoonsOmdb(BaseDataflow):
                 continue
 
             new_row = dict(row)
-            data = requests.get(f"http://www.omdbapi.com/?apikey={self.OMDB_API_KEY}&i={imdb_id}").json()
-            if data.get("Response") == "True":
-                new_title = data.get("Title")
-                new_poster = data.get("Poster")
+            tmdb_gave_result = False
+            tmdb_data = None
+            try:
+                tmdb_data = requests.get(
+                    f"https://api.themoviedb.org/3/movie/{imdb_id}",
+                    params={"api_key": self.TMDB_API_KEY}
+                ).json()
+            except Exception:
+                tmdb_data = None
 
-                if new_title and new_title.strip().upper() != "N/A":
-                    new_row["english_title"] = new_title.strip()
-                    self.english_title = new_title.strip()
+            if tmdb_data and not tmdb_data.get("success") is False and tmdb_data.get("status_code") not in (34,):
+                title = (tmdb_data.get("title") or "").strip()
+                poster_path = tmdb_data.get("poster_path")
+                if title and poster_path:
+                    new_row["english_title"] = title
+                    self.english_title = title
+                    poster = f"https://image.tmdb.org/t/p/w500{poster_path}"
+                    new_row["poster"] = poster
+                    self.poster = poster
+                    tmdb_gave_result = True
 
-                if new_poster and new_poster.strip().upper() != "N/A":
-                    new_row["poster"] = new_poster.strip()
-                    self.poster = new_poster.strip()
+            if not tmdb_gave_result:
+                try:
+                    omdb_data = requests.get(
+                        f"http://www.omdbapi.com/?apikey={self.OMDB_API_KEY}&i={imdb_id}"
+                    ).json()
+                except Exception:
+                    omdb_data = None
+
+                if omdb_data and omdb_data.get("Response") == "True":
+                    new_title = omdb_data.get("Title")
+                    new_poster = omdb_data.get("Poster")
+
+                    if new_title and new_title.strip().upper() != "N/A":
+                        new_row["english_title"] = new_title.strip()
+                        self.english_title = new_title.strip()
+
+                    if new_poster and new_poster.strip().upper() != "N/A":
+                        new_row["poster"] = new_poster.strip()
+                        self.poster = new_poster.strip()
 
             self.updates.append(new_row)
 

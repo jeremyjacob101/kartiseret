@@ -1,6 +1,6 @@
 from backend.dataflow.utils.SupabaseTables import SupabaseTables
 from backend.dataflow.utils.DataflowHelpers import DataflowHelpers
-from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpOmdb, setUpOpenAI
+from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpOmdb, setUpTmdb, setUpOpenAI
 from backend.dataflow.comingsoons.utils.ComingSoonsHelpers import ComingSoonsHelpers
 
 
@@ -15,6 +15,8 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
 
         setUpSupabase(self)
         setUpOmdb(self)
+        setUpTmdb(self)
+        setUpOpenAI(self)
 
         self.main_table_rows = self.selectAll(self.MAIN_TABLE_NAME)
         self.duplicate_table_rows = self.selectAll(self.DUPLICATE_TABLE_NAME)

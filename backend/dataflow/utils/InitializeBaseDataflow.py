@@ -13,6 +13,10 @@ def setUpOmdb(self):
     self.OMDB_API_KEY = os.environ.get("OMDB_API_KEY")
 
 
+def setUpTmdb(self):
+    self.TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
+
+
 def setUpOpenAI(self):
     self.OPENAI_TEST_KEY_2 = os.environ.get("OPENAI_TEST_KEY_2")
     self.OPENAI_TEST_ADMIN_KEY_2 = os.environ.get("OPENAI_TEST_ADMIN_KEY_2")
