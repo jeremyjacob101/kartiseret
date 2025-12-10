@@ -10,8 +10,8 @@ class MovieLand(BaseCinema):
 
     def logic(self):
         self.sleep(5)
-        self.waitAndClick("#sbuzz-confirm", 2)
-        self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2)
+        self.tryExceptPass(lambda: self.waitAndClick("#sbuzz-confirm", 2))
+        self.tryExceptPass(lambda: self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2))
         self.click("#branch-1293", 1)
 
         for film_card in range(1, self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div/div/div") + 1):

@@ -32,7 +32,6 @@ class InitializeBaseCinema:
         super().__init__(*args, **kwargs)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
 
-
         self.today_date = datetime.today()
         self.current_year = str(datetime.now(pytz.timezone("Asia/Jerusalem")).year)
         self.current_month = str(datetime.now(pytz.timezone("Asia/Jerusalem")).month)

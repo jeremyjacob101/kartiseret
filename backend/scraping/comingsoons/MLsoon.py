@@ -10,8 +10,9 @@ class MLsoon(BaseCinema):
 
     def logic(self):
         self.sleep(8)
-        self.waitAndClick("#sbuzz-confirm", 5)
-        self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 5)
+        self.tryExceptPass(lambda: self.waitAndClick("#sbuzz-confirm", 2))
+        self.tryExceptPass(lambda: self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2))
+
         self.waitAndClick("#chooseTheaterModalCenter > div > div > a", 5)
         self.sleep(2)
 
