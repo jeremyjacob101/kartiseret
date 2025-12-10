@@ -11,8 +11,8 @@ def main():
     setup_logging("ERROR")
 
     runCinemaType("testingMovies")
-    runCinemaType("testingTheques")
-    runCinemaType("testingSoons")
+    # runCinemaType("testingTheques")
+    # runCinemaType("testingSoons")
 
     # runDataflows()
 

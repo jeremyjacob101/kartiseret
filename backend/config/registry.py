@@ -38,7 +38,7 @@ REGISTRY = {
         SSCtheque,
         JAFCtheque,
         HAIFtheque,
-        # HERZtheque,
+        HERZtheque,
         TLVtheque,
         HOLONtheque,
     ],
@@ -53,8 +53,8 @@ REGISTRY = {
 
 DATAFLOW_REGISTRY = {
     "comingSoonData": [
-        # ComingSoonsClean,
+        ComingSoonsClean,
         # ComingSoonsOmdb,
-        ComingSoonsOpenAI,
+        # ComingSoonsOpenAI,
     ],
 }
