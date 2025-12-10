@@ -13,21 +13,12 @@ class HCsoon(BaseCinema):
         try:
             self.waitAndClick("/html/body/div[7]/div/button", 3)
         except:
-            try:
-                self.waitAndClick("/html/body/div[7]/div/div/button", 3)
-            except:
-                pass
+            self.tryExceptPass(lambda: self.waitAndClick("/html/body/div[7]/div/div/button", 3))
         self.waitAndClick("/html/body/div[3]/div/div/div[1]/a", 3)
         self.zoomOut(50)
 
-        try:
-            self.driver.execute_script("document.querySelector('.pp-backdrop').remove();")
-        except:
-            pass
-        try:
-            self.driver.execute_script("document.querySelector('.pp-backdrop').style.display='none';")
-        except:
-            pass
+        self.tryExceptPass(lambda: self.driver.execute_script("document.querySelector('.pp-backdrop').remove();"))
+        self.tryExceptPass(lambda: self.driver.execute_script("document.querySelector('.pp-backdrop').style.display='none';"))
 
         for film_block in range(2, self.lenElements("/html/body/div[2]/div[4]/div[2]/div/div/div") + 1, 2):
             for film_card in range(1, self.lenElements(f"/html/body/div[2]/div[4]/div[2]/div/div/div[{film_block}]/div/h4")):

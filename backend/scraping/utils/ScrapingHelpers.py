@@ -39,7 +39,13 @@ class ScrapingHelpers:
             return func()
         except:
             return None
-        
+
+    def tryExceptPass(self, func):
+        try:
+            func()
+        except:
+            pass
+
     def ifElseNone(self, condition, value):
         return value if condition else None
 
