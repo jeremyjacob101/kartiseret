@@ -9,4 +9,10 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 sb = create_client(url, key)
 
-sb.table("testingFinalSoons2").delete().filter("imdb_id", "not.is", "null").execute()
+
+def clear_testingFinalSoons2():
+    return sb.table("testingFinalSoons2").delete().filter("id", "not.is", "null").execute()
+
+
+if __name__ == "__main__":
+    clear_testingFinalSoons2()

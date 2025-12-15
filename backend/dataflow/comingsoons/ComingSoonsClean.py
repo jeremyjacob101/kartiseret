@@ -1,5 +1,8 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoons import clear_testingSoons
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoonsHelpers import clear_testingSoonsHelpers
+from backend.dataflow.comingsoons.supabaseHelpers.append.soonstosoons2 import append_testingSoons_to_testingSoons2
 
 
 class ComingSoonsClean(BaseDataflow):
@@ -7,6 +10,9 @@ class ComingSoonsClean(BaseDataflow):
     HELPER_TABLE_NAME = "testingSoonsHelpers"
 
     def logic(self):
+        clear_testingSoons()
+        clear_testingSoonsHelpers()
+
         for row in self.main_table_rows:
             row["english_title"] = self.normalizeTitle(row.get("english_title") or "")
             row["hebrew_title"] = (row.get("hebrew_title") or "").lower()
@@ -49,3 +55,5 @@ class ComingSoonsClean(BaseDataflow):
         self.comingSoonsWriteHelpers(helpers_by_winner)
         self.comingSoonsWriteSingleHelpers(groups)
         self.deleteTheseRows(self.MAIN_TABLE_NAME)
+
+        append_testingSoons_to_testingSoons2()

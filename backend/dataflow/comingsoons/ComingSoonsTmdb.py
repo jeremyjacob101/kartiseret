@@ -1,6 +1,8 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
 import requests
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingFinalSoons2 import clear_testingFinalSoons2
+from backend.dataflow.comingsoons.supabaseHelpers.replace.finalSoons2toFinalSoons import replace_testingFinalSoons2_to_testingFinalSoons
 
 
 class ComingSoonsTmdb(BaseDataflow):
@@ -10,6 +12,8 @@ class ComingSoonsTmdb(BaseDataflow):
     HELPER_TABLE_NAME_2 = "testingSkips"
 
     def logic(self):
+        clear_testingFinalSoons2()
+
         # BUILD SKIP LOOKUP (testingSkips)
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
@@ -201,3 +205,5 @@ class ComingSoonsTmdb(BaseDataflow):
             self.updates.append(new_row)
 
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+
+        replace_testingFinalSoons2_to_testingFinalSoons()
