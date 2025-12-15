@@ -19,3 +19,18 @@ while True:
 
     sb.table("testingSoons").insert(rows).execute()
     start += PAGE_SIZE
+
+
+def append_testingSoons_to_testingSoons2():
+    while True:
+        res = sb.table("testingFinalSoons").select("*").range(start, start + PAGE_SIZE - 1).execute()
+        rows = res.data or []
+        if not rows:
+            break
+
+        sb.table("testingFinalSoons2").insert(rows).execute()
+        start += PAGE_SIZE
+
+
+if __name__ == "__main__":
+    append_testingSoons_to_testingSoons2()

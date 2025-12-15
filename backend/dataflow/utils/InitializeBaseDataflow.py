@@ -34,6 +34,7 @@ class InitializeBaseDataflow:
         self.reset_soon_row_state()
 
         self.non_deduplicated_updates = []
+        self.non_enriched_updates = []
         self.visited_already = set()
         self.delete_these = []
         self.updates = []

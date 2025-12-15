@@ -8,6 +8,7 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
     MAIN_TABLE_NAME: str = ""
     DUPLICATE_TABLE_NAME: str = ""
     MOVING_TO_TABLE_NAME: str = ""
+    MOVING_TO_TABLE_NAME_2: str = ""
     HELPER_TABLE_NAME: str = ""
     HELPER_TABLE_NAME_2: str = ""
     HELPER_TABLE_NAME_3: str = ""

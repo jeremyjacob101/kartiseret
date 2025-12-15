@@ -1,6 +1,6 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
-from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoons import clear_testingSoons
+
 from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoonsHelpers import clear_testingSoonsHelpers
 from backend.dataflow.comingsoons.supabaseHelpers.append.soonstosoons2 import append_testingSoons_to_testingSoons2
 
@@ -10,7 +10,6 @@ class ComingSoonsClean(BaseDataflow):
     HELPER_TABLE_NAME = "testingSoonsHelpers"
 
     def logic(self):
-        clear_testingSoons()
         clear_testingSoonsHelpers()
 
         for row in self.main_table_rows:

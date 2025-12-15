@@ -1,19 +1,20 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
 import requests
-from backend.dataflow.comingsoons.supabaseHelpers.clear.testingFinalSoons2 import clear_testingFinalSoons2
-from backend.dataflow.comingsoons.supabaseHelpers.replace.finalSoons2toFinalSoons import replace_testingFinalSoons2_to_testingFinalSoons
+
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoons import clear_testingSoons
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingFinalSoons import clear_testingFinalSoons
+from backend.dataflow.comingsoons.supabaseHelpers.append.finalSoonstoFinalSoons2 import append_testingFinalSoons_to_testingFinalSoons2
 
 
 class ComingSoonsTmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
-    MOVING_TO_TABLE_NAME = "testingFinalSoons2"
+    MOVING_TO_TABLE_NAME = "testingFinalSoons"
+    MOVING_TO_TABLE_NAME_2 = "testingFinalSoons2"
     HELPER_TABLE_NAME = "testingIMDbFixes"
     HELPER_TABLE_NAME_2 = "testingSkips"
 
     def logic(self):
-        clear_testingFinalSoons2()
-
         # BUILD SKIP LOOKUP (testingSkips)
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
@@ -180,12 +181,10 @@ class ComingSoonsTmdb(BaseDataflow):
                     if hebrew_title not in ("", "null"):
                         best["hebrew_title"] = hebrew_title
                         break
-            self.updates.append(best)
-
-        self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+            self.non_enriched_updates.append(best)
 
         # 6) ENRICH TITLE + POSTER
-        for row in self.moving_to_table_rows:
+        for row in self.non_enriched_updates:
             tmdb_id = row.get("tmdb_id")
             if not tmdb_id:
                 continue
@@ -204,6 +203,7 @@ class ComingSoonsTmdb(BaseDataflow):
                 new_row["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"]
             self.updates.append(new_row)
 
+        clear_testingFinalSoons()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
-
-        replace_testingFinalSoons2_to_testingFinalSoons()
+        append_testingFinalSoons_to_testingFinalSoons2()
+        clear_testingSoons()
