@@ -16,10 +16,26 @@ class SupabaseTables:
 
         return all_rows
 
-    def deleteTheseRows(self, table_name: str):
+    def refreshAllTables(self, table_name: str | None = None):
+        table_to_attr = {
+            self.MAIN_TABLE_NAME: "main_table_rows",
+            self.DUPLICATE_TABLE_NAME: "duplicate_table_rows",
+            self.MOVING_TO_TABLE_NAME: "moving_to_table_rows",
+            self.HELPER_TABLE_NAME: "helper_table_rows",
+            self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
+            self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
+        }
+        if table_name:
+            attr = table_to_attr.get(table_name)
+            setattr(self, attr, self.selectAll(table_name))
+            return
+        for table, attr in table_to_attr.items():
+            setattr(self, attr, self.selectAll(table))
+
+    def deleteTheseRows(self, table_name: str, primary_key: str = "id"):
         for i in range(0, len(self.delete_these), 200):
             chunk = self.delete_these[i : i + 200]
-            self.supabase.table(table_name).delete().in_(self.PRIMARY_KEY, chunk).execute()
+            self.supabase.table(table_name).delete().in_(primary_key, chunk).execute()
         self.delete_these = []
 
         attr_name = {
@@ -27,6 +43,8 @@ class SupabaseTables:
             self.DUPLICATE_TABLE_NAME: "duplicate_table_rows",
             self.MOVING_TO_TABLE_NAME: "moving_to_table_rows",
             self.HELPER_TABLE_NAME: "helper_table_rows",
+            self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
+            self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
         }.get(table_name)
         setattr(self, attr_name, self.selectAll(table_name))
 
@@ -34,3 +52,4 @@ class SupabaseTables:
         if self.updates:
             self.supabase.table(table_name).upsert(self.updates).execute()
         self.updates = []
+        self.refreshAllTables(table_name)

@@ -33,15 +33,23 @@ class InitializeBaseDataflow:
         super().__init__(*args, **kwargs)
         self.reset_soon_row_state()
 
+        self.non_deduplicated_updates = []
         self.visited_already = set()
         self.delete_these = []
         self.updates = []
         self.PRIMARY_KEY = "id"
+        self.potential_chosen_id = None
+
+        self.first_search_result = None
+        self.found_year_match = False
+        self.results_page = 1
+        self.candidates = []
+        self.details = {}
 
         self.fake_runtimes = [60, 90, 100, 120, 150, 180, 200, 240, 250]
 
     def reset_soon_row_state(self):
-        self.potential_chosen = None
+        self.potential_chosen_id = None
 
         self.english_title = None
         self.hebrew_title = None
@@ -51,5 +59,7 @@ class InitializeBaseDataflow:
         self.runtime = None
 
         self.first_search_result = None
-        self.potential_imdb_ids = []
+        self.found_year_match = False
+        self.results_page = 1
+        self.candidates = []
         self.details = {}

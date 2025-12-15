@@ -9,6 +9,8 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
     DUPLICATE_TABLE_NAME: str = ""
     MOVING_TO_TABLE_NAME: str = ""
     HELPER_TABLE_NAME: str = ""
+    HELPER_TABLE_NAME_2: str = ""
+    HELPER_TABLE_NAME_3: str = ""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,10 +20,7 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
         setUpTmdb(self)
         setUpOpenAI(self)
 
-        self.main_table_rows = self.selectAll(self.MAIN_TABLE_NAME)
-        self.duplicate_table_rows = self.selectAll(self.DUPLICATE_TABLE_NAME)
-        self.moving_to_table_rows = self.selectAll(self.MOVING_TO_TABLE_NAME)
-        self.helper_table_rows = self.selectAll(self.HELPER_TABLE_NAME)
+        self.refreshAllTables()
 
     def logic(self):
         raise NotImplementedError("Each dataflow must implement its own logic()")

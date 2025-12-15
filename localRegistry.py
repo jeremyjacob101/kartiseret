@@ -54,7 +54,7 @@ REGISTRY = {
 
 DATAFLOW_REGISTRY = {
     "comingSoonData": [
-        # ComingSoonsClean,
+        ComingSoonsClean,
         # ComingSoonsOmdb,
         ComingSoonsTmdb,
         # ComingSoonsOpenAI,

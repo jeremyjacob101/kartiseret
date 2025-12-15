@@ -7,280 +7,197 @@ class ComingSoonsTmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
     MOVING_TO_TABLE_NAME = "testingFinalSoons2"
     HELPER_TABLE_NAME = "testingIMDbFixes"
+    HELPER_TABLE_NAME_2 = "testingSkips"
 
     def logic(self):
-        stats = {
-            "imdb_fix": 0,
-            "title_year": 0,
-            "director": 0,
-            "runtime": 0,
-            "fallback_first": 0,
-        }
-        index_stats = {i: 0 for i in range(1, 16)}
+        # BUILD SKIP LOOKUP (testingSkips)
+        skip_tokens = set()
+        for skip_row in self.helper_table_2_rows:
+            skip_value = (skip_row.get("name_or_imdb_id") or skip_row.get("id") or "").strip()
+            if not skip_value:
+                continue
+            skip_tokens.add(skip_value.lower())
+
+            try:
+                skip_tokens.add(self.normalizeTitle(skip_value).strip().lower())
+            except:
+                pass
+
+        # BUILD IMDb FIX LOOKUPS (testingIMDbFixes)
+        imdb_fix_ids = set()
+        imdb_fix_by_title = {}
+
+        for fix in self.helper_table_rows:
+            imdb_id = (fix.get("imdb_id") or "").strip()
+            title_fix = (fix.get("title_fix") or "").strip()
+            if not imdb_id or not title_fix:
+                continue
+
+            imdb_fix_ids.add(imdb_id)
+
+            title_low = title_fix.lower()
+            imdb_fix_by_title[title_low] = imdb_id
+            try:
+                imdb_fix_by_title[self.normalizeTitle(title_fix).strip().lower()] = imdb_id
+            except:
+                pass
 
         for row in self.main_table_rows:
             self.reset_soon_row_state()
             self.load_soon_row(row)
 
-            print("--------------------------------------------------")
-            print(f"PROCESSING: {self.english_title} ({self.release_year})")
+            original_title = self.english_title
+            original_release_date = self.release_date
 
-            candidates = []
-            details = {}
+            # SKIP TITLES
+            title_raw = (self.english_title or "").strip().lower()
+            try:
+                title_norm = self.normalizeTitle(self.english_title or "").strip().lower()
+            except:
+                title_norm = title_raw
 
-            # --------------------------------------------------
-            # 1) SEARCH TMDB AND COLLECT FIRST ~15 RESULTS
-            # --------------------------------------------------
-            page = 1
-            while len(candidates) < 15:
-                print(f"TMDB SEARCH | page={page}")
+            if title_raw in skip_tokens or title_norm in skip_tokens:
+                continue
 
-                params = {
-                    "api_key": self.TMDB_API_KEY,
-                    "query": self.english_title,
-                    "page": page,
-                }
-
+            # IMDB FIX OVERRIDE
+            override_imdb = imdb_fix_by_title.get(title_raw) or imdb_fix_by_title.get(title_norm)
+            if override_imdb:
                 try:
-                    r = requests.get(
-                        "https://api.themoviedb.org/3/search/movie",
-                        params=params,
-                        timeout=10,
-                    ).json()
-                except Exception as e:
-                    print("SEARCH ERROR:", e)
+                    find_data = requests.get(f"https://api.themoviedb.org/3/find/{override_imdb}", params={"api_key": self.TMDB_API_KEY, "external_source": "imdb_id"}).json()
+                except:
+                    find_data = None
+
+                movie_results = (find_data or {}).get("movie_results") or []
+                if movie_results and movie_results[0].get("id"):
+                    self.potential_chosen_id = movie_results[0]["id"]
+                    self.non_deduplicated_updates.append({"english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": override_imdb})
+                    continue
+
+            # 1) SEARCH TMDB AND COLLECT FIRST ~15 RESULTS
+            while len(self.candidates) < 15:
+                try:
+                    response = requests.get("https://api.themoviedb.org/3/search/movie", params={"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": self.results_page}).json()
+                except:
                     break
 
-                results = r.get("results") or []
+                results = response.get("results") or []
                 if not results:
                     break
 
-                for m in results:
-                    tmdb_id = m.get("id")
+                for movie_result in results:
+                    tmdb_id = movie_result.get("id")
                     if tmdb_id:
-                        candidates.append(tmdb_id)
-                        print(f"  candidate → TMDB {tmdb_id}")
-
-                    if len(candidates) >= 15:
+                        self.candidates.append(tmdb_id)
+                    if len(self.candidates) == 15:
                         break
-
-                page += 1
-
-            if not candidates:
-                print("NO SEARCH RESULTS – SKIPPING")
+                self.results_page += 1
+            if not self.candidates:
                 continue
 
-            # --------------------------------------------------
             # 2) FETCH FULL DETAILS (external_ids + credits)
-            # --------------------------------------------------
-            for tmdb_id in candidates:
+            for tmdb_id in self.candidates:
                 try:
-                    print(f"FETCH DETAILS | TMDB {tmdb_id}")
-                    m = requests.get(
-                        f"https://api.themoviedb.org/3/movie/{tmdb_id}",
-                        params={
-                            "api_key": self.TMDB_API_KEY,
-                            "append_to_response": "external_ids,credits",
-                        },
-                        timeout=10,
-                    ).json()
+                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}).json()
+                    if movie_response.get("id"):
+                        self.details[tmdb_id] = movie_response
+                except:
+                    pass
 
-                    if m.get("id"):
-                        details[tmdb_id] = m
-                except Exception as e:
-                    print("DETAIL ERROR:", e)
-
-            if not details:
-                print("NO DETAILS FETCHED – SKIPPING")
+            if not self.details:
                 continue
 
-            # --------------------------------------------------
-            # 3) IMDb FIX TABLE HARD MATCH
-            # --------------------------------------------------
-            for tmdb_id, d in details.items():
-                imdb_id = d.get("external_ids", {}).get("imdb_id")
-                if not imdb_id:
-                    continue
-
-                for fix in self.helper_table_rows:
-                    if fix.get("imdb_id") == imdb_id:
-                        self.potential_chosen = tmdb_id
-                        print(f"IMDB FIX MATCH | IMDb {imdb_id} → TMDB {tmdb_id}")
-                        stats["imdb_fix"] += 1
-                        break
-
-                if self.potential_chosen:
+            # 3) IMDb FIX TABLE HARD MATCH (fast set membership)
+            for tmdb_id, movie_details in self.details.items():
+                imdb_id = (movie_details.get("external_ids", {}) or {}).get("imdb_id")
+                if imdb_id and imdb_id in imdb_fix_ids:
+                    self.potential_chosen_id = tmdb_id
                     break
 
-            # --------------------------------------------------
-            # 4) FALLBACK RANKING LOGIC
-            # --------------------------------------------------
-            if self.potential_chosen is None:
-                print("NO IMDb FIX MATCH – APPLYING HEURISTICS")
-
-                # exact title + year bias on first result
-                first_id = candidates[0]
-                first = details.get(first_id)
-
+            # 4) FALLBACK FIRST/DIRECTOR/RUNTIME RANKING LOGIC
+            if self.potential_chosen_id is None:
+                first = self.details.get(self.candidates[0])
                 if first:
-                    title_match = self.normalizeTitle(first.get("title") or "").strip().lower() == str(self.english_title).strip().lower()
+                    first_title = first.get("title") or ""
+                    try:
+                        title_match = self.normalizeTitle(first_title).strip().lower() == self.normalizeTitle(str(self.english_title)).strip().lower()
+                    except:
+                        title_match = (first_title or "").strip().lower() == (self.english_title or "").strip().lower()
 
-                    year_match = False
                     if self.release_year and first.get("release_date"):
                         try:
-                            year_match = int(first["release_date"][:4]) == self.release_year
+                            self.found_year_match = int(first["release_date"][:4]) == self.release_year
                         except:
                             pass
 
-                    if title_match and year_match:
-                        self.potential_chosen = first_id
-                        print(f"TITLE+YEAR MATCH → TMDB {first_id}")
-                        stats["title_year"] += 1
+                    if title_match and self.found_year_match:
+                        self.potential_chosen_id = self.candidates[0]
 
-                # director match
-                if self.potential_chosen is None and self.directed_by:
+                # Director match
+                if self.potential_chosen_id is None and self.directed_by:
                     target = self.directed_by.lower()
-                    for tmdb_id, d in details.items():
-                        crew = d.get("credits", {}).get("crew", [])
-                        directors = [c["name"].lower() for c in crew if c.get("job") == "Director" and c.get("name")]
+                    for tmdb_id, movie_details in self.details.items():
+                        crew = movie_details.get("credits", {}).get("crew", [])
+                        directors = [crew_member["name"].lower() for crew_member in crew if crew_member.get("job") == "Director" and crew_member.get("name")]
                         if target in directors:
-                            self.potential_chosen = tmdb_id
-                            print(f"DIRECTOR MATCH ({self.directed_by}) → TMDB {tmdb_id}")
-                            stats["director"] += 1
+                            self.potential_chosen_id = tmdb_id
                             break
 
-                # runtime match
-                if self.potential_chosen is None and self.runtime and self.runtime not in self.fake_runtimes:
-                    for tmdb_id, d in details.items():
-                        if d.get("runtime") == self.runtime:
-                            self.potential_chosen = tmdb_id
-                            print(f"RUNTIME MATCH ({self.runtime}) → TMDB {tmdb_id}")
-                            stats["runtime"] += 1
+                # Runtime match
+                if self.potential_chosen_id is None and self.runtime and self.runtime not in self.fake_runtimes:
+                    for tmdb_id, movie_details in self.details.items():
+                        if movie_details.get("runtime") == self.runtime:
+                            self.potential_chosen_id = tmdb_id
                             break
 
-                # last resort
-                if self.potential_chosen is None:
-                    self.potential_chosen = candidates[0]
-                    print(f"FALLBACK FIRST RESULT → TMDB {self.potential_chosen}")
-                    stats["fallback_first"] += 1
+                if self.potential_chosen_id is None:
+                    self.potential_chosen_id = self.candidates[0]
+            if not self.potential_chosen_id:
+                continue
 
-            chosen_imdb = None
-            if self.potential_chosen:
-                chosen_details = details.get(self.potential_chosen) or {}
-                chosen_imdb = (chosen_details.get("external_ids", {}) or {}).get("imdb_id")
+            chosen_details = self.details.get(self.potential_chosen_id) or {}
+            chosen_imdb = (chosen_details.get("external_ids", {}) or {}).get("imdb_id")
 
-            print(f"CHOSEN → {self.english_title} | TMDB {self.potential_chosen} | IMDb {chosen_imdb}")
-            if self.potential_chosen in candidates:
-                idx = candidates.index(self.potential_chosen) + 1  # 1-based
-                index_stats[idx] += 1
-                print(f"USED ORIGINAL RESULT INDEX: {idx}")
-            else:
-                print("WARNING: CHOSEN TMDB ID NOT IN ORIGINAL CANDIDATES")
+            self.non_deduplicated_updates.append({"english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
 
-            self.updates.append(
-                {
-                    "english_title": self.english_title,
-                    "hebrew_title": self.hebrew_title,
-                    "release_date": self.release_date,
-                    "tmdb_id": self.potential_chosen,
-                    "imdb_id": chosen_imdb,
-                }
-            )
-
-        # --------------------------------------------------
-        # 5) DEDUPE BY TMDB ID
-        # --------------------------------------------------
+        # 5) DEDUPE BY IMDB ID
         grouped = defaultdict(list)
-        for row in self.updates:
-            grouped[row["tmdb_id"]].append(row)
+        for row in self.non_deduplicated_updates:
+            imdb_id = row.get("imdb_id")
+            if imdb_id:
+                grouped[imdb_id].append(row)
 
-        deduped = []
-        for tmdb_id, rows in grouped.items():
+        for imdb_id, rows in grouped.items():
             rows_sorted = sorted(rows, key=self.comingSoonsFinalDedupeSortKey)
             best = rows_sorted[0]
 
             if (best.get("hebrew_title") or "").strip() in ("", "null"):
-                for r in rows_sorted:
-                    ht = (r.get("hebrew_title") or "").strip()
-                    if ht not in ("", "null"):
-                        best["hebrew_title"] = ht
+                for candidate_row in rows_sorted:
+                    hebrew_title = (candidate_row.get("hebrew_title") or "").strip()
+                    if hebrew_title not in ("", "null"):
+                        best["hebrew_title"] = hebrew_title
                         break
+            self.updates.append(best)
 
-            deduped.append(best)
-
-        self.updates = deduped
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
 
-        # --------------------------------------------------
         # 6) ENRICH TITLE + POSTER
-        # --------------------------------------------------
-        enrich_stats = {
-            "title_hit": 0,
-            "title_poster_hit": 0,
-        }
-
-        enriched = []
-        for row in deduped:
+        for row in self.moving_to_table_rows:
             tmdb_id = row.get("tmdb_id")
             if not tmdb_id:
                 continue
 
             try:
-                data = requests.get(
-                    f"https://api.themoviedb.org/3/movie/{tmdb_id}",
-                    params={"api_key": self.TMDB_API_KEY},
-                    timeout=10,
-                ).json()
-            except Exception as e:
-                print("ENRICH ERROR:", e)
+                data = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY}).json()
+            except:
                 continue
 
             new_row = dict(row)
-
-            has_title = False
-            has_poster = False
-
             if data.get("title"):
                 new_row["english_title"] = data["title"].strip()
-                has_title = True
             if data.get("poster_path"):
                 new_row["poster"] = "https://image.tmdb.org/t/p/w500" + data["poster_path"]
-                has_poster = True
             if data.get("backdrop_path"):
                 new_row["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"]
-                has_poster = True
+            self.updates.append(new_row)
 
-            if has_title:
-                enrich_stats["title_hit"] += 1
-            if has_title and has_poster:
-                enrich_stats["title_poster_hit"] += 1
-
-            enriched.append(new_row)
-
-        self.updates = enriched
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
-
-        print("==================================================")
-        print("TMDB MATCHING SUMMARY")
-        print("--------------------------------------------------")
-        print(f"IMDb fix matches        : {stats['imdb_fix']}")
-        print(f"Title + year matches    : {stats['title_year']}")
-        print(f"Director matches        : {stats['director']}")
-        print(f"Runtime matches         : {stats['runtime']}")
-        print(f"Fallback to first result: {stats['fallback_first']}")
-        print("==================================================")
-
-        print("--------------------------------------------------")
-        print("TMDB ENRICHMENT SUMMARY")
-        print(f"Title hits           : {enrich_stats['title_hit']}")
-        print(f"Title + poster hits  : {enrich_stats['title_poster_hit']}")
-        print("--------------------------------------------------")
-
-        print("==================================================")
-        print("TMDB ORIGINAL INDEX USED TIMES")
-        print("--------------------------------------------------")
-
-        for i in range(1, 16):
-            print(f"{i:2d}. : {index_stats[i]}")
-
-        print("==================================================")

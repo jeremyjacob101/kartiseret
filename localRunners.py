@@ -34,7 +34,7 @@ def runCinemaType(type: str):
     for thread in threads:
         thread.join()
 
-    print("\n\n\n--------------------\n")
+    print("\n--------------------\n")
     for name, secs in runtimes.items():
         m, s = divmod(int(secs), 60)
         print(f"{name}: {m:02d}m{s:02d}s\n")
@@ -56,7 +56,7 @@ def runDataflows():
                 dt = time.time() - t0
                 step_timings.append((f"{key}:{cls.__name__}", dt))
 
-    print("\n\n\n--------------------\n")
+    print("\n--------------------\n")
     for name, secs in step_timings:
         m, s = divmod(int(secs), 60)
         print(f"{name}: {m}m{s:02d}s\n")
