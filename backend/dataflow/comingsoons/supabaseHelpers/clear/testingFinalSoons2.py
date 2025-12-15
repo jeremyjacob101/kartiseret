@@ -11,7 +11,7 @@ sb = create_client(url, key)
 
 
 def clear_testingFinalSoons2():
-    return sb.table("testingFinalSoons2").delete().filter("id", "not.is", "null").execute()
+    return sb.table("testingFinalSoons2").delete().filter("imdb_id", "not.is", "null").execute()
 
 
 if __name__ == "__main__":

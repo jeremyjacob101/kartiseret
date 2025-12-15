@@ -11,26 +11,17 @@ sb = create_client(url, key)
 
 start, PAGE_SIZE = 0, 1000
 
-while True:
-    res = sb.table("testingSoons2").select("*").range(start, start + PAGE_SIZE - 1).execute()
-    rows = res.data or []
-    if not rows:
-        break
 
-    sb.table("testingSoons").insert(rows).execute()
-    start += PAGE_SIZE
-
-
-def append_testingSoons_to_testingSoons2():
+def append_testingSoons2_to_testingSoons():
     while True:
-        res = sb.table("testingFinalSoons").select("*").range(start, start + PAGE_SIZE - 1).execute()
+        res = sb.table("testingSoons2").select("*").range(start, start + PAGE_SIZE - 1).execute()
         rows = res.data or []
         if not rows:
             break
 
-        sb.table("testingFinalSoons2").insert(rows).execute()
+        sb.table("testingSoons").insert(rows).execute()
         start += PAGE_SIZE
 
 
 if __name__ == "__main__":
-    append_testingSoons_to_testingSoons2()
+    append_testingSoons2_to_testingSoons()
