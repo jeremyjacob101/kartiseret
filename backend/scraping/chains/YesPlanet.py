@@ -18,7 +18,8 @@ class YesPlanet(BaseCinema):
         self.driver.get(self.URL)
         self.sleep(3)
 
-        for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
+        # for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
+        for film_card in range(1, 2):
             self.english_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
             self.english_titles.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
         for href in self.english_hrefs:
@@ -107,9 +108,8 @@ class YesPlanet(BaseCinema):
                             self.dub_language = "Hebrew" if is_it_dubbed_1 or is_it_dubbed_2 else None
 
                             for showtype in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div") + 1):
-                                self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]/li/span").text)
-                                if self.screening_type == "2D":
-                                    self.screening_type = "Regular"
+                                self.screening_type = str(self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/ul[1]").get_attribute("innerText"))
+                                self.screening_tech = self.screening_type
 
                                 for showtime in range(1, self.lenElements(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a") + 1):
                                     self.showtime = self.element(f"/html/body/section[3]/section/div[1]/div/section/div[2]/div[{film_index}]/div/div/div[2]/div/div[2]/div[{showtype}]/div/a[{showtime}]").text
@@ -126,3 +126,4 @@ class YesPlanet(BaseCinema):
                                     self.hebrew_title = self.hebrew_titles[checking_film]
 
                                     self.appendToGatheringInfo()
+                                    self.printTech()
