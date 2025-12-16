@@ -12,7 +12,7 @@ class MovieLand(BaseCinema):
         self.sleep(5)
         self.tryExceptPass(lambda: self.waitAndClick("#sbuzz-confirm", 2))
         self.tryExceptPass(lambda: self.waitAndClick("#gdpr-module-message > div > div > div.gdpr-content-part.gdpr-accept > a", 2))
-        self.click("#branch-1293", 1)
+        self.click("/html/body/div[1]/div[13]/div/div/a")
 
         for film_card in range(1, self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div/div/div") + 1):
             self.hebrew_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
@@ -79,14 +79,41 @@ class MovieLand(BaseCinema):
                                     self.hebrew_title = self.hebrew_title.replace("(מדובב)", "").strip()
                                     self.dub_language = "Hebrew"
 
+                                if "3D תלת מימד HFR" in self.hebrew_title:
+                                    self.screening_tech = "3D HFR"
+                                    self.hebrew_title = self.hebrew_title.replace("3D תלת מימד HFR", "").strip()
+                                elif "תלת מימד HFR" in self.hebrew_title:
+                                    self.screening_tech = "3D HFR"
+                                    self.hebrew_title = self.hebrew_title.replace("תלת מימד HFR", "").strip()
+                                elif "תלת מימד" in self.hebrew_title:
+                                    self.screening_tech = "3D"
+                                    self.hebrew_title = self.hebrew_title.replace("תלת מימד", "").strip()
+                                elif "3D תלת מימד" in self.hebrew_title:
+                                    self.screening_tech = "3D"
+                                    self.hebrew_title = self.hebrew_title.replace("3D תלת מימד", "").strip()
+                                elif "3D" in self.hebrew_title:
+                                    self.screening_tech = "3D"
+                                    self.hebrew_title = self.hebrew_title.replace("3D", "").strip()
+                                elif "3D HFR" in self.hebrew_title:
+                                    self.screening_tech = "3D HFR"
+                                    self.hebrew_title = self.hebrew_title.replace("3D HFR", "").strip()
+                                elif "HFR" in self.hebrew_title:
+                                    self.screening_tech = "2D HFR"
+                                    self.hebrew_title = self.hebrew_title.replace("HFR", "").strip()
+                                else:
+                                    self.screening_tech = "2D"
+
+                                if "3D" in self.english_title:
+                                    self.english_title = self.english_title.replace("3D", "").strip()
+
                                 full_text = self.element(f"#events-list > div.bg-choose > div:nth-child({film_index}) > div > div.col-7.col-md-8.col-lg-9.col-xl-10.px-0.right-help > div.bg-day-c").text.strip()
                                 date_part = full_text.split()[-1].replace(".", "/", 1) + f"/{checking_year}"
                                 self.date_of_showing = datetime.strptime(date_part, "%d/%m/%Y").date().isoformat()
 
                                 for screening_time in range(1, self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a") + 1):
                                     self.showtime = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]/div/span").text
-                                    self.screening_type = "Upgrade" if self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]/div/img") else "Regular"
                                     self.english_href = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]").get_attribute("href")
                                     self.hebrew_href = self.element(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]").get_attribute("href")
+                                    self.screening_type = "Upgrade" if self.lenElements(f"/html/body/div[1]/div[10]/div[2]/div[1]/div/div/div/div[2]/div[4]/div[{film_index}]/div/div[3]/div[2]/div/div[2]/a[{screening_time}]/div/img", "vip") else "Regular"
 
                                     self.appendToGatheringInfo()

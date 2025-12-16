@@ -30,8 +30,8 @@ REGISTRY = {
         # CinemaCity,
         # YesPlanet,
         # LevCinema,
-        RavHen,
-        # MovieLand,
+        # RavHen,
+        MovieLand,
         # HotCinema,
     ],
     "testingTheques": [
