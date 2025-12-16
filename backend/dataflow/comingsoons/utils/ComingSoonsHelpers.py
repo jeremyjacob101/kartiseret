@@ -34,9 +34,9 @@ class ComingSoonsHelpers:
             if not new_helpers:
                 continue
 
-            existing = self.supabase.table(self.HELPER_TABLE_NAME).select("*").eq("id", winner_id).execute()
+            existing = self.supabase.table(self.HELPER_TABLE_NAME).select("*").eq("old_uuid", winner_id).execute()
             data = existing.data or []
-            row = (data[0] if data else None) or {"id": winner_id}
+            row = (data[0] if data else None) or {"old_uuid": winner_id}
 
             existing_values = {v for k, v in row.items() if k.startswith("helper_") and v not in (None, "", "null")}
 
@@ -50,26 +50,27 @@ class ComingSoonsHelpers:
                 if next_slot > 20:
                     break
                 row[f"helper_{next_slot}"] = helper_id
+                existing_values.add(helper_id)
                 next_slot += 1
 
             self.updates.append(row)
         self.upsertUpdates(self.HELPER_TABLE_NAME)
 
     def comingSoonsWriteSingleHelpers(self, groups) -> None:
-        existing = self.supabase.table(self.HELPER_TABLE_NAME).select("id").execute().data or []
-        existing_ids = {r.get("id") for r in existing if r.get("id")}
+        existing = self.supabase.table(self.HELPER_TABLE_NAME).select("old_uuid").execute().data or []
+        existing_ids = {row.get("old_uuid") for row in existing if row.get("old_uuid")}
 
-        for _, rows in groups.items():
+        for rows in groups.values():
             if len(rows) != 1:
                 continue
 
-            r = rows[0]
-            rid = r[self.PRIMARY_KEY]
+            row = rows[0]
+            rid = row[self.PRIMARY_KEY]
             if rid in existing_ids:
                 continue
 
-            payload = {"id": rid}
-            helper = r.get("helper_id")
+            payload = {"old_uuid": rid}
+            helper = row.get("helper_id")
             if helper not in (None, "", "null"):
                 payload["helper_1"] = helper
 

@@ -28,14 +28,26 @@ class SupabaseTables:
         }
         if table_name:
             attr = table_to_attr.get(table_name)
-            setattr(self, attr, self.selectAll(table_name))
-            return
+            if attr:
+                setattr(self, attr, self.selectAll(table_name))
+                return
         for table, attr in table_to_attr.items():
             setattr(self, attr, self.selectAll(table))
 
     def deleteTheseRows(self, table_name: str, primary_key: str = "id"):
-        for i in range(0, len(self.delete_these), 200):
-            chunk = self.delete_these[i : i + 200]
+        if not self.delete_these:
+            return
+
+        seen = set()
+        deduped = []
+        for x in self.delete_these:
+            if x in (None, "", "null") or x in seen:
+                continue
+            seen.add(x)
+            deduped.append(x)
+
+        for i in range(0, len(deduped), 200):
+            chunk = deduped[i : i + 200]
             self.supabase.table(table_name).delete().in_(primary_key, chunk).execute()
         self.delete_these = []
 
@@ -47,7 +59,9 @@ class SupabaseTables:
             self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
             self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
         }.get(table_name)
-        setattr(self, attr_name, self.selectAll(table_name))
+
+        if attr_name:
+            setattr(self, attr_name, self.selectAll(table_name))
 
     def upsertUpdates(self, table_name: str):
         if self.updates:

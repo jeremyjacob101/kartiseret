@@ -9,10 +9,10 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 sb = create_client(url, key)
 
-start, PAGE_SIZE = 0, 1000
-
 
 def replace_testingSoons2_to_testingSoons():
+    start, PAGE_SIZE = 0, 1000
+
     sb.table("testingSoonsHelpers").delete().filter("id", "not.is", "null").execute()
     sb.table("testingSoons").delete().filter("id", "not.is", "null").execute()
 

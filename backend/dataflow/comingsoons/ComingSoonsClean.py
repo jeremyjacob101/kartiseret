@@ -3,6 +3,7 @@ from collections import defaultdict
 
 from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoonsHelpers import clear_testingSoonsHelpers
 from backend.dataflow.comingsoons.supabaseHelpers.append.soonstosoons2 import append_testingSoons_to_testingSoons2
+from backend.dataflow.comingsoons.supabaseHelpers.append.soonsHelperstoSoonsHelpers2 import append_testingSoonsHelpers_to_testingSoonsHelpers2
 
 
 class ComingSoonsClean(BaseDataflow):
@@ -53,6 +54,8 @@ class ComingSoonsClean(BaseDataflow):
 
         self.comingSoonsWriteHelpers(helpers_by_winner)
         self.comingSoonsWriteSingleHelpers(groups)
-        self.deleteTheseRows(self.MAIN_TABLE_NAME)
 
         append_testingSoons_to_testingSoons2()
+        append_testingSoonsHelpers_to_testingSoonsHelpers2()
+
+        self.deleteTheseRows(self.MAIN_TABLE_NAME)
