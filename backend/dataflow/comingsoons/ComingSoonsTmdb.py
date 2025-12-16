@@ -51,6 +51,7 @@ class ComingSoonsTmdb(BaseDataflow):
             self.reset_soon_row_state()
             self.load_soon_row(row)
 
+            original_uuid = row.get("id")
             original_title = self.english_title
             original_release_date = self.release_date
 
@@ -75,7 +76,7 @@ class ComingSoonsTmdb(BaseDataflow):
                 movie_results = (find_data or {}).get("movie_results") or []
                 if movie_results and movie_results[0].get("id"):
                     self.potential_chosen_id = movie_results[0]["id"]
-                    self.non_deduplicated_updates.append({"english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": override_imdb})
+                    self.non_deduplicated_updates.append({"old_uuid": original_uuid, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": override_imdb})
                     continue
 
             # 1) SEARCH TMDB AND COLLECT FIRST ~15 RESULTS
@@ -162,7 +163,7 @@ class ComingSoonsTmdb(BaseDataflow):
             chosen_details = self.details.get(self.potential_chosen_id) or {}
             chosen_imdb = (chosen_details.get("external_ids", {}) or {}).get("imdb_id")
 
-            self.non_deduplicated_updates.append({"english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
+            self.non_deduplicated_updates.append({"old_uuid": original_uuid, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
 
         # 5) DEDUPE BY IMDB ID
         grouped = defaultdict(list)
