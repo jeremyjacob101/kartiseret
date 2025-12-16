@@ -90,5 +90,6 @@ class SSCtheque(BaseCinema):
 
             self.screening_city = self.SCREENING_CITY
             self.screening_type = "Regular"
+            self.screening_tech = "2D"
 
             self.appendToGatheringInfo()

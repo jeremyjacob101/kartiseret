@@ -65,5 +65,6 @@ class TLVtheque(BaseCinema):
                     self.showtime = self.element(f"/html/body/div[3]/div[1]/div[2]/div[4]/div/div/div/div[2]/div[{film_block}]/div[{film_card}]/div[2]/div[3]/div[1]/a/span").text.strip()
                     self.screening_city = self.SCREENING_CITY
                     self.screening_type = "Regular"
+                    self.screening_tech = "2D"
 
                     self.appendToGatheringInfo()

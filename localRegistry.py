@@ -27,11 +27,11 @@ from backend.dataflow.comingsoons.ComingSoonsOpenAI import ComingSoonsOpenAI
 
 REGISTRY = {
     "testingMovies": [
-        CinemaCity,
-        YesPlanet,
-        LevCinema,
-        RavHen,
-        MovieLand,
+        # CinemaCity,
+        # YesPlanet,
+        # LevCinema,
+        # RavHen,
+        # MovieLand,
         HotCinema,
     ],
     "testingTheques": [

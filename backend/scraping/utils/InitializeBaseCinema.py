@@ -42,6 +42,7 @@ class InitializeBaseCinema:
         self.english_hrefs = []
         self.hebrew_hrefs = []
         self.screening_types = []
+        self.screening_techs = []
         self.original_languages = []
         self.dub_languages = []
         self.date_of_showings = []
@@ -58,6 +59,7 @@ class InitializeBaseCinema:
         self.english_href = None
         self.hebrew_href = None
         self.screening_type = None
+        self.screening_tech = None
         self.original_language = None
         self.dub_language = None
         self.date_of_showing = None
@@ -76,6 +78,7 @@ class InitializeBaseCinema:
             "english_href": [],
             "hebrew_href": [],
             "screening_type": [],
+            "screening_tech": [],
             "original_language": [],
             "dub_language": [],
             "date_of_showing": [],

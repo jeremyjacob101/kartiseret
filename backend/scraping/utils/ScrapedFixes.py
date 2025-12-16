@@ -107,23 +107,29 @@ class ScrapedFixes:
     def fixScreeningType(self):
         replace = {
             "VIP LIGHT": "VIP Light",
-            "סינמה סיטי גלילות": "Regular",
             "סינמה סיטי גלילות (Lounge)": "Lounge",
-            "סינמה סיטי גלילות (ONYX)": "4DX",
             "סינמה סיטי גלילות (VIP)": "VIP",
-            'סינמה סיטי ראשל"צ': "Regular",
             'סינמה סיטי ראשל"צ (VIP)': "VIP",
             'סינמה סיטי ראשל"צ (VIP לייט)': "VIP Light",
-            "סינמה סיטי ירושלים": "Regular",
             "סינמה סיטי ירושלים (VIP)": "VIP",
-            "סינמה סיטי כפר-סבא": "Regular",
             "סינמה סיטי כפר סבא (Prime)": "Prime",
-            "סינמה סיטי נתניה": "Regular",
             "סינמה סיטי נתניה (Prime)": "Prime",
-            "סינמה סיטי באר שבע": "Regular",
             "סינמה סיטי באר שבע (VIP)": "VIP",
-            "סינמה סיטי אשדוד": "Regular",
-            "סינמה סיטי חדרה": "Regular",
             "סינמה סיטי חדרה (Prime)": "Prime",
         }
         self.screening_type = replace.get(self.screening_type, self.screening_type)
+
+    def fixScreeningTech(self):
+        replace = {
+            "סינמה סיטי גלילות": "2D",
+            "סינמה סיטי גלילות (ONYX)": "4DX",
+            'סינמה סיטי ראשל"צ': "2D",
+            "סינמה סיטי ירושלים": "2D",
+            "סינמה סיטי כפר-סבא": "2D",
+            "סינמה סיטי נתניה": "2D",
+            "סינמה סיטי באר שבע": "2D",
+            "סינמה סיטי אשדוד": "2D",
+            "סינמה סיטי חדרה": "2D",
+            "VIP LIGHT 2D": "2D",
+        }
+        self.screening_tech = replace.get(self.screening_tech, self.screening_tech)

@@ -24,13 +24,15 @@ class HAIFtheque(BaseCinema):
             self.showtime = self.element(f"/html/body/div[4]/section[4]/div[3]").text.strip()
             date_of_showing = self.element(f"/html/body/div[4]/section[4]/div[2]").text.strip().split(",")[1].strip()
             self.date_of_showing = datetime.strptime(date_of_showing, "%d.%m.%y").date().isoformat()
+            
             self.screening_city = self.SCREENING_CITY
             self.screening_type = "Regular"
+            self.screening_tech = "2D"
+
             try:
                 release_year = self.element("/html/body/div[4]/section[5]/div[1]/strong[1]").text.strip()
             except:
                 continue
-
             self.release_year = self.tryExceptNone(lambda: int(re.search(r"\b(\d{4})\b", release_year).group(1)))
 
             self.appendToGatheringInfo()

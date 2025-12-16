@@ -62,5 +62,6 @@ class LevCinema(BaseCinema):
                             self.english_href = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").get_attribute("href") + "?lang=en")
                             self.hebrew_href = str(self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/div[{time}]/a").get_attribute("href") + "?lang=he")
                             self.screening_type = "Regular"
+                            self.screening_tech = "2D"
 
                             self.appendToGatheringInfo()

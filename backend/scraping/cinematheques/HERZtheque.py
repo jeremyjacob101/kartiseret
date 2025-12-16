@@ -74,7 +74,8 @@ class HERZtheque(BaseCinema):
             self.hebrew_href = self.element(f"/html/body/div[2]/div/div/div[1]/div[6]/div/div/a").get_attribute("href")
             self.english_href = self.hebrew_href
 
-            self.screening_type = "Regular"
             self.screening_city = self.SCREENING_CITY
+            self.screening_type = "Regular"
+            self.screening_tech = "2D"
 
             self.appendToGatheringInfo()

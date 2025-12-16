@@ -25,6 +25,7 @@ def formatAndUpload(self):
 class AppendToInfo:
     def appendToGatheringInfo(self, print_info=False):
         self.fixScreeningType()
+        self.fixScreeningTech()
         self.fixCinemaName()
         self.fixLanguage()
         self.fixRating()
@@ -35,6 +36,7 @@ class AppendToInfo:
         self.gathering_info["english_href"].append(self.english_href)
         self.gathering_info["hebrew_href"].append(self.hebrew_href)
         self.gathering_info["screening_type"].append(self.screening_type)
+        self.gathering_info["screening_tech"].append(self.screening_tech)
         self.gathering_info["original_language"].append(self.original_language)
         self.gathering_info["dub_language"].append(self.dub_language)
         self.gathering_info["date_of_showing"].append(self.date_of_showing)

@@ -56,6 +56,7 @@ class JLEMtheque(BaseCinema):
                         self.english_href = self.element(f"/html/body/div[4]/div/div[2]/div[2]/div/div/div[4]/div[1]/div/div/div/div[1]/div/div[2]/div[2]/div[{film_block}]/div[2]/div[1]/a").get_attribute("href")
                     self.screening_city = self.SCREENING_CITY
                     self.screening_type = "Regular"
+                    self.screening_tech = "2D"
                 except:
                     continue
 

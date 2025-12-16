@@ -36,7 +36,7 @@ class HotCinema(BaseCinema):
                 self.runtimes.append(int(re.sub(r"\D", "", self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[1]/div[2]/span").text.strip())))
             except:
                 self.runtimes.append(None)
-        name_to_idx = {str(name).lower(): i for i, name in enumerate(self.hebrew_titles)}
+        name_to_idx = {str(name): i for i, name in enumerate(self.hebrew_titles)}
 
         for cinema in range(1, self.lenElements("/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a") + 1):
             self.driver.get(self.element(f"/html/body/div[2]/div[1]/div/div/div[1]/div[3]/div[2]/div[2]/a[{cinema}]").get_attribute("href"))
@@ -74,9 +74,27 @@ class HotCinema(BaseCinema):
 
                             if "מדובב לעברית" in self.hebrew_title:
                                 self.dub_language = "Hebrew"
-                                self.hebrew_title = self.hebrew_title.replace("מדובב לעברית", "").strip()
+                                self.hebrew_title = self.hebrew_title.split("מדובב לעברית", 1)[0].strip()
+                            if "מדובב לצרפתית" in self.hebrew_title:
+                                self.dub_language = "French"
+                                self.hebrew_title = self.hebrew_title.split("מדובב לצרפתית", 1)[0].strip()
                             if "מדובב לרוסית" in self.hebrew_title:
                                 continue
+
+                            if self.hebrew_title.endswith(" אנגלית"):
+                                self.hebrew_title = self.hebrew_title.removesuffix(" אנגלית").strip()
+
+                            if "תלת-ממד HFR" in self.hebrew_title:
+                                self.screening_tech = "3D HFR"
+                                self.hebrew_title = self.hebrew_title.split("תלת-ממד HFR", 1)[0].strip()
+                            elif "HFR" in self.hebrew_title:
+                                self.screening_tech = "2D HFR"
+                                self.hebrew_title = self.hebrew_title.split("HFR", 1)[0].strip()
+                            elif "תלת-ממד" in self.hebrew_title:
+                                self.screening_tech = "3D"
+                                self.hebrew_title = self.hebrew_title.split("תלת-ממד", 1)[0].strip()
+                            else:
+                                self.screening_tech = "2D"
 
                             row_xpath = f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]"
                             row_element = self.element(row_xpath)
@@ -116,10 +134,20 @@ class HotCinema(BaseCinema):
                                 row_element,
                             )
 
+                            base_tech = self.screening_tech
                             for showtime in range(1, self.lenElements(f"/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div/div/div/table/tbody/tr[{film_index}]/td[5]/a") + 1):
                                 showtime_element = self.element(f"{row_xpath}/td[5]/a[{showtime}]")
                                 full_showtime_text = str(showtime_element.get_attribute("innerHTML"))
-                                self.screening_type = "Premium" if "PREMIUM" in full_showtime_text else "Regular"
+
+                                if "לא רק קולנוע" in full_showtime_text:
+                                    self.screening_type = "Not Just Cinema"
+                                elif "PREMIUM" in full_showtime_text:
+                                    self.screening_type = "Premium"
+                                else:
+                                    self.screening_type = "Regular"
+
+                                self.screening_tech = base_tech + (" Atmos" if "atmos" in full_showtime_text else "")
+
                                 self.showtime = re.search(r"\b(?:[01]?\d|2[0-3]):[0-5]\d\b", full_showtime_text).group(0)
 
                                 event_id = time_to_event.get(self.showtime)
