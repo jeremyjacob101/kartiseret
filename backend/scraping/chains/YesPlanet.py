@@ -18,8 +18,7 @@ class YesPlanet(BaseCinema):
         self.driver.get(self.URL)
         self.sleep(3)
 
-        # for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
-        for film_card in range(1, 2):
+        for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
             self.english_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
             self.english_titles.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
         for href in self.english_hrefs:
@@ -126,4 +125,3 @@ class YesPlanet(BaseCinema):
                                     self.hebrew_title = self.hebrew_titles[checking_film]
 
                                     self.appendToGatheringInfo()
-                                    self.printTech()
