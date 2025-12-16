@@ -106,6 +106,12 @@ class ScrapedFixes:
 
     def fixScreeningType(self):
         replace = {
+            "רגיל": "Regular",
+            "ONYX": "Regular",
+            "VIP": "VIP",
+            "VIP לייט": "VIP Light",
+            "VIP ביזנס": "VIP Business",
+            "Prime": "Prime",
             "סינמה סיטי גלילות (Lounge)": "Lounge",
             "סינמה סיטי גלילות (VIP)": "VIP",
             'סינמה סיטי ראשל"צ (VIP)': "VIP",
@@ -142,7 +148,7 @@ class ScrapedFixes:
     def fixScreeningTech(self):
         replace = {
             "סינמה סיטי גלילות": "2D",
-            "סינמה סיטי גלילות (ONYX)": "2D 4DX",
+            "סינמה סיטי גלילות (ONYX)": "2D ONYX",
             'סינמה סיטי ראשל"צ': "2D",
             "סינמה סיטי ירושלים": "2D",
             "סינמה סיטי כפר-סבא": "2D",
@@ -150,6 +156,8 @@ class ScrapedFixes:
             "סינמה סיטי באר שבע": "2D",
             "סינמה סיטי אשדוד": "2D",
             "סינמה סיטי חדרה": "2D",
+            "ONYX": "2D ONYX",
+            "VIP": "2D",
             "SCREENX3D": "3D ScreenX",
             "SCREENX2D": "2D ScreenX",
             "2DIMAX": "2D IMAX",

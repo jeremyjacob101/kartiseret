@@ -14,7 +14,7 @@ def main():
     runCinemaType("testingTheques")
     runCinemaType("testingSoons")
 
-    # runDataflows()
+    runDataflows()
 
 
 if __name__ == "__main__":
