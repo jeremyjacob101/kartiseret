@@ -79,24 +79,87 @@ class ComingSoonsTmdb(BaseDataflow):
                     self.non_deduplicated_updates.append({"old_uuid": original_uuid, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": override_imdb})
                     continue
 
-            # 1) SEARCH TMDB AND COLLECT FIRST ~15 RESULTS
-            while len(self.candidates) < 15:
-                try:
-                    response = requests.get("https://api.themoviedb.org/3/search/movie", params={"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": self.results_page}).json()
-                except:
-                    break
+            # 1) SEARCH TMDB AND COLLECT CANDIDATES
+            seen = set()
 
-                results = response.get("results") or []
-                if not results:
-                    break
-
-                for movie_result in results:
-                    tmdb_id = movie_result.get("id")
-                    if tmdb_id:
-                        self.candidates.append(tmdb_id)
-                    if len(self.candidates) == 15:
+            if not self.release_year:
+                page = 1
+                while len(self.candidates) < 20:
+                    params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
+                    try:
+                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
+                    except:
                         break
-                self.results_page += 1
+
+                    results = response.get("results") or []
+                    if not results:
+                        break
+
+                    for movie_result in results:
+                        tmdb_id = movie_result.get("id")
+                        if not tmdb_id or tmdb_id in seen:
+                            continue
+                        seen.add(tmdb_id)
+                        self.candidates.append(tmdb_id)
+                        if len(self.candidates) >= 20:
+                            break
+
+                    page += 1
+
+            else:
+                for year in [int(self.release_year), int(self.release_year) - 1, int(self.release_year) + 1]:
+                    if len(self.candidates) >= 24:
+                        break
+
+                    added_this_year, page = 0, 1
+                    while len(self.candidates) < 24 and added_this_year < 8:
+                        params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page, "primary_release_year": year}
+
+                        try:
+                            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
+                        except:
+                            break
+
+                        results = response.get("results") or []
+                        if not results:
+                            break
+
+                        for movie_result in results:
+                            tmdb_id = movie_result.get("id")
+                            if not tmdb_id or tmdb_id in seen:
+                                continue
+                            seen.add(tmdb_id)
+                            self.candidates.append(tmdb_id)
+                            added_this_year += 1
+
+                            if len(self.candidates) >= 24 or added_this_year >= 8:
+                                break
+                        page += 1
+
+                page = 1
+                while len(self.candidates) < 30:
+                    params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
+                    try:
+                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
+                    except:
+                        break
+
+                    results = response.get("results") or []
+                    if not results:
+                        break
+
+                    for movie_result in results:
+                        tmdb_id = movie_result.get("id")
+                        if not tmdb_id or tmdb_id in seen:
+                            continue
+                        seen.add(tmdb_id)
+                        self.candidates.append(tmdb_id)
+
+                        if len(self.candidates) >= 30:
+                            break
+
+                    page += 1
+
             if not self.candidates:
                 continue
 
@@ -135,8 +198,8 @@ class ComingSoonsTmdb(BaseDataflow):
                         except:
                             pass
 
-                    if title_match and self.found_year_match:
-                        self.potential_chosen_id = self.candidates[0]
+                        if title_match and self.found_year_match:
+                            self.potential_chosen_id = self.candidates[0]
 
                 # Director match
                 if self.potential_chosen_id is None and self.directed_by:

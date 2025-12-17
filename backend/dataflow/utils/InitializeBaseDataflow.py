@@ -43,7 +43,6 @@ class InitializeBaseDataflow:
 
         self.first_search_result = None
         self.found_year_match = False
-        self.results_page = 1
         self.candidates = []
         self.details = {}
 
@@ -61,6 +60,5 @@ class InitializeBaseDataflow:
 
         self.first_search_result = None
         self.found_year_match = False
-        self.results_page = 1
         self.candidates = []
         self.details = {}
