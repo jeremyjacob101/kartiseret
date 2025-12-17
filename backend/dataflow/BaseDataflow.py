@@ -17,9 +17,9 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
         super().__init__(*args, **kwargs)
 
         setUpSupabase(self)
-        setUpOmdb(self)
+        # setUpOmdb(self)
         setUpTmdb(self)
-        setUpOpenAI(self)
+        # setUpOpenAI(self)
 
         self.refreshAllTables()
 
