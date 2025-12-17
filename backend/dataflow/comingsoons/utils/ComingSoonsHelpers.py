@@ -11,22 +11,20 @@ class ComingSoonsHelpers:
 
         return (
             d_key,
+            0 if has_directed_by else 1,
             0 if good_runtime else 1,
             0 if has_release_year else 1,
-            0 if has_directed_by else 1,
         )
 
     def comingSoonsFinalDedupeSortKey(self, row):
         d_key = self.dateToDate(row.get("release_date"))
-        has_hebrew = bool((row.get("hebrew_title") or "").strip())
-        has_directed = bool((row.get("directed_by") or "").strip())
-        has_runtime = row.get("runtime") is not None
+
+        heb = (row.get("hebrew_title") or "").strip()
+        has_hebrew = bool(heb) and heb.lower() != "null"
 
         return (
             d_key,
             0 if has_hebrew else 1,
-            0 if has_directed else 1,
-            0 if has_runtime else 1,
         )
 
     def comingSoonsWriteHelpers(self, helpers_by_winner: dict[str, list[str]]) -> None:
