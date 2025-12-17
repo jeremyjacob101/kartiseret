@@ -47,7 +47,7 @@ class InitializeBaseDataflow:
         self.candidates = []
         self.details = {}
 
-        self.fake_runtimes = [0, 30, 40, 45, 60, 90, 100, 120, 150, 180, 200, 240, 250, 300]
+        self.fake_runtimes = [0, 30, 40, 45, 60, 90, 100, 120, 130, 150, 180, 200, 240, 250, 300]
 
     def reset_soon_row_state(self):
         self.potential_chosen_id = None
