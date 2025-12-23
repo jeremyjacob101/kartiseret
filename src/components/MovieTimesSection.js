@@ -32,10 +32,10 @@ const getCinemaClass = (cinema) => {
 };
 
 const areFirstFourShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 4).every((showtime) => showtime.type === "2D");
+  showtimes.slice(0, 4).every((showtime) => showtime.type === "Regular");
 
 // const areAllShowtimesRegular = (showtimes) =>
-//   showtimes.every((showtime) => showtime.type === "2D");
+//   showtimes.every((showtime) => showtime.type === "Regular");
 
 const groupShowtimesByTheater = (showtimes) => {
   const groupedByTheater = {};
@@ -176,7 +176,7 @@ const MovieTimesSection = ({
                           className="showtime-link"
                         >
                           <div className="showtime-background">
-                            {showtime.type !== "2D" && (
+                            {showtime.type !== "Regular" && (
                               <div className="showtime-type">
                                 {showtime.type}
                               </div>
@@ -213,7 +213,7 @@ const MovieTimesSection = ({
                 className="showtime-link"
               >
                 <div className="showtime-background">
-                  {showtime.type !== "2D" && (
+                  {showtime.type !== "Regular" && (
                     <div className="showtime-type">{showtime.type}</div>
                   )}
                   <div
