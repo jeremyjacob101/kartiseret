@@ -14,102 +14,22 @@ const theaterNames = {
 
 const getCinemaClass = (cinema) => {
   switch (cinema) {
-    case "YP":
+    case "Yes Planet":
       return "yes-planet";
-    case "CC":
+    case "Cinema City":
       return "cinema-city";
-    case "LC":
+    case "Lev Cinema":
       return "lev-cinema";
-    case "HC":
+    case "Hot Cinema":
       return "hot-cinema";
-    case "ML":
+    case "MovieLand":
       return "movieland-cinema";
-    case "RH":
+    case "Rav Hen":
       return "rav-hen-cinema";
     default:
       return "";
   }
 };
-
-function getShowtimeURL(showtime) {
-  const { cinema, timeHref, snif } = showtime;
-
-  switch (cinema) {
-    case "HC": {
-      let theaterId;
-      switch (snif) {
-        case "Carmiel":
-          theaterId = "1192";
-          break;
-        case "Kiryat Bialik":
-          theaterId = "1184";
-          break;
-        case "Nahariya":
-          theaterId = "1181";
-          break;
-        case "Haifa":
-          theaterId = "1195";
-          break;
-        case "Kfar Saba":
-          theaterId = "1197";
-          break;
-        case "Petach Tikvah":
-          theaterId = "1194";
-          break;
-        case "Modiin":
-          theaterId = "1183";
-          break;
-        case "Rehovot":
-          theaterId = "1191";
-          break;
-        case "Ashdod":
-          theaterId = "1182";
-          break;
-        case "Ashkelon":
-          theaterId = "1193";
-          break;
-        default:
-          theaterId = "9999";
-      }
-      return `https://tickets.hotcinema.co.il/site/${theaterId}/tickets?code=${theaterId}-${timeHref}&saleChannelCode=WEB&languageid=en_gb`;
-    }
-    case "CC":
-      return `https://tickets.cinema-city.co.il/order/${timeHref}`;
-
-    case "YP":
-      return `https://tickets5.planetcinema.co.il/order/${timeHref}?lang=en`;
-
-    case "ML": {
-      let theaterId;
-      switch (snif) {
-        case "Carmiel":
-          theaterId = "1290";
-          break;
-        case "Haifa":
-          theaterId = "1291";
-          break;
-        case "Netanya":
-          theaterId = "1292";
-          break;
-        case "Glilot":
-          theaterId = "1293";
-          break;
-        default:
-          theaterId = "9999";
-      }
-      return `https://movieland.co.il/order/?eventID=${timeHref}&theaterId=${theaterId}&saleChannelCode=web&languageid=en_gb`;
-    }
-
-    case "LC":
-      return `https://ticket.lev.co.il/order/${timeHref}?lang=en`;
-
-    case "RH": 
-      return `https://tickets5.rav-hen.co.il/order/${timeHref}?lang=en`;
-
-    default:
-      return `https://www.google.com`;
-  }
-}
 
 const areFirstFourShowtimesRegular = (showtimes) =>
   showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
@@ -250,13 +170,13 @@ const MovieTimesSection = ({
                         key={sIndex}
                       >
                         <a
-                          href={getShowtimeURL(showtime)}
+                          href={showtime.timeHref}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="showtime-link"
                         >
                           <div className="showtime-background">
-                            {showtime.type !== "R" && (
+                            {showtime.type !== "2D" && (
                               <div className="showtime-type">
                                 {showtime.type}
                               </div>
@@ -287,7 +207,7 @@ const MovieTimesSection = ({
               key={sIndex}
             >
               <a
-                href={getShowtimeURL(showtime)}
+                href={showtime.timeHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="showtime-link"

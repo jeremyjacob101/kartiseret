@@ -8,7 +8,7 @@ const getFormattedDate = (dayOffset) => {
   const today = new Date();
   today.setDate(today.getDate() + dayOffset);
 
-  const year = String(today.getFullYear()).slice(-2);
+  const year = today.getFullYear(); // full 4 digits now
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const day = String(today.getDate()).padStart(2, "0");
 
@@ -21,7 +21,7 @@ const isValidShowtime = (
   today,
   currentMinutesSinceMidnight
 ) => {
-  const [hours, minutes] = showtime.split(":").map(Number);
+  const [hours, minutes] = showtime.split(":").slice(0, 2).map(Number);
   const showtimeMinutes = hours * 60 + minutes;
 
   return (
@@ -45,9 +45,9 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
 
     while (true) {
       const { data, error } = await supabase
-        .from("showtimes")
+        .from("testingFinalShowtimes")
         .select("*")
-        .eq("datetext", dayString)
+        .eq("date_of_showing", dayString)
         .range(from, from + chunkSize - 1);
 
       if (error) {
@@ -74,7 +74,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
   useEffect(() => {
     const loadMovieData = async () => {
       const { data: moviesData } = await supabase
-        .from("movies")
+        .from("testingFinalMovies")
         .select("*");
 
       const showtimesData = await fetchAllShowtimesForDay(offsatDay);
@@ -91,8 +91,8 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
       let movieInfoMap = {};
 
       moviesData.forEach((movie) => {
-        validMovieTitles.add(movie.title);
-        movieInfoMap[movie.title] = {
+        validMovieTitles.add(movie.english_title);
+        movieInfoMap[movie.english_title] = {
           poster: movie.poster,
           runtime: movie.runtime,
           popularity: movie.popularity,
@@ -106,26 +106,26 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
       const filteredMovies = showtimesData
         .filter(
           (showtime) =>
-            showtime.datetext === offsatDay &&
+            showtime.date_of_showing === offsatDay &&
             (selectedSnifs.length === 0 ||
-              selectedSnifs.includes(showtime.snif)) &&
-            validMovieTitles.has(showtime.title) &&
+              selectedSnifs.includes(showtime.screening_city)) &&
+            validMovieTitles.has(showtime.english_title) &&
             isValidShowtime(
-              showtime.timetext,
-              showtime.datetext,
+              showtime.showtime,
+              showtime.date_of_showing,
               today,
               currentMinutesSinceMidnight
             )
         )
         .map((showtime) => ({
           ...showtime,
-          poster: movieInfoMap[showtime.title]?.poster || "",
-          runtime: movieInfoMap[showtime.title]?.runtime || 0,
-          popularity: movieInfoMap[showtime.title]?.popularity || 0,
-          imdbRating: movieInfoMap[showtime.title]?.imdbRating || 0,
-          imdbVotes: movieInfoMap[showtime.title]?.imdbVotes || 0,
-          rtRating: movieInfoMap[showtime.title]?.rtRating || 0,
-          imdbID: movieInfoMap[showtime.title]?.imdbID || "",
+          poster: movieInfoMap[showtime.english_title]?.poster || "",
+          runtime: movieInfoMap[showtime.english_title]?.runtime || 0,
+          popularity: movieInfoMap[showtime.english_title]?.popularity || 0,
+          imdbRating: movieInfoMap[showtime.english_title]?.imdbRating || 0,
+          imdbVotes: movieInfoMap[showtime.english_title]?.imdbVotes || 0,
+          rtRating: movieInfoMap[showtime.english_title]?.rtRating || 0,
+          imdbID: movieInfoMap[showtime.english_title]?.imdbID || "",
         }));
 
       setMovies(filteredMovies);

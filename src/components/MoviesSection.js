@@ -14,15 +14,15 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     const groupedMovies = {};
 
     movies.forEach((movie) => {
-      if (!groupedMovies[movie.title]) {
-        groupedMovies[movie.title] = [];
+      if (!groupedMovies[movie.english_title]) {
+        groupedMovies[movie.english_title] = [];
       }
-      groupedMovies[movie.title].push({
-        time: movie.timetext,
+      groupedMovies[movie.english_title].push({
+        showtime: movie.showtime,
         cinema: movie.cinema,
-        type: movie.type,
-        snif: movie.snif,
-        timeHref: movie.partialHref,
+        screening_type: movie.screening_type,
+        screening_city: movie.screening_city,
+        english_href: movie.english_href,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,
@@ -87,7 +87,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
                 <div className="movie-ratings-block">
                   <div className="movie-ratings-sub-block-imdb">
                     <a
-                      href={`https://www.imdb.com/title/${groupedMovies[title][0].imdbID}`}
+                      href={`https://www.themoviedb.org/movie/${groupedMovies[title][0].tmdb_id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ textDecoration: "none", color: "inherit" }}
