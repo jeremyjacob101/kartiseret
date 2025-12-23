@@ -25,6 +25,7 @@ class SupabaseTables:
             self.HELPER_TABLE_NAME: "helper_table_rows",
             self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
             self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
+            self.HELPER_TABLE_NAME_4: "helper_table_4_rows",
         }
         if table_name:
             attr = table_to_attr.get(table_name)
@@ -55,9 +56,11 @@ class SupabaseTables:
             self.MAIN_TABLE_NAME: "main_table_rows",
             self.DUPLICATE_TABLE_NAME: "duplicate_table_rows",
             self.MOVING_TO_TABLE_NAME: "moving_to_table_rows",
+            self.MOVING_TO_TABLE_NAME_2: "moving_to_table_2_rows",
             self.HELPER_TABLE_NAME: "helper_table_rows",
             self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
             self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
+            self.HELPER_TABLE_NAME_4: "helper_table_4_rows",
         }.get(table_name)
 
         if attr_name:

@@ -10,11 +10,11 @@ from localRunners import runCinemaType, runDataflows
 def main():
     setup_logging("ERROR")
 
-    # runCinemaType("testingMovies")
+    runCinemaType("testingShowtimes")
     # runCinemaType("testingTheques")
     # runCinemaType("testingSoons")
 
-    # runDataflows()
+    runDataflows()
 
 
 if __name__ == "__main__":

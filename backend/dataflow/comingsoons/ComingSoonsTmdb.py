@@ -2,9 +2,10 @@ from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
 import requests
 
-from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoons import clear_testingSoons
-from backend.dataflow.comingsoons.supabaseHelpers.clear.testingFinalSoons import clear_testingFinalSoons
 from backend.dataflow.comingsoons.supabaseHelpers.append.finalSoonstoFinalSoons2 import append_testingFinalSoons_to_testingFinalSoons2
+from backend.dataflow.comingsoons.supabaseHelpers.append.soonstosoons2 import append_testingSoons_to_testingSoons2
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingFinalSoons import clear_testingFinalSoons
+from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoons import clear_testingSoons
 
 
 class ComingSoonsTmdb(BaseDataflow):
@@ -267,7 +268,8 @@ class ComingSoonsTmdb(BaseDataflow):
                 new_row["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"]
             self.updates.append(new_row)
 
+        append_testingFinalSoons_to_testingFinalSoons2()
         clear_testingFinalSoons()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
-        append_testingFinalSoons_to_testingFinalSoons2()
+        append_testingSoons_to_testingSoons2()
         clear_testingSoons()

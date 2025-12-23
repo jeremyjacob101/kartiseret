@@ -1,9 +1,9 @@
-from backend.scraping.chains.CinemaCity import CinemaCity
-from backend.scraping.chains.YesPlanet import YesPlanet
-from backend.scraping.chains.LevCinema import LevCinema
-from backend.scraping.chains.RavHen import RavHen
-from backend.scraping.chains.MovieLand import MovieLand
-from backend.scraping.chains.HotCinema import HotCinema
+from backend.scraping.nowplayings.CinemaCity import CinemaCity
+from backend.scraping.nowplayings.YesPlanet import YesPlanet
+from backend.scraping.nowplayings.LevCinema import LevCinema
+from backend.scraping.nowplayings.RavHen import RavHen
+from backend.scraping.nowplayings.MovieLand import MovieLand
+from backend.scraping.nowplayings.HotCinema import HotCinema
 
 from backend.scraping.cinematheques.JLEMtheque import JLEMtheque
 from backend.scraping.cinematheques.SSCtheque import SSCtheque
@@ -24,15 +24,17 @@ from backend.dataflow.comingsoons.ComingSoonsOmdb import ComingSoonsOmdb
 from backend.dataflow.comingsoons.ComingSoonsTmdb import ComingSoonsTmdb
 from backend.dataflow.comingsoons.ComingSoonsOpenAI import ComingSoonsOpenAI
 
+from backend.dataflow.nowplayings.NowPlayingsClean import NowPlayingsClean
+from backend.dataflow.nowplayings.NowPlayingsTmdb import NowPlayingsTmdb
 
 REGISTRY = {
-    "testingMovies": [
-        CinemaCity,
-        YesPlanet,
+    "testingShowtimes": [
+        # CinemaCity,
+        # YesPlanet,
         LevCinema,
-        RavHen,
-        MovieLand,
-        HotCinema,
+        # RavHen,
+        # MovieLand,
+        # HotCinema,
     ],
     "testingTheques": [
         JLEMtheque,
@@ -53,10 +55,12 @@ REGISTRY = {
 }
 
 DATAFLOW_REGISTRY = {
-    "comingSoonData": [
-        ComingSoonsClean,
-        # ComingSoonsOmdb,
-        ComingSoonsTmdb,
-        # ComingSoonsOpenAI,
+    # "comingSoonsData": [
+    #     ComingSoonsClean,
+    #     ComingSoonsTmdb,
+    # ],
+    "nowPlayingData": [
+        NowPlayingsClean,
+        NowPlayingsTmdb,
     ],
 }
