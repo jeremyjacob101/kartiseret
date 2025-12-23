@@ -32,10 +32,10 @@ const getCinemaClass = (cinema) => {
 };
 
 const areFirstFourShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 4).every((showtime) => showtime.type === "R");
+  showtimes.slice(0, 4).every((showtime) => showtime.type === "2D");
 
 // const areAllShowtimesRegular = (showtimes) =>
-//   showtimes.every((showtime) => showtime.type === "R");
+//   showtimes.every((showtime) => showtime.type === "2D");
 
 const groupShowtimesByTheater = (showtimes) => {
   const groupedByTheater = {};
@@ -50,7 +50,7 @@ const groupShowtimesByTheater = (showtimes) => {
   Object.values(groupedByTheater).forEach((group) => {
     group.sort((a, b) => {
       const getMinutes = (time) => {
-        const [hours, minutes] = time.split(":").map(Number);
+        const [hours, minutes] = time.split(":").slice(0, 2).map(Number);
         return hours * 60 + minutes;
       };
 
@@ -70,7 +70,7 @@ const groupShowtimesByTheater = (showtimes) => {
 function sortShowtimes(showtimes) {
   return [...showtimes].sort((a, b) => {
     const getMinutes = (time) => {
-      const [hours, minutes] = time.split(":").map(Number);
+      const [hours, minutes] = time.split(":").slice(0, 2).map(Number);
       return hours * 60 + minutes;
     };
     const aMinutes = getMinutes(a.time);
@@ -213,7 +213,7 @@ const MovieTimesSection = ({
                 className="showtime-link"
               >
                 <div className="showtime-background">
-                  {showtime.type !== "R" && (
+                  {showtime.type !== "2D" && (
                     <div className="showtime-type">{showtime.type}</div>
                   )}
                   <div
