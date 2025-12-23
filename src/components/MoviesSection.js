@@ -18,11 +18,11 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         groupedMovies[movie.english_title] = [];
       }
       groupedMovies[movie.english_title].push({
-        showtime: movie.showtime,
+        time: movie.showtime,
         cinema: movie.cinema,
-        screening_type: movie.screening_type,
-        screening_city: movie.screening_city,
-        english_href: movie.english_href,
+        type: movie.screening_type,
+        snif: movie.screening_city,
+        time_href: movie.english_href,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,
@@ -36,7 +36,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
     Object.keys(groupedMovies).forEach((title) => {
       groupedMovies[title].sort((a, b) => {
         const getMinutes = (time) => {
-          const [hours, minutes] = time.split(":").map(Number);
+          const [hours, minutes] = time.split(":").slice(0, 2).map(Number);
           return hours * 60 + minutes;
         };
         return getMinutes(a.time) - getMinutes(b.time);

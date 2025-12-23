@@ -186,7 +186,7 @@ const MovieTimesSection = ({
                                 showtime.cinema
                               )}`}
                             >
-                              {showtime.time}
+                              {showtime.time?.slice(0, 5)}
                             </div>
                           </div>
                         </a>
@@ -221,7 +221,7 @@ const MovieTimesSection = ({
                       showtime.cinema
                     )}`}
                   >
-                    {showtime.time}
+                    {showtime.time?.slice(0, 5)}
                   </div>
                 </div>
               </a>
