@@ -12,6 +12,13 @@ const theaterNames = {
   RH: "Rav Hen",
 };
 
+const getShowtimeLabel = (showtime) => {
+  const tech = showtime.tech && showtime.tech !== "2D" ? showtime.tech : "";
+  const type =
+    showtime.type && showtime.type !== "Regular" ? showtime.type : "";
+  return [tech, type].filter(Boolean).join(" ");
+};
+
 const getCinemaClass = (cinema) => {
   switch (cinema) {
     case "Yes Planet":
@@ -32,7 +39,7 @@ const getCinemaClass = (cinema) => {
 };
 
 const areFirstFourShowtimesRegular = (showtimes) =>
-  showtimes.slice(0, 4).every((showtime) => showtime.type === "Regular");
+  showtimes.slice(0, 4).every((st) => !getShowtimeLabel(st));
 
 // const areAllShowtimesRegular = (showtimes) =>
 //   showtimes.every((showtime) => showtime.type === "Regular");
@@ -176,9 +183,9 @@ const MovieTimesSection = ({
                           className="showtime-link"
                         >
                           <div className="showtime-background">
-                            {showtime.type !== "Regular" && (
+                            {getShowtimeLabel(showtime) && (
                               <div className="showtime-type">
-                                {showtime.type}
+                                {getShowtimeLabel(showtime)}
                               </div>
                             )}
                             <div
@@ -213,8 +220,10 @@ const MovieTimesSection = ({
                 className="showtime-link"
               >
                 <div className="showtime-background">
-                  {showtime.type !== "Regular" && (
-                    <div className="showtime-type">{showtime.type}</div>
+                  {getShowtimeLabel(showtime) && (
+                    <div className="showtime-type">
+                      {getShowtimeLabel(showtime)}
+                    </div>
                   )}
                   <div
                     className={`showtime-time ${getCinemaClass(
