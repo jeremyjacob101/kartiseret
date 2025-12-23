@@ -23,7 +23,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         type: movie.screening_type,
         tech: movie.screening_tech,
         snif: movie.screening_city,
-        time_href: movie.english_href,
+        timeHref: movie.english_href,
         poster: movie.poster,
         runtime: movie.runtime,
         popularity: movie.popularity,
