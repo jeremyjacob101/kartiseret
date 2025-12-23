@@ -99,7 +99,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
           imdbRating: movie.imdbRating,
           imdbVotes: movie.imdbVotes,
           rtRating: movie.rtRating,
-          imdbID: movie.imdbID,
+          tmdb_id: movie.tmdb_id,
         };
       });
 
@@ -125,7 +125,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
           imdbRating: movieInfoMap[showtime.english_title]?.imdbRating || 0,
           imdbVotes: movieInfoMap[showtime.english_title]?.imdbVotes || 0,
           rtRating: movieInfoMap[showtime.english_title]?.rtRating || 0,
-          imdbID: movieInfoMap[showtime.english_title]?.imdbID || "",
+          tmdb_id: movieInfoMap[showtime.english_title]?.tmdb_id || "",
         }));
 
       setMovies(filteredMovies);

@@ -29,7 +29,7 @@ const MoviesSection = ({ movies, selectedSnifs, sortByTheater }) => {
         imdbRating: movie.imdbRating,
         imdbVotes: movie.imdbVotes,
         rtRating: movie.rtRating,
-        imdbID: movie.imdbID,
+        tmdb_id: movie.tmdb_id,
       });
     });
 
