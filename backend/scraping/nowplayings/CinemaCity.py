@@ -44,8 +44,7 @@ class CinemaCity(BaseCinema):
         self.sleep(2)
 
         self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dt/a", 0.25)
-        # for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li") + 1):
-        for cinema in range(3, 4):
+        for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
 
             self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li[{cinema}]/a", 0.25)
