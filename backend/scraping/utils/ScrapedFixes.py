@@ -106,6 +106,8 @@ class ScrapedFixes:
 
     def fixScreeningType(self):
         replace = {
+            "IMAX2D": "Regular",
+            "IMAX3D": "Regular",
             "רגיל": "Regular",
             "ONYX": "Regular",
             "VIP": "VIP",
@@ -167,6 +169,8 @@ class ScrapedFixes:
 
     def fixScreeningTech(self):
         replace = {
+            "IMAX2D": "2D IMAX",
+            "IMAX3D": "3D IMAX",
             "סינמה סיטי גלילות": "2D",
             "סינמה סיטי גלילות (ONYX)": "2D ONYX",
             'סינמה סיטי ראשל"צ': "2D",

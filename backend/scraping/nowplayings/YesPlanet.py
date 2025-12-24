@@ -19,7 +19,11 @@ class YesPlanet(BaseCinema):
         self.sleep(3)
 
         for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div")):
-            self.english_hrefs.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href")))
+            href = str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a").get_attribute("href"))
+            if href.endswith("s2r2"):
+                continue
+
+            self.english_hrefs.append(href)
             self.english_titles.append(str(self.element(f"/html/body/div[6]/section/div[2]/div/div/div/div[2]/div/div/div/div[1]/div[{film_card}]/a/p").text))
         for href in self.english_hrefs:
             self.driver.get(href)
