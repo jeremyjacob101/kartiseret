@@ -1,5 +1,6 @@
 from selenium import webdriver
 from datetime import datetime
+from utils import logger
 import time, pytz, os
 from supabase import create_client
 
@@ -27,11 +28,25 @@ def build_chrome(headless: bool = True):
     return webdriver.Chrome(options=options)
 
 
+def logSuccessfulRun(self) -> None:
+    duration_seconds = time.perf_counter() - self.startTime
+
+    resp = self.supabase.table("utilAvgScrapeTime").select("avg_time,num_runs,cinema_type").eq("cinema_name", self.__class__.__name__).limit(1).execute()
+    row = resp.data[0]
+    old_avg = float(row.get("avg_time") or 0.0)
+    n = int(row.get("num_runs") or 0)
+    new_avg = (old_avg * n + float(duration_seconds)) / (n + 1)
+    update_payload = {"avg_time": float(new_avg), "num_runs": n + 1, "cinema_type": row.get("cinema_type") or self.cinema_type}
+
+    self.supabase.table("utilAvgScrapeTime").update(update_payload).eq("cinema_name", self.__class__.__name__).eq("num_runs", n).execute()
+
+
 class InitializeBaseCinema:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.sleep = lambda s=None: time.sleep(999999999 if s is None else s)
 
+        self.startTime = time.perf_counter()
         self.today_date = datetime.today()
         self.current_year = str(datetime.now(pytz.timezone("Asia/Jerusalem")).year)
         self.current_month = str(datetime.now(pytz.timezone("Asia/Jerusalem")).month)

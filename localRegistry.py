@@ -30,11 +30,11 @@ from backend.dataflow.nowplayings.NowPlayingsTmdb import NowPlayingsTmdb
 REGISTRY = {
     "testingShowtimes": [
         LevCinema,
-        RavHen,
-        MovieLand,
-        HotCinema,
-        YesPlanet,
-        CinemaCity,
+        # RavHen,
+        # MovieLand,
+        # HotCinema,
+        # YesPlanet,
+        # CinemaCity,
     ],
     "testingTheques": [
         JLEMtheque,

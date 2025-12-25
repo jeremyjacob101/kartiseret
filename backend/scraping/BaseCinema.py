@@ -1,4 +1,4 @@
-from backend.scraping.utils.InitializeBaseCinema import InitializeBaseCinema, build_chrome, setUpSupabase, navigate
+from backend.scraping.utils.InitializeBaseCinema import InitializeBaseCinema, build_chrome, setUpSupabase, navigate, logSuccessfulRun
 from backend.scraping.utils.FormatAndAppend import AppendToInfo, formatAndUpload, formatAndWriteCsv
 from backend.scraping.utils.ScrapedFixes import ScrapedFixes
 from backend.scraping.utils.ScrapingHelpers import ScrapingHelpers
@@ -24,7 +24,8 @@ class BaseCinema(ScrapingHelpers, ScrapedFixes, InitializeBaseCinema, AppendToIn
             setUpSupabase(self)
             navigate(self)
             self.logic()
-            formatAndUpload(self)
+            # formatAndUpload(self)
+            logSuccessfulRun(self)
         except Exception:
             formatAndWriteCsv(self)
             raise
