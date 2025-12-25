@@ -1,62 +1,93 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
+from rich.console import Console, Group
+from rich.live import Live
+from rich.theme import Theme
+import time
+
 from localRegistry import REGISTRY, DATAFLOW_REGISTRY
 from utils.logger import artifactPrinting
-import threading, time
 
 
 def runCinemaType(type: str):
-    threads, runtimes, lock = [], {}, threading.Lock()
-
     classes = REGISTRY.get(type, [])
-    for cls in classes:
 
-        def _target(c=cls):
-            t0 = time.time()
-            instance = None
-            try:
-                instance = c(cinema_type=type, supabase_table_name=type)
-                instance.scrape()
-            except Exception:
-                artifactPrinting(instance)
-            finally:
-                dt = time.time() - t0
-                with lock:
-                    runtimes[c.__name__] = dt
-                try:
-                    if instance and getattr(instance, "driver", None):
-                        instance.driver.quit()
-                except Exception:
-                    raise
+    def run_one(cls):
+        t0, instance, ok = time.time(), None, True
+        try:
+            instance = cls(cinema_type=type, supabase_table_name=type)
+            instance.scrape()
+        except Exception as e:
+            ok = False
+            artifactPrinting(instance)
+        finally:
+            if instance and getattr(instance, "driver", None):
+                instance.driver.quit()
+        return getattr(cls, "CINEMA_NAME", cls.__name__), time.time() - t0, ok
 
-        thread = threading.Thread(target=_target, name=cls.__name__)
-        threads.append(thread)
-        thread.start()
+    console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
+    overall = Progress(TimeElapsedColumn(), TextColumn("[bold green]{task.completed}/{task.total} Threads[/bold green] " "[bold #66d6f2]{task.fields[cinema_type]}[bold /#66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
+    status = Progress(TextColumn("{task.fields[time]}"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
 
-    for thread in threads:
-        thread.join()
-
-    print("\n--------------------\n")
-    for name, secs in runtimes.items():
-        m, s = divmod(int(secs), 60)
-        print(f"{name}: {m:02d}m{s:02d}s\n")
-
-
-def runDataflows():
-    step_timings = []
-
-    for key, classes in DATAFLOW_REGISTRY.items():
+    status_task_by_name = {}
+    with Live(Group(overall, status), console=console, refresh_per_second=6):
+        overall_task = overall.add_task("scrape", total=len(classes), cinema_type=type)
         for cls in classes:
-            t0 = time.time()
-            instance = None
+            name = getattr(cls, "CINEMA_NAME", cls.__name__)
+            tid = status.add_task(f"[yellow]{name}[/yellow]", total=1, time=f"[yellow]       [/yellow]")
+            status_task_by_name[name] = tid
+
+        with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
+            futures = [ex.submit(run_one, cls) for cls in classes]
+            for future in as_completed(futures):
+                name, secs, ok = future.result()
+                tid = status_task_by_name[name]
+
+                h, rem = divmod(int(secs), 3600)
+                m, s = divmod(rem, 60)
+                hms = f"{h}:{m:02d}:{s:02d}"
+
+                if ok:
+                    status.update(tid, description=f"[green]{name}[/green]", time=f"[green]{hms}[/green]", completed=1)
+                else:
+                    status.update(tid, description=f"[red]{name}[/red]", time=f"[red]{hms}[/red]", completed=1)
+                overall.advance(overall_task, 1)
+
+
+def runDataflows(flow_key: str):
+    classes = DATAFLOW_REGISTRY.get(flow_key, [])
+    if not classes:
+        return
+
+    console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
+    overall = Progress(TimeElapsedColumn(), TextColumn("[bold green]{task.completed}/{task.total} Dataflows[/bold green] " "[bold #66d6f2]{task.fields[flow_key]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
+    status = Progress(TextColumn("{task.fields[time]}"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
+
+    status_task_by_name = {}
+    with Live(Group(overall, status), console=console, refresh_per_second=6):
+        overall_task = overall.add_task("dataflow", total=len(classes), flow_key=flow_key)
+        for cls in classes:
+            tid = status.add_task(f"[yellow]{cls.__name__}[/yellow]", total=1, time=f"[yellow]       [/yellow]")
+            status_task_by_name[cls.__name__] = tid
+
+        for cls in classes:
+            tid = status_task_by_name[cls.__name__]
+            t0, instance, ok = time.time(), None, True
             try:
                 instance = cls()
                 instance.dataRun()
             except Exception:
+                ok = False
                 artifactPrinting(instance)
-            finally:
-                dt = time.time() - t0
-                step_timings.append((f"{key}:{cls.__name__}", dt))
 
-    print("\n--------------------\n")
-    for name, secs in step_timings:
-        m, s = divmod(int(secs), 60)
-        print(f"{name}: {m}m{s:02d}s\n")
+            secs = time.time() - t0
+            h, rem = divmod(int(secs), 3600)
+            m, s = divmod(rem, 60)
+            hms = f"{h}:{m:02d}:{s:02d}"
+
+            if ok:
+                status.update(tid, description=f"[green]{cls.__name__}[/green]", time=f"[green]{hms}[/green]", completed=1)
+            else:
+                status.update(tid, description=f"[red]{cls.__name__}[/red]", time=f"[red]{hms}[/red]", completed=1)
+
+            overall.advance(overall_task, 1)

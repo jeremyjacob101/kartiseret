@@ -1,13 +1,20 @@
-def formatAndUpload(self):
+import csv
+import json
+import pathlib
+import threading
+import time
+
+
+def _format_rows_from_gathering_info(self):
     info = getattr(self, "gathering_info", {})
     if not isinstance(info, dict):
-        return None
+        return [], []
 
     active_columns = [name for name, values in info.items() if isinstance(values, list) and len(values) > 0]
     max_rows = max((len(info[name]) for name in active_columns), default=0)
 
     if not active_columns or max_rows == 0:
-        raise Exception("Empty gathering_info table")
+        return [], []
 
     rows = []
     for row_index in range(max_rows):
@@ -15,10 +22,69 @@ def formatAndUpload(self):
         for column_name in active_columns:
             column_values = info[column_name]
             value = column_values[row_index] if row_index < len(column_values) else None
-            if (isinstance(value, str) and (value := value.strip())) or (value is not None and (not hasattr(value, "__len__") or len(value) > 0)):
-                row_data[column_name] = value
-        rows.append(row_data)
 
+            if isinstance(value, str):
+                value = value.strip()
+                if value == "":
+                    continue
+            elif value is None:
+                continue
+            else:
+                try:
+                    if hasattr(value, "__len__") and len(value) == 0:
+                        continue
+                except Exception:
+                    pass
+
+            if isinstance(value, (dict, list, tuple, set)):
+                value = json.dumps(value, ensure_ascii=False)
+
+            row_data[column_name] = value
+
+        if row_data:
+            rows.append(row_data)
+
+    return rows, active_columns
+
+
+def formatAndWriteCsv(self, *, note: str = "gathering_info"):
+    try:
+        rows, columns = _format_rows_from_gathering_info(self)
+        if not rows:
+            return None
+
+        artifact_dir = pathlib.Path("utils/logger_artifacts")
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+
+        name = getattr(self, "CINEMA_NAME", None) or self.__class__.__name__
+        safe_prefix = str(name).replace(" ", "_")
+        ts = time.strftime("%Y%m%d-%H%M%S")
+        thread_name = threading.current_thread().name.replace(" ", "_")
+
+        csv_path = artifact_dir / f"{safe_prefix}-{thread_name}-{ts}-{note}.csv"
+
+        header = list(columns)
+        if not header:
+            keys = set()
+            for r in rows:
+                keys.update(r.keys())
+            header = sorted(keys)
+
+        with open(csv_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=header, extrasaction="ignore")
+            writer.writeheader()
+            writer.writerows(rows)
+
+        self._last_csv_artifact = str(csv_path)
+        return str(csv_path)
+    except:
+        pass
+
+
+def formatAndUpload(self):
+    rows, _columns = _format_rows_from_gathering_info(self)
+    if not rows:
+        raise Exception("Empty gathering_info table")
     return self.supabase.table(self.supabase_table_name).insert(rows).execute()
 
 
