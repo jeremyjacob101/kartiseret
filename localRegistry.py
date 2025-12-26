@@ -29,12 +29,12 @@ from backend.dataflow.nowplayings.NowPlayingsTmdb import NowPlayingsTmdb
 
 REGISTRY = {
     "testingShowtimes": [
-        # LevCinema,
+        LevCinema,
         RavHen,
-        # MovieLand,
-        # HotCinema,
+        MovieLand,
+        HotCinema,
         YesPlanet,
-        # CinemaCity,
+        CinemaCity,
     ],
     "testingTheques": [
         JLEMtheque,

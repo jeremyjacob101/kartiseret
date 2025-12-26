@@ -12,7 +12,7 @@ def main():
 
     # runCinemaType("testingSoons")
     # runCinemaType("testingTheques")
-    # runCinemaType("testingShowtimes")
+    runCinemaType("testingShowtimes")
 
     # runDataflows("comingSoonsData")
     # runDataflows("nowPlayingData")
