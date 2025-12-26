@@ -12,7 +12,8 @@ class ComingSoonsClean(BaseDataflow):
     def logic(self):
         append_testingSoonsHelpers_to_testingSoonsHelpers2()
         clear_testingSoonsHelpers()
-
+        self.dedupeTable(self.MAIN_TABLE_NAME)
+        
         for row in self.main_table_rows:
             row["english_title"] = self.normalizeTitle(row.get("english_title") or "")
             row["hebrew_title"] = (row.get("hebrew_title") or "").lower()
@@ -25,6 +26,7 @@ class ComingSoonsClean(BaseDataflow):
 
         self.upsertUpdates(self.MAIN_TABLE_NAME)
         self.deleteTheseRows(self.MAIN_TABLE_NAME)
+        self.dedupeTable(self.MAIN_TABLE_NAME)
 
         groups, helpers_by_winner = defaultdict(list), defaultdict(list)
 
@@ -55,3 +57,4 @@ class ComingSoonsClean(BaseDataflow):
         self.comingSoonsWriteHelpers(helpers_by_winner)
         self.comingSoonsWriteSingleHelpers(groups)
         self.deleteTheseRows(self.MAIN_TABLE_NAME)
+        self.dedupeTable(self.MAIN_TABLE_NAME)

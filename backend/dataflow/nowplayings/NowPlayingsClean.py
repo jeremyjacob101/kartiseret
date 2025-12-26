@@ -5,9 +5,11 @@ class NowPlayingsClean(BaseDataflow):
     MAIN_TABLE_NAME = "testingShowtimes"
 
     def logic(self):
-        yes_map = {}
+        self.dedupeTable(self.MAIN_TABLE_NAME)
+
         # Move Yes Planet hebrew_titles into Rav Hen english_titles
         #
+        yes_map = {}
         for row in self.main_table_rows:
             if row.get("cinema") == "Yes Planet":
                 hebrew = (row.get("hebrew_title") or "").strip()
@@ -35,3 +37,4 @@ class NowPlayingsClean(BaseDataflow):
 
         self.upsertUpdates(self.MAIN_TABLE_NAME)
         self.deleteTheseRows(self.MAIN_TABLE_NAME)
+        self.dedupeTable(self.MAIN_TABLE_NAME)

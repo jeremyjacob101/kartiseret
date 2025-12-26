@@ -24,8 +24,8 @@ class BaseCinema(ScrapingHelpers, ScrapedFixes, InitializeBaseCinema, AppendToIn
             setUpSupabase(self)
             navigate(self)
             self.logic()
-            # formatAndUpload(self)
-            # logSuccessfulRun(self)
+            formatAndUpload(self)
+            logSuccessfulRun(self)
             formatAndWriteCsv(self)
         except Exception:
             formatAndWriteCsv(self)
