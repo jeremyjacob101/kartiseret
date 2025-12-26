@@ -8,13 +8,13 @@ from backend.config.runners import runCinemaType, runDataflows
 
 
 def main():
-    setup_logging("ERROR")
+    setup_logging()
 
-    runCinemaType("testingShowtimes")
-    runCinemaType("testingTheques")
-    runCinemaType("testingSoons")
+    # runCinemaType("testingShowtimes")
+    # runCinemaType("testingTheques")
+    # runCinemaType("testingSoons")
 
-    runDataflows()
+    # runDataflows()
 
 
 if __name__ == "__main__":

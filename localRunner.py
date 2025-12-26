@@ -8,7 +8,7 @@ from localRunners import runCinemaType, runDataflows
 
 
 def main():
-    setup_logging("ERROR")
+    setup_logging()
 
     # runCinemaType("testingSoons")
     # runCinemaType("testingTheques")

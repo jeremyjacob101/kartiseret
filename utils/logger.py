@@ -1,31 +1,24 @@
 import logging, os, sys, traceback, pathlib, time, threading, re, signal
 
 logger = logging.getLogger("sel")
-SUPPRESS_ERRORS, _SIGINT_HOOKED = False, False
+SUPPRESS_ERRORS = False
 
 
-def setup_logging(level: str | int = None) -> None:
-    global _SIGINT_HOOKED, SUPPRESS_ERRORS
-    if not _SIGINT_HOOKED:
-        _SIGINT_HOOKED = True
+def setup_logging() -> None:
+    global SUPPRESS_ERRORS
 
-        def _handler(sig, frame):
-            global SUPPRESS_ERRORS
-            SUPPRESS_ERRORS = True
-            signal.default_int_handler(sig, frame)
+    def _handler(sig, frame):
+        global SUPPRESS_ERRORS
+        SUPPRESS_ERRORS = True
+        signal.default_int_handler(sig, frame)
 
-        try:
-            signal.signal(signal.SIGINT, _handler)
-        except Exception:
-            pass
+    try:
+        signal.signal(signal.SIGINT, _handler)
+    except Exception:
+        pass
 
-    if level is None:
-        level = os.getenv("LOG_LEVEL", "DEBUG")
-    if isinstance(level, str):
-        level = getattr(logging, level.upper(), logging.DEBUG)
-
-    logging.basicConfig(level=level, format="%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s", handlers=[logging.StreamHandler(sys.stdout)], force=True)
-    logger.setLevel(level)
+    logging.basicConfig(level=logging.ERROR, format="%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s", handlers=[logging.StreamHandler(sys.stdout)], force=True)
+    logger.setLevel(logging.ERROR)
 
     artifact_dir = pathlib.Path("utils/logger_artifacts")
     if artifact_dir.exists():  # Clean up old artifacts on each run
