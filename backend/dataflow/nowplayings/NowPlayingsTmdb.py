@@ -253,11 +253,7 @@ class NowPlayingsTmdb(BaseDataflow):
             # 2) FETCH FULL DETAILS (external_ids + credits)
             for tmdb_id in candidates:
                 try:
-                    movie_response = requests.get(
-                        f"https://api.themoviedb.org/3/movie/{tmdb_id}",
-                        params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"},
-                        timeout=20,
-                    ).json()
+                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}, timeout=20).json()
                     if movie_response.get("id"):
                         details[tmdb_id] = movie_response
                 except:
@@ -332,11 +328,7 @@ class NowPlayingsTmdb(BaseDataflow):
         for tmdb_id, res in list(movies_by_tmdb.items()):
             if tmdb_id not in tmdb_basic_cache:
                 try:
-                    tmdb_basic_cache[tmdb_id] = requests.get(
-                        f"https://api.themoviedb.org/3/movie/{tmdb_id}",
-                        params={"api_key": self.TMDB_API_KEY},
-                        timeout=20,
-                    ).json()
+                    tmdb_basic_cache[tmdb_id] = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY}, timeout=20).json()
                 except:
                     tmdb_basic_cache[tmdb_id] = {}
 
@@ -352,9 +344,6 @@ class NowPlayingsTmdb(BaseDataflow):
             if data.get("backdrop_path"):
                 res["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"]
 
-        clear_testingFinalShowtimes()
-        clear_testingFinalMovies()
-
         tmdb_id_to_enriched = dict(movies_by_tmdb)
 
         for key, rows in grouped_rows_by_key.items():
@@ -364,45 +353,28 @@ class NowPlayingsTmdb(BaseDataflow):
             final_title = (enriched or {}).get("english_title") if enriched else None
 
             for row in rows:
-                title_norm = self.normalizeTitle(row.get("english_title") or "").strip()
+                if not tmdb_id or self.titleIsSkipped(self.normalizeTitle(row.get("english_title")), skip_tokens):
+                    continue
+
                 new_row = dict(row)
-
-                if self.titleIsSkipped(title_norm, skip_tokens):
-                    new_row["english_title"] = title_norm
-                    new_row["tmdb_id"] = None
-                    self.updates.append(new_row)
-                    continue
-
-                if not tmdb_id:
-                    continue
-
                 new_row["tmdb_id"] = tmdb_id
                 if final_title:
                     new_row["english_title"] = final_title
                 else:
-                    new_row["english_title"] = title_norm
+                    new_row["english_title"] = self.normalizeTitle(row.get("english_title"))
 
                 self.updates.append(new_row)
 
-        append_testingFinalShowtimes_to_testingFinalShowtimes2
+        append_testingFinalShowtimes_to_testingFinalShowtimes2()
         clear_testingFinalShowtimes()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
 
         for tmdb_id, res in tmdb_id_to_enriched.items():
             if not tmdb_id:
                 continue
-            self.updates.append(
-                {
-                    "tmdb_id": tmdb_id,
-                    "english_title": res.get("english_title"),
-                    "runtime": res.get("runtime"),
-                    "popularity": res.get("popularity"),
-                    "poster": res.get("poster"),
-                    "backdrop": res.get("backdrop"),
-                }
-            )
+            self.updates.append({"tmdb_id": tmdb_id, "english_title": res.get("english_title"), "runtime": res.get("runtime"), "popularity": res.get("popularity"), "poster": res.get("poster"), "backdrop": res.get("backdrop")})
 
-        append_testingFinalMovies_to_testingFinalMovies2
+        append_testingFinalMovies_to_testingFinalMovies2()
         clear_testingFinalMovies()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME_2)
 

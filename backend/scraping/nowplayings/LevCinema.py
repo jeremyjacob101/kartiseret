@@ -28,6 +28,8 @@ class LevCinema(BaseCinema):
                     self.english_title = re.sub(r"\b[dD]ubbded\b", "", self.english_title).strip()
                     self.hebrew_title = self.hebrew_title.replace("מדובב", "").strip()
                     self.dub_language = "Hebrew"
+                if isinstance(self.hebrew_title, str) and self.hebrew_title.endswith(" אנגלית"):
+                    self.hebrew_title = self.hebrew_title[: -len(" אנגלית")].strip()
 
                 self.release_year = self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[2]/div[1]/div[1]").text
                 self.release_year = int(m.group(0)) if (m := re.search(r"\b(19|20)\d{2}\b", self.release_year)) else None
@@ -51,7 +53,7 @@ class LevCinema(BaseCinema):
                         self.date_of_showing = self.element(f"/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[6]/div[{city}]/div[{day}]/span").text
                         self.date_of_showing = re.search(r"\d{1,2}/\d{1,2}", self.date_of_showing).group(0)
                         dd, mm = re.search(r"(\d{1,2})/(\d{1,2})", self.date_of_showing).groups()
-                        if self.current_month == "12" and not crossed_year and (str(mm) == "1" or str(mm) == "01"):
+                        if self.current_month == "12" and not crossed_year and (str(mm) == "1" or str(mm) == "01" or str(mm) == "2" or str(mm) == "02" or str(mm) == "3" or str(mm) == "03" or str(mm) == "4" or str(mm) == "04"):
                             crossed_year = True
                             trying_year = str(int(trying_year) + 1)
                         yyyy = str(trying_year)

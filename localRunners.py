@@ -100,13 +100,13 @@ def runCinemaType(type: str):
         return cls.__name__, time.time() - t0, ok
 
     console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
-    overall = Progress(TextColumn("[bold #9c27f5]{task.fields[elapsed]}[/bold #9c27f5]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold orange1]{task.fields[eta]}[/bold orange1]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} Threads[/bold green] " "[bold #66d6f2]{task.fields[cinema_type]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
+    overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} Threads[/bold green] " "[bold #66d6f2]{task.fields[cinema_type]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
     status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
 
     task_by_classname, start_by_classname, total_by_classname = {}, {}, {}
     with Live(Group(overall, status), console=console, refresh_per_second=6):
         total_estimated = max(avg_by_classname.values()) if avg_by_classname else 0.0
-        overall_task = overall.add_task("overall", total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), cinema_type=type, bar_color="#f266e0")
+        overall_task = overall.add_task("overall", total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), cinema_type=type, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
 
         for cls in classes:
             display_name = getattr(cls, "CINEMA_NAME", cls.__name__)
@@ -187,7 +187,7 @@ def runCinemaType(type: str):
                     task.complete_style = overall_color
                     task.pulse_style = overall_color
 
-                    overall.update(overall_task, total=total_estimated, completed=total_estimated, eta=_hms(0), done=done_count, bar_color=overall_color)
+                    overall.update(overall_task, total=total_estimated, completed=total_estimated, eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
                     break
 
                 time.sleep(0.2)
@@ -213,7 +213,7 @@ def runDataflows(flow_key: str):
     console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
 
     total_estimated = float(sum(avg_by_classname.get(cls.__name__, 60.0) for cls in classes))
-    overall = Progress(TextColumn("[bold #9c27f5]{task.fields[elapsed]}[/bold #9c27f5]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold orange1]{task.fields[eta]}[/bold orange1]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} Dataflows[/bold green] " "[bold #66d6f2]{task.fields[flow_key]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
+    overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} Dataflows[/bold green] " "[bold #66d6f2]{task.fields[flow_key]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
     status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
 
     task_by_name: dict[str, int] = {}
@@ -221,7 +221,7 @@ def runDataflows(flow_key: str):
 
     with Live(Group(overall, status), console=console, refresh_per_second=6):
         overall_start = time.time()
-        overall_task = overall.add_task("dataflows", total=total_estimated, completed=0.0, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), flow_key=flow_key, bar_color="#f266e0")
+        overall_task = overall.add_task("dataflows", total=total_estimated, completed=0.0, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), flow_key=flow_key, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
 
         for cls in classes:
             name = cls.__name__
@@ -286,4 +286,4 @@ def runDataflows(flow_key: str):
         task.pulse_style = overall_color
 
         final_elapsed = time.time() - overall_start
-        overall.update(overall_task, completed=total_estimated, elapsed=_hms(final_elapsed), eta=_hms(0), done=done_count, bar_color=overall_color)
+        overall.update(overall_task, completed=total_estimated, elapsed=_hms(final_elapsed), eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
