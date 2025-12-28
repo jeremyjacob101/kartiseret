@@ -67,6 +67,5 @@ class LevCinema(BaseCinema):
                             self.screening_tech = "2D"
 
                             self.appendToGatheringInfo()
-                            raise
 
             self.driver.get(self.URL)
