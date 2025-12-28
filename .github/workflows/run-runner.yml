@@ -99,7 +99,7 @@ jobs:
           if [ "${{ github.event.inputs.debug }}" = "true" ]; then set -x; fi
           . .venv/bin/activate
           export PYTHONPATH="${PYTHONPATH}:${{ github.workspace }}"
-          python backend/config/runner.py ${{ github.event.inputs.args }}
+          python localRunner.py ${{ github.event.inputs.args }}
       
       - name: Check for artifacts
         id: artifacts-exist
