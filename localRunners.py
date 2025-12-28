@@ -14,6 +14,15 @@ from supabase import create_client
 
 runningGithubActions = os.getenv("GITHUB_ACTIONS") == "true"
 
+from dataclasses import dataclass
+
+
+@dataclass
+class RunResult:
+    name: str
+    secs: float
+    ok: bool
+
 
 class PerTaskBarColumn(ProgressColumn):
     def __init__(self, bar_width=20, default_bar="#f266e0", default_back="grey23"):
@@ -37,6 +46,14 @@ def _hms(secs: float) -> str:
     h, rem = divmod(secs, 3600)
     m, s = divmod(rem, 60)
     return f"{h}:{m:02d}:{s:02d}"
+
+
+def _print_timings(results):
+    print("\n--------------------\n", flush=True)
+    for result in results:
+        minutes, seconds = divmod(int(result.secs), 60)
+        print(f"{result.name}: {minutes:02d}m{seconds:02d}s", flush=True)
+    print("\n--------------------\n", flush=True)
 
 
 def _fetch_avg_times_for_dataflows(classes) -> dict[str, float]:
@@ -84,8 +101,202 @@ def _fetch_avg_times_for_classes(classes) -> dict[str, float]:
     return out
 
 
+def _run_in_threadpool(classes, run_one):
+    results = []
+    with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
+        futures = [ex.submit(run_one, cls) for cls in classes]
+        for fut in as_completed(futures):
+            results.append(fut.result())  # RunResult
+    return results
+
+
+def _run_sequential(classes, run_one):
+    results = []
+    for cls in classes:
+        results.append(run_one(cls))  # RunResult
+    return results
+
+
+def _make_rich_ui(count_label: str, key_field: str):
+    console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
+    summary = "[bold green]{task.fields[done]}/{task.fields[total_count]} " + count_label + "[/bold green] " + "[bold #66d6f2]{task.fields[" + key_field + "]}[/bold #66d6f2]"
+    overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn(summary), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
+    status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
+    return console, overall, status
+
+
+def _runCinemaType_rich(type: str, classes, run_one):
+    avg_by_classname = _fetch_avg_times_for_classes(classes)
+    console, overall, status = _make_rich_ui("Threads", "cinema_type")
+    task_by_classname, start_by_classname, total_by_classname = {}, {}, {}
+
+    with Live(Group(overall, status), console=console, refresh_per_second=6):
+        total_estimated = max(avg_by_classname.values()) if avg_by_classname else 0.0
+        overall_task = overall.add_task("overall", total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), cinema_type=type, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
+
+        for cls in classes:
+            display_name = getattr(cls, "CINEMA_NAME", cls.__name__)
+            classname = cls.__name__
+            est = float(avg_by_classname.get(classname, 60.0))
+
+            tid = status.add_task(f"[yellow]{display_name}[/yellow]", total=est, time=f"[yellow]       [/yellow]", bar_color="#f266e0")
+            task_by_classname[classname] = (tid, display_name)
+            total_by_classname[classname] = est
+
+        with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
+            futures, future_to_classname = [], {}
+            for cls in classes:
+                classname = cls.__name__
+                start_by_classname[classname] = time.time()
+                f = ex.submit(run_one, cls)
+                futures.append(f)
+                future_to_classname[f] = classname
+
+            done_count, done_set = 0, set()
+            while True:
+                now = time.time()
+                max_elapsed = 0.0
+                for cls in classes:
+                    classname = cls.__name__
+                    if classname in done_set:
+                        continue
+                    elapsed = now - start_by_classname[classname]
+                    if elapsed > max_elapsed:
+                        max_elapsed = elapsed
+
+                overall_completed = min(max_elapsed, total_estimated)
+                eta_secs = (total_estimated - overall_completed) if total_estimated > overall_completed else 0.0
+
+                for cls in classes:
+                    classname = cls.__name__
+                    tid, _display_name = task_by_classname[classname]
+                    t_total = float(total_by_classname[classname])
+
+                    if classname in done_set:
+                        continue
+
+                    elapsed = now - start_by_classname[classname]
+                    status.update(tid, completed=min(elapsed, t_total))
+
+                for f in futures:
+                    if not f.done():
+                        continue
+                    classname = future_to_classname[f]
+                    if classname in done_set:
+                        continue
+
+                    r = f.result()
+                    tid, display_name = task_by_classname[classname]
+                    t_total = float(total_by_classname[classname])
+
+                    done_count += 1
+                    done_set.add(classname)
+
+                    if r.ok:
+                        status.update(tid, description=f"[green]{display_name}[/green]", time=f"[green]{_hms(r.secs)}[/green]", completed=t_total, bar_color="green")
+                    else:
+                        status.update(tid, description=f"[red]{display_name}[/red]", time=f"[red]{_hms(r.secs)}[/red]", bar_color="red", failed=True)
+
+                overall_elapsed = now - min(start_by_classname.values())
+                overall.update(overall_task, total=total_estimated, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
+
+                if len(done_set) == len(classes):
+                    all_ok = all(f.result().ok for f in futures)
+                    overall_color = "green" if all_ok else "red"
+
+                    task = overall.tasks[overall_task]
+                    task.finished_style = overall_color
+                    task.complete_style = overall_color
+                    task.pulse_style = overall_color
+
+                    overall.update(overall_task, total=total_estimated, completed=total_estimated, eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+                    break
+
+                time.sleep(0.2)
+
+
+def _runDataflows_rich(flow_key, classes, run_one_dataflow):
+    avg_by_classname = _fetch_avg_times_for_dataflows(classes)
+    console, overall, status = _make_rich_ui("Dataflows", "flow_key")
+    total_estimated = float(sum(avg_by_classname.get(cls.__name__, 60.0) for cls in classes))
+
+    task_by_name: dict[str, int] = {}
+    est_by_name: dict[str, float] = {}
+
+    with Live(Group(overall, status), console=console, refresh_per_second=6):
+        overall_start = time.time()
+        overall_task = overall.add_task("dataflows", total=total_estimated, completed=0.0, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), flow_key=flow_key, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
+
+        for cls in classes:
+            name = cls.__name__
+            est = float(avg_by_classname.get(name, 60.0))
+            tid = status.add_task(f"[yellow]{name}[/yellow]", total=est, completed=0.0, time=f"[yellow]       [/yellow]", bar_color="#f266e0")
+            task_by_name[name] = tid
+            est_by_name[name] = est
+
+        done_count = 0
+        sum_est_done = 0.0
+        all_ok = True
+
+        with ThreadPoolExecutor(max_workers=1) as ex:
+            for cls in classes:
+                name = cls.__name__
+                tid = task_by_name[name]
+                est = est_by_name[name]
+
+                start = time.time()
+                fut = ex.submit(run_one_dataflow, cls)
+
+                while True:
+                    now = time.time()
+                    elapsed = now - start
+
+                    status.update(tid, completed=min(elapsed, est))
+
+                    overall_completed = min(sum_est_done + min(elapsed, est), total_estimated)
+                    eta_secs = max(0.0, total_estimated - overall_completed)
+                    overall_elapsed = now - overall_start
+
+                    overall.update(overall_task, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
+
+                    if fut.done():
+                        break
+
+                    time.sleep(0.2)
+
+                r = fut.result()
+                done_count += 1
+                sum_est_done += est
+                all_ok = all_ok and r.ok
+
+                if r.ok:
+                    status.update(tid, description=f"[green]{name}[/green]", time=f"[green]{_hms(r.secs)}[/green]", completed=est, bar_color="green")
+                else:
+                    status.update(tid, description=f"[red]{name}[/red]", time=f"[red]{_hms(r.secs)}[/red]", completed=est, bar_color="red", failed=True)
+
+                # Push overall after marking this one done
+                now = time.time()
+                overall_elapsed = now - overall_start
+                overall_completed = min(sum_est_done, total_estimated)
+                eta_secs = max(0.0, total_estimated - overall_completed)
+
+                overall.update(overall_task, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
+
+        # Finalize overall bar color based on success
+        overall_color = "green" if all_ok else "red"
+        task = overall.tasks[overall_task]
+        task.finished_style = overall_color
+        task.complete_style = overall_color
+        task.pulse_style = overall_color
+
+        final_elapsed = time.time() - overall_start
+        overall.update(overall_task, completed=total_estimated, elapsed=_hms(final_elapsed), eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+
+
 def runCinemaType(type: str):
     classes = REGISTRY.get(type, [])
+    if not classes:
+        return
 
     def run_one(cls):
         t0, instance, ok = time.time(), None, True
@@ -98,119 +309,13 @@ def runCinemaType(type: str):
         finally:
             if instance and getattr(instance, "driver", None):
                 instance.driver.quit()
-        return cls.__name__, time.time() - t0, ok
+        return RunResult(name=cls.__name__, secs=time.time() - t0, ok=ok)
 
     if runningGithubActions:
-        runtimes = {}
-        with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
-            futures = [ex.submit(run_one, cls) for cls in classes]
-            for future in as_completed(futures):
-                name, secs, ok = future.result()
-                runtimes[name] = secs
-
-        print("\n--------------------\n")
-        for name, secs in runtimes.items():
-            m, s = divmod(int(secs), 60)
-            print(f"{name}: {m:02d}m{s:02d}s")
-        print("\n--------------------\n")
-
-        return
-
-    if not runningGithubActions:
-        avg_by_classname = _fetch_avg_times_for_classes(classes)
-
-        console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
-        overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} Threads[/bold green] " "[bold #66d6f2]{task.fields[cinema_type]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
-        status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
-
-        task_by_classname, start_by_classname, total_by_classname = {}, {}, {}
-        with Live(Group(overall, status), console=console, refresh_per_second=6):
-            total_estimated = max(avg_by_classname.values()) if avg_by_classname else 0.0
-            overall_task = overall.add_task("overall", total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), cinema_type=type, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
-
-            for cls in classes:
-                display_name = getattr(cls, "CINEMA_NAME", cls.__name__)
-                classname = cls.__name__
-                est = float(avg_by_classname.get(classname, 60.0))
-
-                tid = status.add_task(f"[yellow]{display_name}[/yellow]", total=est, time=f"[yellow]       [/yellow]", bar_color="#f266e0")
-                task_by_classname[classname] = (tid, display_name)
-                total_by_classname[classname] = est
-
-            with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
-                futures, future_to_classname = [], {}
-                for cls in classes:
-                    classname = cls.__name__
-                    start_by_classname[classname] = time.time()
-                    f = ex.submit(run_one, cls)
-                    futures.append(f)
-                    future_to_classname[f] = classname
-
-                done_count, done_set = 0, set()
-                while True:
-                    now = time.time()
-                    max_elapsed = 0.0
-                    sum_completed = 0.0
-                    for cls in classes:
-                        classname = cls.__name__
-                        if classname in done_set:
-                            continue
-                        elapsed = now - start_by_classname[classname]
-                        if elapsed > max_elapsed:
-                            max_elapsed = elapsed
-
-                    overall_completed = min(max_elapsed, total_estimated)
-                    eta_secs = (total_estimated - overall_completed) if total_estimated > overall_completed else 0.0
-
-                    for cls in classes:
-                        classname = cls.__name__
-                        tid, display_name = task_by_classname[classname]
-
-                        t_total = float(total_by_classname[classname])
-
-                        if classname in done_set:
-                            sum_completed += t_total
-                            continue
-
-                        elapsed = now - start_by_classname[classname]
-                        sum_completed += min(elapsed, t_total)
-                        status.update(tid, completed=min(elapsed, t_total))
-
-                    for f in futures:
-                        if not f.done():
-                            continue
-                        classname = future_to_classname[f]
-                        if classname in done_set:
-                            continue
-
-                        _, secs, ok = f.result()
-                        tid, display_name = task_by_classname[classname]
-                        t_total = float(total_by_classname[classname])
-
-                        done_count += 1
-                        done_set.add(classname)
-
-                        if ok:
-                            status.update(tid, description=f"[green]{display_name}[/green]", time=f"[green]{_hms(secs)}[/green]", completed=t_total, bar_color="green")
-                        else:
-                            status.update(tid, description=f"[red]{display_name}[/red]", time=f"[red]{_hms(secs)}[/red]", bar_color="red", failed=True)
-
-                    overall_elapsed = now - min(start_by_classname.values())
-                    overall.update(overall_task, total=total_estimated, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
-
-                    if len(done_set) == len(classes):
-                        all_ok = all(f.result()[2] for f in futures)
-                        overall_color = "green" if all_ok else "red"
-
-                        task = overall.tasks[overall_task]
-                        task.finished_style = overall_color
-                        task.complete_style = overall_color
-                        task.pulse_style = overall_color
-
-                        overall.update(overall_task, total=total_estimated, completed=total_estimated, eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
-                        break
-
-                    time.sleep(0.2)
+        results = _run_in_threadpool(classes, run_one)
+        _print_timings(results)
+    else:
+        _runCinemaType_rich(type, classes, run_one)
 
 
 def runDataflows(flow_key: str):
@@ -226,98 +331,10 @@ def runDataflows(flow_key: str):
         except Exception:
             ok = False
             artifactPrinting(instance)
-        return cls.__name__, time.time() - t0, ok
+        return RunResult(name=cls.__name__, secs=time.time() - t0, ok=ok)
 
     if runningGithubActions:
-        step_timings = []
-        for cls in classes:
-            name, secs, ok = run_one_dataflow(cls)
-            step_timings.append((f"{flow_key}:{name}", secs))
-
-        print("\n--------------------\n")
-        for name, secs in step_timings:
-            m, s = divmod(int(secs), 60)
-            print(f"{name}: {m:02d}m{s:02d}s")
-        print("\n--------------------\n")
-
-        return
-
-    if not runningGithubActions:
-        avg_by_classname = _fetch_avg_times_for_dataflows(classes)
-        console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
-
-        total_estimated = float(sum(avg_by_classname.get(cls.__name__, 60.0) for cls in classes))
-        overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} Dataflows[/bold green] " "[bold #66d6f2]{task.fields[flow_key]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
-        status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
-
-        task_by_name: dict[str, int] = {}
-        est_by_name: dict[str, float] = {}
-
-        with Live(Group(overall, status), console=console, refresh_per_second=6):
-            overall_start = time.time()
-            overall_task = overall.add_task("dataflows", total=total_estimated, completed=0.0, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), flow_key=flow_key, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
-
-            for cls in classes:
-                name = cls.__name__
-                est = float(avg_by_classname.get(name, 60.0))
-                tid = status.add_task(f"[yellow]{name}[/yellow]", total=est, completed=0.0, time=f"[yellow]       [/yellow]", bar_color="#f266e0")
-                task_by_name[name] = tid
-                est_by_name[name] = est
-
-            done_count = 0
-            sum_est_done = 0.0
-            all_ok = True
-
-            with ThreadPoolExecutor(max_workers=1) as ex:
-                for cls in classes:
-                    name = cls.__name__
-                    tid = task_by_name[name]
-                    est = est_by_name[name]
-
-                    start = time.time()
-                    fut = ex.submit(run_one_dataflow, cls)
-
-                    while True:
-                        now = time.time()
-                        elapsed = now - start
-
-                        status.update(tid, completed=min(elapsed, est))
-
-                        overall_completed = min(sum_est_done + min(elapsed, est), total_estimated)
-                        eta_secs = max(0.0, total_estimated - overall_completed)
-                        overall_elapsed = now - overall_start
-
-                        overall.update(overall_task, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
-
-                        if fut.done():
-                            break
-
-                        time.sleep(0.2)
-
-                    _, secs, ok = fut.result()
-                    done_count += 1
-                    sum_est_done += est
-                    all_ok = all_ok and ok
-
-                    if ok:
-                        status.update(tid, description=f"[green]{name}[/green]", time=f"[green]{_hms(secs)}[/green]", completed=est, bar_color="green")
-                    else:
-                        status.update(tid, description=f"[red]{name}[/red]", time=f"[red]{_hms(secs)}[/red]", completed=est, bar_color="red", failed=True)
-
-                    # Push overall after marking this one done
-                    now = time.time()
-                    overall_elapsed = now - overall_start
-                    overall_completed = min(sum_est_done, total_estimated)
-                    eta_secs = max(0.0, total_estimated - overall_completed)
-
-                    overall.update(overall_task, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
-
-            # Finalize overall bar color based on success
-            overall_color = "green" if all_ok else "red"
-            task = overall.tasks[overall_task]
-            task.finished_style = overall_color
-            task.complete_style = overall_color
-            task.pulse_style = overall_color
-
-            final_elapsed = time.time() - overall_start
-            overall.update(overall_task, completed=total_estimated, elapsed=_hms(final_elapsed), eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+        results = _run_sequential(classes, run_one_dataflow)
+        _print_timings(results)
+    else:
+        _runDataflows_rich(flow_key, classes, run_one_dataflow)
