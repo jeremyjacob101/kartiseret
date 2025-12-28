@@ -101,6 +101,17 @@ def _fetch_avg_times_for_classes(classes) -> dict[str, float]:
     return out
 
 
+def _finalize_overall_bar(overall, overall_task_id: int, ok: bool, completed: float, elapsed_secs: float, done: int):
+    overall_color = "green" if ok else "red"
+
+    task = overall.tasks[overall_task_id]
+    task.finished_style = overall_color
+    task.complete_style = overall_color
+    task.pulse_style = overall_color
+
+    overall.update(overall_task_id, completed=completed, elapsed=_hms(elapsed_secs), eta=_hms(0), done=done, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+
+
 def _run_in_threadpool(classes, run_one):
     results = []
     with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
@@ -201,15 +212,9 @@ def _runCinemaType_rich(type: str, classes, run_one):
                 overall.update(overall_task, total=total_estimated, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
 
                 if len(done_set) == len(classes):
-                    all_ok = all(f.result().ok for f in futures)
-                    overall_color = "green" if all_ok else "red"
-
-                    task = overall.tasks[overall_task]
-                    task.finished_style = overall_color
-                    task.complete_style = overall_color
-                    task.pulse_style = overall_color
-
-                    overall.update(overall_task, total=total_estimated, completed=total_estimated, eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+                    all_ok = all(future.result().ok for future in futures)
+                    overall_elapsed = now - min(start_by_classname.values())
+                    _finalize_overall_bar(overall, overall_task, all_ok, total_estimated, overall_elapsed, done_count)
                     break
 
                 time.sleep(0.2)
@@ -282,15 +287,8 @@ def _runDataflows_rich(flow_key, classes, run_one_dataflow):
 
                 overall.update(overall_task, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
 
-        # Finalize overall bar color based on success
-        overall_color = "green" if all_ok else "red"
-        task = overall.tasks[overall_task]
-        task.finished_style = overall_color
-        task.complete_style = overall_color
-        task.pulse_style = overall_color
-
         final_elapsed = time.time() - overall_start
-        overall.update(overall_task, completed=total_estimated, elapsed=_hms(final_elapsed), eta=_hms(0), done=done_count, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+        _finalize_overall_bar(overall, overall_task, all_ok, total_estimated, final_elapsed, done_count)
 
 
 def runCinemaType(type: str):
