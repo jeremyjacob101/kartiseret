@@ -101,8 +101,6 @@ def runCinemaType(type: str):
         return cls.__name__, time.time() - t0, ok
 
     if runningGithubActions:
-        print("using gh actions", flush=True)
-
         runtimes = {}
         with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
             futures = [ex.submit(run_one, cls) for cls in classes]

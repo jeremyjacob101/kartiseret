@@ -13,6 +13,7 @@ class LevCinema(BaseCinema):
             stale_hrefs = self.elements(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li", "featureItem")
 
             for href in [self.element(f"/html/body/div[1]/div[2]/div[3]/div/section/div[1]/div/div/div[{tab_view}]/div/ul/li[{i}]/div/a[1]").get_attribute("href") for i in range(1, len(stale_hrefs) + 1)]:
+                raise
                 hebrew_title_href = re.sub(r"(/)en(/)", r"\1", href)
                 self.driver.get(hebrew_title_href)
                 self.hebrew_title = str(self.element("/html/body/div[1]/div[2]/div[2]/div/div[1]/div/section/div[1]/div[2]/div[1]/h1").text)
