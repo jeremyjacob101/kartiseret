@@ -3,15 +3,31 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from datetime import datetime
-import pytz, secrets, string
+import pytz, secrets, string, time
 
 
 class ScrapingHelpers:
     def element(self, path: str):
-        return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+        try:
+            return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+        except Exception:
+            time.sleep(1)
+            try:
+                return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+            except Exception:
+                locator = (By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+                return WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(locator))
 
     def elements(self, path: str, contains: str | None = None) -> list:
-        elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+        try:
+            elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+        except Exception:
+            time.sleep(1)
+            try:
+                elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+            except Exception:
+                locator = (By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+                elements = WebDriverWait(self.driver, 15).until(EC.presence_of_all_elements_located(locator))
 
         if contains is None:
             return elements
@@ -21,7 +37,15 @@ class ScrapingHelpers:
         return filtered
 
     def lenElements(self, path: str, contains: str | None = None) -> int:
-        elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+        try:
+            elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+        except Exception:
+            time.sleep(1)
+            try:
+                elements = self.driver.find_elements(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+            except Exception:
+                locator = (By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
+                elements = WebDriverWait(self.driver, 15).until(EC.presence_of_all_elements_located(locator))
 
         if contains is None:
             return len(elements)
