@@ -6,15 +6,14 @@ from rich.live import Live
 from rich.theme import Theme
 from rich.table import Column
 import time, os
+from supabase import create_client
+from dataclasses import dataclass
+from typing import Callable, Any, Optional
 
 from localRegistry import REGISTRY, DATAFLOW_REGISTRY
 from utils.logger import artifactPrinting
 
-from supabase import create_client
-
 runningGithubActions = os.getenv("GITHUB_ACTIONS") == "true"
-
-from dataclasses import dataclass
 
 
 @dataclass
@@ -22,6 +21,20 @@ class RunResult:
     name: str
     secs: float
     ok: bool
+
+
+@dataclass(frozen=True)
+class KindSpec:
+    registry: dict[str, list[type]]
+    make_instance: Callable[[type, str], Any]  # (cls, key) -> instance
+    run_instance: Callable[[Any], None]  # instance -> None
+    cleanup: Callable[[Any], None]  # instance -> None
+    count_label: str
+    mode: str  # "parallel" | "sequential"
+    total_strategy: str  # "max" | "sum"
+    overall_task_name: str
+    fetch_avg: Callable[[list[type]], dict[str, float]]
+    get_item_name: Callable[[type], str]
 
 
 class PerTaskBarColumn(ProgressColumn):
@@ -48,12 +61,15 @@ def _hms(secs: float) -> str:
     return f"{h}:{m:02d}:{s:02d}"
 
 
-def _print_timings(results):
-    print("\n--------------------\n", flush=True)
-    for result in results:
-        minutes, seconds = divmod(int(result.secs), 60)
-        print(f"{result.name}: {minutes:02d}m{seconds:02d}s", flush=True)
-    print("\n--------------------\n", flush=True)
+def _calc_total_estimated(items, get_item_est, strategy: str) -> float:
+    ests = [float(get_item_est(item)) for item in items] if items else []
+    if not ests:
+        return 0.0
+    if strategy == "max":
+        return float(max(ests))
+    if strategy == "sum":
+        return float(sum(ests))
+    raise ValueError(f"Unknown total strategy: {strategy}")
 
 
 def _fetch_avg_times_for_dataflows(classes) -> dict[str, float]:
@@ -101,6 +117,12 @@ def _fetch_avg_times_for_classes(classes) -> dict[str, float]:
     return out
 
 
+KIND_SPECS: dict[str, KindSpec] = {
+    "cinema": KindSpec(registry=REGISTRY, make_instance=lambda cls, key: cls(cinema_type=key, supabase_table_name=key), run_instance=lambda inst: inst.scrape(), cleanup=lambda instance: (instance.driver.quit() if instance and getattr(instance, "driver", None) else None), count_label="Threads", mode="parallel", total_strategy="max", overall_task_name="overall", fetch_avg=_fetch_avg_times_for_classes, get_item_name=lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__)),
+    "dataflow": KindSpec(registry=DATAFLOW_REGISTRY, make_instance=lambda cls, key: cls(), run_instance=lambda inst: inst.dataRun(), cleanup=lambda instance: None, count_label="Dataflows", mode="sequential", total_strategy="sum", overall_task_name="dataflows", fetch_avg=_fetch_avg_times_for_dataflows, get_item_name=lambda cls: cls.__name__),
+}
+
+
 def _finalize_overall_bar(overall, overall_task_id: int, ok: bool, completed: float, elapsed_secs: float, done: int):
     overall_color = "green" if ok else "red"
 
@@ -112,51 +134,40 @@ def _finalize_overall_bar(overall, overall_task_id: int, ok: bool, completed: fl
     overall.update(overall_task_id, completed=completed, elapsed=_hms(elapsed_secs), eta=_hms(0), done=done, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
 
 
-def _run_in_threadpool(classes, run_one):
-    results = []
-    with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
-        futures = [ex.submit(run_one, cls) for cls in classes]
-        for fut in as_completed(futures):
-            results.append(fut.result())  # RunResult
-    return results
+def _update_task_status(status, tid: int, name: str, est: float, r: RunResult):
+    color = "green" if r.ok else "red"
+    status.update(tid, description=f"[{color}]{name}[/{color}]", time=f"[{color}]{_hms(r.secs)}[/{color}]", completed=est, bar_color=color, **({} if r.ok else {"failed": True}))
 
 
-def _run_sequential(classes, run_one):
-    results = []
-    for cls in classes:
-        results.append(run_one(cls))  # RunResult
-    return results
+def _update_overall(overall, task_id: int, now: float, started_at: float, completed: float, done: int):
+    total = float(overall.tasks[task_id].total or 0.0)
+    completed = min(float(completed), total)
+    eta_secs = max(0.0, total - completed)
+    elapsed_secs = now - started_at
 
-
-def _make_rich_ui(count_label: str, key_field: str):
-    console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
-    summary = "[bold green]{task.fields[done]}/{task.fields[total_count]} " + count_label + "[/bold green] " + "[bold #66d6f2]{task.fields[" + key_field + "]}[/bold #66d6f2]"
-    overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn(summary), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
-    status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
-    return console, overall, status
+    overall.update(task_id, completed=completed, elapsed=_hms(elapsed_secs), eta=_hms(eta_secs), done=done)
+    return total, completed, elapsed_secs, eta_secs
 
 
 def _run_rich(overall, status, overall_task_id: int, items, get_item_name, get_item_est, run_one, mode: str, overall_started_at: float, refresh_sleep: float = 0.2):
-    results = []
-    status_task_id_by_key = {}
-    est_by_key = {}
+    results, status_task_id_by_item, est_by_item = [], {}, {}
 
     for item in items:
-        key = item
         name = get_item_name(item)
         est = float(get_item_est(item))
         tid = status.add_task(f"[yellow]{name}[/yellow]", total=est, completed=0.0, time=f"[yellow]       [/yellow]", bar_color="#f266e0")
-        status_task_id_by_key[key] = tid
-        est_by_key[key] = est
+        status_task_id_by_item[item] = tid
+        est_by_item[item] = est
 
     if mode == "parallel":
-        start_by_key = {item: time.time() for item in items}
+        start_by_item = {item: time.time() for item in items}
 
         with ThreadPoolExecutor(max_workers=max(1, len(items))) as ex:
             future_to_item = {ex.submit(run_one, item): item for item in items}
             pending = set(future_to_item.keys())
             done_set = set()
             done_count = 0
+            max_elapsed_seen = 0.0
 
             while True:
                 now = time.time()
@@ -166,22 +177,20 @@ def _run_rich(overall, status, overall_task_id: int, items, get_item_name, get_i
                 for item in items:
                     if item in done_set:
                         continue
-                    elapsed = now - start_by_key[item]
+                    elapsed = now - start_by_item[item]
                     if elapsed > max_elapsed:
                         max_elapsed = elapsed
 
-                overall_total = float(overall.tasks[overall_task_id].total or 0.0)
-                overall_completed = min(max_elapsed, overall_total)
-                eta_secs = max(0.0, overall_total - overall_completed)
-                overall_elapsed = now - overall_started_at
+                max_elapsed_seen = max(max_elapsed_seen, max_elapsed)
+                overall_total, overall_completed, overall_elapsed, eta_secs = _update_overall(overall, overall_task_id, now, overall_started_at, max_elapsed_seen, done_count)
 
                 # Update each per-task bar by elapsed time
                 for item in items:
                     if item in done_set:
                         continue
-                    tid = status_task_id_by_key[item]
-                    est = est_by_key[item]
-                    elapsed = now - start_by_key[item]
+                    tid = status_task_id_by_item[item]
+                    est = est_by_item[item]
+                    elapsed = now - start_by_item[item]
                     status.update(tid, completed=min(elapsed, est))
 
                 # Collect finished (only touch futures that are done)
@@ -199,13 +208,11 @@ def _run_rich(overall, status, overall_task_id: int, items, get_item_name, get_i
                     done_count += 1
                     pending.discard(fut)
 
-                    tid = status_task_id_by_key[item]
-                    est = est_by_key[item]
+                    tid = status_task_id_by_item[item]
+                    est = est_by_item[item]
                     name = get_item_name(item)
 
-                    status.update(tid, description=f"[{'green' if r.ok else 'red'}]{name}[/{'green' if r.ok else 'red'}]", time=f"[{'green' if r.ok else 'red'}]{_hms(r.secs)}[/{'green' if r.ok else 'red'}]", completed=est, bar_color=("green" if r.ok else "red"), **({} if r.ok else {"failed": True}))
-
-                overall.update(overall_task_id, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
+                    _update_task_status(status, tid, name, est, r)
 
                 if not pending:
                     all_ok = all(r.ok for r in results)
@@ -221,8 +228,8 @@ def _run_rich(overall, status, overall_task_id: int, items, get_item_name, get_i
 
         with ThreadPoolExecutor(max_workers=1) as ex:
             for item in items:
-                tid = status_task_id_by_key[item]
-                est = est_by_key[item]
+                tid = status_task_id_by_item[item]
+                est = est_by_item[item]
                 name = get_item_name(item)
 
                 start = time.time()
@@ -233,13 +240,7 @@ def _run_rich(overall, status, overall_task_id: int, items, get_item_name, get_i
                     elapsed = now - start
 
                     status.update(tid, completed=min(elapsed, est))
-
-                    overall_total = float(overall.tasks[overall_task_id].total or 0.0)
-                    overall_completed = min(sum_est_done + min(elapsed, est), overall_total)
-                    eta_secs = max(0.0, overall_total - overall_completed)
-                    overall_elapsed = now - overall_started_at
-
-                    overall.update(overall_task_id, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
+                    overall_total, overall_completed, overall_elapsed, eta_secs = _update_overall(overall, overall_task_id, now, overall_started_at, sum_est_done + min(elapsed, est), done_count)
 
                     if fut.done():
                         break
@@ -252,85 +253,64 @@ def _run_rich(overall, status, overall_task_id: int, items, get_item_name, get_i
                 done_count += 1
                 sum_est_done += est
                 all_ok = all_ok and r.ok
-
-                status.update(tid, description=f"[{'green' if r.ok else 'red'}]{name}[/{'green' if r.ok else 'red'}]", time=f"[{'green' if r.ok else 'red'}]{_hms(r.secs)}[/{'green' if r.ok else 'red'}]", completed=est, bar_color=("green" if r.ok else "red"), **({} if r.ok else {"failed": True}))
-
                 now = time.time()
-                overall_elapsed = now - overall_started_at
-                overall_completed = min(sum_est_done, float(overall.tasks[overall_task_id].total or 0.0))
-                eta_secs = max(0.0, float(overall.tasks[overall_task_id].total or 0.0) - overall_completed)
 
-                overall.update(overall_task_id, completed=overall_completed, elapsed=_hms(overall_elapsed), eta=_hms(eta_secs), done=done_count)
+                _update_task_status(status, tid, name, est, r)
+                _update_overall(overall, overall_task_id, now, overall_started_at, sum_est_done, done_count)
 
         final_elapsed = time.time() - overall_started_at
         _finalize_overall_bar(overall, overall_task_id, all_ok, float(overall.tasks[overall_task_id].total or 0.0), final_elapsed, done_count)
         return results
 
 
-def _runCinemaType_rich(type: str, classes, run_one):
-    avg_by_classname = _fetch_avg_times_for_classes(classes)
-    console, overall, status = _make_rich_ui("Threads", "cinema_type")
+def runGroup(kind: str, key: str) -> Optional[list[RunResult]]:
+    spec = KIND_SPECS.get(kind)
+    if spec is None:
+        raise ValueError(f"Unknown kind: {kind}")
 
-    with Live(Group(overall, status), console=console, refresh_per_second=6):
-        total_estimated = max(avg_by_classname.values()) if avg_by_classname else 0.0
-        overall_task = overall.add_task("overall", total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), cinema_type=type, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
-        overall_started_at = time.time()
-        _run_rich(overall, status, overall_task, classes, lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__), lambda cls: float(avg_by_classname.get(cls.__name__, 60.0)), run_one, "parallel", overall_started_at)
-
-
-def _runDataflows_rich(flow_key, classes, run_one_dataflow):
-    avg_by_classname = _fetch_avg_times_for_dataflows(classes)
-    console, overall, status = _make_rich_ui("Dataflows", "flow_key")
-
-    with Live(Group(overall, status), console=console, refresh_per_second=6):
-        total_estimated = float(sum(avg_by_classname.get(cls.__name__, 60.0) for cls in classes))
-        overall_task = overall.add_task("dataflows", total=total_estimated, completed=0.0, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), flow_key=flow_key, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
-        overall_started_at = time.time()
-        _run_rich(overall, status, overall_task, classes, lambda cls: cls.__name__, lambda cls: float(avg_by_classname.get(cls.__name__, 60.0)), run_one_dataflow, "sequential", overall_started_at)
-
-
-def runCinemaType(type: str):
-    classes = REGISTRY.get(type, [])
+    classes = spec.registry.get(key, [])
     if not classes:
-        return
+        return None
 
-    def run_one(cls):
+    def run_one(cls: type) -> RunResult:
         t0, instance, ok = time.time(), None, True
         try:
-            instance = cls(cinema_type=type, supabase_table_name=type)
-            instance.scrape()
-        except Exception as e:
-            ok = False
-            artifactPrinting(instance)
-        finally:
-            if instance and getattr(instance, "driver", None):
-                instance.driver.quit()
-        return RunResult(name=cls.__name__, secs=time.time() - t0, ok=ok)
-
-    if runningGithubActions:
-        results = _run_in_threadpool(classes, run_one)
-        _print_timings(results)
-    else:
-        _runCinemaType_rich(type, classes, run_one)
-
-
-def runDataflows(flow_key: str):
-    classes = DATAFLOW_REGISTRY.get(flow_key, [])
-    if not classes:
-        return
-
-    def run_one_dataflow(cls):
-        t0, instance, ok = time.time(), None, True
-        try:
-            instance = cls()
-            instance.dataRun()
+            instance = spec.make_instance(cls, key)
+            spec.run_instance(instance)
         except Exception:
             ok = False
             artifactPrinting(instance)
+        finally:
+            spec.cleanup(instance)
+
         return RunResult(name=cls.__name__, secs=time.time() - t0, ok=ok)
 
     if runningGithubActions:
-        results = _run_sequential(classes, run_one_dataflow)
-        _print_timings(results)
-    else:
-        _runDataflows_rich(flow_key, classes, run_one_dataflow)
+        results: list[RunResult] = []
+        if spec.mode == "parallel":
+            with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
+                futures = [ex.submit(run_one, cls) for cls in classes]
+                for fut in as_completed(futures):
+                    results.append(fut.result())  # RunResult
+        else:
+            for cls in classes:
+                results.append(run_one(cls))  # RunResult
+
+        print("\n--------------------\n", flush=True)
+        for result in results:
+            minutes, seconds = divmod(int(result.secs), 60)
+            print(f"{result.name}: {minutes:02d}m{seconds:02d}s", flush=True)
+        print("\n--------------------\n", flush=True)
+
+    if not runningGithubActions:
+        avg_by_name = spec.fetch_avg(classes)
+        get_item_est = lambda item: float(avg_by_name.get(item.__name__, 60.0))
+
+        console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
+        overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} " + spec.count_label + "[/bold green] " + "[bold #66d6f2]{task.fields[group_label]}[/bold #66d6f2]"), SpinnerColumn(style="bold #f266e0"), console=console, refresh_per_second=6)
+        status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=console, refresh_per_second=6)
+        with Live(Group(overall, status), console=console, refresh_per_second=6):
+            total_estimated = _calc_total_estimated(classes, get_item_est, spec.total_strategy)
+            overall_task_id = overall.add_task(spec.overall_task_name, total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(classes), group_label=key, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
+            overall_started_at = time.time()
+            _run_rich(overall, status, overall_task_id, classes, spec.get_item_name, get_item_est, run_one, spec.mode, overall_started_at)
