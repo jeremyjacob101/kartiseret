@@ -20,7 +20,7 @@ def setup_logging() -> None:
     logging.basicConfig(level=logging.ERROR, format="%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s", handlers=[logging.StreamHandler(sys.stdout)], force=True)
     logger.setLevel(logging.ERROR)
 
-    artifact_dir = pathlib.Path("utils/logger_artifacts")
+    artifact_dir = pathlib.Path("backend/utils/logger_artifacts")
     if artifact_dir.exists():  # Clean up old artifacts on each run
         for f in artifact_dir.glob("*"):
             try:
@@ -73,7 +73,7 @@ def artifactPrinting(obj=None, *, driver=None, prefix=None, url=None, note: str 
     match = re.search(r'"selector":\s*"([^"]+)"', cleaned_msg)
     selector = match.group(1) if match else None
 
-    artifact_dir = pathlib.Path("utils/logger_artifacts")
+    artifact_dir = pathlib.Path("backend/utils/logger_artifacts")
     artifact_dir.mkdir(parents=True, exist_ok=True)
 
     ts = time.strftime("%Y%m%d-%H%M%S")

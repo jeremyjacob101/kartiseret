@@ -2,8 +2,8 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
-from utils import logger
-from utils.logger import setup_logging
+from backend.utils import logger
+from backend.utils.logger import setup_logging
 from backend.config.runners import runGroup
 
 

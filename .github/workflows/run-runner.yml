@@ -104,7 +104,7 @@ jobs:
       - name: Check for artifacts
         id: artifacts-exist
         run: |
-          if [ -d utils/logger_artifacts ] && [ "$(ls -A utils/logger_artifacts)" ]; then
+          if [ -d backend/utils/logger_artifacts ] && [ "$(ls -A backend/utils/logger_artifacts)" ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
@@ -115,7 +115,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: selenium-failure-artifacts
-          path: utils/logger_artifacts/
+          path: backend/utils/logger_artifacts/
 
       - name: Mark run as warning
         if: steps.artifacts-exist.outputs.found == 'true'

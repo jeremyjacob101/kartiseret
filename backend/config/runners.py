@@ -1,5 +1,5 @@
-from concurrent.futures import ThreadPoolExecutor, as_completed, wait, FIRST_COMPLETED
-from utils.rich_support import RunResult, run_rich_ui
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from backend.utils.rich_support import RunResult, run_rich_ui
 
 from supabase import create_client
 from dataclasses import dataclass
@@ -7,7 +7,7 @@ from typing import Callable, Any
 import time, os
 
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
-from utils.logger import artifactPrinting
+from backend.utils.logger import artifactPrinting
 
 runningGithubActions = os.getenv("GITHUB_ACTIONS") == "true"
 

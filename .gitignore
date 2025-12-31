@@ -22,4 +22,4 @@ venv/
 .env
 
 # debugging artifacts
-utils/logger_artifacts/
+backend/utils/logger_artifacts/

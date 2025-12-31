@@ -1,8 +1,4 @@
-import csv
-import json
-import pathlib
-import threading
-import time
+import csv, json, pathlib, threading, time
 
 
 def _format_rows_from_gathering_info(self):
@@ -53,7 +49,7 @@ def formatAndWriteCsv(self, *, note: str = "gathering_info"):
         if not rows:
             return None
 
-        artifact_dir = pathlib.Path("utils/logger_artifacts")
+        artifact_dir = pathlib.Path("backend/utils/logger_artifacts")
         artifact_dir.mkdir(parents=True, exist_ok=True)
 
         name = getattr(self, "CINEMA_NAME", None) or self.__class__.__name__

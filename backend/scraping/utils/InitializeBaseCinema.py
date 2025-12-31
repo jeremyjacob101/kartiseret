@@ -1,6 +1,5 @@
 from selenium import webdriver
 from datetime import datetime
-from utils import logger
 import time, pytz, os
 from supabase import create_client
 
