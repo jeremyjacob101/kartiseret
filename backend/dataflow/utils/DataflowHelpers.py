@@ -8,6 +8,17 @@ class DataflowHelpers:
             return v
         return datetime.fromisoformat(str(v)).date()
 
+    def datetimeToDatetime(self, v):
+        if isinstance(v, datetime):
+            return v
+
+        s = str(v).replace("T", " ")
+        if s.endswith("+00"):
+            s = s[:-3] + "+0000"
+        elif s.endswith("+00:00"):
+            s = s[:-6] + "+0000"
+        return datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f%z")
+
     def removeBadTitle(self, title: str) -> bool:
         if not isinstance(title, str) or title.strip() == "":
             return True  # Empty

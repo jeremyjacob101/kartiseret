@@ -2,16 +2,10 @@ from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
 import requests
 
-from backend.dataflow.comingsoons.supabaseHelpers.append.finalSoonstoFinalSoons2 import append_testingFinalSoons_to_testingFinalSoons2
-from backend.dataflow.comingsoons.supabaseHelpers.append.soonstosoons2 import append_testingSoons_to_testingSoons2
-from backend.dataflow.comingsoons.supabaseHelpers.clear.testingFinalSoons import clear_testingFinalSoons
-from backend.dataflow.comingsoons.supabaseHelpers.clear.testingSoons import clear_testingSoons
-
 
 class ComingSoonsTmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
     MOVING_TO_TABLE_NAME = "testingFinalSoons"
-    MOVING_TO_TABLE_NAME_2 = "testingFinalSoons2"
     HELPER_TABLE_NAME = "testingFixes"
     HELPER_TABLE_NAME_2 = "testingSkips"
 
@@ -49,6 +43,7 @@ class ComingSoonsTmdb(BaseDataflow):
             self.load_soon_row(row)
 
             original_uuid = row.get("id")
+            original_run_id = row.get("run_id")
             original_title = self.english_title
             original_release_date = self.release_date
 
@@ -68,7 +63,7 @@ class ComingSoonsTmdb(BaseDataflow):
                 self.potential_chosen_id = override_tmdb
                 if str(self.potential_chosen_id).lower() in skip_tokens:
                     continue
-                self.non_deduplicated_updates.append({"old_uuid": original_uuid, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": None})
+                self.non_deduplicated_updates.append({"old_uuid": original_uuid, "run_id": original_run_id, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": None})
                 continue
 
             # 1) SEARCH TMDB AND COLLECT CANDIDATES
@@ -215,7 +210,7 @@ class ComingSoonsTmdb(BaseDataflow):
             chosen_details = self.details.get(self.potential_chosen_id) or {}
             chosen_imdb = (chosen_details.get("external_ids", {}) or {}).get("imdb_id")
 
-            self.non_deduplicated_updates.append({"old_uuid": original_uuid, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
+            self.non_deduplicated_updates.append({"old_uuid": original_uuid, "run_id": original_run_id, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
 
         # 5) DEDUPE BY TMDB ID
         grouped = defaultdict(list)
@@ -265,8 +260,5 @@ class ComingSoonsTmdb(BaseDataflow):
 
             self.updates.append(new_row)
 
-        append_testingFinalSoons_to_testingFinalSoons2()
-        clear_testingFinalSoons()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
-        append_testingSoons_to_testingSoons2()
-        clear_testingSoons()
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"poster", "backdrop", "release_date", "hebrew_title"}, sort_key=self.comingSoonsFinalDedupeSortKey2)

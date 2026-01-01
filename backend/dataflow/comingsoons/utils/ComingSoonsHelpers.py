@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 
 class ComingSoonsHelpers:
@@ -26,6 +26,11 @@ class ComingSoonsHelpers:
             d_key,
             0 if has_hebrew else 1,
         )
+
+    def comingSoonsFinalDedupeSortKey2(self, row: dict):
+        rd = self.dateToDate(row["release_date"])
+        ca_dt = self.datetimeToDatetime(row["created_at"])
+        return (rd, -ca_dt.timestamp())
 
     def load_soon_row(self, row: dict):
         def clean_str(v):

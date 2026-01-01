@@ -1,16 +1,7 @@
-class SupabaseTables:
-    def _table_to_attr_map(self) -> dict[str, str]:
-        return {
-            self.MAIN_TABLE_NAME: "main_table_rows",
-            self.DUPLICATE_TABLE_NAME: "duplicate_table_rows",
-            self.MOVING_TO_TABLE_NAME: "moving_to_table_rows",
-            self.MOVING_TO_TABLE_NAME_2: "moving_to_table_2_rows",
-            self.HELPER_TABLE_NAME: "helper_table_rows",
-            self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
-            self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
-            self.HELPER_TABLE_NAME_4: "helper_table_4_rows",
-        }
+from typing import Callable, Any
 
+
+class SupabaseTables:
     def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:
         if not table:
             return []
@@ -29,7 +20,16 @@ class SupabaseTables:
         return all_rows
 
     def refreshAllTables(self, table_name: str | None = None):
-        table_to_attr = self._table_to_attr_map()
+        table_to_attr: dict[str, str] = {
+            self.MAIN_TABLE_NAME: "main_table_rows",
+            self.DUPLICATE_TABLE_NAME: "duplicate_table_rows",
+            self.MOVING_TO_TABLE_NAME: "moving_to_table_rows",
+            self.MOVING_TO_TABLE_NAME_2: "moving_to_table_2_rows",
+            self.HELPER_TABLE_NAME: "helper_table_rows",
+            self.HELPER_TABLE_NAME_2: "helper_table_2_rows",
+            self.HELPER_TABLE_NAME_3: "helper_table_3_rows",
+            self.HELPER_TABLE_NAME_4: "helper_table_4_rows",
+        }
 
         if table_name:
             attr = table_to_attr.get(table_name)
@@ -67,13 +67,17 @@ class SupabaseTables:
         if refresh:
             self.refreshAllTables(table_name)
 
-    def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True):
+    def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True, sort_key: Callable[[dict], Any] | None = None, sort_reverse: bool = False):
         ignore = set(ignore_cols or set())
-        ignore.update({id_col, "created_at", "scraped_at", "run_id"})
+        ignore.update({id_col, "created_at", "scraped_at", "run_id", "old_uuid"})
         seen = set()
 
+        if sort_key is None:
+            sort_key = lambda r: r.get("created_at") or ""
+
         rows = self.selectAll(table_name)
-        rows.sort(key=lambda r: r.get("created_at") or "", reverse=True)
+        rows.sort(key=sort_key, reverse=True if sort_reverse else False)
+
         for row in rows:
             key = tuple(sorted((k, repr(v)) for k, v in row.items() if k not in ignore))
             if key in seen:

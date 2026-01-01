@@ -12,10 +12,10 @@ def main():
 
     # runGroup("cinema", "testingSoons")
     # runGroup("cinema", "testingTheques")
-    runGroup("cinema", "testingShowtimes")
+    # runGroup("cinema", "testingShowtimes")
 
-    # runGroup("dataflow", "comingSoonsData")
-    runGroup("dataflow", "nowPlayingData")
+    runGroup("dataflow", "comingSoonsData")
+    # runGroup("dataflow", "nowPlayingData")
 
 
 if __name__ == "__main__":
