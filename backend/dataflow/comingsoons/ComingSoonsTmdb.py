@@ -12,11 +12,11 @@ class ComingSoonsTmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingSoons"
     MOVING_TO_TABLE_NAME = "testingFinalSoons"
     MOVING_TO_TABLE_NAME_2 = "testingFinalSoons2"
-    HELPER_TABLE_NAME = "testingTMDbFixes"
+    HELPER_TABLE_NAME = "testingFixes"
     HELPER_TABLE_NAME_2 = "testingSkips"
 
     def logic(self):
-        # BUILD SKIP LOOKUP (testingSkips)
+        # BUILD SKIP LOOKUP
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
             skip_value = skip_row.get("name_or_tmdb_id").strip()
@@ -29,10 +29,10 @@ class ComingSoonsTmdb(BaseDataflow):
             except:
                 pass
 
-        # BUILD TMDb FIX LOOKUPS (testingTMDbFixes)
+        # BUILD TMDb FIX LOOKUPS
         tmdb_fix_ids, tmdb_fix_by_title = set(), {}
         for fix in self.helper_table_rows:
-            tmdb_id = (fix.get("tmdb_id") or "").strip()
+            tmdb_id = fix.get("tmdb_id").strip()
             title_fix = fix.get("title_fix").strip().lower()
             if not tmdb_id or not title_fix:
                 continue
@@ -66,6 +66,8 @@ class ComingSoonsTmdb(BaseDataflow):
             override_tmdb = tmdb_fix_by_title.get(title_raw) or tmdb_fix_by_title.get(title_norm)
             if override_tmdb:
                 self.potential_chosen_id = override_tmdb
+                if str(self.potential_chosen_id).lower() in skip_tokens:
+                    continue
                 self.non_deduplicated_updates.append({"old_uuid": original_uuid, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": None})
                 continue
 
@@ -207,7 +209,7 @@ class ComingSoonsTmdb(BaseDataflow):
 
                 if self.potential_chosen_id is None:
                     self.potential_chosen_id = self.candidates[0]
-            if not self.potential_chosen_id:
+            if not self.potential_chosen_id or str(self.potential_chosen_id).lower() in skip_tokens:
                 continue
 
             chosen_details = self.details.get(self.potential_chosen_id) or {}

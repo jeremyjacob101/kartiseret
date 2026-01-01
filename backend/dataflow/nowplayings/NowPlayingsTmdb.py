@@ -14,7 +14,7 @@ class NowPlayingsTmdb(BaseDataflow):
     MAIN_TABLE_NAME = "testingShowtimes"
     MOVING_TO_TABLE_NAME = "testingFinalShowtimes"
     MOVING_TO_TABLE_NAME_2 = "testingFinalMovies"
-    HELPER_TABLE_NAME = "testingIMDbFixes"
+    HELPER_TABLE_NAME = "testingFixes"
     HELPER_TABLE_NAME_2 = "testingSkips"
     HELPER_TABLE_NAME_3 = "testingFinalShowtimes2"
     HELPER_TABLE_NAME_4 = "testingFinalMovies2"
@@ -36,7 +36,7 @@ class NowPlayingsTmdb(BaseDataflow):
         return title_raw in skip_tokens or title_norm in skip_tokens
 
     def logic(self):
-        # BUILD SKIP LOOKUP (testingSkips)
+        # BUILD SKIP LOOKUP
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
             skip_value = skip_row.get("name_or_tmdb_id").strip()
@@ -49,22 +49,18 @@ class NowPlayingsTmdb(BaseDataflow):
             except:
                 pass
 
-        # BUILD IMDb FIX LOOKUPS (testingIMDbFixes)
-        imdb_fix_ids = set()
-        imdb_fix_by_title = {}
-
+        # BUILD TMDb FIX LOOKUPS
+        tmdb_fix_ids, tmdb_fix_by_title = set(), {}
         for fix in self.helper_table_rows:
-            imdb_id = (fix.get("imdb_id") or "").strip()
-            title_fix = (fix.get("title_fix") or "").strip()
-            if not imdb_id or not title_fix:
+            tmdb_id = fix.get("tmdb_id").strip()
+            title_fix = fix.get("title_fix").strip().lower()
+            if not tmdb_id or not title_fix:
                 continue
-
-            imdb_fix_ids.add(imdb_id)
-
-            title_low = title_fix.lower()
-            imdb_fix_by_title[title_low] = imdb_id
+            tmdb_id = int(tmdb_id)
+            tmdb_fix_ids.add(tmdb_id)
+            tmdb_fix_by_title[title_fix] = tmdb_id
             try:
-                imdb_fix_by_title[self.normalizeTitle(title_fix).strip().lower()] = imdb_id
+                tmdb_fix_by_title[self.normalizeTitle(title_fix).strip().lower()] = tmdb_id
             except:
                 pass
 
@@ -136,33 +132,23 @@ class NowPlayingsTmdb(BaseDataflow):
             candidates = []
             details = {}
 
-            # IMDB FIX OVERRIDE
-            override_imdb = None
-            for t in candidate_titles:
-                t_raw = (t or "").strip().lower()
+            # TMDB FIX OVERRIDE (title -> tmdb_id)
+            override_tmdb = None
+            for title in candidate_titles:
+                title_raw = (title or "").strip().lower()
                 try:
-                    t_norm = self.normalizeTitle(t or "").strip().lower()
+                    title_norm = self.normalizeTitle(title or "").strip().lower()
                 except:
-                    t_norm = t_raw
-                override_imdb = imdb_fix_by_title.get(t_raw) or imdb_fix_by_title.get(t_norm)
-                if override_imdb:
+                    title_norm = title_raw
+                override_tmdb = tmdb_fix_by_title.get(title_raw) or tmdb_fix_by_title.get(title_norm)
+                if override_tmdb:
                     break
-
-            if override_imdb:
-                try:
-                    find_data = requests.get(
-                        f"https://api.themoviedb.org/3/find/{override_imdb}",
-                        params={"api_key": self.TMDB_API_KEY, "external_source": "imdb_id"},
-                        timeout=20,
-                    ).json()
-                except:
-                    find_data = None
-
-                movie_results = (find_data or {}).get("movie_results") or []
-                if movie_results and movie_results[0].get("id"):
-                    potential_chosen_id = movie_results[0]["id"]
-                    key_result[key] = {"tmdb_id": potential_chosen_id, "imdb_id": override_imdb, "hebrew_title": hebrew_title}
+            if override_tmdb:
+                potential_chosen_id = override_tmdb
+                if str(potential_chosen_id).lower() in skip_tokens:
                     continue
+                key_result[key] = {"tmdb_id": potential_chosen_id, "imdb_id": None, "hebrew_title": hebrew_title}
+                continue
 
             representative_title = candidate_titles[0]
 
@@ -262,10 +248,9 @@ class NowPlayingsTmdb(BaseDataflow):
             if not details:
                 continue
 
-            # 3) IMDb FIX TABLE HARD MATCH (fast set membership)
-            for tmdb_id, movie_details in details.items():
-                imdb_id = (movie_details.get("external_ids", {}) or {}).get("imdb_id")
-                if imdb_id and imdb_id in imdb_fix_ids:
+            # 3) TMDb FIX TABLE HARD MATCH (fast set membership)
+            for tmdb_id in details.keys():
+                if tmdb_id in tmdb_fix_ids:
                     potential_chosen_id = tmdb_id
                     break
 
@@ -307,7 +292,7 @@ class NowPlayingsTmdb(BaseDataflow):
                 if potential_chosen_id is None:
                     potential_chosen_id = candidates[0]
 
-            if not potential_chosen_id:
+            if not potential_chosen_id or str(potential_chosen_id).lower() in skip_tokens:
                 continue
 
             chosen_details = details.get(potential_chosen_id) or {}
@@ -324,21 +309,26 @@ class NowPlayingsTmdb(BaseDataflow):
             if tmdb_id not in movies_by_tmdb:
                 movies_by_tmdb[tmdb_id] = res
 
-        # 6) ENRICH TITLE + POSTER
+        # 6) ENRICH TITLE + POSTER (+ imdb_id)
         for tmdb_id, res in list(movies_by_tmdb.items()):
             if tmdb_id not in tmdb_basic_cache:
                 try:
-                    tmdb_basic_cache[tmdb_id] = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY}, timeout=20).json()
+                    tmdb_basic_cache[tmdb_id] = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}, timeout=20).json()
                 except:
                     tmdb_basic_cache[tmdb_id] = {}
-
             data = tmdb_basic_cache.get(tmdb_id) or {}
+
             if data.get("title"):
                 res["english_title"] = data["title"].strip()
             if data.get("runtime"):
                 res["runtime"] = data["runtime"]
             if data.get("popularity"):
                 res["popularity"] = data["popularity"]
+
+            external_ids = data.get("external_ids") or {}
+            if external_ids.get("imdb_id"):
+                res["imdb_id"] = external_ids["imdb_id"]
+
             if data.get("poster_path"):
                 res["poster"] = "https://image.tmdb.org/t/p/w500" + data["poster_path"]
             if data.get("backdrop_path"):
