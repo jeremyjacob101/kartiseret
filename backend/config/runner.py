@@ -10,11 +10,11 @@ from backend.config.runners import runGroup
 def main():
     setup_logging()
 
-    # runGroup("cinema", "testingSoons")
-    # runGroup("cinema", "testingTheques")
-    # runGroup("cinema", "testingShowtimes")
+    runGroup("cinema", "testingSoons")
+    runGroup("cinema", "testingTheques")
+    runGroup("cinema", "testingShowtimes")
 
-    # runGroup("dataflow", "comingSoonsData")
+    runGroup("dataflow", "comingSoonsData")
     runGroup("dataflow", "nowPlayingData")
 
 
