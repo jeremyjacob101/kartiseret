@@ -83,7 +83,6 @@ class InitializeBaseCinema:
         self.runtime = None
         self.rating = None
         self.screening_city = None
-        self.helper_id = None
 
         self.gathering_info = {
             "showtime": [],
@@ -102,7 +101,6 @@ class InitializeBaseCinema:
             "runtime": [],
             "rating": [],
             "screening_city": [],
-            "helper_id": [],
             "scraped_at": [],
             "cinema": [],
         }

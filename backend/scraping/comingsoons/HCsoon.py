@@ -47,6 +47,4 @@ class HCsoon(BaseCinema):
             release_date = self.element("/html/body/div[2]/div[4]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[3]/div[2]/div[1]/span").text.split(":")[1].strip().replace(".", "/")
             self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 
-            self.helper_id = href
-
             self.appendToGatheringInfo()

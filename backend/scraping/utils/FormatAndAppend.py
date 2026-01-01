@@ -108,7 +108,6 @@ class AppendToInfo:
         self.gathering_info["runtime"].append(self.runtime)
         self.gathering_info["rating"].append(self.rating)
         self.gathering_info["screening_city"].append(self.screening_city)
-        self.gathering_info["helper_id"].append(self.helper_id)
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
 

@@ -27,54 +27,6 @@ class ComingSoonsHelpers:
             0 if has_hebrew else 1,
         )
 
-    def comingSoonsWriteHelpers(self, helpers_by_winner: dict[str, list[str]]) -> None:
-        for winner_id, new_helpers in helpers_by_winner.items():
-            if not new_helpers:
-                continue
-
-            existing = self.supabase.table(self.HELPER_TABLE_NAME).select("*").eq("old_uuid", winner_id).execute()
-            data = existing.data or []
-            row = (data[0] if data else None) or {"old_uuid": winner_id}
-
-            existing_values = {v for k, v in row.items() if k.startswith("helper_") and v not in (None, "", "null")}
-
-            next_slot = 1
-            while next_slot <= 20 and row.get(f"helper_{next_slot}") not in (None, "", "null"):
-                next_slot += 1
-
-            for helper_id in new_helpers:
-                if helper_id in existing_values:
-                    continue
-                if next_slot > 20:
-                    break
-                row[f"helper_{next_slot}"] = helper_id
-                existing_values.add(helper_id)
-                next_slot += 1
-
-            self.updates.append(row)
-        self.upsertUpdates(self.HELPER_TABLE_NAME)
-
-    def comingSoonsWriteSingleHelpers(self, groups) -> None:
-        existing = self.supabase.table(self.HELPER_TABLE_NAME).select("old_uuid").execute().data or []
-        existing_ids = {row.get("old_uuid") for row in existing if row.get("old_uuid")}
-
-        for rows in groups.values():
-            if len(rows) != 1:
-                continue
-
-            row = rows[0]
-            rid = row[self.PRIMARY_KEY]
-            if rid in existing_ids:
-                continue
-
-            payload = {"old_uuid": rid}
-            helper = row.get("helper_id")
-            if helper not in (None, "", "null"):
-                payload["helper_1"] = helper
-
-            self.updates.append(payload)
-        self.upsertUpdates(self.HELPER_TABLE_NAME)
-
     def load_soon_row(self, row: dict):
         def clean_str(v):
             return str(v) if v not in (None, "", "null") else ""

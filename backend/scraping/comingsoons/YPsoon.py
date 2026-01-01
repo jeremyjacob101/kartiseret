@@ -56,6 +56,4 @@ class YPsoon(BaseCinema):
             release_date = f"{d}/{self.month_mapping[m]}/{y}"
             self.release_date = datetime.strptime(release_date, "%d/%m/%Y").date().isoformat()
 
-            self.helper_id = href
-
             self.appendToGatheringInfo()

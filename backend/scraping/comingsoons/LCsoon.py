@@ -50,6 +50,4 @@ class LCsoon(BaseCinema):
             if runtime and runtime.isdigit():
                 self.runtime = runtime
 
-            self.helper_id = href
-
             self.appendToGatheringInfo()

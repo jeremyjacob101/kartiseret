@@ -59,6 +59,4 @@ class MLsoon(BaseCinema):
             if original_language != "יעודכן בקרוב":
                 self.original_language = original_language.split(":", 1)[1].strip()
 
-            self.helper_id = href
-
             self.appendToGatheringInfo()
