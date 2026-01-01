@@ -20,7 +20,7 @@ class MLsoon(BaseCinema):
             self.english_hrefs.append(self.element(f"/html/body/div[1]/div[10]/div[2]/div/div/div[{film_card}]/div/div/div/div[1]/a[1]").get_attribute("href"))
         for href in self.english_hrefs:
             self.driver.get(href)
-            self.sleep(3)
+            self.sleep(0.5)
 
             if "IsLtr" in self.element("/html/body/div[1]/div[10]/div/div[3]/div/div[2]/div/div/div[1]").get_attribute("className"):
                 continue

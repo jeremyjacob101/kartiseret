@@ -39,7 +39,7 @@ class NowPlayingsTmdb(BaseDataflow):
         # BUILD SKIP LOOKUP (testingSkips)
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
-            skip_value = (skip_row.get("name_or_imdb_id") or skip_row.get("id") or "").strip()
+            skip_value = skip_row.get("name_or_tmdb_id").strip()
             if not skip_value:
                 continue
             skip_tokens.add(skip_value.lower())

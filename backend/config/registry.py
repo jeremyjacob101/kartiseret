@@ -56,7 +56,7 @@ REGISTRY = {
 
 DATAFLOW_REGISTRY = {
     "comingSoonsData": [
-        ComingSoonsClean,
+        # ComingSoonsClean,
         ComingSoonsTmdb,
     ],
     "nowPlayingData": [
