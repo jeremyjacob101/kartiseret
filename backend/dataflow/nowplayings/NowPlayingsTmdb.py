@@ -1,13 +1,7 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
+from datetime import datetime
 import requests
-
-from backend.dataflow.nowplayings.supabaseHelpers.append.finalMoviestofinalMovies2 import append_testingFinalMovies_to_testingFinalMovies2
-from backend.dataflow.nowplayings.supabaseHelpers.append.finalShowtimestofinalShowtimes2 import append_testingFinalShowtimes_to_testingFinalShowtimes2
-from backend.dataflow.nowplayings.supabaseHelpers.append.showtimestoshowtimes2 import append_testingShowtimes_to_testingShowtimes2
-from backend.dataflow.nowplayings.supabaseHelpers.clear.testingFinalShowtimes import clear_testingFinalShowtimes
-from backend.dataflow.nowplayings.supabaseHelpers.clear.testingFinalMovies import clear_testingFinalMovies
-from backend.dataflow.nowplayings.supabaseHelpers.clear.testingShowtimes import clear_testingShowtimes
 
 
 class NowPlayingsTmdb(BaseDataflow):
@@ -16,8 +10,16 @@ class NowPlayingsTmdb(BaseDataflow):
     MOVING_TO_TABLE_NAME_2 = "testingFinalMovies"
     HELPER_TABLE_NAME = "testingFixes"
     HELPER_TABLE_NAME_2 = "testingSkips"
-    HELPER_TABLE_NAME_3 = "testingFinalShowtimes2"
-    HELPER_TABLE_NAME_4 = "testingFinalMovies2"
+
+    def createdAtToDatetime(self, ca):
+        if isinstance(ca, datetime):
+            return ca
+        s = str(ca).replace("T", " ")
+        s = s[:-3] + "+0000"
+        return datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f%z")
+
+    def newestCreatedAtSortKey(self, row: dict):
+        return self.datetimeToDatetime(row["created_at"])
 
     def nowPlayingsGroupKey(self, normalized_title: str) -> str:
         t = (normalized_title or "").strip().lower()
@@ -36,6 +38,10 @@ class NowPlayingsTmdb(BaseDataflow):
         return title_raw in skip_tokens or title_norm in skip_tokens
 
     def logic(self):
+        self.dedupeTable(self.MAIN_TABLE_NAME)
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME)
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME_2)
+
         # BUILD SKIP LOOKUP
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
@@ -353,20 +359,22 @@ class NowPlayingsTmdb(BaseDataflow):
                 else:
                     new_row["english_title"] = self.normalizeTitle(row.get("english_title"))
 
+                for col in ("cleaned", "release_year", "rating", "directed_by"):
+                    new_row.pop(col, None)
+
                 self.updates.append(new_row)
 
-        append_testingFinalShowtimes_to_testingFinalShowtimes2()
-        clear_testingFinalShowtimes()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "scraped_at", "rating", "directed_by", "runtime"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
 
         for tmdb_id, res in tmdb_id_to_enriched.items():
             if not tmdb_id:
                 continue
-            self.updates.append({"tmdb_id": tmdb_id, "english_title": res.get("english_title"), "runtime": res.get("runtime"), "popularity": res.get("popularity"), "poster": res.get("poster"), "backdrop": res.get("backdrop")})
+            if res.get("imdb_id"):
+                imdb_id = res.get("imdb_id")
+            else:
+                imdb_id = None
+            self.updates.append({"tmdb_id": tmdb_id, "english_title": res.get("english_title"), "runtime": res.get("runtime"), "popularity": res.get("popularity"), "poster": res.get("poster"), "backdrop": res.get("backdrop"), "imdb_id": imdb_id})
 
-        append_testingFinalMovies_to_testingFinalMovies2()
-        clear_testingFinalMovies()
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME_2)
-
-        append_testingShowtimes_to_testingShowtimes2()
-        clear_testingShowtimes()
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME_2, ignore_cols={"english_title", "runtime", "popularity", "poster", "backdrop", "imdb_id", "imdbRating", "imdbVotes", "rtRating", "year"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)

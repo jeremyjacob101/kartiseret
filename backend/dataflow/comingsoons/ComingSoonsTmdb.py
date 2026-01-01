@@ -10,6 +10,9 @@ class ComingSoonsTmdb(BaseDataflow):
     HELPER_TABLE_NAME_2 = "testingSkips"
 
     def logic(self):
+        self.dedupeTable(self.MAIN_TABLE_NAME)
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME)
+
         # BUILD SKIP LOOKUP
         skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
