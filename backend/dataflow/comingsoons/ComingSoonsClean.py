@@ -15,10 +15,10 @@ class ComingSoonsClean(BaseDataflow):
                 self.delete_these.append(row[self.PRIMARY_KEY])
             if self.removeRussianHebrewTitle(row.get("hebrew_title")):
                 self.delete_these.append(row[self.PRIMARY_KEY])
-            self.updates.append({"id": row["id"], "english_title": row["english_title"], "hebrew_title": row.get("hebrew_title")})
+            self.updates.append({"id": row["id"], "english_title": row["english_title"], "hebrew_title": row.get("hebrew_title"), "cleaned": True})
 
-        self.upsertUpdates(self.MAIN_TABLE_NAME)
-        self.deleteTheseRows(self.MAIN_TABLE_NAME)
+        self.upsertUpdates(self.MAIN_TABLE_NAME, refresh=False)
+        self.deleteTheseRows(self.MAIN_TABLE_NAME, refresh=False)
         self.dedupeTable(self.MAIN_TABLE_NAME)
 
         groups, fuzzy_cache = defaultdict(list), {}
@@ -37,5 +37,5 @@ class ComingSoonsClean(BaseDataflow):
                 if r[self.PRIMARY_KEY] != winner_id:
                     self.delete_these.append(r[self.PRIMARY_KEY])
 
-        self.deleteTheseRows(self.MAIN_TABLE_NAME)
-        self.dedupeTable(self.MAIN_TABLE_NAME)
+        self.deleteTheseRows(self.MAIN_TABLE_NAME, refresh=False)
+        self.dedupeTable(self.MAIN_TABLE_NAME, refresh=False)

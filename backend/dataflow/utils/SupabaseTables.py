@@ -41,7 +41,7 @@ class SupabaseTables:
             if table:
                 setattr(self, attr, self.selectAll(table))
 
-    def deleteTheseRows(self, table_name: str, primary_key: str = "id"):
+    def deleteTheseRows(self, table_name: str, primary_key: str = "id", refresh: bool = True):
         if not self.delete_these:
             return
 
@@ -57,17 +57,19 @@ class SupabaseTables:
             chunk = deduped[i : i + 200]
             self.supabase.table(table_name).delete().in_(primary_key, chunk).execute()
         self.delete_these = []
-        setattr(self, self._table_to_attr_map().get(table_name), self.selectAll(table_name))
+        if refresh:
+            self.refreshAllTables(table_name)
 
-    def upsertUpdates(self, table_name: str):
+    def upsertUpdates(self, table_name: str, refresh: bool = True):
         if self.updates:
             self.supabase.table(table_name).upsert(self.updates).execute()
         self.updates = []
-        self.refreshAllTables(table_name)
+        if refresh:
+            self.refreshAllTables(table_name)
 
-    def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None):
+    def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True):
         ignore = set(ignore_cols or set())
-        ignore.update({id_col, "created_at", "scraped_at"})
+        ignore.update({id_col, "created_at", "scraped_at", "run_id"})
         seen = set()
 
         rows = self.selectAll(table_name)
@@ -81,3 +83,5 @@ class SupabaseTables:
 
         if self.delete_these:
             self.deleteTheseRows(table_name, primary_key=id_col)
+        if refresh:
+            self.refreshAllTables(table_name)
