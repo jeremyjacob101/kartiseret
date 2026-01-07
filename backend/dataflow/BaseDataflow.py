@@ -1,6 +1,6 @@
 from backend.dataflow.utils.SupabaseTables import SupabaseTables
 from backend.dataflow.utils.DataflowHelpers import DataflowHelpers
-from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpOmdb, setUpTmdb, setUpOpenAI, logSuccessfulRun
+from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpTmdb, logSuccessfulRun
 from backend.dataflow.comingsoons.utils.ComingSoonsHelpers import ComingSoonsHelpers
 
 
@@ -18,9 +18,7 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
         super().__init__(*args, **kwargs)
 
         setUpSupabase(self)
-        # setUpOmdb(self)
         setUpTmdb(self)
-        # setUpOpenAI(self)
 
         self.refreshAllTables()
 

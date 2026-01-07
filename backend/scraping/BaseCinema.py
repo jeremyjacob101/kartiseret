@@ -16,12 +16,13 @@ class BaseCinema(ScrapingHelpers, ScrapedFixes, InitializeBaseCinema, AppendToIn
         self.cinema_type = cinema_type
         self.supabase_table_name = supabase_table_name
 
+        setUpSupabase(self)
+
     def logic(self):
         raise NotImplementedError("Each cinema must implement its own logic()")
 
     def scrape(self):
         try:
-            setUpSupabase(self)
             navigate(self)
             self.logic()
             formatAndUpload(self)
