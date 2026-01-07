@@ -3,6 +3,8 @@ from datetime import datetime
 import time, pytz, os
 from supabase import create_client
 
+RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
+
 
 def setUpSupabase(self):
     url = os.environ.get("SUPABASE_URL")
@@ -29,15 +31,16 @@ def build_chrome(headless: bool = True):
 
 def logSuccessfulRun(self) -> None:
     duration_seconds = time.perf_counter() - self.startTime
+    avg_time_col, num_runs_col = "avg_time_" + str(RUNNER_MACHINE), "num_runs_" + str(RUNNER_MACHINE)
 
-    resp = self.supabase.table("utilAvgScrapeTime").select("avg_time,num_runs,cinema_type").eq("cinema_name", self.__class__.__name__).limit(1).execute()
+    resp = self.supabase.table("utilAvgScrapeTime").select(f"{avg_time_col},{num_runs_col},cinema_type").eq("cinema_name", self.__class__.__name__).limit(1).execute()
     row = resp.data[0]
-    old_avg = float(row.get("avg_time") or 0.0)
-    n = int(row.get("num_runs") or 0)
+    old_avg = float(row.get(avg_time_col) or 0.0)
+    n = int(row.get(num_runs_col) or 0)
     new_avg = (old_avg * n + float(duration_seconds)) / (n + 1)
-    update_payload = {"avg_time": float(new_avg), "num_runs": n + 1, "cinema_type": row.get("cinema_type") or self.cinema_type}
+    update_payload = {avg_time_col: float(new_avg), num_runs_col: n + 1, "cinema_type": row.get("cinema_type") or self.cinema_type}
 
-    self.supabase.table("utilAvgScrapeTime").update(update_payload).eq("cinema_name", self.__class__.__name__).eq("num_runs", n).execute()
+    self.supabase.table("utilAvgScrapeTime").update(update_payload).eq("cinema_name", self.__class__.__name__).eq(num_runs_col, n).execute()
 
 
 class InitializeBaseCinema:

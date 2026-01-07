@@ -1,6 +1,6 @@
 from backend.dataflow.utils.SupabaseTables import SupabaseTables
 from backend.dataflow.utils.DataflowHelpers import DataflowHelpers
-from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpOmdb, setUpTmdb, setUpOpenAI
+from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpOmdb, setUpTmdb, setUpOpenAI, logSuccessfulRun
 from backend.dataflow.comingsoons.utils.ComingSoonsHelpers import ComingSoonsHelpers
 
 
@@ -30,5 +30,6 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
     def dataRun(self):
         try:
             self.logic()
+            logSuccessfulRun(self)
         except Exception:
             raise

@@ -9,7 +9,8 @@ import time, os
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
 from backend.utils.logger import artifactPrinting
 
-runningGithubActions = os.getenv("GITHUB_ACTIONS") == "true"
+runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
+RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
 
 
 @dataclass(frozen=True)
@@ -72,11 +73,12 @@ def runGroup(kind: str, key: str):
         avg_by_name: dict[str, float] = {}
 
         url, svc_key = os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+        avg_time_col = "avg_time_" + str(RUNNER_MACHINE)
         if url and svc_key:
             if kind == "dataflow":
-                table, name_col, time_col = "utilAvgDataTime", "data_type", "avg_time"
+                table, name_col, time_col = "utilAvgDataTime", "data_type", f"{avg_time_col}"
             if kind == "cinema":
-                table, name_col, time_col = "utilAvgScrapeTime", "cinema_name", "avg_time"
+                table, name_col, time_col = "utilAvgScrapeTime", "cinema_name", f"{avg_time_col}"
 
             class_names = [cls.__name__ for cls in classes]
             sb = create_client(url, svc_key)
