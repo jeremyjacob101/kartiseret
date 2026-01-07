@@ -2,9 +2,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from backend.utils.rich_support import RunResult, run_rich_ui
 
 from supabase import create_client
-from dataclasses import dataclass
-from typing import Callable, Any
+from types import SimpleNamespace
 import time, os
+
 
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
 from backend.utils.logger import artifactPrinting
@@ -13,27 +13,14 @@ runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
 RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
 
 
-@dataclass(frozen=True)
-class KindSpec:
-    registry: dict[str, list[type]]
-    make_instance: Callable[[type, str], Any]
-    run_instance: Callable[[Any], None]
-    cleanup: Callable[[Any], None]
-    count_label: str
-    mode: str  # "parallel" | "sequential"
-    total_strategy: str  # "max" | "sum"
-    overall_task_name: str
-    get_item_name: Callable[[type], str]
-
-
-KIND_SPECS: dict[str, KindSpec] = {
-    "cinema": KindSpec(registry=REGISTRY, make_instance=lambda cls, key: cls(cinema_type=key, supabase_table_name=key), run_instance=lambda inst: inst.scrape(), cleanup=lambda instance: (instance.driver.quit() if instance and getattr(instance, "driver", None) else None), count_label="Threads", mode="parallel", total_strategy="max", overall_task_name="overall", get_item_name=lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__)),
-    "dataflow": KindSpec(registry=DATAFLOW_REGISTRY, make_instance=lambda cls, key: cls(), run_instance=lambda inst: inst.dataRun(), cleanup=lambda instance: None, count_label="Dataflows", mode="sequential", total_strategy="sum", overall_task_name="dataflows", get_item_name=lambda cls: cls.__name__),
-}
+cinemaDictionary = {"registry": REGISTRY, "make_instance": lambda cls, key: cls(cinema_type=key, supabase_table_name=key), "run_instance": lambda inst: inst.scrape(), "cleanup": lambda instance: (instance.driver.quit() if instance and getattr(instance, "driver", None) else None), "count_label": "Threads", "mode": "parallel", "total_strategy": "max", "overall_task_name": "overall", "get_item_name": lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__)}
+dataflowDictionary = {"registry": DATAFLOW_REGISTRY, "make_instance": lambda cls, key: cls(), "run_instance": lambda inst: inst.dataRun(), "cleanup": lambda instance: None, "count_label": "Dataflows", "mode": "sequential", "total_strategy": "sum", "overall_task_name": "dataflows", "get_item_name": lambda cls: cls.__name__}
+SPEC_BY_KIND = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}
 
 
 def runGroup(kind: str, key: str):
-    spec = KIND_SPECS.get(kind)
+    spec_dict = SPEC_BY_KIND.get(kind)
+    spec = SimpleNamespace(**spec_dict)
     classes = spec.registry.get(key, [])
     if not classes:
         return None

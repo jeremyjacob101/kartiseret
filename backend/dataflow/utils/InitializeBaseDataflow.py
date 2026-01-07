@@ -2,6 +2,7 @@ from supabase import create_client
 from openai import OpenAI
 import time, os
 
+runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
 RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
 
 
@@ -31,17 +32,18 @@ def setUpOpenAI(self):
 
 
 def logSuccessfulRun(self) -> None:
-    duration_seconds = time.perf_counter() - self.startTime
-    avg_time_col, num_runs_col = "avg_time_" + str(RUNNER_MACHINE), "num_runs_" + str(RUNNER_MACHINE)
+    if not runningGithubActions:
+        duration_seconds = time.perf_counter() - self.startTime
+        avg_time_col, num_runs_col = "avg_time_" + str(RUNNER_MACHINE), "num_runs_" + str(RUNNER_MACHINE)
 
-    resp = self.supabase.table("utilAvgDataTime").select(f"{avg_time_col},{num_runs_col}").eq("data_type", self.__class__.__name__).limit(1).execute()
-    row = resp.data[0]
-    old_avg = float(row.get(avg_time_col) or 0.0)
-    n = int(row.get(num_runs_col) or 0)
-    new_avg = (old_avg * n + float(duration_seconds)) / (n + 1)
-    update_payload = {avg_time_col: float(new_avg), num_runs_col: n + 1}
+        resp = self.supabase.table("utilAvgDataTime").select(f"{avg_time_col},{num_runs_col}").eq("data_type", self.__class__.__name__).limit(1).execute()
+        row = resp.data[0]
+        old_avg = float(row.get(avg_time_col) or 0.0)
+        n = int(row.get(num_runs_col) or 0)
+        new_avg = (old_avg * n + float(duration_seconds)) / (n + 1)
+        update_payload = {avg_time_col: float(new_avg), num_runs_col: n + 1}
 
-    self.supabase.table("utilAvgDataTime").update(update_payload).eq("data_type", self.__class__.__name__).eq(num_runs_col, n).execute()
+        self.supabase.table("utilAvgDataTime").update(update_payload).eq("data_type", self.__class__.__name__).eq(num_runs_col, n).execute()
 
 
 class InitializeBaseDataflow:

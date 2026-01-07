@@ -57,7 +57,7 @@ class MovieLand(BaseCinema):
                         date_class_name = date_element.get_attribute("class")
                         if date_class_name == "day":
                             date_element.click()
-                            self.sleep(1)
+                            self.sleep(0.5)
 
                             for film_index in range(1, self.lenElements("#events-list > div.bg-choose > div > div > div.col-12 > a") + 1):
                                 elems = self.elements("#events-list > div.bg-choose > div")
