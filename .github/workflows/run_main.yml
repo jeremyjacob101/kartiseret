@@ -1,4 +1,4 @@
-name: Run runner.py
+name: Run Main
 
 on:
   workflow_dispatch:
