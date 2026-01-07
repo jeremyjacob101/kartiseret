@@ -163,7 +163,7 @@ class HotCinema(BaseCinema):
                                 theater_to_href_map = {16: 1197, 14: 1194, 1: 1183, 17: 1191, 9: 1195, 2: 1184, 15: 1192, 6: 1181, 8: 1193, 5: 1182, 3: 1196, 22: 1198}
                                 href_index = theater_to_href_map.get(href_index)
 
-                                use_this_href = f"tickets.hotcinema.co.il/site/{href_index}/tickets?code={href_index}-{event_id}"
+                                use_this_href = f"https://tickets.hotcinema.co.il/site/{href_index}/tickets?code={href_index}-{event_id}"
                                 self.english_href = use_this_href + "&languageid=en_gb"
                                 self.hebrew_href = use_this_href + "&languageid=he_IL"
 
