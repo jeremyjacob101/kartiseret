@@ -77,6 +77,7 @@ class HotCinema(BaseCinema):
                             self.english_title = str(self.english_titles[checking_film])
                             self.hebrew_title = str(self.hebrew_titles[checking_film])
 
+                            self.dub_language = None
                             if "מדובב לעברית" in self.hebrew_title:
                                 self.dub_language = "Hebrew"
                                 self.hebrew_title = self.hebrew_title.split("מדובב לעברית", 1)[0].strip()

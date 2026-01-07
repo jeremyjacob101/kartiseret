@@ -73,8 +73,9 @@ class MovieLand(BaseCinema):
                                 self.hebrew_title = self.hebrew_titles[checking_film]
                                 self.release_year = self.release_years[checking_film]
                                 self.rating = self.ratings[checking_film]
-
                                 self.original_language = self.original_languages[checking_film]
+                                self.dub_language = None
+                                
                                 if "(מדובב)" in self.hebrew_title:
                                     self.hebrew_title = self.hebrew_title.replace("(מדובב)", "").strip()
                                     self.dub_language = "Hebrew"
