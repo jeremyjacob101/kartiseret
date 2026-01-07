@@ -1,0 +1,65 @@
+name: Daily Sweep
+
+on:
+  schedule:
+    # 4 AM Israel time = 2 AM UTC (Israel is UTC+2, no DST at 4am winter)
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  clear-old-showtimes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: clear-old-showtimes
+      cancel-in-progress: false
+    env:
+      TZ: Asia/Jerusalem
+      LOG_LEVEL: ERROR
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache .venv
+        id: cache-venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
+
+      - name: Create venv and install deps (if needed)
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install --prefer-binary -r requirements.txt
+          elif [ -f pyproject.toml ]; then
+            pip install --prefer-binary .
+          fi
+
+      - name: Debug env vars
+        run: |
+          echo "SUPABASE_URL: $SUPABASE_URL"
+          echo "SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:+set}"
+
+      - name: Run cleanup script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          set -e
+          . .venv/bin/activate
+          export PYTHONPATH="${PYTHONPATH}:${{ github.workspace }}"
+          python -m backend.utils.supabase.clear_old_showtimes

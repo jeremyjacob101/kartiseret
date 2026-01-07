@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -36,6 +34,5 @@ def sync_tables(action: str, source_table: Optional[str] = None, target_tables: 
         start += page_size
 
 
-if __name__ == "__main__":
-    # append, clear, replace
+if __name__ == "__main__":  # append, clear, replace
     sync_tables(action="append", source_table="testingSoons", target_tables=["testingSoons2"])
