@@ -1,4 +1,6 @@
 from backend.scraping.BaseCinema import BaseCinema
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 
 from datetime import datetime
 import re
@@ -9,22 +11,21 @@ class CinemaCity(BaseCinema):
     URL = "https://www.cinema-city.co.il/"
 
     def logic(self):
-        self.sleep(3)
-        self.driver.execute_script("var el=document.querySelector('body > flashy-popup');if(el){el.remove();}")
-        self.sleep(3)
-        self.driver.execute_script("var el=document.querySelector('#popupVSChat');if(el){el.remove();}")
-        self.sleep(3)
-        self.driver.execute_script("var el=document.querySelector('#gdpr-module-message');if(el){el.remove();}")
-        self.sleep(5)
+        for css in ("body > flashy-popup", "#popupVSChat", "#gdpr-module-message"):
+            try:
+                elementToRemove = WebDriverWait(self.driver, 5).until(lambda _, s=css: self.element(s))
+                self.driver.execute_script("arguments[0].remove();", elementToRemove)
+            except:
+                pass
         self.zoomOut(50)
 
         for _ in range(8):
             scroll_button = self.element("#change-bg > div.container.movies.index-movies-mob > div.movie-more-wrapper > div.row > div > p > a")
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", scroll_button)
-            self.sleep(1)
+            self.sleep(0.5)
             try:
                 scroll_button.click()
-                self.sleep(3)
+                self.sleep(0.5)
             except:
                 break
 
@@ -41,20 +42,20 @@ class CinemaCity(BaseCinema):
 
         self.sleep(1)
         self.driver.execute_script("window.scrollTo(0, 0);")
-        self.sleep(2)
+        self.sleep(1)
 
-        self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dt/a", 0.5)
+        self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dt/a", 0.25)
         for cinema in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li") + 1):
             self.screening_city = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li[{cinema}]/a/span").get_attribute("textContent")
 
-            self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li[{cinema}]/a", 0.12)
-            self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a", 0.12)
+            self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[1]/dl/dd/ul/li[{cinema}]/a", 0.11)
+            self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dt/a", 0.11)
             for showtype in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li") + 1):
                 self.screening_type = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{showtype}]/a").get_attribute("textContent").strip()
                 base_showtech = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{showtype}]/a").get_attribute("textContent").strip()
 
-                self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{showtype}]/a", 0.12)
-                self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dt/a", 0.12)
+                self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[2]/dl/dd/ul/li[{showtype}]/a", 0.11)
+                self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dt/a", 0.11)
                 for film_index in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li/div/div[1]/ul/li") + 1):
                     checking_film_name = str(self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a").get_attribute("textContent"))
                     checking_film = name_to_idx.get(checking_film_name)
@@ -95,18 +96,18 @@ class CinemaCity(BaseCinema):
                         tech_prefix = "2D"
                     self.screening_tech = f"{tech_prefix} {base_showtech}".strip()
 
-                    self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a", 0.12)
-                    self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a", 0.12)
+                    self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[3]/dl/dd/ul/li/div/div[1]/ul/li[{film_index}]/a", 0.11)
+                    self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dt/a", 0.11)
                     for day in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li") + 1):
                         self.date_of_showing = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li[{day}]/a").get_attribute("textContent")
                         self.date_of_showing = datetime.strptime(re.search(r"\d{1,2}/\d{1,2}/\d{4}", self.date_of_showing).group(), "%d/%m/%Y").date().isoformat()
 
-                        self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li[{day}]/a", 0.12)
-                        self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dt/a", 0.12)
+                        self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[4]/dl/dd/ul/li[{day}]/a", 0.11)
+                        self.jsClick("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dt/a", 0.11)
                         for time in range(1, self.lenElements("/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li") + 1):
                             self.showtime = self.element(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a").get_attribute("textContent")
 
-                            self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a", 0.12)
+                            self.jsClick(f"/html/body/div[4]/div[2]/div/div/div[2]/div/div[5]/dl/dd/ul/li[{time}]/a", 0.11)
 
                             event_id = self.driver.execute_script(
                                 """

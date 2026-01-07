@@ -1,6 +1,6 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, date
 import requests
 
 
@@ -75,6 +75,10 @@ class NowPlayingsTmdb(BaseDataflow):
         meta_by_key = {}
 
         for row in self.main_table_rows:
+            showing_date = row.get("date_of_showing")
+            if showing_date and self.dateToDate(showing_date) < date.today():
+                continue
+            
             title_norm = self.normalizeTitle(row.get("english_title") or "").strip()
             if not title_norm:
                 continue
@@ -216,7 +220,7 @@ class NowPlayingsTmdb(BaseDataflow):
                         page += 1
 
                 page = 1
-                while len(candidates) < 30:
+                while len(candidates) < 20:
                     params = {"api_key": self.TMDB_API_KEY, "query": representative_title, "page": page}
                     try:
                         response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=20).json()
@@ -234,7 +238,7 @@ class NowPlayingsTmdb(BaseDataflow):
                         seen.add(tmdb_id)
                         candidates.append(tmdb_id)
 
-                        if len(candidates) >= 30:
+                        if len(candidates) >= 20:
                             break
 
                     page += 1

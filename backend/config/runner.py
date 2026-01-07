@@ -4,7 +4,8 @@ load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
 
 from backend.utils import logger
 from backend.utils.logger import setup_logging
-from backend.config.runners import runGroup
+# from backend.config.runners import runGroup
+from backend.config.runners_new import runGroup
 
 
 def main():

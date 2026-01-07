@@ -51,6 +51,8 @@ class InitializeBaseDataflow:
         super().__init__(*args, **kwargs)
         self.reset_soon_row_state()
 
+        self.startTime = time.perf_counter()
+
         self.non_deduplicated_updates = []
         self.non_enriched_updates = []
         self.visited_already = set()

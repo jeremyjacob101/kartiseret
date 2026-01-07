@@ -1,0 +1,193 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any, Callable, Dict, Iterable, List, Optional, Set
+
+import time
+from rich.progress import Progress, ProgressColumn, SpinnerColumn, TextColumn
+from rich.progress_bar import ProgressBar
+from rich.console import Console, Group
+from rich.table import Column
+from rich.theme import Theme
+from rich.live import Live
+
+
+@dataclass
+class RunResult:
+    name: str
+    secs: float
+    ok: bool
+
+
+class PerTaskBarColumn(ProgressColumn):
+    def __init__(self, bar_width=20, default_bar="#f266e0", default_back="grey23"):
+        super().__init__(Column())
+        self.bar_width = bar_width
+        self.default_bar = default_bar
+        self.default_back = default_back
+
+    def render(self, task):
+        bar_color = task.fields.get("bar_color", self.default_bar)
+        back_color = task.fields.get("bar_back", self.default_back)
+        failed = task.fields.get("failed", False)
+
+        total = max(0, task.total) if task.total is not None else None
+        completed = max(0, task.completed)
+
+        if failed:
+            return ProgressBar(total=total, completed=min(completed, task.total or 0) if task.total is not None else completed, width=self.bar_width, pulse=False, style=back_color, complete_style="red", finished_style="red", pulse_style="red")
+        return ProgressBar(total=total, completed=completed, width=self.bar_width, pulse=not task.started, animation_time=task.get_time(), style=back_color, complete_style=bar_color, finished_style=bar_color, pulse_style=bar_color)
+
+
+def _hms(secs: float) -> str:
+    secs = int(secs)
+    hours, remainder = divmod(secs, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{hours}:{minutes:02d}:{seconds:02d}"
+
+
+def _finalize_overall_bar(overall: Progress, overall_task_id: int, ok: bool, completed: float, elapsed_secs: float, done: int):
+    overall_color = "green" if ok else "red"
+    task = overall.tasks[overall_task_id]
+    task.finished_style = overall_color
+    task.complete_style = overall_color
+    task.pulse_style = overall_color
+    overall.update(overall_task_id, completed=completed, elapsed=_hms(elapsed_secs), eta=_hms(0), done=done, bar_color=overall_color, elapsed_color=overall_color, eta_color=overall_color)
+
+
+def _update_task_status(status: Progress, task_id: int, name: str, estimated_secs: float, result: RunResult):
+    color = "green" if result.ok else "red"
+    status.update(task_id, description=f"[{color}]{name}[/{color}]", time=f"[{color}]{_hms(result.secs)}[/{color}]", completed=estimated_secs, bar_color=color, **({} if result.ok else {"failed": True}))
+
+
+def _update_overall(overall: Progress, task_id: int, now: float, started_at: float, completed: float, done: int):
+    total = float(overall.tasks[task_id].total or 0.0)
+    completed = min(float(completed), total)
+    eta_secs = max(0.0, total - completed)
+    elapsed_secs = now - started_at
+    overall.update(task_id, completed=completed, elapsed=_hms(elapsed_secs), eta=_hms(eta_secs), done=done)
+
+
+class RichRunUI:
+    def __init__(self, spec: Any, key: str, items: Iterable[Any], get_item_est: Callable[[Any], float], refresh_per_second: int = 6):
+        self.spec = spec
+        self.key = key
+        self.items: List[Any] = list(items)
+        self.get_item_est = get_item_est
+        self.refresh_per_second = refresh_per_second
+
+        self.est_by_item: Dict[Any, float] = {item: float(get_item_est(item)) for item in self.items}
+
+        all_estimated = list(self.est_by_item.values())
+        if not all_estimated:
+            total_estimated = 0.0
+        elif spec.total_strategy == "max":
+            total_estimated = float(max(all_estimated))
+        else:  # "sum"
+            total_estimated = float(sum(all_estimated))
+
+        self.console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
+        self.overall = Progress(TextColumn("[bold {task.fields[elapsed_color]}]{task.fields[elapsed]}[/bold {task.fields[elapsed_color]}]"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("[bold {task.fields[eta_color]}]{task.fields[eta]}[/bold {task.fields[eta_color]}]"), TextColumn("[bold green]{task.fields[done]}/{task.fields[total_count]} " + spec.count_label + "[/bold green] " + "[bold #66d6f2]{task.fields[group_label]}[/bold #66d6f2]", table_column=Column(ratio=1, overflow="ellipsis", no_wrap=True)), SpinnerColumn(style="bold #f266e0"), console=self.console, refresh_per_second=refresh_per_second)
+        self.status = Progress(TextColumn("{task.fields[time]}"), PerTaskBarColumn(bar_width=20, default_bar="#f266e0"), TextColumn("{task.description}"), console=self.console, refresh_per_second=refresh_per_second)
+
+        self.overall_task_id = self.overall.add_task(spec.overall_task_name, total=total_estimated, elapsed=_hms(0), eta=_hms(total_estimated), done=0, total_count=len(self.items), group_label=key, bar_color="#f266e0", elapsed_color="#9c27f5", eta_color="orange1")
+
+        self.status_task_id_by_item: Dict[Any, int] = {}
+        for item in self.items:
+            name = spec.get_item_name(item)
+            est = self.est_by_item[item]
+            task_id = self.status.add_task(f"[yellow]{name}[/yellow]", total=est, completed=0.0, time=f"[yellow]       [/yellow]", bar_color="#f266e0")
+            self.status_task_id_by_item[item] = task_id
+
+        self._live = Live(Group(self.overall, self.status), console=self.console, refresh_per_second=refresh_per_second)
+
+        # State for all calculations
+        self._overall_started_at: Optional[float] = None
+        self._start_by_item: Dict[Any, float] = {}
+        self._done: Set[Any] = set()
+        self._results: List[RunResult] = []
+        self._max_completed_seen: float = 0.0  # only used when total_strategy == "max"
+
+    def __enter__(self) -> "RichRunUI":
+        self._live.__enter__()
+        self._overall_started_at = time.time()
+        return self
+
+    def __exit__(self, exc_type, exc, tb) -> None:
+        self._live.__exit__(exc_type, exc, tb)
+
+    @property
+    def overall_started_at(self) -> float:
+        return float(self._overall_started_at or time.time())
+
+    def start_item(self, item: Any, started_at: Optional[float] = None) -> None:
+        if item in self._start_by_item:
+            return
+        self._start_by_item[item] = float(started_at if started_at is not None else time.time())
+
+    def tick(self, now: Optional[float] = None) -> None:
+        now = float(now if now is not None else time.time())
+        done_count = len(self._done)
+
+        # Update per-task bars for items that started and aren't done
+        for item, started in self._start_by_item.items():
+            if item in self._done:
+                continue
+            task_id = self.status_task_id_by_item[item]
+            est = self.est_by_item[item]
+            elapsed = now - started
+            self.status.update(task_id, completed=min(elapsed, est))
+
+        # Compute overall "completed" from strategy (ALL math lives here)
+        completed = 0.0
+        if self.spec.total_strategy == "sum":
+            total = 0.0
+            for item in self.items:
+                est = self.est_by_item[item]
+                if item in self._done:
+                    total += est
+                else:
+                    started = self._start_by_item.get(item)
+                    if started is None:
+                        continue
+                    total += min(now - started, est)
+            completed = total
+
+        else:  # "max"
+            m = 0.0
+            for item in self.items:
+                est = self.est_by_item[item]
+                if item in self._done:
+                    v = est
+                else:
+                    started = self._start_by_item.get(item)
+                    if started is None:
+                        v = 0.0
+                    else:
+                        v = min(now - started, est)
+                if v > m:
+                    m = v
+            self._max_completed_seen = max(self._max_completed_seen, m)
+            completed = self._max_completed_seen
+
+        _update_overall(self.overall, self.overall_task_id, now, self.overall_started_at, completed, done_count)
+
+    def finish_item(self, item: Any, result: RunResult, now: Optional[float] = None) -> None:
+        self._done.add(item)
+        self._results.append(result)
+
+        task_id = self.status_task_id_by_item[item]
+        est = self.est_by_item[item]
+        name = self.spec.get_item_name(item)
+        _update_task_status(self.status, task_id, name, est, result)
+
+        # Immediately refresh overall + ETAs after a completion
+        self.tick(now=now)
+
+    def finalize(self, now: Optional[float] = None) -> None:
+        now = float(now if now is not None else time.time())
+        done_count = len(self._done)
+        all_ok = all(r.ok for r in self._results) if self._results else True
+        total = float(self.overall.tasks[self.overall_task_id].total or 0.0)
+        elapsed = now - self.overall_started_at
+        _finalize_overall_bar(self.overall, self.overall_task_id, all_ok, total, elapsed, done_count)

@@ -35,4 +35,4 @@ def sync_tables(action: str, source_table: Optional[str] = None, target_tables: 
 
 
 if __name__ == "__main__":  # append, clear, replace
-    sync_tables(action="append", source_table="testingSoons", target_tables=["testingSoons2"])
+    sync_tables(action="clear", source_table="testingShowtimes", target_tables=["testingShowtimes"])

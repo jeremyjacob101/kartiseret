@@ -1,5 +1,6 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
 from collections import defaultdict
+from datetime import date
 import requests
 
 
@@ -44,6 +45,9 @@ class ComingSoonsTmdb(BaseDataflow):
         for row in self.main_table_rows:
             self.reset_soon_row_state()
             self.load_soon_row(row)
+
+            if self.release_date and self.dateToDate(self.release_date) < date.today():
+                continue
 
             original_uuid = row.get("id")
             original_run_id = row.get("run_id")
@@ -126,7 +130,7 @@ class ComingSoonsTmdb(BaseDataflow):
                         page += 1
 
                 page = 1
-                while len(self.candidates) < 30:
+                while len(self.candidates) < 20:
                     params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
                     try:
                         response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
@@ -144,7 +148,7 @@ class ComingSoonsTmdb(BaseDataflow):
                         seen.add(tmdb_id)
                         self.candidates.append(tmdb_id)
 
-                        if len(self.candidates) >= 30:
+                        if len(self.candidates) >= 20:
                             break
 
                     page += 1
