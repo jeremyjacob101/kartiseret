@@ -2,5 +2,5 @@ selenium
 webdriver-manager
 supabase
 pytz
-openai
 rich
+readchar

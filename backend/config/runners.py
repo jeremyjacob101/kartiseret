@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from backend.utils.rich_support import RunResult, RichRunUI
+from backend.utils.rich_readchar.rich_support import RunResult, RichRunUI
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
 from backend.utils.logger import artifactPrinting
 from supabase import create_client
