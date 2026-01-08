@@ -1,5 +1,6 @@
-from typing import Any, Callable, Dict, Iterable, List, Optional, Set
 from __future__ import annotations
+
+from typing import Any, Callable, Dict, Iterable, List, Optional, Set
 from dataclasses import dataclass
 import time
 

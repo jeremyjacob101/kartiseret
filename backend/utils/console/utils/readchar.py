@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
-import readchar
 from readchar import key as rkey
+import readchar
 
 
 @dataclass(frozen=True)
