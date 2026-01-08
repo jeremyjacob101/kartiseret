@@ -5,6 +5,7 @@ import time, os, queue
 
 from rich.console import Console, Group, RenderableType
 from rich.panel import Panel
+from rich.theme import Theme
 from rich.live import Live
 from rich.text import Text
 
@@ -163,25 +164,25 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
 
 
 def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: RenderableType | None = None):
-    console = Console()
+    console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
     header_renderable = header_renderable or Panel(Text("Running…", style="bold"), title="Run Plan", border_style="grey37")
 
-    placeholder = Panel.fit(Text("Starting…", style="yellow"), border_style="grey37")
-    with Live(Group(header_renderable, placeholder), console=console, refresh_per_second=12) as live:
-        if not plan:
-            live.update(Group(header_renderable, Panel.fit(Text("Nothing selected.", style="red"), border_style="grey37")))
-            return
+    console.print(header_renderable)
 
-        total = len(plan)
-        for i, entry in enumerate(plan, start=1):
-            if len(entry) == 2:
-                kind, key = entry
-                classes_override = None
-            else:
-                kind, key, classes_override = entry
+    if not plan:
+        console.print(Panel.fit(Text("Nothing selected.", style="red"), border_style="grey37"))
+        return
 
-            step = Panel.fit(Text(f"{i}/{total}: {kind} → {key}", style="grey70"), border_style="grey37")
-            combined_header = Group(header_renderable, step)
-            live.update(Group(combined_header, placeholder))
+    total = len(plan)
+    for i, entry in enumerate(plan, start=1):
+        if len(entry) == 2:
+            kind, key = entry
+            classes_override = None
+        else:
+            kind, key, classes_override = entry
 
-            runGroup(kind, key, run_id, classes_override=classes_override, ui_parent=live, header_renderable=combined_header, console=console)
+        step = Panel.fit(Text(f"{i}/{total}: {kind} → {key}", style="grey70"), border_style="grey37")
+        console.print(step)
+
+        runGroup(kind, key, run_id, classes_override=classes_override, console=console)
+        console.print()
