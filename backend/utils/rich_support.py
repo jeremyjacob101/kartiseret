@@ -222,7 +222,7 @@ class RichRunUI:
     def finalize(self, now: Optional[float] = None) -> None:
         now = float(now if now is not None else time.time())
         done_count = len(self._done)
-        all_ok = all(r.ok for r in self._results) if self._results else True
+        all_ok = all(result.ok for result in self._results) if self._results else True
         total = float(self.overall.tasks[self.overall_task_id].total or 0.0)
         elapsed = now - self.overall_started_at
         _finalize_overall_bar(self.overall, self.overall_task_id, all_ok, total, elapsed, done_count)
