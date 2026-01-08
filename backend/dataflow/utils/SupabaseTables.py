@@ -75,9 +75,9 @@ class SupabaseTables:
     def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True, sort_key: Callable[[dict], Any] | None = None, sort_reverse: bool = False, dedupe_added: bool = True):
         ignore = set(ignore_cols or set())
         if dedupe_added:
-            ignore.update({id_col, "created_at", "scraped_at", "run_id", "old_uuid", "added"})
+            ignore.update({id_col, "created_at", "run_id", "old_uuid", "added"})
         else:
-            ignore.update({id_col, "created_at", "scraped_at", "run_id", "old_uuid"})
+            ignore.update({id_col, "created_at", "run_id", "old_uuid"})
 
         if sort_key is None:
             sort_key = lambda r: r.get("created_at") or ""
@@ -103,7 +103,7 @@ class SupabaseTables:
 
         if promote_added_ids:
             promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
-            for i in range(0, len(promote_added_ids), 1000):  # feel free to change 1000
+            for i in range(0, len(promote_added_ids), 1000):
                 chunk = promote_added_ids[i : i + 1000]
                 self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
 

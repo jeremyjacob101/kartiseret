@@ -367,7 +367,7 @@ class NowPlayingsTmdb(BaseDataflow):
                 else:
                     new_row["english_title"] = self.normalizeTitle(row.get("english_title"))
 
-                for col in ("cleaned", "release_year", "rating", "directed_by"):
+                for col in ("added", "cleaned", "release_year", "rating", "directed_by", "runtime"):
                     new_row.pop(col, None)
 
                 processed_ids.add(row["id"])
@@ -379,7 +379,7 @@ class NowPlayingsTmdb(BaseDataflow):
             for i in range(0, len(ids), 1000):
                 chunk = ids[i : i + 200]
                 self.supabase.table(self.MAIN_TABLE_NAME).update({"added": True}).in_("id", chunk).execute()
-        self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "scraped_at", "rating", "directed_by", "runtime"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "rating", "directed_by", "runtime"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
 
         for tmdb_id, res in tmdb_id_to_enriched.items():
             if not tmdb_id:

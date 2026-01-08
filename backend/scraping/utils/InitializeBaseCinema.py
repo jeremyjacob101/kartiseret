@@ -106,7 +106,6 @@ class InitializeBaseCinema:
             "runtime": [],
             "rating": [],
             "screening_city": [],
-            "scraped_at": [],
             "cinema": [],
             "run_id": [],
         }

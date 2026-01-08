@@ -24,4 +24,4 @@ class NowPlayingsClean(BaseDataflow):
 
         self.upsertUpdates(self.MAIN_TABLE_NAME, refresh=False)
         self.deleteTheseRows(self.MAIN_TABLE_NAME, refresh=False)
-        self.dedupeTable(self.MAIN_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "scraped_at", "rating", "directed_by", "runtime", "tmdb_id", "cleaned"}, sort_key=lambda row: self.datetimeToDatetime(row["created_at"]), sort_reverse=True)
+        self.dedupeTable(self.MAIN_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "rating", "directed_by", "runtime", "tmdb_id", "cleaned"}, sort_key=lambda row: self.datetimeToDatetime(row["created_at"]), sort_reverse=True)
