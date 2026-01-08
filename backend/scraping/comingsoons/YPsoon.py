@@ -12,7 +12,7 @@ class YPsoon(BaseCinema):
     first_click = False
 
     def logic(self):
-        self.sleep(10)
+        self.sleep(5)
         self.waitAndClick("#onetrust-accept-btn-handler", 1)
 
         for film_card in range(1, self.lenElements("/html/body/div[6]/section/div[4]/div/div/div/div[2]/div/div/div/div[1]/div") + 1):
