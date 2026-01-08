@@ -1,11 +1,11 @@
 from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
-import os
 
 from backend.utils import logger
 from backend.utils.run_id import allocate_run_id
 from backend.config.runners import runGroup
+import os
 
 
 def main():
@@ -13,11 +13,12 @@ def main():
     run_id = allocate_run_id()
 
     runGroup("cinema", "testingSoons", run_id)
-    # runGroup("cinema", "testingTheques", run_id)
-    runGroup("cinema", "testingShowtimes", run_id)
-
     runGroup("dataflow", "comingSoonsData", run_id)
+
+    runGroup("cinema", "testingShowtimes", run_id)
     runGroup("dataflow", "nowPlayingData", run_id)
+
+    # runGroup("cinema", "testingTheques", run_id)
 
 
 if __name__ == "__main__":
