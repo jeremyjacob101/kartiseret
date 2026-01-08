@@ -75,10 +75,13 @@ class NowPlayingsTmdb(BaseDataflow):
         meta_by_key = {}
 
         for row in self.main_table_rows:
+            if row.get("added") is True:
+                continue
+
             showing_date = row.get("date_of_showing")
             if showing_date and self.dateToDate(showing_date) < date.today():
                 continue
-            
+
             title_norm = self.normalizeTitle(row.get("english_title") or "").strip()
             if not title_norm:
                 continue
@@ -346,6 +349,7 @@ class NowPlayingsTmdb(BaseDataflow):
 
         tmdb_id_to_enriched = dict(movies_by_tmdb)
 
+        processed_ids = set()
         for key, rows in grouped_rows_by_key.items():
             group_res = key_result.get(key)
             tmdb_id = (group_res or {}).get("tmdb_id")
@@ -366,9 +370,15 @@ class NowPlayingsTmdb(BaseDataflow):
                 for col in ("cleaned", "release_year", "rating", "directed_by"):
                     new_row.pop(col, None)
 
+                processed_ids.add(row["id"])
                 self.updates.append(new_row)
 
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+        if processed_ids:
+            ids = list(processed_ids)
+            for i in range(0, len(ids), 1000):
+                chunk = ids[i : i + 200]
+                self.supabase.table(self.MAIN_TABLE_NAME).update({"added": True}).in_("id", chunk).execute()
         self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "scraped_at", "rating", "directed_by", "runtime"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
 
         for tmdb_id, res in tmdb_id_to_enriched.items():

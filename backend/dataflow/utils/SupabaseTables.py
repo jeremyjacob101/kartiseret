@@ -43,6 +43,8 @@ class SupabaseTables:
 
     def deleteTheseRows(self, table_name: str, primary_key: str = "id", refresh: bool = True):
         if not self.delete_these:
+            if refresh:
+                self.refreshAllTables(table_name)
             return
 
         seen = set()
@@ -70,10 +72,12 @@ class SupabaseTables:
         if refresh:
             self.refreshAllTables(table_name)
 
-    def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True, sort_key: Callable[[dict], Any] | None = None, sort_reverse: bool = False):
+    def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True, sort_key: Callable[[dict], Any] | None = None, sort_reverse: bool = False, dedupe_added: bool = True):
         ignore = set(ignore_cols or set())
-        ignore.update({id_col, "created_at", "scraped_at", "run_id", "old_uuid"})
-        seen = set()
+        if dedupe_added:
+            ignore.update({id_col, "created_at", "scraped_at", "run_id", "old_uuid", "added"})
+        else:
+            ignore.update({id_col, "created_at", "scraped_at", "run_id", "old_uuid"})
 
         if sort_key is None:
             sort_key = lambda r: r.get("created_at") or ""
@@ -81,14 +85,27 @@ class SupabaseTables:
         rows = self.selectAll(table_name)
         rows.sort(key=sort_key, reverse=True if sort_reverse else False)
 
+        seen: dict[tuple, Any] = {}
+        promote_added_ids: list[Any] = []
+
         for row in rows:
             key = tuple(sorted((k, repr(v)) for k, v in row.items() if k not in ignore))
-            if key in seen:
-                self.delete_these.append(row.get(id_col))
+            row_id = row.get(id_col)
+
+            if key not in seen:
+                seen[key] = row_id
             else:
-                seen.add(key)
+                keeper_id = seen[key]
+                if row.get("added") is True:
+                    promote_added_ids.append(keeper_id)
+
+                self.delete_these.append(row_id)
+
+        if promote_added_ids:
+            promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
+            for i in range(0, len(promote_added_ids), 1000):  # feel free to change 1000
+                chunk = promote_added_ids[i : i + 1000]
+                self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
 
         if self.delete_these:
-            self.deleteTheseRows(table_name, primary_key=id_col)
-        if refresh:
-            self.refreshAllTables(table_name)
+            self.deleteTheseRows(table_name, primary_key=id_col, refresh=refresh)
