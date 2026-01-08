@@ -34,59 +34,70 @@ def _move_index(items: List[_MenuItem], idx: int, delta: int) -> int:
 
 def _render_hmenu(items: List[_MenuItem], idx: int, *, selected_values: Optional[Set[str]] = None, show_checks: bool = False) -> RenderableType:
     selected_values = selected_values or set()
+    all_selected = show_checks and _is_all_selected(selected_values, items)
+
     t = Text()
     for i, it in enumerate(items):
         is_cursor = i == idx
         is_enabled = it.enabled
-        is_checked = it.value in selected_values
+        is_checked = (it.value in selected_values) if it.value != "all" else all_selected
 
+        # No checkbox for All
         prefix = ""
-        if show_checks:
+        if show_checks and it.value != "all":
             prefix = "[x] " if is_checked else "[ ] "
 
         label = prefix + it.label
+
+        # Base style
         if not is_enabled:
             style = "grey50"
-            if is_cursor:
-                style = "black on grey50"
         else:
             style = "white"
-            if is_cursor:
-                style = "black on #f266e0"
+
+        # If All is active, make it obvious (no checkbox)
+        if show_checks and it.value == "all" and is_checked and is_enabled:
+            style = "bold green"
+
+        # Cursor override
+        if is_cursor:
+            style = "bold black on grey50" if not is_enabled else "bold black on #8040e6"
 
         t.append(label, style=style)
         if i < len(items) - 1:
             t.append(" | ", style="grey62")
+
     return Align.center(t)
 
 
-def _panel(title: str, body: RenderableType, help_text: str) -> Panel:
-    help_line = Align.center(Text(help_text, style="grey70"))
-    return Panel(Group(body, Text(""), help_line), title=title, border_style="grey37")
+def _panel(title: str, body: RenderableType) -> Panel:
+    return Panel(Group(Text(""), body, Text("")), title=title, title_align="center", border_style="grey37")
 
 
-def _enabled_values(items: List[_MenuItem]) -> Set[str]:
-    return {it.value for it in items if it.enabled}
+def _enabled_non_all(items: List[_MenuItem]) -> List[_MenuItem]:
+    return [it for it in items if it.enabled and it.value != "all"]
 
 
 def _enabled_non_all_values(items: List[_MenuItem]) -> Set[str]:
-    return {it.value for it in items if it.enabled and it.value != "all"}
+    return {it.value for it in _enabled_non_all(items)}
 
 
-def _apply_all_semantics(selected: Set[str], items: List[_MenuItem]) -> Set[str]:
-    sel = set(selected)
+def _is_all_selected(selected: Set[str], items: List[_MenuItem]) -> bool:
     non_all = _enabled_non_all_values(items)
+    return bool(non_all) and non_all.issubset(selected)
 
-    if "all" in sel:
-        sel |= non_all
-    else:
-        if non_all and non_all.issubset(sel):
-            sel.add("all")
-        else:
-            sel.discard("all")
 
-    sel &= _enabled_values(items)
-    return sel
+def _toggle_all(selected: Set[str], items: List[_MenuItem]) -> Set[str]:
+    # Toggle between select-all and clear-all
+    if _is_all_selected(selected, items):
+        return set()
+    return set(_enabled_non_all_values(items))
+
+
+def _normalize_selected(selected: Set[str], items: List[_MenuItem]) -> Set[str]:
+    # Keep only enabled non-all values (never keep "all" in the set)
+    allowed = _enabled_non_all_values(items)
+    return set(selected) & allowed
 
 
 def _plan_header(plan: List[Tuple[str, str, Optional[List[type]]]]) -> Panel:
@@ -111,17 +122,14 @@ def _plan_header(plan: List[Tuple[str, str, Optional[List[type]]]]) -> Panel:
 
 
 def _select_mode_and_groups(console: Console) -> Tuple[str, Set[str]]:
-    top = [_MenuItem("All", "all"), _MenuItem("Scrape", "scrape"), _MenuItem("Dataflow", "dataflow")]
+    top = [_MenuItem("Everything", "everything"), _MenuItem("All", "all"), _MenuItem("Scrape", "scrape"), _MenuItem("Dataflow", "dataflow")]
     groups_all_or_scrape = [_MenuItem("All", "all"), _MenuItem("Soons", "Soons"), _MenuItem("Theques", "Theques"), _MenuItem("Showtimes", "Showtimes")]
     groups_dataflow = [_MenuItem("All", "all"), _MenuItem("Soons", "Soons"), _MenuItem("Theques", "Theques", enabled=False), _MenuItem("Showtimes", "Showtimes")]
 
     stage: str = "top"
     idx: int = 0
     mode: str = "all"
-    selected_groups: Set[str] = set()
-
-    def default_select_all(items: List[_MenuItem]) -> Set[str]:
-        return _apply_all_semantics({"all"}, items)
+    selected_groups = set()  # DEFAULT EMPTY
 
     def current_items() -> List[_MenuItem]:
         if stage == "groups_dataflow":
@@ -130,13 +138,13 @@ def _select_mode_and_groups(console: Console) -> Tuple[str, Set[str]]:
 
     def render() -> Panel:
         if stage == "top":
-            body = Group(Text("Run:", style="bold"), _render_hmenu(top, idx))
-            return _panel("Select Mode", body, "←/→ move   Enter select   Backspace/Esc back   q quit")
+            body = _render_hmenu(top, idx)
+            return _panel("Select Mode", body)
 
         items = current_items()
         title = "All" if mode == "all" else ("Scrape" if mode == "scrape" else "Dataflow")
-        body = Group(Text(f"[{title}]", style="bold"), _render_hmenu(items, idx, selected_values=selected_groups, show_checks=True))
-        return _panel("Select Groups", body, "←/→ move   Space toggle   Enter done   Backspace/Esc back   q quit")
+        body = _render_hmenu(items, idx, selected_values=selected_groups, show_checks=True)
+        return _panel(title, body)
 
     with Live(render(), console=console, refresh_per_second=30) as live:
         while True:
@@ -159,16 +167,18 @@ def _select_mode_and_groups(console: Console) -> Tuple[str, Set[str]]:
                     idx = _move_index(top, idx, +1)
                 elif is_enter(k):
                     mode = top[idx].value
-                    idx = 0
+                    if mode == "everything":
+                        return "everything", set()
+
+                    idx, selected_groups = 0, set()
                     if mode == "dataflow":
                         stage = "groups_dataflow"
-                        selected_groups = default_select_all(groups_dataflow)
                     else:
                         stage = "groups_all"
-                        selected_groups = default_select_all(groups_all_or_scrape)
                 continue
 
             items = current_items()
+
             if is_left(k):
                 idx = _move_index(items, idx, -1)
                 continue
@@ -182,24 +192,23 @@ def _select_mode_and_groups(console: Console) -> Tuple[str, Set[str]]:
                     continue
 
                 sel = set(selected_groups)
+
                 if it.value == "all":
-                    if "all" in sel:
-                        sel.discard("all")
-                    else:
-                        sel.add("all")
-                    selected_groups = _apply_all_semantics(sel, items)
+                    selected_groups = _toggle_all(sel, items)
                 else:
                     if it.value in sel:
                         sel.remove(it.value)
                     else:
                         sel.add(it.value)
-                    selected_groups = _apply_all_semantics(sel, items)
+                    selected_groups = _normalize_selected(sel, items)
+
                 continue
 
             if is_enter(k):
-                out = set(selected_groups)
-                out.discard("all")
-                return mode, out
+                hovered = items[idx]
+                if hovered.value == "all":
+                    return mode, set(_enabled_non_all_values(items))
+                return mode, set(selected_groups)
 
 
 def _select_registry_items(console: Console, title: str, classes: List[type]) -> Tuple[Optional[List[type]], bool]:
@@ -214,11 +223,8 @@ def _select_registry_items(console: Console, title: str, classes: List[type]) ->
     selected: Set[str] = set()  # DEFAULT EMPTY
 
     def render() -> Panel:
-        body = Group(
-            Text(title, style="bold"),
-            _render_hmenu(menu_items, idx, selected_values=selected, show_checks=True),
-        )
-        return _panel("Select Items", body, "←/→ move   Space toggle   Enter done   Backspace/Esc back   q quit")
+        body = _render_hmenu(menu_items, idx, selected_values=selected, show_checks=True)
+        return _panel(title, body)
 
     with Live(render(), console=console, refresh_per_second=30) as live:
         while True:
@@ -240,28 +246,31 @@ def _select_registry_items(console: Console, title: str, classes: List[type]) ->
 
             if is_space(k):
                 it = menu_items[idx]
+                if not it.enabled:
+                    continue
+
                 sel = set(selected)
 
                 if it.value == "all":
-                    if "all" in sel:
-                        sel.discard("all")
-                    else:
-                        sel.add("all")
-                    selected = _apply_all_semantics(sel, menu_items)
+                    selected = _toggle_all(sel, menu_items)
                 else:
                     if it.value in sel:
                         sel.remove(it.value)
                     else:
                         sel.add(it.value)
-                    selected = _apply_all_semantics(sel, menu_items)
+                    selected = _normalize_selected(sel, menu_items)
+
                 continue
 
             if is_enter(k):
-                sel = set(selected)
-                if "all" in sel:
+                hovered = menu_items[idx]
+                if hovered.value == "all":
                     return list(classes), False
-                sel.discard("all")
-                picked = [by_value[it.value] for it in menu_items if it.value in sel and it.value in by_value]
+
+                if _is_all_selected(selected, menu_items):
+                    return list(classes), False
+
+                picked = [by_value[it.value] for it in menu_items if it.value in selected and it.value in by_value]
                 return picked, False
 
 
@@ -270,51 +279,64 @@ def choose_run_plan() -> Tuple[List[Tuple], Panel]:
 
     SCRAPE_KEY_BY_GROUP = {"Soons": "testingSoons", "Theques": "testingTheques", "Showtimes": "testingShowtimes"}
     DATAFLOW_KEY_BY_GROUP = {"Soons": "comingSoonsData", "Showtimes": "nowPlayingData"}
-
     ORDER = ["Soons", "Showtimes", "Theques"]
 
     while True:
         mode, groups = _select_mode_and_groups(console)
 
+        if mode == "everything":
+            plan: List[Tuple[str, str, Optional[List[type]]]] = []
+
+            for group in ["Soons", "Showtimes", "Theques"]:
+                scrape_key = SCRAPE_KEY_BY_GROUP.get(group)
+                if scrape_key:
+                    plan.append(("cinema", scrape_key, list(REGISTRY.get(scrape_key, []))))
+
+            for group in ["Soons", "Showtimes"]:
+                df_key = DATAFLOW_KEY_BY_GROUP.get(group)
+                if df_key:
+                    plan.append(("dataflow", df_key, list(DATAFLOW_REGISTRY.get(df_key, []))))
+
+            return plan, _plan_header(plan)
+
         if not groups:
             plan: List[Tuple[str, str, Optional[List[type]]]] = []
             return plan, _plan_header(plan)
 
-        if len(groups) == 1:
-            group = next(iter(groups))
-            plan: List[Tuple[str, str, Optional[List[type]]]] = []
+        plan: List[Tuple[str, str, Optional[List[type]]]] = []
+
+        def pick_for_group(kind: str, group: str, key_by_group: Dict[str, str], registry: Dict[str, List[type]], title_prefix: str) -> bool:
+            key = key_by_group.get(group)
+            if not key:
+                return True
+
+            classes = list(registry.get(key, []))
+            picked, backed = _select_registry_items(console, f"{title_prefix} → {group}", classes)
+
+            if backed:
+                return False
+
+            if picked:
+                plan.append((kind, key, picked))
+
+            return True
+
+        for group in ORDER:
+            if group not in groups:
+                continue
 
             if mode in ("all", "scrape"):
-                scrape_key = SCRAPE_KEY_BY_GROUP.get(group)
-                if scrape_key:
-                    scrape_classes = list(REGISTRY.get(scrape_key, []))
-                    picked, backed = _select_registry_items(console, f"Scrape → {group}", scrape_classes)
-                    if backed:
-                        continue
-                    if picked:
-                        plan.append(("cinema", scrape_key, picked))
+                if not pick_for_group("cinema", group, SCRAPE_KEY_BY_GROUP, REGISTRY, "Scrape"):
+                    plan = []
+                    break
 
             if mode in ("all", "dataflow"):
-                df_key = DATAFLOW_KEY_BY_GROUP.get(group)
-                if df_key:
-                    df_classes = list(DATAFLOW_REGISTRY.get(df_key, []))
-                    picked, backed = _select_registry_items(console, f"Dataflow → {group}", df_classes)
-                    if backed:
-                        continue
-                    if picked:
-                        plan.append(("dataflow", df_key, picked))
+                if not pick_for_group("dataflow", group, DATAFLOW_KEY_BY_GROUP, DATAFLOW_REGISTRY, "Dataflow"):
+                    plan = []
+                    break
 
-            return plan, _plan_header(plan)
+        if not plan:
+            if plan == []:
+                continue
 
-        plan2: List[Tuple[str, str, Optional[List[type]]]] = []
-
-        scrape_groups = set(groups) if mode in ("all", "scrape") else set()
-        dataflow_groups = (set(groups) & {"Soons", "Showtimes"}) if mode in ("all", "dataflow") else set()
-
-        for g in ORDER:
-            if g in scrape_groups:
-                plan2.append(("cinema", SCRAPE_KEY_BY_GROUP[g], None))
-            if g in dataflow_groups:
-                plan2.append(("dataflow", DATAFLOW_KEY_BY_GROUP[g], None))
-
-        return plan2, _plan_header(plan2)
+        return plan, _plan_header(plan)

@@ -38,7 +38,7 @@ def is_enter(k: str) -> bool:
 
 
 def is_space(k: str) -> bool:
-    return k == Keys.SPACE
+    return k == Keys.SPACE or k == " "
 
 
 def is_back(k: str) -> bool:

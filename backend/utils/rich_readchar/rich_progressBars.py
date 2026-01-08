@@ -1,15 +1,12 @@
 from __future__ import annotations
-
-from dataclasses import dataclass
 from typing import Any, Callable, Dict, Iterable, List, Optional, Set
-
 from rich.progress import Progress, ProgressColumn, SpinnerColumn, TextColumn
-from rich.console import Console, Group, RenderableType
 from rich.progress_bar import ProgressBar
+from rich.console import Console, Group, RenderableType
 from rich.table import Column
 from rich.theme import Theme
 from rich.live import Live
-from rich.text import Text
+from dataclasses import dataclass
 import time
 
 
@@ -154,6 +151,7 @@ class RichRunUI:
         started_at = float(started_at if started_at is not None else time.time())
         attempt = int(attempt)
 
+        # If we somehow get duplicate signals, ignore going backwards
         prev = int(self.attempt_by_item.get(item, 1))
         if attempt <= prev:
             return
@@ -172,6 +170,7 @@ class RichRunUI:
         now = float(now if now is not None else time.time())
         done_count = len(self._done)
 
+        # Update per-task bars for items that started and aren't done
         for item, started in self._start_by_item.items():
             if item in self._done:
                 continue
@@ -180,6 +179,7 @@ class RichRunUI:
             elapsed = now - started
             self.status.update(task_id, completed=min(elapsed, est), time=f"[yellow]{_hms(elapsed)}[/yellow]")
 
+        # Compute overall totals/completed/eta based on *current attempt only*
         ests: Dict[Any, float] = {item: float(self.est_by_item[item]) for item in self.items}
         if self.spec.total_strategy == "sum":  # Sequential
             overall_total, completed = float(sum(ests.values())), 0.0
@@ -194,6 +194,7 @@ class RichRunUI:
                 elapsed = min(max(now - started, 0.0), est)
                 completed += elapsed
             eta_override = None
+
         else:  # Parallel
             remaining_max = 0.0
             for item in self.items:

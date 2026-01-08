@@ -7,7 +7,7 @@ from rich.live import Live
 from rich.panel import Panel
 from rich.text import Text
 
-from backend.utils.rich_readchar.rich_support2 import RunResult, RichRunUI
+from backend.utils.rich_readchar.rich_progressBars import RunResult, RichRunUI
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
 from backend.utils.logger import artifactPrinting
 from supabase import create_client
@@ -160,7 +160,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
             ui_parent.update(Group(hdr, ui.renderable))
 
 
-def runPlan(plan: list[tuple[str, str]], run_id: int, header_renderable: RenderableType | None = None):
+def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: RenderableType | None = None):
     console = Console()
     header_renderable = header_renderable or Panel(Text("Running…", style="bold"), title="Run Plan", border_style="grey37")
 
