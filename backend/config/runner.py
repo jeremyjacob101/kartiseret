@@ -1,18 +1,17 @@
 from dotenv import load_dotenv
 
 load_dotenv()  # Load dotenv BEFORE importing anything that uses env vars
+import os
 
 from backend.utils import logger
-from backend.utils.logger import setup_logging
-# from backend.config.runners import runGroup
-from backend.config.runners_new import runGroup
 from backend.utils.run_id import allocate_run_id
+from backend.config.runners import runGroup
 
 
 def main():
-    setup_logging()
+    logger.setup_logging()
     run_id = allocate_run_id()
-    
+
     runGroup("cinema", "testingSoons", run_id)
     # runGroup("cinema", "testingTheques", run_id)
     runGroup("cinema", "testingShowtimes", run_id)
@@ -26,4 +25,4 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         logger.SUPPRESS_ERRORS = True
-        pass
+        os._exit(0)
