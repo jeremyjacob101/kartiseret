@@ -1,15 +1,13 @@
 from __future__ import annotations
-
-from dataclasses import dataclass
 from typing import Any, Callable, Dict, Iterable, List, Optional, Set
-
-import time
 from rich.progress import Progress, ProgressColumn, SpinnerColumn, TextColumn
 from rich.progress_bar import ProgressBar
 from rich.console import Console, Group
 from rich.table import Column
 from rich.theme import Theme
 from rich.live import Live
+from dataclasses import dataclass
+import time
 
 
 @dataclass
@@ -108,7 +106,6 @@ class RichRunUI:
 
         self._live = Live(Group(self.overall, self.status), console=self.console, refresh_per_second=refresh_per_second)
 
-        # State for all calculations
         self._overall_started_at: Optional[float] = None
         self._start_by_item: Dict[Any, float] = {}
         self._done: Set[Any] = set()
@@ -175,34 +172,24 @@ class RichRunUI:
 
         # Compute overall totals/completed/eta based on *current attempt only*
         ests: Dict[Any, float] = {item: float(self.est_by_item[item]) for item in self.items}
-
-        if self.spec.total_strategy == "sum":
-            # Sequential: total is sum of estimates; completed is sum of completed estimates
-            overall_total = float(sum(ests.values()))
-            completed = 0.0
-
+        if self.spec.total_strategy == "sum":  # Sequential
+            overall_total, completed = float(sum(ests.values())), 0.0
             for item in self.items:
                 est = ests[item]
                 if item in self._done:
                     completed += est
                     continue
-
                 started = self._start_by_item.get(item)
                 if started is None:
                     continue
-
                 elapsed = min(max(now - started, 0.0), est)
                 completed += elapsed
-
             eta_override = None
 
-        else:
-            # Parallel/max: bar shows elapsed / (elapsed + remaining_max)
+        else:  # Parallel
             remaining_max = 0.0
-
             for item in self.items:
                 est = float(self.est_by_item[item])
-
                 if item in self._done:
                     r = 0.0
                 else:
@@ -212,16 +199,11 @@ class RichRunUI:
                     else:
                         elapsed = min(max(now - started, 0.0), est)
                         r = max(0.0, est - elapsed)
-
                 if r > remaining_max:
                     remaining_max = r
-
             elapsed_overall = max(0.0, now - self.overall_started_at)
-
-            # Dynamic total makes the bar a true "elapsed vs remaining" percentage
             overall_total, completed, eta_override = elapsed_overall + remaining_max, elapsed_overall, remaining_max
 
-        # Update overall total (it should not change with retries)
         self.overall.update(self.overall_task_id, total=overall_total)
         _update_overall(self.overall, self.overall_task_id, now, self.overall_started_at, completed, done_count, eta_secs_override=eta_override)
 

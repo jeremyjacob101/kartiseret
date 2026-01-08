@@ -68,8 +68,8 @@ def runGroup(kind: str, key: str, run_id: int):
         if spec.mode == "parallel":
             with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
                 futures = [ex.submit(run_one, cls) for cls in classes]
-                for fut in as_completed(futures):
-                    results.append(fut.result())
+                for future in as_completed(futures):
+                    results.append(future.result())
         else:
             for cls in classes:
                 results.append(run_one(cls))
@@ -89,10 +89,10 @@ def runGroup(kind: str, key: str, run_id: int):
         avg_time_col = "avg_time_" + str(RUNNER_MACHINE)
         if url and svc_key:
             table, name_col, time_col = "utilAvgTime", "name", f"{avg_time_col}"
-
             class_names = [cls.__name__ for cls in classes]
             sb = create_client(url, svc_key)
             resp = sb.table(table).select(f"{name_col},{time_col}").in_(name_col, class_names).execute()
+
             rows = resp.data or []
             for row in rows:
                 k = row.get(name_col)
@@ -116,12 +116,11 @@ def runGroup(kind: str, key: str, run_id: int):
                         ui.tick()
 
                         done_futures, _ = wait(pending, timeout=0, return_when=FIRST_COMPLETED)
-                        for fut in done_futures:
-                            pending.discard(fut)
-                            item = future_to_item[fut]
-                            result = fut.result()
+                        for future in done_futures:
+                            pending.discard(future)
+                            item = future_to_item[future]
+                            result = future.result()
                             ui.finish_item(item, result)
-
                         time.sleep(0.2)
 
                 drain_attempt_events(ui)
@@ -130,15 +129,15 @@ def runGroup(kind: str, key: str, run_id: int):
             else:  # sequential
                 with ThreadPoolExecutor(max_workers=1) as ex:
                     for item in classes:
-                        fut = ex.submit(run_one, item)
+                        future = ex.submit(run_one, item)
 
-                        while not fut.done():
+                        while not future.done():
                             drain_attempt_events(ui)
                             ui.tick()
                             time.sleep(0.2)
 
                         drain_attempt_events(ui)
-                        result = fut.result()
+                        result = future.result()
                         ui.finish_item(item, result)
 
                 ui.finalize()
