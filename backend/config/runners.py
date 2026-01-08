@@ -180,11 +180,7 @@ def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: Rendera
             else:
                 kind, key, classes_override = entry
 
-            extra = ""
-            if classes_override is not None:
-                extra = f" ({len(classes_override)})"
-
-            step = Panel.fit(Text(f"{i}/{total}: {kind} → {key}{extra}", style="grey70"), border_style="grey37")
+            step = Panel.fit(Text(f"{i}/{total}: {kind} → {key}", style="grey70"), border_style="grey37")
             combined_header = Group(header_renderable, step)
             live.update(Group(combined_header, placeholder))
 
