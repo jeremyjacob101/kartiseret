@@ -10,11 +10,12 @@ class BaseCinema(ScrapingHelpers, ScrapedFixes, InitializeBaseCinema, AppendToIn
     URL: str
     HEADLESS: bool = True
 
-    def __init__(self, cinema_type, supabase_table_name, *args, **kwargs):
+    def __init__(self, cinema_type, supabase_table_name, run_id, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.driver = build_chrome(self.HEADLESS)
         self.cinema_type = cinema_type
         self.supabase_table_name = supabase_table_name
+        self.run_id = run_id
 
         setUpSupabase(self)
 

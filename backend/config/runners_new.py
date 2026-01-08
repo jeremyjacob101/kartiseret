@@ -13,12 +13,12 @@ runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
 RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
 
 
-cinemaDictionary = {"registry": REGISTRY, "make_instance": lambda cls, key: cls(cinema_type=key, supabase_table_name=key), "run_instance": lambda inst: inst.scrape(), "cleanup": lambda instance: (instance.driver.quit() if instance and getattr(instance, "driver", None) else None), "count_label": "Threads", "mode": "parallel", "total_strategy": "max", "overall_task_name": "overall", "get_item_name": lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__)}
-dataflowDictionary = {"registry": DATAFLOW_REGISTRY, "make_instance": lambda cls, key: cls(), "run_instance": lambda inst: inst.dataRun(), "cleanup": lambda instance: None, "count_label": "Dataflows", "mode": "sequential", "total_strategy": "sum", "overall_task_name": "dataflows", "get_item_name": lambda cls: cls.__name__}
+cinemaDictionary = {"registry": REGISTRY, "make_instance": lambda cls, key, run_id: cls(cinema_type=key, supabase_table_name=key, run_id=run_id), "run_instance": lambda inst: inst.scrape(), "cleanup": lambda instance: (instance.driver.quit() if instance and getattr(instance, "driver", None) else None), "count_label": "Threads", "mode": "parallel", "total_strategy": "max", "overall_task_name": "overall", "get_item_name": lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__)}
+dataflowDictionary = {"registry": DATAFLOW_REGISTRY, "make_instance": lambda cls, _key, run_id: cls(run_id=run_id), "run_instance": lambda inst: inst.dataRun(), "cleanup": lambda instance: None, "count_label": "Dataflows", "mode": "sequential", "total_strategy": "sum", "overall_task_name": "dataflows", "get_item_name": lambda cls: cls.__name__}
 SPEC_BY_KIND = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}
 
 
-def runGroup(kind: str, key: str):
+def runGroup(kind: str, key: str, run_id: int):
     spec_dict = SPEC_BY_KIND.get(kind)
     spec = SimpleNamespace(**spec_dict)
     classes = spec.registry.get(key, [])
@@ -28,7 +28,7 @@ def runGroup(kind: str, key: str):
     def run_one(cls: type) -> RunResult:
         starting_time, instance, ok = time.time(), None, True
         try:
-            instance = spec.make_instance(cls, key)
+            instance = spec.make_instance(cls, key, run_id)
             spec.run_instance(instance)
         except Exception:
             ok = False
@@ -64,10 +64,7 @@ def runGroup(kind: str, key: str):
         url, svc_key = os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
         avg_time_col = "avg_time_" + str(RUNNER_MACHINE)
         if url and svc_key:
-            if kind == "dataflow":
-                table, name_col, time_col = "utilAvgDataTime", "data_type", f"{avg_time_col}"
-            if kind == "cinema":
-                table, name_col, time_col = "utilAvgScrapeTime", "cinema_name", f"{avg_time_col}"
+            table, name_col, time_col = "utilAvgTime", "name", f"{avg_time_col}"
 
             class_names = [cls.__name__ for cls in classes]
             sb = create_client(url, svc_key)

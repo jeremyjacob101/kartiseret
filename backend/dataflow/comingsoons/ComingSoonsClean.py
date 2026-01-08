@@ -9,6 +9,8 @@ class ComingSoonsClean(BaseDataflow):
         self.dedupeTable(self.MAIN_TABLE_NAME)
 
         for row in self.main_table_rows:
+            if row.get("cleaned") is True:
+                continue
             row["english_title"] = self.normalizeTitle(row.get("english_title") or "")
             row["hebrew_title"] = (row.get("hebrew_title") or "").lower()
             if self.removeBadTitle(row.get("english_title")):

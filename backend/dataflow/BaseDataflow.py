@@ -15,8 +15,9 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
     HELPER_TABLE_NAME_3: str = ""
     HELPER_TABLE_NAME_4: str = ""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, run_id, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.run_id = run_id
 
         setUpSupabase(self)
         setUpTmdb(self)

@@ -110,6 +110,7 @@ class AppendToInfo:
         self.gathering_info["screening_city"].append(self.screening_city)
         self.gathering_info["scraped_at"].append(str(self.getJlemTimeNow()))
         self.gathering_info["cinema"].append(self.CINEMA_NAME)
+        self.gathering_info["run_id"].append(self.run_id)
 
         if print_info:
             self.printRow()
