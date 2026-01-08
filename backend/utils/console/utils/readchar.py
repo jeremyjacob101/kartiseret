@@ -21,7 +21,6 @@ class Keys:
 
 
 def read_key() -> str:
-    """Blocking read of a single keypress."""
     return readchar.readkey()
 
 

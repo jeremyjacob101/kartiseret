@@ -1,11 +1,17 @@
-from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from backend.utils.rich_readchar.rich_support import RunResult, RichRunUI
-from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
-from backend.utils.logger import artifactPrinting
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED, as_completed
 from supabase import create_client
 from types import SimpleNamespace
 import time, os, queue
+
+from rich.console import Console, Group, RenderableType
+from rich.panel import Panel
+from rich.live import Live
+from rich.text import Text
+
+from backend.utils.console.progressBars import RunResult, RichRunUI
+from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
+from backend.utils.log.logger import artifactPrinting
+
 
 runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
 RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
@@ -15,11 +21,13 @@ cinemaDictionary = {"registry": REGISTRY, "make_instance": lambda cls, key, run_
 dataflowDictionary = {"registry": DATAFLOW_REGISTRY, "make_instance": lambda cls, _key, run_id: cls(run_id=run_id), "run_instance": lambda inst: inst.dataRun(), "cleanup": lambda instance: None, "count_label": "Dataflows", "mode": "sequential", "total_strategy": "sum", "overall_task_name": "dataflows", "get_item_name": lambda cls: cls.__name__}
 SPEC_BY_KIND = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}
 
+DEFAULT_PLAN: list[tuple[str, str]] = [("cinema", "testingSoons"), ("cinema", "testingShowtimes"), ("dataflow", "comingSoonsData"), ("dataflow", "nowPlayingData")]
 
-def runGroup(kind: str, key: str, run_id: int):
+
+def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] | None = None, ui_parent: Live | None = None, header_renderable: RenderableType | None = None, console: Console | None = None):
     spec_dict = SPEC_BY_KIND.get(kind)
     spec = SimpleNamespace(**spec_dict)
-    classes = spec.registry.get(key, [])
+    classes = list(classes_override) if classes_override is not None else spec.registry.get(key, [])
     if not classes:
         return None
 
@@ -102,10 +110,17 @@ def runGroup(kind: str, key: str, run_id: int):
 
         get_item_est = lambda item: float(avg_by_name.get(item.__name__) or FALLBACK)
 
-        with RichRunUI(spec, key, classes, get_item_est) as ui:
+        use_embedded = ui_parent is not None
+        ui = RichRunUI(spec, key, classes, get_item_est, use_live=not use_embedded, console=console)
+
+        with ui:
             if not classes:
                 ui.finalize()
                 return
+
+            if use_embedded:
+                hdr = header_renderable or Panel.fit(Text("Running...", style="bold"), border_style="grey37")
+                ui_parent.update(Group(hdr, ui.renderable))
 
             if spec.mode == "parallel":
                 with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
@@ -141,3 +156,36 @@ def runGroup(kind: str, key: str, run_id: int):
                         ui.finish_item(item, result)
 
                 ui.finalize()
+
+            if use_embedded:
+                hdr = header_renderable or Panel.fit(Text("Running...", style="bold"), border_style="grey37")
+                ui_parent.update(Group(hdr, ui.renderable))
+
+
+def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: RenderableType | None = None):
+    console = Console()
+    header_renderable = header_renderable or Panel(Text("Running…", style="bold"), title="Run Plan", border_style="grey37")
+
+    placeholder = Panel.fit(Text("Starting…", style="yellow"), border_style="grey37")
+    with Live(Group(header_renderable, placeholder), console=console, refresh_per_second=12) as live:
+        if not plan:
+            live.update(Group(header_renderable, Panel.fit(Text("Nothing selected.", style="red"), border_style="grey37")))
+            return
+
+        total = len(plan)
+        for i, entry in enumerate(plan, start=1):
+            if len(entry) == 2:
+                kind, key = entry
+                classes_override = None
+            else:
+                kind, key, classes_override = entry
+
+            extra = ""
+            if classes_override is not None:
+                extra = f" ({len(classes_override)})"
+
+            step = Panel.fit(Text(f"{i}/{total}: {kind} → {key}{extra}", style="grey70"), border_style="grey37")
+            combined_header = Group(header_renderable, step)
+            live.update(Group(combined_header, placeholder))
+
+            runGroup(kind, key, run_id, classes_override=classes_override, ui_parent=live, header_renderable=combined_header, console=console)

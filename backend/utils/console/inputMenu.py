@@ -1,16 +1,15 @@
-from __future__ import annotations
-
-from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple
+from __future__ import annotations
+from dataclasses import dataclass
 
-from rich.align import Align
 from rich.console import Console, Group, RenderableType
-from rich.live import Live
+from rich.align import Align
 from rich.panel import Panel
-from rich.text import Text
 from rich.theme import Theme
+from rich.live import Live
+from rich.text import Text
 
-from backend.utils.rich_readchar.readchar_support import read_key, is_back, is_enter, is_left, is_quit, is_right, is_space
+from backend.utils.console.utils.readchar import read_key, is_back, is_enter, is_left, is_quit, is_right, is_space
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
 
 

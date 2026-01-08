@@ -20,9 +20,7 @@ from backend.scraping.comingsoons.MLsoon import MLsoon
 from backend.scraping.comingsoons.YPsoon import YPsoon
 
 from backend.dataflow.comingsoons.ComingSoonsClean import ComingSoonsClean
-from backend.dataflow.comingsoons.ComingSoonsOmdb import ComingSoonsOmdb
 from backend.dataflow.comingsoons.ComingSoonsTmdb import ComingSoonsTmdb
-from backend.dataflow.comingsoons.ComingSoonsOpenAI import ComingSoonsOpenAI
 
 from backend.dataflow.nowplayings.NowPlayingsClean import NowPlayingsClean
 from backend.dataflow.nowplayings.NowPlayingsTmdb import NowPlayingsTmdb

@@ -1,13 +1,14 @@
-from __future__ import annotations
 from typing import Any, Callable, Dict, Iterable, List, Optional, Set
+from __future__ import annotations
+from dataclasses import dataclass
+import time
+
 from rich.progress import Progress, ProgressColumn, SpinnerColumn, TextColumn
-from rich.progress_bar import ProgressBar
 from rich.console import Console, Group, RenderableType
+from rich.progress_bar import ProgressBar
 from rich.table import Column
 from rich.theme import Theme
 from rich.live import Live
-from dataclasses import dataclass
-import time
 
 
 @dataclass
