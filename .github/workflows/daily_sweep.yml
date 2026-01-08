@@ -62,4 +62,4 @@ jobs:
           set -e
           . .venv/bin/activate
           export PYTHONPATH="${PYTHONPATH}:${{ github.workspace }}"
-          python backend/utils/supabase/clear_old_showtimes ${{ github.event.inputs.args }}
+          python backend/utils/supabase/clear_old_entries ${{ github.event.inputs.args }}
