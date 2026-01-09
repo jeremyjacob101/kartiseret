@@ -5,10 +5,10 @@ import requests
 
 
 class ComingSoonsTmdb(BaseDataflow):
-    MAIN_TABLE_NAME = "testingSoons"
-    MOVING_TO_TABLE_NAME = "testingFinalSoons"
-    HELPER_TABLE_NAME = "testingFixes"
-    HELPER_TABLE_NAME_2 = "testingSkips"
+    MAIN_TABLE_NAME = "allSoons"
+    MOVING_TO_TABLE_NAME = "finalSoons"
+    HELPER_TABLE_NAME = "tableFixes"
+    HELPER_TABLE_NAME_2 = "tableSkips"
 
     def logic(self):
         self.dedupeTable(self.MAIN_TABLE_NAME)

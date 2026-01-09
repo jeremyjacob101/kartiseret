@@ -3,7 +3,7 @@ from collections import defaultdict
 
 
 class ComingSoonsClean(BaseDataflow):
-    MAIN_TABLE_NAME = "testingSoons"
+    MAIN_TABLE_NAME = "allSoons"
 
     def logic(self):
         self.dedupeTable(self.MAIN_TABLE_NAME)

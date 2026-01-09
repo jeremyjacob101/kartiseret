@@ -277,7 +277,7 @@ def _select_registry_items(console: Console, title: str, classes: List[type]) ->
 def choose_run_plan() -> Tuple[List[Tuple], Panel]:
     console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
 
-    SCRAPE_KEY_BY_GROUP = {"Soons": "testingSoons", "Theques": "testingTheques", "Showtimes": "testingShowtimes"}
+    SCRAPE_KEY_BY_GROUP = {"Soons": "allSoons", "Theques": "allTheques", "Showtimes": "allShowtimes"}
     DATAFLOW_KEY_BY_GROUP = {"Soons": "comingSoonsData", "Showtimes": "nowPlayingData"}
     ORDER = ["Soons", "Showtimes", "Theques"]
 

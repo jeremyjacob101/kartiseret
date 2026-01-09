@@ -4,9 +4,9 @@ import requests
 
 
 class ComingSoonsOmdb(BaseDataflow):
-    MAIN_TABLE_NAME = "testingSoons"
-    MOVING_TO_TABLE_NAME = "testingFinalSoons2"
-    HELPER_TABLE_NAME = "testingIMDbFixes"
+    MAIN_TABLE_NAME = "allSoons"
+    MOVING_TO_TABLE_NAME = "finalSoons"
+    HELPER_TABLE_NAME = "tableFixes"
 
     def logic(self):
         for row in self.main_table_rows:

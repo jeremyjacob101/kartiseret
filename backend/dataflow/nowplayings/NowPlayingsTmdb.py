@@ -5,11 +5,11 @@ import requests
 
 
 class NowPlayingsTmdb(BaseDataflow):
-    MAIN_TABLE_NAME = "testingShowtimes"
-    MOVING_TO_TABLE_NAME = "testingFinalShowtimes"
-    MOVING_TO_TABLE_NAME_2 = "testingFinalMovies"
-    HELPER_TABLE_NAME = "testingFixes"
-    HELPER_TABLE_NAME_2 = "testingSkips"
+    MAIN_TABLE_NAME = "allShowtimes"
+    MOVING_TO_TABLE_NAME = "finalShowtimes"
+    MOVING_TO_TABLE_NAME_2 = "finalMovies"
+    HELPER_TABLE_NAME = "tableFixes"
+    HELPER_TABLE_NAME_2 = "tableSkips"
 
     def createdAtToDatetime(self, ca):
         if isinstance(ca, datetime):

@@ -14,13 +14,13 @@ def clear_showtimes(days: int = 3, soons_days: int = 7, movies_days: int = 30):
     soons_cutoff = (date.today() - timedelta(days=soons_days)).isoformat()
     final_movies_cutoff = (date.today() - timedelta(days=movies_days)).isoformat()
 
-    sb.table("testingShowtimes").delete().lt("date_of_showing", showtimes_cutoff).execute()
-    sb.table("testingFinalShowtimes").delete().lt("date_of_showing", showtimes_cutoff).execute()
+    sb.table("allShowtimes").delete().lt("date_of_showing", showtimes_cutoff).execute()
+    sb.table("finalShowtimes").delete().lt("date_of_showing", showtimes_cutoff).execute()
 
-    sb.table("testingSoons").delete().lt("release_date", soons_cutoff).execute()
-    sb.table("testingFinalSoons").delete().lt("release_date", soons_cutoff).execute()
+    sb.table("allSoons").delete().lt("release_date", soons_cutoff).execute()
+    sb.table("finalSoons").delete().lt("release_date", soons_cutoff).execute()
 
-    sb.table("testingFinalMovies").delete().lt("created_at", final_movies_cutoff).execute()
+    sb.table("finalMovies").delete().lt("created_at", final_movies_cutoff).execute()
 
 
 if __name__ == "__main__":

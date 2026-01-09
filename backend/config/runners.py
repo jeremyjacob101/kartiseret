@@ -22,7 +22,7 @@ cinemaDictionary = {"registry": REGISTRY, "make_instance": lambda cls, key, run_
 dataflowDictionary = {"registry": DATAFLOW_REGISTRY, "make_instance": lambda cls, _key, run_id: cls(run_id=run_id), "run_instance": lambda inst: inst.dataRun(), "cleanup": lambda instance: None, "count_label": "Dataflows", "mode": "sequential", "total_strategy": "sum", "overall_task_name": "dataflows", "get_item_name": lambda cls: cls.__name__}
 SPEC_BY_KIND = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}
 
-DEFAULT_PLAN: list[tuple[str, str]] = [("cinema", "testingSoons"), ("cinema", "testingShowtimes"), ("dataflow", "comingSoonsData"), ("dataflow", "nowPlayingData")]
+DEFAULT_PLAN: list[tuple[str, str]] = [("cinema", "allSoons"), ("cinema", "allShowtimes"), ("dataflow", "comingSoonsData"), ("dataflow", "nowPlayingData")]
 
 
 def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] | None = None, ui_parent: Live | None = None, header_renderable: RenderableType | None = None, console: Console | None = None):

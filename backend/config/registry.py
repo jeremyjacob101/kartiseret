@@ -26,7 +26,7 @@ from backend.dataflow.nowplayings.NowPlayingsClean import NowPlayingsClean
 from backend.dataflow.nowplayings.NowPlayingsTmdb import NowPlayingsTmdb
 
 REGISTRY = {
-    "testingShowtimes": [
+    "allShowtimes": [
         LevCinema,
         RavHen,
         MovieLand,
@@ -34,7 +34,7 @@ REGISTRY = {
         YesPlanet,
         CinemaCity,
     ],
-    "testingTheques": [
+    "allTheques": [
         JAFCtheque,
         SSCtheque,
         HOLONtheque,
@@ -43,7 +43,7 @@ REGISTRY = {
         JLEMtheque,
         TLVtheque,
     ],
-    "testingSoons": [
+    "allSoons": [
         LCsoon,
         YPsoon,
         CCsoon,

@@ -2,7 +2,7 @@ from backend.dataflow.BaseDataflow import BaseDataflow
 
 
 class NowPlayingsClean(BaseDataflow):
-    MAIN_TABLE_NAME = "testingShowtimes"
+    MAIN_TABLE_NAME = "allShowtimes"
 
     def logic(self):
         self.dedupeTable(self.MAIN_TABLE_NAME)

@@ -2,7 +2,7 @@ from backend.dataflow.BaseDataflow import BaseDataflow
 
 
 class ComingSoonsOpenAI(BaseDataflow):
-    MAIN_TABLE_NAME = "testingSoons"
+    MAIN_TABLE_NAME = "allSoons"
 
     def guess_imdb_id(self, eng_desc_parts, heb_desc_parts):
         eng_description = ", ".join(str(p) for p in eng_desc_parts if p)
