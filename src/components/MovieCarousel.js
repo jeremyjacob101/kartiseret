@@ -45,7 +45,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
 
     while (true) {
       const { data, error } = await supabase
-        .from("testingFinalShowtimes")
+        .from("finalShowtimes")
         .select("*")
         .eq("date_of_showing", dayString)
         .range(from, from + chunkSize - 1);
@@ -74,7 +74,7 @@ const MovieCarousel = ({ selectedSnifs, setSelectedSnifs, setDayOffset }) => {
   useEffect(() => {
     const loadMovieData = async () => {
       const { data: moviesData } = await supabase
-        .from("testingFinalMovies")
+        .from("finalMovies")
         .select("*");
 
       const showtimesData = await fetchAllShowtimesForDay(offsatDay);
