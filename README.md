@@ -1,219 +1,121 @@
 # 🎬 Kartiseret
-### A cinematic data pipeline with attitude
+### One place. Every cinema. No guesswork.
 
-Welcome to **Kartiseret** — a terminal-first, automation-heavy, Rich-powered backend project that scrapes, cleans, deduplicates, enriches, and ships cinema data like it actually means business.
+**Kartiseret** is an open-source movie ticketing and showtimes platform built for **moviegoers**, not engineers.
 
-This project doesn’t just *run jobs*.  
-It **orchestrates runners**, **tracks execution**, **renders beautiful live UIs**, and **keeps your data sane** while doing it.
+Instead of jumping between cinema websites, broken apps, and outdated listings, Kartiseret brings **all showtimes, cinemas, and upcoming movies** together into one clean, reliable experience.
 
-If you like:
-- clean abstractions  
-- aggressive deduping  
-- deterministic run IDs  
-- and a terminal UI that feels alive  
-
-You’re in the right place. 🍿
+Find what’s playing.  
+Find where.  
+Go watch the movie. 🍿
 
 ---
 
-## ✨ What Kartiseret Does
+## 🍿 What Kartiseret Is
 
-Kartiseret is a **modular dataflow execution engine** built around cinemas, movies, and showtimes.
+Kartiseret is a **consumer movie platform** that:
 
-It handles:
+- 🎥 Aggregates showtimes from multiple cinemas
+- 🏛️ Supports multiple cinema chains and locations
+- 📅 Tracks *now playing* and *coming soon* movies
+- 🔄 Keeps listings fresh and accurate
+- 🧹 Actively removes duplicates and outdated entries
 
-- 🎥 Cinema scrapers (Selenium-based, battle-tested)
-- 🔄 Dataflows that clean, enrich, and migrate data
-- 🧠 Central registries for discoverability and orchestration
-- 🧵 Threaded + sequential execution
-- 📊 Rich terminal UI with progress bars, spinners, timers, and live status
-- 🆔 Run ID allocation for traceability
-- 🧹 Aggressive deduplication & cleanup
-- 🧪 Testing vs Regular execution modes
+Everything is designed to answer one simple question:
 
-All without turning your terminal into unreadable soup.
+> “What can I watch, where, and when?”
 
 ---
 
-## 🧱 Architecture Overview
+## 🎟️ Why Kartiseret Exists
 
-Kartiseret is intentionally layered.
+Movie tickets shouldn’t be hard.
 
-### 1. Runners
-The orchestration layer.
+Today, finding showtimes often means:
+- Visiting multiple cinema websites
+- Fighting slow or broken UIs
+- Missing movies because listings are outdated
+- Comparing times and locations manually
 
-- Decide *what* runs
-- Decide *how* it runs (threads vs sequential)
-- Delegate rendering to Rich
-- Stay intentionally thin
-
-> Runners do orchestration, not logic.
+Kartiseret fixes that by acting as a **single source of truth** for movie showtimes.
 
 ---
 
-### 2. Dataflows
-Pure data logic.
+## 🧭 What You Can Do
 
-- Cleaning
-- Deduplication
-- Moving rows between tables
-- Skipping already-processed records
-- Retry-safe execution
+With Kartiseret, you can:
 
-Every dataflow is:
-- Isolated
-- Repeatable
-- Safe to re-run
+- Browse movies currently in theaters
+- See showtimes across different cinemas
+- Discover upcoming releases early
+- Compare options without switching sites
+- Trust that listings are actively maintained
+
+No clutter. No ads screaming at you. Just movies.
 
 ---
 
-### 3. Cinema Scrapers
-The gritty stuff.
+## 🔄 How the Data Stays Fresh
 
-- Selenium automation
-- Cookie banners
-- Location pickers
-- Dynamic DOMs
-- Non-cooperative websites
+Behind the scenes, Kartiseret continuously:
 
-All scrapers inherit from shared base classes so pain is suffered once.
+- Collects showtimes directly from cinema sources
+- Cleans and standardizes messy data
+- Removes duplicates automatically
+- Updates listings as schedules change
+- Retires expired showtimes cleanly
 
----
-
-### 4. Rich UI Support
-Where the ✨ happens.
-
-- Per-task progress bars
-- Colored spinners
-- Elapsed vs remaining time
-- Thread awareness
-- Failure visualization
-
-All UI logic lives here so execution code stays clean.
+The goal is simple:
+**what you see should reflect what’s actually playing.**
 
 ---
 
-## 🖥️ Terminal UI Philosophy
+## 🌍 Open Source & Community-Driven
 
-Kartiseret uses **Rich** correctly:
+Kartiseret is **open source**.
 
-- Alternate screen buffer for menus
-- One final clean summary on exit
-- No flickering
-- No duplicated logs
-- No lost scrollback
+That means:
+- Anyone can inspect how data is collected
+- Anyone can help improve coverage and accuracy
+- Anyone can contribute fixes or features
+- Transparency over black-box ticketing platforms
 
-You’ll see:
-- Live progress bars per task
-- Pink spinners while pending
-- Thread counts
-- Precise timings
-- Clear failure states
-
-It feels closer to a build system than a script.
+Open source keeps the platform honest and evolving.
 
 ---
 
-## 🧪 Execution Modes
+## 🔒 What Kartiseret Is *Not*
 
-Kartiseret supports multiple modes:
+Kartiseret is not:
+- A reseller inflating ticket prices
+- A platform pushing sponsored listings
+- A data broker tracking your behavior
 
-### Testing Mode
-- Smaller batches
-- Faster iteration
-- Safer experimentation
-
-### Regular Mode
-- Full datasets
-- Real tables
-- Real consequences
-
-Modes affect:
-- Which tables are used
-- How much data is processed
-- Visual labeling in the UI
+It exists to make going to the movies easier — nothing more.
 
 ---
 
-## 🆔 Run IDs & Traceability
+## 🚧 Project Status
 
-Every execution gets a **unique run ID**.
+Kartiseret is actively developed and expanding.
 
-Why this matters:
-- Logs are attributable
-- Database writes are traceable
-- Parallel runs don’t collide
-- Debugging becomes survivable
+Coverage grows over time as:
+- More cinemas are added
+- Data accuracy improves
+- Features mature
 
-Run IDs are allocated once and propagated everywhere.
-
----
-
-## 🧹 Deduplication Strategy
-
-Kartiseret is paranoid about data integrity.
-
-It:
-- Dedupes before inserts
-- Dedupes before deletes
-- Chunks large operations
-- Refreshes tables when required
-- Skips already-seen rows intelligently
-
-The goal is **idempotent execution**.
-
-> Running the same thing twice should not ruin your day.
+Early users help shape where it goes next.
 
 ---
 
-## 🧠 Design Principles
+## 🎬 The Goal
 
-This project follows a few non-negotiables:
+Kartiseret’s mission is simple:
 
-- Separation of concerns
-- No UI logic in execution code
-- No execution logic in UI code
-- Explicit over implicit
-- Failures should be visible
-- Terminal UX matters
+> Make moviegoing effortless.
 
----
+No hunting.  
+No confusion.  
+Just pick a movie and enjoy the night.
 
-## 🚀 How It Runs
-
-At the top level, execution follows a clean flow:
-
-1. Environment loads
-2. Logging initializes
-3. Run ID is allocated
-4. Mode is selected
-5. Runners execute
-6. Rich UI renders live progress
-7. One final clean summary is printed
-
-No magic. No spaghetti.
-
----
-
-## 🎯 Who This Is For
-
-Kartiseret is for developers who:
-
-- Care about maintainable automation
-- Want terminal tools that feel professional
-- Are tired of unreadable logs
-- Value deterministic data pipelines
-- Like their code structured and intentional
-
----
-
-## 🎬 Final Words
-
-Kartiseret isn’t just scraping cinema data.  
-It’s a **framework for running complex jobs without losing control**.
-
-If something breaks, you’ll know where.  
-If something fails, you’ll see it.  
-If something runs, it’ll look good doing it.
-
-Enjoy the show. 🍿
+See you at the cinema. 🍿
