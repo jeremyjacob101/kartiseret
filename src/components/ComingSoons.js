@@ -23,7 +23,7 @@ const ComingSoons = ({ selectedSnifs }) => {
   useEffect(() => {
     const loadShowtimeData = async () => {
       const { data: showtimes } = await supabase
-        .from("testingFinalSoons")
+        .from("finalSoons")
         .select("*");
 
       const filteredMovies = showtimes
