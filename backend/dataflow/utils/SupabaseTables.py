@@ -73,20 +73,6 @@ class SupabaseTables:
             self.refreshAllTables(table_name)
 
     def dedupeTable(self, table_name: str, id_col: str = "id", ignore_cols: set[str] | None = None, refresh: bool = True, sort_key: Callable[[dict], Any] | None = None, sort_reverse: bool = False, dedupe_added: bool = True):
-
-        ########
-
-        def _mask_id(x, keep=6):
-            s = str(x)
-            if len(s) <= keep * 2:
-                return s
-            return f"{s[:keep]}…{s[-keep:]}"
-
-        def _type_name(x):
-            return type(x).__name__
-
-        ########
-
         ignore = set(ignore_cols or set())
         if dedupe_added:
             ignore.update({id_col, "created_at", "run_id", "old_uuid", "added"})
@@ -115,58 +101,11 @@ class SupabaseTables:
 
                 self.delete_these.append(row_id)
 
-        # if promote_added_ids:
-        #     promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
-        #     for i in range(0, len(promote_added_ids), 200):
-        #         chunk = promote_added_ids[i : i + 200]
-        #         self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
-
         if promote_added_ids:
             promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
             for i in range(0, len(promote_added_ids), 200):
                 chunk = promote_added_ids[i : i + 200]
-                if not chunk:
-                    print(f"[dedupeTable] Empty chunk at i={i}, skipping", flush=True)
-                    continue
-
-                # ===== DEBUG PRINTS =====
-                print("\n[dedupeTable] About to promote added=True", flush=True)
-                print(f"[dedupeTable] table_name={table_name} id_col={id_col}", flush=True)
-                print(f"[dedupeTable] chunk_index_start={i} chunk_size={len(chunk)}", flush=True)
-
-                # Quick validity checks
-                none_count = sum(x is None for x in chunk)
-                empty_str_count = sum((isinstance(x, str) and x.strip() == "") for x in chunk)
-                print(f"[dedupeTable] none_count={none_count} empty_str_count={empty_str_count}", flush=True)
-
-                # Type distribution (super useful for CI-only weirdness)
-                type_counts = {}
-                for x in chunk:
-                    t = _type_name(x)
-                    type_counts[t] = type_counts.get(t, 0) + 1
-                print(f"[dedupeTable] type_counts={type_counts}", flush=True)
-
-                # Preview IDs (masked so logs are safe)
-                preview = chunk[:3] + (["..."] if len(chunk) > 6 else []) + chunk[-3:]
-                preview_masked = [_mask_id(x) if x != "..." else "..." for x in preview]
-                print(f"[dedupeTable] chunk_preview={preview_masked}", flush=True)
-
-                # Full query description (no secrets)
-                print(f"[dedupeTable] Running: update({{'added': True}}).in_({id_col}, <{len(chunk)} ids>)", flush=True)
-
-                # ===== ACTUAL CALL =====
-                try:
-                    resp = self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
-                    # resp shape varies by client version; print something resilient:
-                    data_len = len(getattr(resp, "data", []) or [])
-                    print(f"[dedupeTable] Update succeeded. returned_rows={data_len}", flush=True)
-                except Exception as e:
-                    print(f"[dedupeTable] Update FAILED: {e!r}", flush=True)
-                    # Print a little more context without dumping everything
-                    print(f"[dedupeTable] First_id={_mask_id(chunk[0])} Last_id={_mask_id(chunk[-1])}", flush=True)
-                    raise
-
-        #######
+                self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
 
         if self.delete_these:
             self.deleteTheseRows(table_name, primary_key=id_col, refresh=refresh)
