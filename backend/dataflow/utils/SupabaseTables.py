@@ -2,7 +2,7 @@ from typing import Callable, Any
 
 
 class SupabaseTables:
-    def selectAll(self, table: str, select: str = "*", batch_size: int = 1000) -> list[dict]:
+    def selectAll(self, table: str, select: str = "*", batch_size: int = 200) -> list[dict]:
         if not table:
             return []
 
@@ -117,14 +117,14 @@ class SupabaseTables:
 
         # if promote_added_ids:
         #     promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
-        #     for i in range(0, len(promote_added_ids), 1000):
-        #         chunk = promote_added_ids[i : i + 1000]
+        #     for i in range(0, len(promote_added_ids), 200):
+        #         chunk = promote_added_ids[i : i + 200]
         #         self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
 
         if promote_added_ids:
             promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
-            for i in range(0, len(promote_added_ids), 1000):
-                chunk = promote_added_ids[i : i + 1000]
+            for i in range(0, len(promote_added_ids), 200):
+                chunk = promote_added_ids[i : i + 200]
                 if not chunk:
                     print(f"[dedupeTable] Empty chunk at i={i}, skipping", flush=True)
                     continue

@@ -376,7 +376,7 @@ class NowPlayingsTmdb(BaseDataflow):
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
         if processed_ids:
             ids = list(processed_ids)
-            for i in range(0, len(ids), 1000):
+            for i in range(0, len(ids), 200):
                 chunk = ids[i : i + 200]
                 self.supabase.table(self.MAIN_TABLE_NAME).update({"added": True}).in_("id", chunk).execute()
         self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"id", "created_at", "run_id", "release_year", "hebrew_title", "hebrew_href", "english_href", "rating", "directed_by", "runtime"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)

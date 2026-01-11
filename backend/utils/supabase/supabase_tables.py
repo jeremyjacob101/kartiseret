@@ -10,7 +10,7 @@ import os
 sb = create_client(os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
 
 
-def sync_tables(action: str, source_table: Optional[str] = None, target_tables: Optional[Sequence[str]] = None, page_size: int = 1000, start: int = 0) -> None:
+def sync_tables(action: str, source_table: Optional[str] = None, target_tables: Optional[Sequence[str]] = None, page_size: int = 200, start: int = 0) -> None:
     targets = list(target_tables or [])
     action = action.strip().lower()
     if action not in {"append", "clear", "replace"} or ((action in {"append", "replace"}) and not source_table) or not targets:
