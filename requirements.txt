@@ -4,3 +4,4 @@ supabase
 pytz
 rich
 readchar
+python-dotenv
