@@ -1,6 +1,8 @@
 name: Run Main
 
 on:
+  # schedule:
+  #   - cron: "0 16 * * 2" # Runs every Tuesday at 6pm Israel time
   workflow_dispatch:
     inputs:
       args:
@@ -12,8 +14,6 @@ on:
         type: boolean
         required: false
         default: false
-  # schedule:
-  #   - cron: "0 16 * * 2" # Runs every Tuesday at 6pm Israel time
 
 jobs:
   run:
@@ -57,10 +57,7 @@ jobs:
           python -m venv .venv
           . .venv/bin/activate
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install --prefer-binary -r requirements.txt
-          elif [ -f pyproject.toml ]; then
-            pip install --prefer-binary .
+          pip install --prefer-binary -r requirements.txt
           fi
 
       - name: Detect Chrome version

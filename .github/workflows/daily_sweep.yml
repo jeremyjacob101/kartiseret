@@ -2,9 +2,13 @@ name: Daily Sweep
 
 on:
   schedule:
-    # 4 AM Israel time = 2 AM UTC (Israel is UTC+2, no DST at 4am winter)
-    - cron: "0 2 * * *"
+    - cron: "0 2 * * *"  # UTC
   workflow_dispatch:
+    inputs:
+      args:
+        description: "Arguments to pass (optional)"
+        required: false
+        default: ""
 
 jobs:
   clear-old-showtimes:
@@ -22,31 +26,11 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
 
-      - name: Debug secrets presence (safe)
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo "SUPABASE_URL is set?        $([ -n "${SUPABASE_URL:-}" ] && echo yes || echo no)"
-          echo "SERVICE_ROLE_KEY is set?   $([ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && echo yes || echo no)"
-          if [ -n "${SUPABASE_URL:-}" ]; then
-            echo "SUPABASE_URL host: $(python - <<'PY'
-          import os
-          from urllib.parse import urlparse
-          u=os.environ.get("SUPABASE_URL","")
-          print(urlparse(u).netloc)
-          PY
-          )"
-                    fi
-
-
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.14.2"
 
       - name: Cache .venv
         id: cache-venv
@@ -57,83 +41,21 @@ jobs:
           restore-keys: |
             venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
 
-      - name: Create venv and install deps (debug)
-        shell: bash
+      - name: Create venv and install deps
+        if: steps.cache-venv.outputs.cache-hit != 'true'
         run: |
-          set -euo pipefail
-          if [ "${{ github.event.inputs.debug || 'false' }}" = "true" ]; then set -x; fi
-
-          echo "=== System ==="
-          uname -a || true
-          lsb_release -a || true
-          echo "PWD: $PWD"
-          ls -la
-
-          echo "=== Python (pre-venv) ==="
-          which python || true
-          python --version || true
-          python -c "import sys; print('sys.executable:', sys.executable); print('sys.version:', sys.version)" || true
-
-          echo "=== Remove any existing venv (avoid broken cached venv) ==="
-          rm -rf .venv
-
-          echo "=== Create venv ==="
           python -m venv .venv
-
-          echo "=== Inspect venv bin dir ==="
-          ls -la .venv/bin || true
-
-          echo "=== Activate venv ==="
           . .venv/bin/activate
-
-          echo "=== Python/Pip (inside venv) ==="
-          echo "which python: $(which python)"
-          python --version
-          python -c "import sys; print('sys.executable:', sys.executable)"
-
-          echo "which pip: $(which pip || true)"
-          ls -la .venv/bin/pip* || true
-          file .venv/bin/pip || true
-          head -n 3 .venv/bin/pip || true
-          readlink -f .venv/bin/pip || true
-
-          echo "=== Upgrade pip using python -m pip (bypasses broken pip launcher) ==="
           python -m pip install --upgrade pip
-          python -m pip --version
-
-          echo "=== Install deps ==="
-          if [ -f requirements.txt ]; then
-            echo "Installing from requirements.txt"
-            python -m pip install --prefer-binary -r requirements.txt
-          elif [ -f pyproject.toml ]; then
-            echo "Installing from pyproject.toml"
-            python -m pip install --prefer-binary .
-          else
-            echo "No requirements.txt or pyproject.toml found" >&2
-            exit 1
+          pip install --prefer-binary -r requirements.txt
           fi
-
-          echo "=== Verify python-dotenv import ==="
-          python - <<'PY'
-          from importlib.metadata import version
-          import dotenv
-          print("dotenv import OK")
-          print("dotenv module file:", dotenv.__file__)
-          print("python-dotenv version:", version("python-dotenv"))
-          PY
-
-
-      - name: Debug env vars
-        run: |
-          echo "SUPABASE_URL: $SUPABASE_URL"
-          echo "SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:+set}"
 
       - name: Run cleanup script
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           set -e
-          . .venv/bin/activate
           export PYTHONPATH="${PYTHONPATH}:${{ github.workspace }}"
-          python backend/utils/supabase/clear_old_entries.py ${{ github.event.inputs.args }}
+          python backend/utils/supabase/clear_old_entries.py
