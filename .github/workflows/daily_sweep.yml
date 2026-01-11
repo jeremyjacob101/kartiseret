@@ -48,7 +48,6 @@ jobs:
           . .venv/bin/activate
           python -m pip install --upgrade pip
           pip install --prefer-binary -r requirements.txt
-          fi
 
       - name: Run cleanup script
         env:
@@ -57,5 +56,6 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           set -e
+          . .venv/bin/activate
           export PYTHONPATH="${PYTHONPATH}:${{ github.workspace }}"
           python backend/utils/supabase/clear_old_entries.py
