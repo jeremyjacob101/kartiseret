@@ -105,8 +105,6 @@ class SupabaseTables:
             promote_added_ids = list(dict.fromkeys([x for x in promote_added_ids if x]))
             for i in range(0, len(promote_added_ids), 1000):
                 chunk = promote_added_ids[i : i + 1000]
-                if not chunk:
-                    continue
                 self.supabase.table(table_name).update({"added": True}).in_(id_col, chunk).execute()
 
         if self.delete_these:
