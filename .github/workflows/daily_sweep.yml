@@ -23,11 +23,24 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Debug secrets presence (safe)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         shell: bash
         run: |
           set -euo pipefail
           echo "SUPABASE_URL is set?        $([ -n "${SUPABASE_URL:-}" ] && echo yes || echo no)"
           echo "SERVICE_ROLE_KEY is set?   $([ -n "${SUPABASE_SERVICE_ROLE_KEY:-}" ] && echo yes || echo no)"
+          if [ -n "${SUPABASE_URL:-}" ]; then
+            echo "SUPABASE_URL host: $(python - <<'PY'
+          import os
+          from urllib.parse import urlparse
+          u=os.environ.get("SUPABASE_URL","")
+          print(urlparse(u).netloc)
+          PY
+          )"
+                    fi
+
 
       - name: Set up Python
         id: setup-python
@@ -101,7 +114,14 @@ jobs:
           fi
 
           echo "=== Verify python-dotenv import ==="
-          python -c "import dotenv; from dotenv import load_dotenv; print('python-dotenv OK:', dotenv.__version__)"
+          python - <<'PY'
+          from importlib.metadata import version
+          import dotenv
+          print("dotenv import OK")
+          print("dotenv module file:", dotenv.__file__)
+          print("python-dotenv version:", version("python-dotenv"))
+          PY
+
 
       - name: Debug env vars
         run: |
