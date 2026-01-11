@@ -12,7 +12,7 @@ def main():
     logger.setup_logging()
     run_id = logger.allocate_run_id()
 
-    if os.environ.get("GITHUB_ACTIONS") == "true":
+    if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true":
         for kind, key in DEFAULT_PLAN:
             runGroup(kind, key, run_id)
         return
