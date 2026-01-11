@@ -35,7 +35,7 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.14.2"
 
       - name: Setup Chrome (stable)
         uses: browser-actions/setup-chrome@v1
