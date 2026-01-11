@@ -13,6 +13,18 @@ def main():
     logger.setup_logging()
     run_id = allocate_run_id()
 
+    import os, re
+
+    url = os.getenv("SUPABASE_URL", "")
+    key = os.getenv("SUPABASE_KEY", "")
+
+    print("SUPABASE_URL present:", bool(url), flush=True)
+    print("SUPABASE_URL:", url, flush=True)
+    print("SUPABASE_KEY present:", bool(key), flush=True)
+    print("SUPABASE_KEY length:", len(key), flush=True)
+    print("SUPABASE_KEY has whitespace:", bool(re.search(r"\s", key)), flush=True)
+    print("SUPABASE_KEY startswith eyJ:", key.startswith("eyJ"), flush=True)
+
     if os.environ.get("GITHUB_ACTIONS") == "true":
         for kind, key in DEFAULT_PLAN:
             runGroup(kind, key, run_id)
