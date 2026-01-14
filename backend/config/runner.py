@@ -10,14 +10,15 @@ import os
 
 def main():
     logger.setup_logging()
-    run_id = logger.allocate_run_id()
+    with logger.RunLogSession() as run:
+        if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true":  # GH or Weekly-Shell Run
+            run.run_groups(list(DEFAULT_PLAN), run_group_fn=runGroup)
+        else:  # Present Local Run
+            plan, header = choose_run_plan()
+            run.set_plan(plan)
 
-    if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true":
-        for kind, key in DEFAULT_PLAN:
-            runGroup(kind, key, run_id)
-        return
-
-    runPlan(run_id, *choose_run_plan())
+            ok = runPlan(run.run_id, plan, header_renderable=header)
+            run.set_successful(ok)
 
 
 if __name__ == "__main__":

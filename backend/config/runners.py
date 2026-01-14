@@ -26,12 +26,12 @@ SPEC_BY_KIND = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}
 DEFAULT_PLAN: list[tuple[str, str]] = [("cinema", "allSoons"), ("cinema", "allShowtimes"), ("dataflow", "comingSoonsData"), ("dataflow", "nowPlayingData")]
 
 
-def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] | None = None, ui_parent: Live | None = None, header_renderable: RenderableType | None = None, console: Console | None = None):
+def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] | None = None, ui_parent: Live | None = None, header_renderable: RenderableType | None = None, console: Console | None = None) -> bool:
     spec_dict = SPEC_BY_KIND.get(kind)
     spec = SimpleNamespace(**spec_dict)
     classes = list(classes_override) if classes_override is not None else spec.registry.get(key, [])
     if not classes:
-        return None
+        return True
 
     attempt_events: "queue.SimpleQueue[tuple]" = queue.SimpleQueue()
 
@@ -90,6 +90,8 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
             print(f"{result.name}: {minutes:02d}m{seconds:02d}s", flush=True)
         print("\n--------------------\n", flush=True)
 
+        return all(result.ok for result in results)
+
     # LOCAL MACHINE LOGIC
     if not runningGithubActions and not runningOnJJIntelMac:
         FALLBACK = 60.0
@@ -110,9 +112,10 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
                 if value > 0:
                     avg_by_name[k] = value
 
-        get_item_est = lambda item: float(avg_by_name.get(item.__name__) or FALLBACK)
+        results: list[RunResult] = []
 
         use_embedded = ui_parent is not None
+        get_item_est = lambda item: float(avg_by_name.get(item.__name__) or FALLBACK)
         ui = RichRunUI(spec, key, classes, get_item_est, use_live=not use_embedded, console=console)
 
         with ui:
@@ -137,6 +140,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
                             pending.discard(future)
                             item = future_to_item[future]
                             result = future.result()
+                            results.append(result)
                             ui.finish_item(item, result)
                         time.sleep(0.2)
 
@@ -155,6 +159,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
 
                         drain_attempt_events(ui)
                         result = future.result()
+                        results.append(result)
                         ui.finish_item(item, result)
 
                 ui.finalize()
@@ -163,8 +168,10 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
                 hdr = header_renderable or Panel.fit(Text("Running...", style="bold"), border_style="grey37")
                 ui_parent.update(Group(hdr, ui.renderable))
 
+        return all(r.ok for r in results) if results else True
 
-def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: RenderableType | None = None):
+
+def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: RenderableType | None = None) -> bool:
     console = Console(theme=Theme({"progress.elapsed": "bold #9c27f5"}))
     header_renderable = header_renderable or Panel(Text("Running…", style="bold"), title="Run Plan", border_style="grey37")
 
@@ -172,8 +179,9 @@ def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: Rendera
 
     if not plan:
         console.print(Panel.fit(Text("Nothing selected.", style="red"), border_style="grey37"))
-        return
+        return True
 
+    overall_ok = True
     total = len(plan)
     for i, entry in enumerate(plan, start=1):
         if len(entry) == 2:
@@ -185,5 +193,8 @@ def runPlan(run_id: int, plan: list[tuple[str, str]], header_renderable: Rendera
         step = Panel.fit(Text(f"{i}/{total}: {kind} → {key}", style="grey70"), border_style="grey37")
         console.print(step)
 
-        runGroup(kind, key, run_id, classes_override=classes_override, console=console)
+        ok = runGroup(kind, key, run_id, classes_override=classes_override, console=console)
+        overall_ok = overall_ok and bool(ok)
         console.print()
+
+    return overall_ok
