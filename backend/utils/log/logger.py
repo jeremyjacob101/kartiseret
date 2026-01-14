@@ -1,16 +1,125 @@
 import logging, os, sys, traceback, pathlib, time, threading, re, signal
 from supabase import create_client
+from typing import Any, Callable
 
 logger = logging.getLogger("sel")
 SUPPRESS_ERRORS = False
+CURRENT_RUN_ID: int | None = None
+
+
+RUN_LOCK_SLEEP_SECONDS = 60
+RUN_LOCK_MAX_MINUTES = 20
+
+
+def _compute_run_from() -> str:
+    if os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true":
+        return "JJ_INTEL_MAC_WEEKLY_RUN"
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        return "GITHUB_ACTIONS"
+    return os.environ.get("RUNNER_MACHINE") or "unknown"
 
 
 def allocate_run_id() -> int:
     sb = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_ROLE_KEY"])
-    rows = sb.table("utilAvgTime").select("latest_run_id").limit(1).execute().data
-    new_id = int(rows[0].get("latest_run_id")) + 1
-    sb.table("utilAvgTime").update({"latest_run_id": new_id}).neq("name", "__no_such_name__").execute()
+    run_from = _compute_run_from()
+
+    for _minute in range(RUN_LOCK_MAX_MINUTES):
+        rows = sb.table("utilRunLogs").select("run_id").eq("running_now", True).limit(1).execute().data or []
+        if not rows:
+            break
+        time.sleep(RUN_LOCK_SLEEP_SECONDS)
+    else:
+        raise RuntimeError("run_id cannot be allocated - already in use in different runner")
+
+    rows = sb.table("utilRunLogs").select("run_id").order("run_id", desc=True).limit(1).execute().data or []
+    latest = int(rows[0].get("run_id")) if rows else 0
+    new_id = latest + 1
+
+    sb.table("utilRunLogs").insert({"run_id": new_id, "running_now": True, "run_from": run_from}).execute()
+
+    global CURRENT_RUN_ID
+    CURRENT_RUN_ID = new_id
     return new_id
+
+
+def finalize_run_log(run_id: int, *, selected_runners: list[dict], successful: bool, total_time: float) -> None:
+    sb = create_client(os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_ROLE_KEY"])
+    sb.table("utilRunLogs").update({"selected_runners": selected_runners, "successful": bool(successful), "total_time": float(total_time), "running_now": False}).eq("run_id", int(run_id)).execute()
+
+
+def _serialize_plan(plan: list[tuple]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+
+    for entry in plan or []:
+        if not isinstance(entry, tuple):
+            continue
+        if len(entry) == 2:
+            kind, key = entry
+            out.append({"kind": str(kind), "key": str(key)})
+            continue
+        if len(entry) == 3:
+            kind, key, classes_override = entry
+            class_names: list[str] = []
+            if classes_override:
+                try:
+                    class_names = [c.__name__ for c in classes_override]
+                except Exception:
+                    class_names = []
+            out.append({"kind": str(kind), "key": str(key), "classes_override": class_names})
+            continue
+        out.append({"raw_entry": repr(entry)})
+    return out
+
+
+class RunLogSession:
+    def __init__(self) -> None:
+        self.run_id: int | None = None
+        self._start_time: float = 0.0
+        self._selected_runners: list[dict[str, Any]] = []
+        self._successful: bool = True
+
+    def __enter__(self) -> "RunLogSession":
+        self.run_id = allocate_run_id()
+        self._start_time = time.time()
+        self._selected_runners = []
+        self._successful = True
+        return self
+
+    def set_plan(self, plan: list[tuple]) -> None:
+        self._selected_runners = _serialize_plan(plan)
+
+    def set_successful(self, ok: bool) -> None:
+        self._successful = self._successful and bool(ok)
+
+    def run_groups(self, plan: list[tuple], *, run_group_fn: Callable[..., bool]) -> bool:
+        self.set_plan(plan)
+
+        overall_ok = True
+        for entry in plan or []:
+            if len(entry) == 2:
+                kind, key = entry
+                ok = bool(run_group_fn(kind, key, self.run_id))
+            else:
+                kind, key, classes_override = entry
+                ok = bool(run_group_fn(kind, key, self.run_id, classes_override=classes_override))
+
+            overall_ok = overall_ok and ok
+
+        self.set_successful(overall_ok)
+        return overall_ok
+
+    def __exit__(self, exc_type, exc, tb) -> bool:
+        if exc_type is not None:
+            self._successful = False
+
+        if self.run_id is not None:
+            total_time = time.time() - self._start_time
+            try:
+                finalize_run_log(self.run_id, selected_runners=self._selected_runners, successful=self._successful, total_time=total_time)
+            except BaseException:
+                pass
+
+        return False
 
 
 def setup_logging() -> None:
