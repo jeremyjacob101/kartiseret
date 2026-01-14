@@ -15,6 +15,7 @@ from backend.utils.log.logger import artifactPrinting
 
 
 runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
+runningOnJJIntelMac = os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true"
 RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
 MAX_NUM_RETRIES = 3
 
@@ -72,7 +73,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
                     ui.retry_item(item, attempt=attempt, started_at=started_at)
 
     # GITHUB ACTIONS LOGIC
-    if runningGithubActions:
+    if runningGithubActions or runningOnJJIntelMac:
         results: list[RunResult] = []
         if spec.mode == "parallel":
             with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
@@ -90,7 +91,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
         print("\n--------------------\n", flush=True)
 
     # LOCAL MACHINE LOGIC
-    if not runningGithubActions:
+    if not runningGithubActions and not runningOnJJIntelMac:
         FALLBACK = 60.0
         avg_by_name: dict[str, float] = {}
 
