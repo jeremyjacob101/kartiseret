@@ -42,7 +42,12 @@ class ComingSoonsTmdb(BaseDataflow):
             except:
                 pass
 
+        processed_ids = set()
+
         for row in self.main_table_rows:
+            if row.get("added") is True:
+                continue
+
             self.reset_soon_row_state()
             self.load_soon_row(row)
 
@@ -71,6 +76,9 @@ class ComingSoonsTmdb(BaseDataflow):
                 if str(self.potential_chosen_id).lower() in skip_tokens:
                     continue
                 self.non_deduplicated_updates.append({"old_uuid": original_uuid, "run_id": original_run_id, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": None})
+
+                if original_uuid:
+                    processed_ids.add(original_uuid)
                 continue
 
             # 1) SEARCH TMDB AND COLLECT CANDIDATES
@@ -80,7 +88,7 @@ class ComingSoonsTmdb(BaseDataflow):
                 while len(self.candidates) < 20:
                     params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
                     try:
-                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
+                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                     except:
                         break
 
@@ -109,7 +117,7 @@ class ComingSoonsTmdb(BaseDataflow):
                         params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page, "primary_release_year": year}
 
                         try:
-                            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
+                            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                         except:
                             break
 
@@ -133,7 +141,7 @@ class ComingSoonsTmdb(BaseDataflow):
                 while len(self.candidates) < 20:
                     params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
                     try:
-                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params).json()
+                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                     except:
                         break
 
@@ -159,7 +167,7 @@ class ComingSoonsTmdb(BaseDataflow):
             # 2) FETCH FULL DETAILS (external_ids + credits)
             for tmdb_id in self.candidates:
                 try:
-                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}).json()
+                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}, timeout=10).json()
                     if movie_response.get("id"):
                         self.details[tmdb_id] = movie_response
                 except:
@@ -219,6 +227,9 @@ class ComingSoonsTmdb(BaseDataflow):
 
             self.non_deduplicated_updates.append({"old_uuid": original_uuid, "run_id": original_run_id, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
 
+            if original_uuid:
+                processed_ids.add(original_uuid)
+
         # 5) DEDUPE BY TMDB ID
         grouped = defaultdict(list)
         for row in self.non_deduplicated_updates:
@@ -246,7 +257,7 @@ class ComingSoonsTmdb(BaseDataflow):
                 continue
 
             try:
-                data = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}).json()
+                data = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}, timeout=10).json()
             except:
                 continue
 
@@ -268,4 +279,9 @@ class ComingSoonsTmdb(BaseDataflow):
             self.updates.append(new_row)
 
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
+        if processed_ids:
+            ids = list(processed_ids)
+            for i in range(0, len(ids), 200):
+                chunk = ids[i : i + 200]
+                self.supabase.table(self.MAIN_TABLE_NAME).update({"added": True}).in_("id", chunk).execute()
         self.dedupeTable(self.MOVING_TO_TABLE_NAME, ignore_cols={"poster", "backdrop", "release_date", "hebrew_title"}, sort_key=self.comingSoonsFinalDedupeSortKey2)
