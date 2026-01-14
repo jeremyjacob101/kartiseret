@@ -173,7 +173,7 @@ class NowPlayingsTmdb(BaseDataflow):
                 while len(candidates) < 20:
                     params = {"api_key": self.TMDB_API_KEY, "query": representative_title, "page": page}
                     try:
-                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=20).json()
+                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                     except:
                         break
 
@@ -202,7 +202,7 @@ class NowPlayingsTmdb(BaseDataflow):
                         params = {"api_key": self.TMDB_API_KEY, "query": representative_title, "page": page, "primary_release_year": year}
 
                         try:
-                            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=20).json()
+                            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                         except:
                             break
 
@@ -226,7 +226,7 @@ class NowPlayingsTmdb(BaseDataflow):
                 while len(candidates) < 20:
                     params = {"api_key": self.TMDB_API_KEY, "query": representative_title, "page": page}
                     try:
-                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=20).json()
+                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                     except:
                         break
 
@@ -252,7 +252,7 @@ class NowPlayingsTmdb(BaseDataflow):
             # 2) FETCH FULL DETAILS (external_ids + credits)
             for tmdb_id in candidates:
                 try:
-                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}, timeout=20).json()
+                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}, timeout=10).json()
                     if movie_response.get("id"):
                         details[tmdb_id] = movie_response
                 except:
@@ -326,7 +326,7 @@ class NowPlayingsTmdb(BaseDataflow):
         for tmdb_id, res in list(movies_by_tmdb.items()):
             if tmdb_id not in tmdb_basic_cache:
                 try:
-                    tmdb_basic_cache[tmdb_id] = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}, timeout=20).json()
+                    tmdb_basic_cache[tmdb_id] = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}, timeout=10).json()
                 except:
                     tmdb_basic_cache[tmdb_id] = {}
             data = tmdb_basic_cache.get(tmdb_id) or {}
