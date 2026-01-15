@@ -68,6 +68,11 @@ def artifactPrinting(obj, run_id):
 
     (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
 
+    try:
+        (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
+    except Exception:
+        pass
+
     csv_written = getattr(obj, "_last_csv_artifact", None) if obj is not None else None
     if csv_written and not os.path.exists(csv_written):
         csv_written = None
