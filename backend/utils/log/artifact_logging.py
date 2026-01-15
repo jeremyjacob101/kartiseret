@@ -66,10 +66,7 @@ def artifactPrinting(obj, run_id):
     png_path, txt_path = f"{base}.png", f"{base}.txt"
     screenshot_written = None
 
-    try:
-        (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
-    except Exception:
-        pass
+    (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
 
     csv_written = getattr(obj, "_last_csv_artifact", None) if obj is not None else None
     if csv_written and not os.path.exists(csv_written):
