@@ -1,7 +1,8 @@
 from supabase import create_client
 from typing import Any, Callable
-import os, time
+import os, time, pathlib
 
+ARTIFACT_ROOT = pathlib.Path("backend/utils/log/logger_artifacts")
 CURRENT_RUN_ID: int | None = None
 RUN_LOCK_SLEEP_SECONDS = 60
 RUN_LOCK_MAX_MINUTES = 10
@@ -27,6 +28,11 @@ def allocate_run_id() -> int:
 
     rows = sb.table("utilRunLogs").select("run_id").order("run_id", desc=True).limit(1).execute().data
     new_id = int(rows[0]["run_id"]) + 1
+    run_dir = ARTIFACT_ROOT / str(new_id)
+    run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / ".job_ok").write_text("true", encoding="utf-8")
+    (ARTIFACT_ROOT / ".last_run_id").write_text(str(new_id), encoding="utf-8")
+
     sb.table("utilRunLogs").insert({"run_id": new_id, "running_now": True, "run_from": run_from}).execute()
 
     global CURRENT_RUN_ID
