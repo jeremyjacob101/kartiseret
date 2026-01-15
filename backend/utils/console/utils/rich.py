@@ -87,7 +87,7 @@ class RichRunUI:
         all_estimated = list(self.est_by_item.values())
         if not all_estimated:
             total_estimated = 0.0
-        elif spec.total_strategy == "max":
+        elif spec.total_strategy == "max":  # "max"
             total_estimated = float(max(all_estimated))
         else:  # "sum"
             total_estimated = float(sum(all_estimated))

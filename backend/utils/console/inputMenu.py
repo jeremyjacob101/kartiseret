@@ -42,24 +42,20 @@ def _render_hmenu(items: List[_MenuItem], idx: int, *, selected_values: Optional
         is_enabled = it.enabled
         is_checked = (it.value in selected_values) if it.value != "all" else all_selected
 
-        # No checkbox for All
         prefix = ""
         if show_checks and it.value != "all":
             prefix = "[x] " if is_checked else "[ ] "
 
         label = prefix + it.label
 
-        # Base style
         if not is_enabled:
             style = "grey50"
         else:
             style = "white"
 
-        # If All is active, make it obvious (no checkbox)
         if show_checks and it.value == "all" and is_checked and is_enabled:
             style = "bold green"
 
-        # Cursor override
         if is_cursor:
             style = "bold black on grey50" if not is_enabled else "bold black on #8040e6"
 
@@ -88,14 +84,12 @@ def _is_all_selected(selected: Set[str], items: List[_MenuItem]) -> bool:
 
 
 def _toggle_all(selected: Set[str], items: List[_MenuItem]) -> Set[str]:
-    # Toggle between select-all and clear-all
     if _is_all_selected(selected, items):
         return set()
     return set(_enabled_non_all_values(items))
 
 
 def _normalize_selected(selected: Set[str], items: List[_MenuItem]) -> Set[str]:
-    # Keep only enabled non-all values (never keep "all" in the set)
     allowed = _enabled_non_all_values(items)
     return set(selected) & allowed
 
@@ -129,7 +123,7 @@ def _select_mode_and_groups(console: Console) -> Tuple[str, Set[str]]:
     stage: str = "top"
     idx: int = 0
     mode: str = "all"
-    selected_groups = set()  # DEFAULT EMPTY
+    selected_groups = set()
 
     def current_items() -> List[_MenuItem]:
         if stage == "groups_dataflow":
@@ -220,7 +214,7 @@ def _select_registry_items(console: Console, title: str, classes: List[type]) ->
         menu_items.append(_MenuItem(v, v))
 
     idx = 0
-    selected: Set[str] = set()  # DEFAULT EMPTY
+    selected: Set[str] = set()
 
     def render() -> Panel:
         body = _render_hmenu(menu_items, idx, selected_values=selected, show_checks=True)
