@@ -81,8 +81,6 @@ def artifactPrinting(obj, run_id):
 
     try:
         lines = ["- - -", "ERROR", "- - -", f"Name: {name or ''}", f"URL: {url or ''}", f"Exception: {exception_msg or ''}", f"Call Chain: {call_chain or ''}", f"Selector: {selector or ''}", f"Screenshot: {screenshot_written or ''}", f"CSV: {csv_written or ''}"]
-    try:
-        lines = ["- - -", "ERROR", "- - -", f"Name: {name or ''}", f"URL: {url or ''}", f"Exception: {exception_msg or ''}", f"Call Chain: {call_chain or ''}", f"Selector: {selector or ''}", f"Screenshot: {screenshot_written or ''}", f"CSV: {csv_written or ''}"]
         with open(txt_path, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
     except Exception:
