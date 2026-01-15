@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: YPsoon
+URL: https://www.planetcinema.co.il/films/stray-kids-the-dominate-experience/7905s2r#/buy-tickets-by-film?for-movie=7905s2r&view-mode=list
+Exception: RuntimeError - No active exception to reraise
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YPsoon.py:60
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/134/YPsoon-ThreadPoolExecutor-0_0-20260115-144216.png
+HTML: backend/utils/log/logger_artifacts/134/YPsoon-ThreadPoolExecutor-0_0-20260115-144216.html
+CSV: backend/utils/log/logger_artifacts/134/YPsoon-ThreadPoolExecutor-0_0-20260115-144216-gathering_info.csv
