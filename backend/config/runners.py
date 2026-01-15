@@ -11,7 +11,7 @@ from rich.text import Text
 
 from backend.utils.console.progressBars import RunResult, RichRunUI
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
-from backend.utils.log.logger import artifactPrinting
+from backend.utils.log.artifact_logging import artifactPrinting
 
 
 runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
