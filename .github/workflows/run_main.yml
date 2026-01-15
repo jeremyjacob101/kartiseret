@@ -95,24 +95,30 @@ jobs:
           . .venv/bin/activate
           export PYTHONPATH="${PYTHONPATH}:${{ github.workspace }}"
           python backend/config/runner.py ${{ github.event.inputs.args }}
-      
-      - name: Check for artifacts
-        id: artifacts-exist
-        run: |
-          if [ -d backend/utils/log/logger_artifacts ] && [ "$(ls -A backend/utils/log/logger_artifacts)" ]; then
-            echo "found=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "found=false" >> "$GITHUB_OUTPUT"
-          fi
 
-      - name: Upload failure artifacts
-        if: steps.artifacts-exist.outputs.found == 'true'
+      - name: Read run id (.last_run_id)
+        id: runid
+        if: always()
+        shell: bash
+        run: |
+          rid="$(tr -d '[:space:]' < backend/utils/log/logger_artifacts/.last_run_id)"
+          echo "rid=$rid" >> "$GITHUB_OUTPUT"
+          echo "Run id: $rid"
+
+      - name: Upload run artifacts
+        if: always() && steps.runid.outputs.rid != ''
         uses: actions/upload-artifact@v4
         with:
-          name: selenium-failure-artifacts
-          path: backend/utils/log/logger_artifacts/
+          name: logger_artifacts_run_${{ steps.runid.outputs.rid }}
+          path: backend/utils/log/logger_artifacts/${{ steps.runid.outputs.rid }}
+          if-no-files-found: ignore
 
       - name: Mark run as warning
-        if: steps.artifacts-exist.outputs.found == 'true'
+        if: always()
+        shell: bash
         run: |
-          echo "::warning::Failure artifacts were saved (see artifact: selenium-failure-artifacts)."
+          rid="${{ steps.runid.outputs.rid }}"
+          f="backend/utils/log/logger_artifacts/${rid}/.job_ok"
+          if [ "$(tr -d '[:space:]' < "$f")" = "false" ]; then
+            echo "::warning::At least one exception occurred during the run (see artifact: logger_artifacts_run_${rid})."
+          fi
