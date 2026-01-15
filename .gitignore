@@ -1,9 +1,6 @@
 # DS_STORE
 .DS_Store
 
-# SECRET KEYS
-keys.py
-
 # INIT PY
 __init__.py
 
@@ -17,6 +14,3 @@ venv/
 
 # .env
 .env
-
-# debugging artifacts
-backend/utils/log/logger_artifacts/

@@ -1,6 +1,6 @@
 import logging, os, sys, traceback, pathlib, time, threading, re, signal
 
-ARTIFACT_DIR = pathlib.Path("backend/utils/log/logger_artifacts")
+ARTIFACT_ROOT = pathlib.Path("backend/utils/log/logger_artifacts")
 logger = logging.getLogger("sel")
 SUPPRESS_ERRORS = False
 
@@ -19,17 +19,8 @@ def setup_logging() -> None:
     logging.basicConfig(level=logging.ERROR, format="%(asctime)s %(levelname)s %(filename)s:%(lineno)d %(message)s", handlers=[logging.StreamHandler(sys.stdout)], force=True)
     logger.setLevel(logging.ERROR)
 
-    artifact_dir = ARTIFACT_DIR
-    if artifact_dir.exists():  # Clean up old artifacts on each run
-        for f in artifact_dir.glob("*"):
-            try:
-                f.unlink()
-            except:
-                pass
-    artifact_dir.mkdir(parents=True, exist_ok=True)
 
-
-def artifactPrinting(obj=None):
+def artifactPrinting(obj, run_id):
     if SUPPRESS_ERRORS:
         return
 
@@ -65,15 +56,20 @@ def artifactPrinting(obj=None):
     match = re.search(r'"selector":\s*"([^"]+)"', cleaned_msg)
     selector = match.group(1) if match else None
 
-    ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
-
-    ts = time.strftime("%Y%m%d-%H%M%S")
-    thread_name = threading.current_thread().name.replace(" ", "_")
     safe_prefix = (name or "fail").replace(" ", "_")
+    thread_name = threading.current_thread().name.replace(" ", "_")
+    ts = time.strftime("%Y%m%d-%H%M%S")
 
-    base = ARTIFACT_DIR / f"{safe_prefix}-{thread_name}-{ts}"
+    artifact_dir = ARTIFACT_ROOT / str(run_id)
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+    base = artifact_dir / f"{safe_prefix}-{thread_name}-{ts}"
     png_path, html_path, txt_path = f"{base}.png", f"{base}.html", f"{base}.txt"
     screenshot_written, html_written = None, None
+
+    try:
+        (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
+    except Exception:
+        pass
 
     csv_written = getattr(obj, "_last_csv_artifact", None) if obj is not None else None
     if csv_written and not os.path.exists(csv_written):
