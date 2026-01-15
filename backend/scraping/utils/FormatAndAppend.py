@@ -52,7 +52,7 @@ def formatAndWriteCsv(self, *, note: str = "gathering_info"):
         artifact_dir = pathlib.Path("backend/utils/log/logger_artifacts")
         artifact_dir.mkdir(parents=True, exist_ok=True)
 
-        name = getattr(self, "CINEMA_NAME", None) or self.__class__.__name__
+        name = self.__class__.__name__ if self is not None else "Unknown"
         safe_prefix = str(name).replace(" ", "_")
         ts = time.strftime("%Y%m%d-%H%M%S")
         thread_name = threading.current_thread().name.replace(" ", "_")
