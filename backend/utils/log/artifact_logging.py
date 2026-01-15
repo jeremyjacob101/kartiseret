@@ -63,15 +63,8 @@ def artifactPrinting(obj, run_id):
     artifact_dir = ARTIFACT_ROOT / str(run_id)
     artifact_dir.mkdir(parents=True, exist_ok=True)
     base = artifact_dir / f"{safe_prefix}-{thread_name}-{ts}"
-<<<<<<< HEAD
     png_path, txt_path = f"{base}.png", f"{base}.txt"
     screenshot_written = None
-
-    (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
-=======
-    png_path, html_path, txt_path = f"{base}.png", f"{base}.html", f"{base}.txt"
-    screenshot_written, html_written = None, None
->>>>>>> 097c566 ([ADD] Added/reformatted logging so it now does it per_run_id in its own folder in utils/log/logger_artifacts folder)
 
     try:
         (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
@@ -89,6 +82,8 @@ def artifactPrinting(obj, run_id):
         except Exception:
             pass
 
+    try:
+        lines = ["- - -", "ERROR", "- - -", f"Name: {name or ''}", f"URL: {url or ''}", f"Exception: {exception_msg or ''}", f"Call Chain: {call_chain or ''}", f"Selector: {selector or ''}", f"Screenshot: {screenshot_written or ''}", f"CSV: {csv_written or ''}"]
     try:
         lines = ["- - -", "ERROR", "- - -", f"Name: {name or ''}", f"URL: {url or ''}", f"Exception: {exception_msg or ''}", f"Call Chain: {call_chain or ''}", f"Selector: {selector or ''}", f"Screenshot: {screenshot_written or ''}", f"CSV: {csv_written or ''}"]
         with open(txt_path, "w", encoding="utf-8") as f:
