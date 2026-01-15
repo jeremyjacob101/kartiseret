@@ -63,10 +63,20 @@ def artifactPrinting(obj, run_id):
     artifact_dir = ARTIFACT_ROOT / str(run_id)
     artifact_dir.mkdir(parents=True, exist_ok=True)
     base = artifact_dir / f"{safe_prefix}-{thread_name}-{ts}"
+<<<<<<< HEAD
     png_path, txt_path = f"{base}.png", f"{base}.txt"
     screenshot_written = None
 
     (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
+=======
+    png_path, html_path, txt_path = f"{base}.png", f"{base}.html", f"{base}.txt"
+    screenshot_written, html_written = None, None
+>>>>>>> 097c566 ([ADD] Added/reformatted logging so it now does it per_run_id in its own folder in utils/log/logger_artifacts folder)
+
+    try:
+        (artifact_dir / ".job_ok").write_text("false", encoding="utf-8")
+    except Exception:
+        pass
 
     csv_written = getattr(obj, "_last_csv_artifact", None) if obj is not None else None
     if csv_written and not os.path.exists(csv_written):
