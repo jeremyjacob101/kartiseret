@@ -13,21 +13,14 @@ from backend.utils.console.progressBars import RunResult, RichRunUI
 from backend.config.registry import REGISTRY, DATAFLOW_REGISTRY
 from backend.utils.log.artifact_logging import artifactPrinting
 
-
-runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
-runningOnJJIntelMac = os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true"
-RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")
-MAX_NUM_RETRIES = 3
+DEFAULT_PLAN: list[tuple[str, str]] = [("cinema", "allSoons"), ("cinema", "allShowtimes"), ("dataflow", "comingSoonsData"), ("dataflow", "nowPlayingData")]
 
 cinemaDictionary = {"registry": REGISTRY, "make_instance": lambda cls, key, run_id: cls(cinema_type=key, supabase_table_name=key, run_id=run_id), "run_instance": lambda inst: inst.scrape(), "cleanup": lambda instance: (instance.driver.quit() if instance and getattr(instance, "driver", None) else None), "count_label": "Threads", "mode": "parallel", "total_strategy": "max", "overall_task_name": "overall", "get_item_name": lambda cls: getattr(cls, "CINEMA_NAME", cls.__name__)}
 dataflowDictionary = {"registry": DATAFLOW_REGISTRY, "make_instance": lambda cls, _key, run_id: cls(run_id=run_id), "run_instance": lambda inst: inst.dataRun(), "cleanup": lambda instance: None, "count_label": "Dataflows", "mode": "sequential", "total_strategy": "sum", "overall_task_name": "dataflows", "get_item_name": lambda cls: cls.__name__}
-SPEC_BY_KIND = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}
-
-DEFAULT_PLAN: list[tuple[str, str]] = [("cinema", "allSoons"), ("cinema", "allShowtimes"), ("dataflow", "comingSoonsData"), ("dataflow", "nowPlayingData")]
 
 
 def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] | None = None, ui_parent: Live | None = None, header_renderable: RenderableType | None = None, console: Console | None = None) -> bool:
-    spec_dict = SPEC_BY_KIND.get(kind)
+    spec_dict = {"cinema": cinemaDictionary, "dataflow": dataflowDictionary}.get(kind)
     spec = SimpleNamespace(**spec_dict)
     classes = list(classes_override) if classes_override is not None else spec.registry.get(key, [])
     if not classes:
@@ -38,7 +31,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
     def run_one(cls: type) -> RunResult:
         total_secs, last_attempt, ok = 0.0, 0, False
 
-        for attempt in range(1, MAX_NUM_RETRIES + 1):
+        for attempt in range(1, 4):
             starting_time, last_attempt, instance = time.time(), attempt, None
             attempt_events.put(("attempt_start", cls, attempt, starting_time))
 
@@ -73,7 +66,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
                     ui.retry_item(item, attempt=attempt, started_at=started_at)
 
     # GITHUB ACTIONS LOGIC
-    if runningGithubActions or runningOnJJIntelMac:
+    if os.environ.get("GITHUB_ACTIONS") == "true" or os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true":
         results: list[RunResult] = []
         if spec.mode == "parallel":
             with ThreadPoolExecutor(max_workers=max(1, len(classes))) as ex:
@@ -93,12 +86,12 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
         return all(result.ok for result in results)
 
     # LOCAL MACHINE LOGIC
-    if not runningGithubActions and not runningOnJJIntelMac:
+    if not os.environ.get("GITHUB_ACTIONS") == "true" and not os.environ.get("JJ_INTEL_MAC_WEEKLY_RUN") == "true":
         FALLBACK = 60.0
         avg_by_name: dict[str, float] = {}
 
         url, svc_key = os.environ.get("SUPABASE_URL"), os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-        avg_time_col = "avg_time_" + str(RUNNER_MACHINE)
+        avg_time_col = "avg_time_" + str(os.environ.get("RUNNER_MACHINE"))
         if url and svc_key:
             table, name_col, time_col = "utilAvgTime", "name", f"{avg_time_col}"
             class_names = [cls.__name__ for cls in classes]
