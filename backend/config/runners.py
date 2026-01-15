@@ -41,7 +41,7 @@ def runGroup(kind: str, key: str, run_id: int, *, classes_override: list[type] |
                 ok = True
             except Exception:
                 ok = False
-                artifactPrinting(instance)
+                artifactPrinting(instance, run_id)
             finally:
                 spec.cleanup(instance)
 
