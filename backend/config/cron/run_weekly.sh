@@ -37,7 +37,7 @@ mkdir -p "$LOG_DIR"
   git add "$LOG_FILE"
 
   if ! git diff --cached --quiet; then
-    git commit -m "chore: weekly artifacts and log $(date +%Y-%m-%d_%H-%M-%S)"
+    git commit -m "[W-RUN] weekly artifacts and log $(date +%Y-%m-%d_%H-%M-%S)"
     git fetch origin main
     git rebase origin/main
     git push origin main
