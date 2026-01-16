@@ -1,0 +1,26 @@
+==== cron run start: 2026-01-16T15:18:04+0200 ====
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+HEAD is now at 434e7d5 [UP] Updated run_weekly logic 7
+
+--------------------
+
+LCsoon: 00m45s
+CCsoon: 00m49s
+YPsoon: 01m39s
+MLsoon: 01m58s
+HCsoon: 03m11s
+
+--------------------
+
+
+--------------------
+
+ComingSoonsClean: 00m04s
+ComingSoonsTmdb: 00m08s
+
+--------------------
+
+==== cron run end: 2026-01-16T15:21:34+0200 ====
