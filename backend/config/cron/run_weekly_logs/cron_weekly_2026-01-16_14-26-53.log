@@ -40,3 +40,26 @@ NowPlayingsTmdb: 01m39s
 
 --------------------
 
+[main db9e97a] [W-RUN] weekly artifacts and log 2026-01-16_14-52-36
+ 22 files changed, 8778 insertions(+), 1 deletion(-)
+ create mode 100644 backend/config/cron/run_weekly_logs/cron_weekly_2026-01-16_14-26-53.log
+ create mode 100644 backend/utils/log/logger_artifacts/150/.job_ok
+ create mode 100644 backend/utils/log/logger_artifacts/150/CCsoon-ThreadPoolExecutor-0_2-20260116-142751-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144119-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144119.png
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144119.txt
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144645-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144645.png
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144645.txt
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144743-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144743.png
+ create mode 100644 backend/utils/log/logger_artifacts/150/CinemaCity-ThreadPoolExecutor-1_5-20260116-144743.txt
+ create mode 100644 backend/utils/log/logger_artifacts/150/HCsoon-ThreadPoolExecutor-0_3-20260116-143002-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/HotCinema-ThreadPoolExecutor-1_3-20260116-144247-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/LCsoon-ThreadPoolExecutor-0_0-20260116-142747-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/LevCinema-ThreadPoolExecutor-1_0-20260116-143217-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/MLsoon-ThreadPoolExecutor-0_4-20260116-142854-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/MovieLand-ThreadPoolExecutor-1_2-20260116-143923-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/RavHen-ThreadPoolExecutor-1_1-20260116-143652-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/YPsoon-ThreadPoolExecutor-0_1-20260116-142838-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/150/YesPlanet-ThreadPoolExecutor-1_4-20260116-144526-gathering_info.csv
