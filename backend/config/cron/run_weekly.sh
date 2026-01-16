@@ -16,33 +16,45 @@ TIMESTAMP=$(date '+%Y-%m-%d_%H-%M-%S')
 LOG_FILE="$LOG_DIR/cron_weekly_${TIMESTAMP}.log"
 mkdir -p "$LOG_DIR"
 
-# Write output to log AND also to stdout
-exec > >(tee -a "$LOG_FILE") 2>&1
+# --------------------
+# Phase 1: run everything and write output to the log (and terminal)
+# --------------------
+run_phase() {
+  echo "==== cron run start: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
 
-echo "==== cron run start: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
+  # Sync code (robust even if main was force-pushed)
+  git fetch origin main
+  git checkout main
+  git reset --hard origin/main
+  git clean -fd -e backend/config/cron/
 
-# 1) Sync code (safe even if main was force-pushed)
-git fetch origin main
-git checkout main
-git reset --hard origin/main
-git clean -fd -e backend/config/cron/
+  # Run the job
+  "$PYTHON" -u -m backend.config.runner "$@"
 
-# 2) Run the job
-"$PYTHON" -u -m backend.config.runner "$@"
+  echo "==== cron run end: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
+}
 
-# 3) Stage artifacts + log AFTER all output has been written
+# Capture ALL output of the run phase. After this returns, the log file is DONE being written.
+run_phase "$@" 2>&1 | tee "$LOG_FILE"
+
+# --------------------
+# Phase 2: git add/commit/rebase/push (NO tee running now)
+# --------------------
+
+# Stage artifacts and the log
 if [[ -d "$ARTIFACT_DIR" ]]; then
   git add "$ARTIFACT_DIR"
 fi
 git add "$LOG_FILE"
 
-if ! git diff --cached --quiet; then
-  git commit -m "[W-RUN] weekly artifacts and log $(date +%Y-%m-%d_%H-%M-%S)"
-
-  # Rebase/push only after ensuring there are no local changes
-  git fetch origin main
-  git rebase origin/main
-  git push origin main
+# If nothing staged, we’re done
+if git diff --cached --quiet; then
+  exit 0
 fi
 
-echo "==== cron run end: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
+git commit -m "[W-RUN] weekly artifacts and log $(date +%Y-%m-%d_%H-%M-%S)"
+
+# Update again in case main moved while the job ran, then push
+git fetch origin main
+git rebase origin/main
+git push origin main
