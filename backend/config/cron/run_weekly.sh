@@ -7,33 +7,41 @@ export GIT_SSH_COMMAND="ssh -i /Users/jeremyjacob/.ssh/id_ed25519_kartiseret -o 
 
 PROJECT_ROOT="/Users/jeremyjacob/Documents/Coding Projects/Kartiseret/NewScraping-August2025"
 PYTHON="$PROJECT_ROOT/venv/bin/python"
-ARTIFACT_DIR="$PROJECT_ROOT/utils/log/logger_artifacts"
+ARTIFACT_DIR="$PROJECT_ROOT/backend/utils/log/logger_artifacts"
+LOG_DIR="$PROJECT_ROOT/backend/config/cron/run_weekly_logs"
 
 cd "$PROJECT_ROOT"
 
-echo "==== cron run start: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
+# Create log file for this run (date + time)
+TIMESTAMP=$(date '+%Y-%m-%d_%H-%M-%S')
+LOG_FILE="$LOG_DIR/cron_weekly_${TIMESTAMP}.log"
+mkdir -p "$LOG_DIR"
 
-# 1) Sync code (safe even if main was force-pushed)
-git fetch origin main
-git checkout main
-git reset --hard origin/main
-git clean -fd -e backend/config/cron/
+{
+  echo "==== cron run start: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
 
-# 2) Run the job
-"$PYTHON" -u -m backend.config.runner "$@"
+  # 1) Sync code (safe even if main was force-pushed)
+  git fetch origin main
+  git checkout main
+  git reset --hard origin/main
+  git clean -fd -e backend/config/cron/
 
-# 3) Commit & push artifacts if they changed
-if [[ -d "$ARTIFACT_DIR" ]]; then
-  git add "$ARTIFACT_DIR"
+  # 2) Run the job
+  "$PYTHON" -u -m backend.config.runner "$@"
+
+  # 3) Commit & push artifacts + this log
+  if [[ -d "$ARTIFACT_DIR" ]]; then
+    git add "$ARTIFACT_DIR"
+  fi
+
+  git add "$LOG_FILE"
 
   if ! git diff --cached --quiet; then
-    git commit -m "chore: weekly logger artifacts $(date +%Y-%m-%d)"
-
-    # If main moved while we ran, rebase then push
+    git commit -m "chore: weekly artifacts and log $(date +%Y-%m-%d_%H-%M-%S)"
     git fetch origin main
     git rebase origin/main
     git push origin main
   fi
-fi
 
-echo "==== cron run end: $(date -Is) ===="
+  echo "==== cron run end: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
+} | tee -a "$LOG_FILE"
