@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: Unknown
+URL: ?
+Exception: APIError - {'message': 'JSON could not be generated', 'code': 500, 'hint': 'Refer to full message for details', 'details': "b'<html>\\r\\n<head><title>500 Internal Server Error</title></head>\\r\\n<body>\\r\\n<center><h1>500 Internal Server Error</h1></center>\\r\\n<hr><center>cloudflare</center>\\r\\n</body>\\r\\n</html>\\r\\n'"}
+Call Chain: runners.py:39 > runners.py:19 > BaseDataflow.py:25 > SupabaseTables.py:42 > SupabaseTables.py:14
+Selector: 
+Screenshot: 
+CSV: 
