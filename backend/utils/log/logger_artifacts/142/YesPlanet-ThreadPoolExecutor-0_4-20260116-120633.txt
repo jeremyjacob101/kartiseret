@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/cinemas/zichronyaakov/1075#/buy-tickets-by-cinema?in-cinema=1075&at=2026-02-07&for-movie=7480s2r&view-mode=list
+Exception: ConnectError - [Errno 8] nodename nor servname provided, or not known
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:29 > FormatAndAppend.py:86
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/142/YesPlanet-ThreadPoolExecutor-0_4-20260116-120633.png
+CSV: backend/utils/log/logger_artifacts/142/YesPlanet-ThreadPoolExecutor-0_4-20260116-120633-gathering_info.csv

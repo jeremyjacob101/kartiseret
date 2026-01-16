@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: ?
+Exception: InvalidSessionIdException - Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:85 > ScrapingHelpers.py:58
+Selector: 
+Screenshot: 
+CSV: backend/utils/log/logger_artifacts/140/YesPlanet-ThreadPoolExecutor-2_4-20260116-110854-gathering_info.csv

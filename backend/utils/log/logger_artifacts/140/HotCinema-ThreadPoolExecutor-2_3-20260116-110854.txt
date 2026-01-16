@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: HotCinema
+URL: ?
+Exception: InvalidSessionIdException - Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > HotCinema.py:49 > ScrapingHelpers.py:89
+Selector: 
+Screenshot: 
+CSV: backend/utils/log/logger_artifacts/140/HotCinema-ThreadPoolExecutor-2_3-20260116-110854-gathering_info.csv

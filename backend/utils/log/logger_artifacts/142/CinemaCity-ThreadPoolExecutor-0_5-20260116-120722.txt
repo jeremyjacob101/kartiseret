@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: CinemaCity
+URL: https://www.cinema-city.co.il/
+Exception: WebDriverException - Message: unknown error: net::ERR_INTERNET_DISCONNECTED
+  (Session info: chrome=143.0.7499.193)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/142/CinemaCity-ThreadPoolExecutor-0_5-20260116-120722.png
+CSV: 

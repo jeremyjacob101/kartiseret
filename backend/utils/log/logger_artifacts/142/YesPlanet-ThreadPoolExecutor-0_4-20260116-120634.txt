@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/?lang=en_gb#/
+Exception: WebDriverException - Message: unknown error: net::ERR_INTERNET_DISCONNECTED
+  (Session info: chrome=143.0.7499.193)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/142/YesPlanet-ThreadPoolExecutor-0_4-20260116-120634.png
+CSV: 
