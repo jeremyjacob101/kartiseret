@@ -57,7 +57,6 @@ class NowPlayingsTmdb(BaseDataflow):
             meta = self.meta_by_key.get(key) or {}
             hebrew_title, directed_by, runtime, year_counts, parsed_year = meta.get("hebrew_title"), meta.get("directed_by"), meta.get("runtime"), meta.get("year_counts") or {}, None
 
-            ##### WHAT THE HECK IS YEAR_COUNTS IS IT REAL? DOES IT EXIST??
             if year_counts:
                 parsed_year = self.tryExceptNone(lambda: max(year_counts.items(), key=lambda kv: kv[1])[0])
 
