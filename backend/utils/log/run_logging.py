@@ -22,6 +22,7 @@ def allocate_run_id() -> int:
         rows = sb.table("utilRunLogs").select("run_id").eq("running_now", True).limit(1).execute().data
         if not rows:
             break
+        print("WAITING ON UTILRUNLOGS TO NOT HAVE TRUE RUNNING ENTRY")
         time.sleep(RUN_LOCK_SLEEP_SECONDS)
     else:
         raise RuntimeError("run_id cannot be allocated - already in use in different runner")
