@@ -1,0 +1,30 @@
+==== cron run start: 2026-01-16T15:03:24+0200 ====
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+HEAD is now at 306ee74 [UP] Updated run_weekly logic 6
+
+--------------------
+
+LCsoon: 00m49s
+CCsoon: 00m53s
+YPsoon: 01m44s
+MLsoon: 02m02s
+HCsoon: 03m05s
+
+--------------------
+
+
+--------------------
+
+ComingSoonsClean: 00m06s
+ComingSoonsTmdb: 00m12s
+
+--------------------
+
+warning: in the working copy of 'backend/utils/log/logger_artifacts/151/CCsoon-ThreadPoolExecutor-0_2-20260116-150422-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/151/HCsoon-ThreadPoolExecutor-0_3-20260116-150634-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/151/LCsoon-ThreadPoolExecutor-0_0-20260116-150418-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/151/MLsoon-ThreadPoolExecutor-0_4-20260116-150532-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/151/YPsoon-ThreadPoolExecutor-0_1-20260116-150513-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
