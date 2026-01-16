@@ -16,10 +16,7 @@ echo "==== cron run start: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
 # 1) Sync code (safe even if main was force-pushed)
 git fetch origin main
 git checkout main
-
-# Reset everything EXCEPT the cron directory
-git checkout origin/main -- .
-git restore --source=origin/main --staged --worktree -- :!backend/config/cron/
+git reset --hard origin/main
 git clean -fd -e backend/config/cron/
 
 # 2) Run the job
@@ -39,4 +36,4 @@ if [[ -d "$ARTIFACT_DIR" ]]; then
   fi
 fi
 
-echo "==== cron run end: $(date '+%Y-%m-%dT%H:%M:%S%z') ===="
+echo "==== cron run end: $(date -Is) ===="
