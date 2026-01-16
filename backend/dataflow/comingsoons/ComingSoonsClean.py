@@ -15,7 +15,7 @@ class ComingSoonsClean(BaseDataflow):
             row["hebrew_title"] = (row.get("hebrew_title") or "").lower()
             if self.removeBadTitle(row.get("english_title")):
                 self.delete_these.append(row[self.PRIMARY_KEY])
-            if self.removeRussianHebrewTitle(row.get("hebrew_title")):
+            elif self.removeRussianHebrewTitle(row.get("hebrew_title")):
                 self.delete_these.append(row[self.PRIMARY_KEY])
             self.updates.append({"id": row["id"], "english_title": row["english_title"], "hebrew_title": row.get("hebrew_title"), "cleaned": True})
 

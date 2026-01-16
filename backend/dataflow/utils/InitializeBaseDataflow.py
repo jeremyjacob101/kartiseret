@@ -1,3 +1,4 @@
+from collections import defaultdict
 from supabase import create_client
 import time, os
 
@@ -34,6 +35,8 @@ class InitializeBaseDataflow:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.reset_soon_row_state()
+        self.reset_np_main_row_state()
+        self.reset_np_groupkey_row_state()
 
         self.startTime = time.perf_counter()
 
@@ -50,19 +53,23 @@ class InitializeBaseDataflow:
         self.candidates = []
         self.details = {}
 
+        self.general_focused_page = 1
+        self.year_focused_page = 1
+        self.search_plans = []
+        self.processed_ids = set()
+        self.seen_already = set()
+        self.skip_tokens = set()
+
+        self.title_counts_by_key = defaultdict(lambda: defaultdict(int))
+        self.grouped_rows_by_key = defaultdict(list)
+        self.date_of_showing = None
+        self.tmdb_fix_by_title = {}
+        self.tmdb_fix_ids = set()
+        self.override_tmdb = None
+        self.movies_by_tmdb = {}
+        self.parsed_year = None
+        self.year_counts = {}
+        self.meta_by_key = {}
+        self.key_result = {}
+
         self.fake_runtimes = [0, 30, 40, 45, 60, 90, 100, 120, 130, 150, 180, 200, 240, 250, 300]
-
-    def reset_soon_row_state(self):
-        self.potential_chosen_id = None
-
-        self.english_title = None
-        self.hebrew_title = None
-        self.release_date = None
-        self.release_year = None
-        self.directed_by = None
-        self.runtime = None
-
-        self.first_search_result = None
-        self.found_year_match = False
-        self.candidates = []
-        self.details = {}

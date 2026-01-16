@@ -14,20 +14,11 @@ class ComingSoonsTmdb(BaseDataflow):
         self.dedupeTable(self.MAIN_TABLE_NAME)
         self.dedupeTable(self.MOVING_TO_TABLE_NAME)
 
-        # BUILD SKIP LOOKUP
-        skip_tokens = set()
         for skip_row in self.helper_table_2_rows:
             skip_value = skip_row.get("name_or_tmdb_id").strip()
-            if not skip_value:
-                continue
-            skip_tokens.add(skip_value.lower())
+            self.skip_tokens.add(skip_value.lower())
+            self.skip_tokens.add(self.normalizeTitle(skip_value).strip().lower())
 
-            try:
-                skip_tokens.add(self.normalizeTitle(skip_value).strip().lower())
-            except:
-                pass
-
-        # BUILD TMDb FIX LOOKUPS
         tmdb_fix_ids, tmdb_fix_by_title = set(), {}
         for fix in self.helper_table_rows:
             tmdb_id = fix.get("tmdb_id").strip()
@@ -37,128 +28,56 @@ class ComingSoonsTmdb(BaseDataflow):
             tmdb_id = int(tmdb_id)
             tmdb_fix_ids.add(tmdb_id)
             tmdb_fix_by_title[title_fix] = tmdb_id
-            try:
-                tmdb_fix_by_title[self.normalizeTitle(title_fix).strip().lower()] = tmdb_id
-            except:
-                pass
-
-        processed_ids = set()
+            self.tryExceptPass(lambda: tmdb_fix_by_title.__setitem__(self.normalizeTitle(title_fix).strip().lower(), tmdb_id))
 
         for row in self.main_table_rows:
-            if row.get("added") is True:
-                continue
-
             self.reset_soon_row_state()
             self.load_soon_row(row)
-
-            if self.release_date and self.dateToDate(self.release_date) < date.today():
+            if row.get("added") or (self.release_date and self.dateToDate(self.release_date) < date.today()):
                 continue
 
-            original_uuid = row.get("id")
-            original_run_id = row.get("run_id")
-            original_title = self.english_title
-            original_release_date = self.release_date
-
-            # SKIP TITLES
             title_raw = (self.english_title or "").strip().lower()
-            try:
-                title_norm = self.normalizeTitle(self.english_title or "").strip().lower()
-            except:
-                title_norm = title_raw
-
-            if title_raw in skip_tokens or title_norm in skip_tokens:
+            title_norm = self.normalizeTitle(self.english_title)
+            if title_raw in self.skip_tokens or title_norm in self.skip_tokens:
                 continue
 
-            # TMDB FIX OVERRIDE
-            override_tmdb = tmdb_fix_by_title.get(title_raw) or tmdb_fix_by_title.get(title_norm)
-            if override_tmdb:
-                self.potential_chosen_id = override_tmdb
-                if str(self.potential_chosen_id).lower() in skip_tokens:
+            if override_tmdb := (tmdb_fix_by_title.get(title_raw) or tmdb_fix_by_title.get(title_norm)):
+                if str(override_tmdb).lower() in self.skip_tokens:
                     continue
-                self.non_deduplicated_updates.append({"old_uuid": original_uuid, "run_id": original_run_id, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": None})
-
-                if original_uuid:
-                    processed_ids.add(original_uuid)
+                self.potential_chosen_id = override_tmdb
+                self.non_deduplicated_updates.append({"old_uuid": row.get("id"), "run_id": row.get("run_id"), "english_title": self.english_title, "hebrew_title": self.hebrew_title, "release_date": self.release_date, "tmdb_id": override_tmdb, "imdb_id": None})
+                self.processed_ids.add(row.get("id"))
                 continue
 
             # 1) SEARCH TMDB AND COLLECT CANDIDATES
-            seen = set()
-            if not self.release_year:
-                page = 1
-                while len(self.candidates) < 20:
+            if self.release_year:
+                self.search_plans += [(24, 8, year) for year in (self.release_year, self.release_year - 1, self.release_year + 1)]
+            self.search_plans.append((20, None, None))
+            for max_total, max_plan, year in self.search_plans:
+                if len(self.candidates) >= max_total:
+                    continue
+
+                added, page = 0, 1
+                while len(self.candidates) < max_total and (max_plan is None or added < max_plan):
                     params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
+                    if year is not None:
+                        params["primary_release_year"] = year
                     try:
                         response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
                     except:
                         break
-
                     results = response.get("results") or []
                     if not results:
                         break
 
                     for movie_result in results:
-                        tmdb_id = movie_result.get("id")
-                        if not tmdb_id or tmdb_id in seen:
+                        if not (tmdb_id := movie_result.get("id")) or tmdb_id in self.seen_already:
                             continue
-                        seen.add(tmdb_id)
+                        self.seen_already.add(tmdb_id)
                         self.candidates.append(tmdb_id)
-                        if len(self.candidates) >= 20:
+                        added += 1
+                        if len(self.candidates) == max_total or (max_plan is not None and added == max_plan):
                             break
-
-                    page += 1
-
-            else:
-                for year in [int(self.release_year), int(self.release_year) - 1, int(self.release_year) + 1]:
-                    if len(self.candidates) >= 24:
-                        break
-
-                    added_this_year, page = 0, 1
-                    while len(self.candidates) < 24 and added_this_year < 8:
-                        params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page, "primary_release_year": year}
-
-                        try:
-                            response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
-                        except:
-                            break
-
-                        results = response.get("results") or []
-                        if not results:
-                            break
-
-                        for movie_result in results:
-                            tmdb_id = movie_result.get("id")
-                            if not tmdb_id or tmdb_id in seen:
-                                continue
-                            seen.add(tmdb_id)
-                            self.candidates.append(tmdb_id)
-                            added_this_year += 1
-
-                            if len(self.candidates) >= 24 or added_this_year >= 8:
-                                break
-                        page += 1
-
-                page = 1
-                while len(self.candidates) < 20:
-                    params = {"api_key": self.TMDB_API_KEY, "query": self.english_title, "page": page}
-                    try:
-                        response = requests.get("https://api.themoviedb.org/3/search/movie", params=params, timeout=10).json()
-                    except:
-                        break
-
-                    results = response.get("results") or []
-                    if not results:
-                        break
-
-                    for movie_result in results:
-                        tmdb_id = movie_result.get("id")
-                        if not tmdb_id or tmdb_id in seen:
-                            continue
-                        seen.add(tmdb_id)
-                        self.candidates.append(tmdb_id)
-
-                        if len(self.candidates) >= 20:
-                            break
-
                     page += 1
 
             if not self.candidates:
@@ -166,12 +85,8 @@ class ComingSoonsTmdb(BaseDataflow):
 
             # 2) FETCH FULL DETAILS (external_ids + credits)
             for tmdb_id in self.candidates:
-                try:
-                    movie_response = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}, timeout=10).json()
-                    if movie_response.get("id"):
-                        self.details[tmdb_id] = movie_response
-                except:
-                    pass
+                self.tryExceptPass(lambda: (resp := requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids,credits"}, timeout=10).json()) and resp.get("id") and self.details.update({tmdb_id: resp}))
+
             if not self.details:
                 continue
 
@@ -184,21 +99,8 @@ class ComingSoonsTmdb(BaseDataflow):
             # 4) FALLBACK FIRST/DIRECTOR/RUNTIME RANKING LOGIC
             if self.potential_chosen_id is None:
                 first = self.details.get(self.candidates[0])
-                if first:
-                    first_title = first.get("title") or ""
-                    try:
-                        title_match = self.normalizeTitle(first_title).strip().lower() == self.normalizeTitle(str(self.english_title)).strip().lower()
-                    except:
-                        title_match = (first_title or "").strip().lower() == (self.english_title or "").strip().lower()
-
-                    if self.release_year and first.get("release_date"):
-                        try:
-                            self.found_year_match = int(first["release_date"][:4]) == self.release_year
-                        except:
-                            pass
-
-                        if title_match and self.found_year_match:
-                            self.potential_chosen_id = self.candidates[0]
+                if first and (self.normalizeTitle(first.get("title")) == self.normalizeTitle(self.english_title)) and self.release_year and self.tryExceptNone(lambda: int((first.get("release_date") or "")[:4]) == self.release_year):
+                    self.potential_chosen_id = self.candidates[0]
 
                 # Director match
                 if self.potential_chosen_id is None and self.directed_by:
@@ -219,23 +121,21 @@ class ComingSoonsTmdb(BaseDataflow):
 
                 if self.potential_chosen_id is None:
                     self.potential_chosen_id = self.candidates[0]
-            if not self.potential_chosen_id or str(self.potential_chosen_id).lower() in skip_tokens:
+
+            if not self.potential_chosen_id or str(self.potential_chosen_id).lower() in self.skip_tokens:
                 continue
 
             chosen_details = self.details.get(self.potential_chosen_id) or {}
             chosen_imdb = (chosen_details.get("external_ids", {}) or {}).get("imdb_id")
 
-            self.non_deduplicated_updates.append({"old_uuid": original_uuid, "run_id": original_run_id, "english_title": original_title, "hebrew_title": self.hebrew_title, "release_date": original_release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
-
-            if original_uuid:
-                processed_ids.add(original_uuid)
+            self.non_deduplicated_updates.append({"old_uuid": row.get("id"), "run_id": row.get("run_id"), "english_title": self.english_title, "hebrew_title": self.hebrew_title, "release_date": self.release_date, "tmdb_id": self.potential_chosen_id, "imdb_id": chosen_imdb})
+            self.processed_ids.add(row.get("id"))
 
         # 5) DEDUPE BY TMDB ID
         grouped = defaultdict(list)
-        for row in self.non_deduplicated_updates:
-            tmdb_id = row.get("tmdb_id")
-            if tmdb_id:
-                grouped[tmdb_id].append(row)
+        for r in self.non_deduplicated_updates:
+            if tmdb_id := r.get("tmdb_id"):
+                grouped[tmdb_id].append(r)
 
         for tmdb_id, rows in grouped.items():
             rows_sorted = sorted(rows, key=self.comingSoonsFinalDedupeSortKey)
@@ -252,35 +152,26 @@ class ComingSoonsTmdb(BaseDataflow):
 
         # 6) ENRICH TITLE + POSTER + IMDB_ID
         for row in self.non_enriched_updates:
-            tmdb_id = row.get("tmdb_id")
-            if not tmdb_id:
+            if not (tmdb_id := row.get("tmdb_id")):
                 continue
-
             try:
                 data = requests.get(f"https://api.themoviedb.org/3/movie/{tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}, timeout=10).json()
             except:
                 continue
-
+            if not isinstance(data, dict) or not data.get("id"):
+                continue
+            external_ids = data.get("external_ids") or {}
             new_row = dict(row)
 
-            if data.get("title"):
-                new_row["english_title"] = data["title"].strip()
-
-            external_ids = data.get("external_ids") or {}
-            imdb_id = external_ids.get("imdb_id")
-            if imdb_id:
-                new_row["imdb_id"] = imdb_id
-
-            if data.get("poster_path"):
-                new_row["poster"] = "https://image.tmdb.org/t/p/w500" + data["poster_path"]
-            if data.get("backdrop_path"):
-                new_row["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"]
-
+            new_row["english_title"] = data["title"].strip() if data.get("title") else new_row.get("english_title")
+            new_row["imdb_id"] = external_ids.get("imdb_id") or new_row.get("imdb_id")
+            new_row["poster"] = "https://image.tmdb.org/t/p/w500" + data["poster_path"] if data.get("poster_path") else new_row.get("poster")
+            new_row["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"] if data.get("backdrop_path") else new_row.get("backdrop")
             self.updates.append(new_row)
 
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME)
-        if processed_ids:
-            ids = list(processed_ids)
+        if self.processed_ids:
+            ids = list(self.processed_ids)
             for i in range(0, len(ids), 200):
                 chunk = ids[i : i + 200]
                 self.supabase.table(self.MAIN_TABLE_NAME).update({"added": True}).in_("id", chunk).execute()
