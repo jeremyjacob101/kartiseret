@@ -1,0 +1,46 @@
+==== cron run start: 2026-01-20T18:00:00+0200 ====
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+HEAD is now at 2a339f2 [UP] Updated run_weekly logic 8
+
+--------------------
+
+CCsoon: 01m02s
+LCsoon: 01m05s
+YPsoon: 02m15s
+MLsoon: 02m22s
+HCsoon: 04m46s
+
+--------------------
+
+
+--------------------
+
+LevCinema: 04m08s
+RavHen: 11m47s
+MovieLand: 18m46s
+HotCinema: 27m03s
+YesPlanet: 29m18s
+CinemaCity: 59m57s
+
+--------------------
+
+
+--------------------
+
+ComingSoonsClean: 00m06s
+ComingSoonsTmdb: 02m19s
+
+--------------------
+
+
+--------------------
+
+NowPlayingsClean: 02m17s
+NowPlayingsTmdb: 05m43s
+
+--------------------
+
+==== cron run end: 2026-01-20T19:15:17+0200 ====
