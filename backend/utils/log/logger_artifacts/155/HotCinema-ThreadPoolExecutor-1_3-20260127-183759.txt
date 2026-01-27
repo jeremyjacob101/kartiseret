@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: HotCinema
+URL: https://hotcinema.co.il/movie/3342/housemaid
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=65124): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > HotCinema.py:27
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183759.png
+CSV: 

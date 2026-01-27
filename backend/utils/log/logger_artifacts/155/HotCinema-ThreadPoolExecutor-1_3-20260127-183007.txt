@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: HotCinema
+URL: https://hotcinema.co.il/ShowingNow
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=64155): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183007.png
+CSV: 

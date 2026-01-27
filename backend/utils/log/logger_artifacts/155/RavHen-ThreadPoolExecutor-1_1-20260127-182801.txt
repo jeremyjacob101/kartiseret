@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: RavHen
+URL: https://www.rav-hen.co.il/#/
+Exception: TimeoutException - Message: 
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > RavHen.py:13 > ScrapingHelpers.py:85
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182801.png
+CSV: 

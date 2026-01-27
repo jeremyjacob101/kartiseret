@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: MovieLand
+URL: https://movieland.co.il/movies
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=64842): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183233.png
+CSV: 

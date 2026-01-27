@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: LCsoon
+URL: https://www.lev.co.il/en/
+Exception: TimeoutException - Message: 
+Call Chain: runners.py:18 > BaseCinema.py:28 > LCsoon.py:13 > ScrapingHelpers.py:77 > ScrapingHelpers.py:19
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181841.png
+CSV: 

@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: RavHen
+URL: https://www.rav-hen.co.il/#/
+Exception: WebDriverException - Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=143.0.7499.194)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182639.png
+CSV: 

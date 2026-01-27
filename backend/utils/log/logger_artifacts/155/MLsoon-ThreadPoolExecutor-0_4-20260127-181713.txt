@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: MLsoon
+URL: https://www.movieland.co.il/soon
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=63187): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181713.png
+CSV: 

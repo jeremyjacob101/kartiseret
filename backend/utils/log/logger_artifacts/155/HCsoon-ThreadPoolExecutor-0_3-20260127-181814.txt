@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: HCsoon
+URL: https://hotcinema.co.il/ComingSoon
+Exception: TimeoutException - Message: 
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > HCsoon.py:17 > ScrapingHelpers.py:85
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/HCsoon-ThreadPoolExecutor-0_3-20260127-181814.png
+CSV: 

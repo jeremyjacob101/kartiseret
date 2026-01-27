@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: LevCinema
+URL: https://www.lev.co.il/en/movies/%d7%9e%d7%99%d7%a1-%d7%95%d7%99%d7%95%d7%9c%d7%98/
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=65304): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > LevCinema.py:20
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-185113.png
+CSV: backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-184956-gathering_info.csv

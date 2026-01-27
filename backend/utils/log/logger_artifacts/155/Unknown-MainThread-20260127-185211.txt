@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: Unknown
+URL: ?
+Exception: ReadError - [Errno 54] Connection reset by peer
+Call Chain: runners.py:39 > runners.py:19 > BaseDataflow.py:25 > SupabaseTables.py:42 > SupabaseTables.py:14
+Selector: 
+Screenshot: 
+CSV: 
