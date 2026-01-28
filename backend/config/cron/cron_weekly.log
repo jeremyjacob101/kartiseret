@@ -1,0 +1,212 @@
+==== cron run start: 2026-01-20T18:00:00+0200 ====
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+Already on 'main'
+Your branch is up to date with 'origin/main'.
+HEAD is now at 2a339f2 [UP] Updated run_weekly logic 8
+
+--------------------
+
+CCsoon: 01m02s
+LCsoon: 01m05s
+YPsoon: 02m15s
+MLsoon: 02m22s
+HCsoon: 04m46s
+
+--------------------
+
+
+--------------------
+
+LevCinema: 04m08s
+RavHen: 11m47s
+MovieLand: 18m46s
+HotCinema: 27m03s
+YesPlanet: 29m18s
+CinemaCity: 59m57s
+
+--------------------
+
+
+--------------------
+
+ComingSoonsClean: 00m06s
+ComingSoonsTmdb: 02m19s
+
+--------------------
+
+
+--------------------
+
+NowPlayingsClean: 02m17s
+NowPlayingsTmdb: 05m43s
+
+--------------------
+
+==== cron run end: 2026-01-20T19:15:17+0200 ====
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/CCsoon-ThreadPoolExecutor-0_2-20260120-180108-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-183318-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190034-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190448-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/HCsoon-ThreadPoolExecutor-0_3-20260120-180451-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/HotCinema-ThreadPoolExecutor-1_3-20260120-183154-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/LCsoon-ThreadPoolExecutor-0_0-20260120-180111-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/LevCinema-ThreadPoolExecutor-1_0-20260120-180900-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/MLsoon-ThreadPoolExecutor-0_4-20260120-180227-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/MovieLand-ThreadPoolExecutor-1_2-20260120-182338-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/RavHen-ThreadPoolExecutor-1_1-20260120-181639-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/YPsoon-ThreadPoolExecutor-0_1-20260120-180221-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'backend/utils/log/logger_artifacts/153/YesPlanet-ThreadPoolExecutor-1_4-20260120-183409-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+[main 99ffdbd] [W-RUN] weekly artifacts and log 2026-01-20_19-15-18
+ 22 files changed, 14443 insertions(+), 1 deletion(-)
+ create mode 100644 backend/config/cron/run_weekly_logs/cron_weekly_2026-01-20_18-00-00.log
+ create mode 100644 backend/utils/log/logger_artifacts/153/.job_ok
+ create mode 100644 backend/utils/log/logger_artifacts/153/CCsoon-ThreadPoolExecutor-0_2-20260120-180108-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-183318-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-183318.png
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-183318.txt
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190034-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190034.png
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190034.txt
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190448-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190448.png
+ create mode 100644 backend/utils/log/logger_artifacts/153/CinemaCity-ThreadPoolExecutor-1_5-20260120-190448.txt
+ create mode 100644 backend/utils/log/logger_artifacts/153/HCsoon-ThreadPoolExecutor-0_3-20260120-180451-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/HotCinema-ThreadPoolExecutor-1_3-20260120-183154-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/LCsoon-ThreadPoolExecutor-0_0-20260120-180111-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/LevCinema-ThreadPoolExecutor-1_0-20260120-180900-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/MLsoon-ThreadPoolExecutor-0_4-20260120-180227-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/MovieLand-ThreadPoolExecutor-1_2-20260120-182338-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/RavHen-ThreadPoolExecutor-1_1-20260120-181639-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/YPsoon-ThreadPoolExecutor-0_1-20260120-180221-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/153/YesPlanet-ThreadPoolExecutor-1_4-20260120-183409-gathering_info.csv
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+Current branch main is up to date.
+To github.com:jeremyjacob101/KartiseretV2.git
+   2a339f2..99ffdbd  main -> main
+==== cron run start: 2026-01-27T18:00:00+0200 ====
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+   99ffdbd..cb430da  main       -> origin/main
+Already on 'main'
+Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+HEAD is now at cb430da [SETT] Settings change prettier.prettier to esbenp.prettier
+
+--------------------
+
+LCsoon: 13m44s
+MLsoon: 13m57s
+CCsoon: 14m52s
+HCsoon: 18m19s
+YPsoon: 20m07s
+
+--------------------
+
+
+--------------------
+
+RavHen: 03m59s
+CinemaCity: 10m35s
+MovieLand: 11m40s
+HotCinema: 12m55s
+YesPlanet: 14m15s
+LevCinema: 26m09s
+
+--------------------
+
+
+--------------------
+
+ComingSoonsClean: 01m08s
+ComingSoonsTmdb: 00m17s
+
+--------------------
+
+
+--------------------
+
+NowPlayingsClean: 03m49s
+NowPlayingsTmdb: 06m08s
+
+--------------------
+
+==== cron run end: 2026-01-27T19:02:41+0200 ====
+warning: in the working copy of 'backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-184956-gathering_info.csv', CRLF will be replaced by LF the next time Git touches it
+[main 2f36933] [W-RUN] weekly artifacts and log 2026-01-27_19-02-42
+ 68 files changed, 683 insertions(+), 1 deletion(-)
+ create mode 100644 backend/config/cron/run_weekly_logs/cron_weekly_2026-01-27_18-00-00.log
+ create mode 100644 backend/utils/log/logger_artifacts/155/.job_ok
+ create mode 100644 backend/utils/log/logger_artifacts/155/CCsoon-ThreadPoolExecutor-0_2-20260127-180945.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/CCsoon-ThreadPoolExecutor-0_2-20260127-180945.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/CCsoon-ThreadPoolExecutor-0_2-20260127-181447.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/CCsoon-ThreadPoolExecutor-0_2-20260127-181447.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/CCsoon-ThreadPoolExecutor-0_2-20260127-181949.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/CCsoon-ThreadPoolExecutor-0_2-20260127-181949.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/CinemaCity-ThreadPoolExecutor-1_5-20260127-183007.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/CinemaCity-ThreadPoolExecutor-1_5-20260127-183007.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/CinemaCity-ThreadPoolExecutor-1_5-20260127-183234.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/CinemaCity-ThreadPoolExecutor-1_5-20260127-183234.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/CinemaCity-ThreadPoolExecutor-1_5-20260127-183538.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/CinemaCity-ThreadPoolExecutor-1_5-20260127-183538.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/HCsoon-ThreadPoolExecutor-0_3-20260127-181502.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/HCsoon-ThreadPoolExecutor-0_3-20260127-181814.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/HCsoon-ThreadPoolExecutor-0_3-20260127-181814.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/HCsoon-ThreadPoolExecutor-0_3-20260127-182316.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/HCsoon-ThreadPoolExecutor-0_3-20260127-182316.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183007.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183007.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183132.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183132.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183759.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/HotCinema-ThreadPoolExecutor-1_3-20260127-183759.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181503.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181503.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181726.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181726.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181841.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/LCsoon-ThreadPoolExecutor-0_0-20260127-181841.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-183007.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-183007.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-183219.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-183219.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-184956-gathering_info.csv
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-185113.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/LevCinema-ThreadPoolExecutor-1_0-20260127-185113.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181211.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181211.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181713.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181713.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181854.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/MLsoon-ThreadPoolExecutor-0_4-20260127-181854.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183007.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183007.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183233.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183233.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183644.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/MovieLand-ThreadPoolExecutor-1_2-20260127-183644.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182639.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182639.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182801.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182801.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182903.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/RavHen-ThreadPoolExecutor-1_1-20260127-182903.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/Unknown-MainThread-20260127-185211.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/YPsoon-ThreadPoolExecutor-0_1-20260127-181503.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/YPsoon-ThreadPoolExecutor-0_1-20260127-182002.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/YPsoon-ThreadPoolExecutor-0_1-20260127-182002.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/YPsoon-ThreadPoolExecutor-0_1-20260127-182504.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/YPsoon-ThreadPoolExecutor-0_1-20260127-182504.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/YesPlanet-ThreadPoolExecutor-1_4-20260127-183007.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/YesPlanet-ThreadPoolExecutor-1_4-20260127-183249.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/YesPlanet-ThreadPoolExecutor-1_4-20260127-183249.txt
+ create mode 100644 backend/utils/log/logger_artifacts/155/YesPlanet-ThreadPoolExecutor-1_4-20260127-183919.png
+ create mode 100644 backend/utils/log/logger_artifacts/155/YesPlanet-ThreadPoolExecutor-1_4-20260127-183919.txt
+From github.com:jeremyjacob101/KartiseretV2
+ * branch            main       -> FETCH_HEAD
+Current branch main is up to date.
+Read from remote host github.com: Operation timed out
+client_loop: send disconnect: Broken pipe
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
