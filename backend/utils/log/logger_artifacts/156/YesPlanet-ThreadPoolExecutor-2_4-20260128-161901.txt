@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/cinemas/ayalon/1025#/buy-tickets-by-cinema?in-cinema=1025&at=2026-01-30&view-mode=list
+Exception: StaleElementReferenceException - Message: stale element reference: stale element not found in the current frame
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:118
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/156/YesPlanet-ThreadPoolExecutor-2_4-20260128-161901.png
+CSV: backend/utils/log/logger_artifacts/156/YesPlanet-ThreadPoolExecutor-2_4-20260128-161901-gathering_info.csv

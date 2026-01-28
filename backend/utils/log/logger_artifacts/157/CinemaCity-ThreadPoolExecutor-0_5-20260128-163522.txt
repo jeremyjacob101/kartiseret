@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: CinemaCity
+URL: https://www.cinema-city.co.il/
+Exception: StaleElementReferenceException - Message: stale element reference: stale element not found in the current frame
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > CinemaCity.py:102
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/157/CinemaCity-ThreadPoolExecutor-0_5-20260128-163522.png
+CSV: backend/utils/log/logger_artifacts/157/CinemaCity-ThreadPoolExecutor-0_5-20260128-163522-gathering_info.csv

@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/?lang=en_gb#/
+Exception: ElementClickInterceptedException - Message: element click intercepted: Element is not clickable at point (618, 1097)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:13 > ScrapingHelpers.py:85
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/157/YesPlanet-ThreadPoolExecutor-0_4-20260128-163210.png
+CSV: 

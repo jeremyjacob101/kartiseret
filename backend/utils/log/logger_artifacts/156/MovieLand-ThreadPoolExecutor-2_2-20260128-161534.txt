@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: MovieLand
+URL: https://movieland.co.il/movies
+Exception: NoSuchElementException - Message: no such element: Unable to locate element: {"method":"xpath","selector":"/html/body/div[1]/div[13]/div/div/a"}
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > MovieLand.py:15 > ScrapingHelpers.py:58
+Selector: /html/body/div[1]/div[13]/div/div/a
+Screenshot: backend/utils/log/logger_artifacts/156/MovieLand-ThreadPoolExecutor-2_2-20260128-161534.png
+CSV: 

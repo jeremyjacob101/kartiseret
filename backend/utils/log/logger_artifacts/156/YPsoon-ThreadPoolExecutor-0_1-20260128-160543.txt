@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YPsoon
+URL: https://www.planetcinema.co.il/?lang=en_gb#/
+Exception: ElementClickInterceptedException - Message: element click intercepted: Element is not clickable at point (618, 1028)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YPsoon.py:16 > ScrapingHelpers.py:85
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/156/YPsoon-ThreadPoolExecutor-0_1-20260128-160543.png
+CSV: 

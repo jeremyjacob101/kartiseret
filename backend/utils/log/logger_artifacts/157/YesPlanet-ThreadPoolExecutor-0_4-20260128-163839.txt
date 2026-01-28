@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/cinemas/ayalon/1025#/buy-tickets-by-cinema?in-cinema=1025&at=2026-02-02&view-mode=list
+Exception: TimeoutException - Message: 
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:104 > ScrapingHelpers.py:19
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/157/YesPlanet-ThreadPoolExecutor-0_4-20260128-163839.png
+CSV: backend/utils/log/logger_artifacts/157/YesPlanet-ThreadPoolExecutor-0_4-20260128-163839-gathering_info.csv

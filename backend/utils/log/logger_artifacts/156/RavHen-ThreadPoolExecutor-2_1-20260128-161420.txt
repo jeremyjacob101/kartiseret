@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: RavHen
+URL: https://www.rav-hen.co.il/#/
+Exception: ElementClickInterceptedException - Message: element click intercepted: Element is not clickable at point (1318, 1064)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > RavHen.py:13 > ScrapingHelpers.py:85
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/156/RavHen-ThreadPoolExecutor-2_1-20260128-161420.png
+CSV: 
