@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/static/en/il/MERCHANDISE
+Exception: TimeoutException - Message: 
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:87 > ScrapingHelpers.py:19
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/159/YesPlanet-ThreadPoolExecutor-0_1-20260131-190120.png
+CSV: backend/utils/log/logger_artifacts/159/YesPlanet-ThreadPoolExecutor-0_1-20260131-190120-gathering_info.csv

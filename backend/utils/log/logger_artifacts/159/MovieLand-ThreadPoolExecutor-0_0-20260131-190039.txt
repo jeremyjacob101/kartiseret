@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: MovieLand
+URL: https://movieland.co.il/movie/4772#order
+Exception: TimeoutException - Message: 
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > MovieLand.py:35 > ScrapingHelpers.py:19
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/159/MovieLand-ThreadPoolExecutor-0_0-20260131-190039.png
+CSV: 

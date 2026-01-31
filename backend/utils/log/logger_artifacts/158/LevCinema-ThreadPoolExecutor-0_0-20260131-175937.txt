@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: LevCinema
+URL: https://www.lev.co.il/en/
+Exception: Empty gathering_info table
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:29 > FormatAndAppend.py:85
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/158/LevCinema-ThreadPoolExecutor-0_0-20260131-175937.png
+CSV: 

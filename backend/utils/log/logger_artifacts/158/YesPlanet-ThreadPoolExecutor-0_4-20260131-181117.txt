@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/cinemas/Rishon_Letziyon/1072#/buy-tickets-by-cinema?in-cinema=1072&at=2026-02-28&for-movie=7919s2i&view-mode=list
+Exception: NoSuchElementException - Message: no such element: Unable to locate element: {"method":"css selector","selector":"body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child(6) > td:nth-child(3) > button"}
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:94 > ScrapingHelpers.py:58
+Selector: body > section.light.quickbook-section.npm-quickbook > section > div:nth-child(1) > div > div > div:nth-child(2) > div.col-xs-12.col-md-6.qb-calendar-widget > div > div.qb-days-group.btn-group > div > div:nth-child(3) > div > div.datepicker.datepicker-inline > div.datepicker-days > table > tbody > tr:nth-child(6) > td:nth-child(3) > button
+Screenshot: backend/utils/log/logger_artifacts/158/YesPlanet-ThreadPoolExecutor-0_4-20260131-181117.png
+CSV: backend/utils/log/logger_artifacts/158/YesPlanet-ThreadPoolExecutor-0_4-20260131-181117-gathering_info.csv
