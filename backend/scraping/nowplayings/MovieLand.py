@@ -19,6 +19,7 @@ class MovieLand(BaseCinema):
 
         for href in range(len(self.hebrew_hrefs)):
             self.driver.get(self.hebrew_hrefs[href])
+            self.sleep(0.05)
             hebrew_name = self.element("#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(1)").text.strip()
             self.hebrew_titles.append(hebrew_name)
             self.english_titles.append(self.element("#change-bg > div > div:nth-child(3) > div > div.col-12.col-sm-8.col-md-8.col-lg-9 > div > div > div.bg-more-b > span:nth-child(3)").text.strip() or hebrew_name)
@@ -32,7 +33,7 @@ class MovieLand(BaseCinema):
         name_to_idx = {str(name): i for i, name in enumerate(self.hebrew_titles)}
 
         for cinema in range(1, self.lenElements("/html/body/div[1]/div[7]/ul/li[2]/div/div[1]/a") + 1):
-            self.driver.get(self.element(f"body > div.rtl-wrapper > div.newnav-upper-menu.d-none.d-md-block > ul > li.dropdown > div > div:nth-child(1) > a:nth-child({cinema})").get_attribute("href").rsplit("/", 1)[0] + "/")
+            self.driver.get(self.element(f"/html/body/div[1]/div[7]/ul/li[2]/div/div[1]/a[{cinema}]").get_attribute("href"))
             self.sleep(1)
             self.zoomOut(30)
 
@@ -75,7 +76,7 @@ class MovieLand(BaseCinema):
                                 self.rating = self.ratings[checking_film]
                                 self.original_language = self.original_languages[checking_film]
                                 self.dub_language = None
-                                
+
                                 if "(מדובב)" in self.hebrew_title:
                                     self.hebrew_title = self.hebrew_title.replace("(מדובב)", "").strip()
                                     self.dub_language = "Hebrew"
