@@ -1,7 +1,7 @@
+from supabase import create_client
 from selenium import webdriver
 from datetime import datetime
 import time, pytz, os
-from supabase import create_client
 
 runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
 RUNNER_MACHINE = os.environ.get("RUNNER_MACHINE")

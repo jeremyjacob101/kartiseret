@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: NowPlayingsUpdate
+URL: data:,
+Exception: TypeError - NowPlayingsHelpers.load_update_final_movies_main_row() missing 1 required positional argument: 'row'
+Call Chain: runners.py:40 > runners.py:19 > BaseDataflow.py:34 > NowPlayingsUpdate.py:13
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/171/NowPlayingsUpdate-ThreadPoolExecutor-0_0-20260202-120921.png
+CSV: 

@@ -50,6 +50,22 @@ class NowPlayingsHelpers:
         self.directed_by = None
         self.runtime = None
 
+        self.popularity = None
+        self.tmdb_id = None
+        self.tmdbRating = None
+        self.tmdbVotes = None
+        self.imdb_id = None
+        self.imdbRating = None
+        self.imdbVotes = None
+        self.rt_id = None
+        self.rtRating = None
+        self.rtVotes = None
+        self.lb_id = None
+        self.lbRating = None
+        self.lbVotes = None
+        self.poster = None
+        self.backdrop = None
+
     def load_np_main_row(self, row: dict):
         def clean_str(v):
             return str(v) if v not in (None, "", "null") else ""
@@ -76,6 +92,41 @@ class NowPlayingsHelpers:
         self.release_year = clean_int(row.get("release_year"))
         self.directed_by = clean_str(row.get("directed_by"))
         self.runtime = clean_int(row.get("runtime"))
+
+    def load_update_final_movies_main_row(self, row: dict):
+        def clean_str(v):
+            return str(v) if v not in (None, "", "null") else ""
+
+        def clean_int(v):
+            try:
+                return int(v) if v not in (None, "", "null") else None
+            except:
+                return None
+
+        def clean_float(v):
+            try:
+                return float(v) if v not in (None, "", "null") else None
+            except:
+                return None
+
+        self.english_title = clean_str(row.get("english_title"))
+        self.release_year = clean_int(row.get("release_year"))
+        self.runtime = clean_int(row.get("runtime"))
+        self.popularity = clean_float(row.get("popularity"))
+        self.tmdb_id = clean_int(row.get("tmdb_id"))
+        self.tmdbRating = clean_int(row.get("tmdbRating"))
+        self.tmdbVotes = clean_int(row.get("tmdbVotes"))
+        self.imdb_id = clean_str(row.get("imdb_id"))
+        self.imdbRating = clean_float(row.get("imdbRating"))
+        self.imdbVotes = clean_int(row.get("imdbVotes"))
+        self.rt_id = clean_str(row.get("rt_id"))
+        self.rtRating = clean_int(row.get("rtRating"))
+        self.rtVotes = clean_int(row.get("rtVotes"))
+        self.lb_id = clean_str(row.get("lb_id"))
+        self.lbRating = clean_float(row.get("lbRating"))
+        self.lbVotes = clean_int(row.get("lbVotes"))
+        self.poster = clean_str(row.get("poster"))
+        self.backdrop = clean_str(row.get("backdrop"))
 
     def reset_np_groupkey_row_state(self):
         self.potential_chosen_id = None

@@ -1,5 +1,6 @@
 from collections import defaultdict
 from supabase import create_client
+from selenium import webdriver
 import time, os
 
 runningGithubActions = os.environ.get("GITHUB_ACTIONS") == "true"
@@ -14,6 +15,19 @@ def setUpSupabase(self):
 
 def setUpTmdb(self):
     self.TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
+
+
+def build_chrome(headless: bool = True):
+    options = webdriver.ChromeOptions()
+    if headless:
+        options.add_argument("--headless=new")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument(f"--window-size=1920,1080")
+    options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.6723.92 Safari/537.36")
+    # options.add_argument(f"user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.0 Safari/537.36")
+    return webdriver.Chrome(options=options)
 
 
 def logSuccessfulRun(self) -> None:
