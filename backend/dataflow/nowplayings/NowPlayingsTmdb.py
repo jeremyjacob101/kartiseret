@@ -183,6 +183,7 @@ class NowPlayingsTmdb(BaseDataflow):
             res["imdb_id"] = external_ids.get("imdb_id") or res.get("imdb_id")
             res["poster"] = "https://image.tmdb.org/t/p/w500" + data["poster_path"] if data.get("poster_path") else res.get("poster")
             res["backdrop"] = "https://image.tmdb.org/t/p/w500" + data["backdrop_path"] if data.get("backdrop_path") else res.get("backdrop")
+            res["year"] = data["release_date"][:4] if data.get("release_date") else res.get("year")
 
         tmdb_id_to_enriched = dict(self.movies_by_tmdb)
         for key, rows in self.grouped_rows_by_key.items():
@@ -217,7 +218,7 @@ class NowPlayingsTmdb(BaseDataflow):
             if not tmdb_id:
                 continue
             imdb_id = res.get("imdb_id") or None
-            self.updates.append({"tmdb_id": tmdb_id, "english_title": res.get("english_title"), "runtime": res.get("runtime"), "popularity": res.get("popularity"), "poster": res.get("poster"), "backdrop": res.get("backdrop"), "imdb_id": imdb_id})
+            self.updates.append({"tmdb_id": tmdb_id, "english_title": res.get("english_title"), "runtime": res.get("runtime"), "popularity": res.get("popularity"), "imdb_id": imdb_id, "poster": res.get("poster"), "backdrop": res.get("backdrop"), "year": res.get("year")})
 
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME_2)
         self.dedupeTable(self.MOVING_TO_TABLE_NAME_2, ignore_cols={"english_title", "runtime", "popularity", "poster", "backdrop", "imdb_id", "imdbRating", "imdbVotes", "rtRating", "year"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
