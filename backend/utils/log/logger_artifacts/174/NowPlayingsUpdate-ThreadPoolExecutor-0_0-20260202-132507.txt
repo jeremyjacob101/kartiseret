@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: NowPlayingsUpdate
+URL: data:,
+Exception: InvalidArgumentException - Message: invalid argument
+  (Session info: chrome=144.0.7559.110)
+Call Chain: runners.py:40 > runners.py:19 > BaseDataflow.py:35 > NowPlayingsUpdate.py:38
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/174/NowPlayingsUpdate-ThreadPoolExecutor-0_0-20260202-132507.png
+CSV: 

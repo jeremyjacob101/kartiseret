@@ -1,11 +1,12 @@
 from backend.dataflow.utils.SupabaseTables import SupabaseTables
+from backend.dataflow.utils.ScrapingHelpers import ScrapingHelpers
 from backend.dataflow.utils.DataflowHelpers import DataflowHelpers
 from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpTmdb, build_chrome, logSuccessfulRun
 from backend.dataflow.comingsoons.utils.ComingSoonsHelpers import ComingSoonsHelpers
 from backend.dataflow.nowplayings.utils.NowPlayingsHelpers import NowPlayingsHelpers
 
 
-class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, ComingSoonsHelpers, NowPlayingsHelpers):
+class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, ComingSoonsHelpers, NowPlayingsHelpers, ScrapingHelpers):
     MAIN_TABLE_NAME: str = ""
     DUPLICATE_TABLE_NAME: str = ""
     MOVING_TO_TABLE_NAME: str = ""
