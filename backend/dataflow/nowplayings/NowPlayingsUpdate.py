@@ -60,7 +60,10 @@ class NowPlayingsUpdate(BaseDataflow):
 
             # Rotten Tomatoes
             self.driver.get(f"https://www.rottentomatoes.com/search?search={new_row['english_title']} {new_row['release_year']}")
-            self.tryExceptPass(self.driver.get(self.element("/html/body/div[3]/main/div/div/section[1]/div/search-page-result[1]/ul/search-page-media-row[1]/a[1]").get_attribute("href")))
+            try:
+                self.driver.get(self.element("/html/body/div[3]/main/div/div/section[1]/div/search-page-result[1]/ul/search-page-media-row[1]/a[1]").get_attribute("href"))
+            except:
+                pass
 
             try:
                 new_row["rtAudienceRating"] = int(re.sub(r"[^\d]", "", (self.element("/html/body/div[3]/main/div/div[1]/div[2]/div[1]/div[1]/media-scorecard/rt-text[3]").get_attribute("innerHTML") or "").strip()))
@@ -82,6 +85,7 @@ class NowPlayingsUpdate(BaseDataflow):
             except:
                 new_row["rtCriticVotes"] = self.rtCriticVotes
 
+            print(new_row)
             self.updates.append(new_row)
 
         if self.updates:
