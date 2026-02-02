@@ -58,8 +58,10 @@ class NowPlayingsHelpers:
         self.imdbRating = None
         self.imdbVotes = None
         self.rt_id = None
-        self.rtRating = None
-        self.rtVotes = None
+        self.rtAudienceRating = None
+        self.rtAudienceVotes = None
+        self.rtCriticRating = None
+        self.rtCriticVotes = None
         self.lb_id = None
         self.lbRating = None
         self.lbVotes = None
@@ -120,8 +122,10 @@ class NowPlayingsHelpers:
         self.imdbRating = clean_float(row.get("imdbRating"))
         self.imdbVotes = clean_int(row.get("imdbVotes"))
         self.rt_id = clean_str(row.get("rt_id"))
-        self.rtRating = clean_int(row.get("rtRating"))
-        self.rtVotes = clean_int(row.get("rtVotes"))
+        self.rtAudienceRating = clean_int(row.get("rtAudienceRating"))
+        self.rtAudienceVotes = clean_int(row.get("rtAudienceVotes"))
+        self.rtCriticRating = clean_int(row.get("rtCriticRating"))
+        self.rtCriticVotes = clean_int(row.get("rtCriticVotes"))
         self.lb_id = clean_str(row.get("lb_id"))
         self.lbRating = clean_float(row.get("lbRating"))
         self.lbVotes = clean_int(row.get("lbVotes"))

@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: NowPlayingsUpdate
+URL: https://www.rottentomatoes.com/m/the_smiling_man_2020
+Exception: APIError - {'message': 'invalid input syntax for type integer: ""', 'code': '22P02', 'hint': None, 'details': None}
+Call Chain: runners.py:40 > runners.py:19 > BaseDataflow.py:35 > NowPlayingsUpdate.py:101 > SupabaseTables.py:70
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/178/NowPlayingsUpdate-ThreadPoolExecutor-0_0-20260202-141334.png
+CSV: 

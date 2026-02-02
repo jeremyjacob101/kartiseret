@@ -221,4 +221,4 @@ class NowPlayingsTmdb(BaseDataflow):
             self.updates.append({"tmdb_id": tmdb_id, "english_title": res.get("english_title"), "runtime": res.get("runtime"), "popularity": res.get("popularity"), "imdb_id": imdb_id, "poster": res.get("poster"), "backdrop": res.get("backdrop"), "release_year": res.get("release_year")})
 
         self.upsertUpdates(self.MOVING_TO_TABLE_NAME_2)
-        self.dedupeTable(self.MOVING_TO_TABLE_NAME_2, ignore_cols={"english_title", "runtime", "popularity", "poster", "backdrop", "imdb_id", "imdbRating", "imdbVotes", "rt_id", "rtRating", "rtVotes", "lb_id", "lbRating", "lbVotes", "tmdbRating", "tmdbVotes", "release_year"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
+        self.dedupeTable(self.MOVING_TO_TABLE_NAME_2, ignore_cols={"english_title", "runtime", "popularity", "poster", "backdrop", "imdb_id", "imdbRating", "imdbVotes", "rt_id", "rtAudienceRating", "rtAudienceVotes", "rtCriticRating", "rtCriticVotes", "lb_id", "lbRating", "lbVotes", "tmdbRating", "tmdbVotes", "release_year"}, sort_key=self.newestCreatedAtSortKey, sort_reverse=True)
