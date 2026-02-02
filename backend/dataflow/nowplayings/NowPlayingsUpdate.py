@@ -4,6 +4,7 @@ import requests, re
 
 class NowPlayingsUpdate(BaseDataflow):
     MAIN_TABLE_NAME = "finalMovies"
+    HEADLESS = False
 
     def logic(self):
         self.dedupeTable(self.MAIN_TABLE_NAME)
@@ -30,18 +31,18 @@ class NowPlayingsUpdate(BaseDataflow):
             new_row["tmdbVotes"] = data["vote_count"] if data.get("vote_count") is not None else self.tmdbVotes
             new_row["lb_id"] = f"tmdb/{self.tmdb_id}"
 
-            # Letterboxd
-            self.driver.get(f"https://www.letterboxd.com/{new_row['lb_id']}")
+            # # Letterboxd
+            # self.driver.get(f"https://www.letterboxd.com/{new_row['lb_id']}")
 
-            try:
-                new_row["lbRating"] = self.element("/html/body/div[2]/div/div[2]/div[2]/aside/section[2]/span/a").text.strip()
-            except:
-                new_row["lbRating"] = self.lbRating
+            # try:
+            #     new_row["lbRating"] = self.element("/html/body/div[2]/div/div[2]/div[2]/aside/section[2]/span/a").text.strip()
+            # except:
+            #     new_row["lbRating"] = self.lbRating
 
-            try:
-                new_row["lbVotes"] = int(re.search(r"based on\s+([\d,]+)\s+ratings", self.element("/html/body/div[2]/div/div[2]/div[2]/aside/section[2]/span/a").get_attribute("data-original-title") or "").group(1).replace(",", ""))
-            except:
-                new_row["lbVotes"] = self.lbVotes
+            # try:
+            #     new_row["lbVotes"] = int(re.search(r"based on\s+([\d,]+)\s+ratings", self.element("/html/body/div[2]/div/div[2]/div[2]/aside/section[2]/span/a").get_attribute("data-original-title") or "").group(1).replace(",", ""))
+            # except:
+            #     new_row["lbVotes"] = self.lbVotes
 
             # IMDb
             if new_row.get("imdb_id") is not None and new_row.get("imdb_id") != "":
