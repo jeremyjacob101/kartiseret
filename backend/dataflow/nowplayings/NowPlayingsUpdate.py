@@ -20,7 +20,6 @@ class NowPlayingsUpdate(BaseDataflow):
                 data = requests.get(f"https://api.themoviedb.org/3/movie/{self.tmdb_id}", params={"api_key": self.TMDB_API_KEY, "append_to_response": "external_ids"}, timeout=10).json()
             except:
                 continue
-
             new_row["english_title"] = data["title"].strip() if data.get("title") else self.english_title
             new_row["runtime"] = data["runtime"] if data.get("runtime") is not None else self.runtime
             new_row["popularity"] = data["popularity"] if data.get("popularity") is not None else self.popularity
@@ -35,7 +34,6 @@ class NowPlayingsUpdate(BaseDataflow):
             # Letterboxd
             tmdb_url = f"https://letterboxd.com/tmdb/{self.tmdb_id}/"
             r0, loc, session, lb_resolved, film_url = None, None, None, False, ""
-
             for attempt in range(10):
                 if attempt:
                     time.sleep(2)
@@ -48,7 +46,6 @@ class NowPlayingsUpdate(BaseDataflow):
                     r0 = session.get(tmdb_url, headers=self.requests_headers, timeout=20, allow_redirects=False)
                 except Exception:
                     continue
-
                 loc = r0.headers.get("Location")
                 if r0.status_code in (301, 302, 303, 307, 308) and loc:
                     lb_resolved = True
@@ -58,7 +55,6 @@ class NowPlayingsUpdate(BaseDataflow):
                     if ("just a moment" in t) or ("cf-challenge" in t) or ("challenge-platform" in t):
                         continue
                 break
-
             if lb_resolved:
                 film_url = loc if (loc and (loc.startswith("http://") or loc.startswith("https://"))) else ("https://letterboxd.com" + loc if loc else "")
                 if film_url and ("/film/" in film_url):
@@ -88,19 +84,15 @@ class NowPlayingsUpdate(BaseDataflow):
                         html = requests.get(f"https://www.imdb.com/title/{imdb_id}/", headers=self.requests_headers, timeout=20, allow_redirects=True).text
                     except:
                         html = ""
-
                     m = re.search(r'"ratingValue"\s*:\s*"?([\d.]+)"?', html or "")
                     new_row["imdbRating"] = m.group(1) if m else self.imdbRating
-
                     m = re.search(r'"ratingCount"\s*:\s*"?([\d,]+)"?', html or "")
                     new_row["imdbVotes"] = int(m.group(1).replace(",", "")) if m else self.imdbVotes
 
             # Rotten Tomatoes
             search_url = f"https://www.rottentomatoes.com/search?search={quote_plus(new_row['english_title'])}"
             search_html = requests.get(search_url, headers=self.requests_headers, timeout=20).text or ""
-
             rows = re.findall(r"<search-page-media-row\b.*?>.*?</search-page-media-row>", search_html, flags=re.S | re.I)
-
             picked_url = None
             for rt_row in rows:
                 y = re.search(r'release-year="(\d{4})"', rt_row, flags=re.I)
@@ -123,7 +115,6 @@ class NowPlayingsUpdate(BaseDataflow):
                     m_path = re.search(r"rottentomatoes\.com(/m/[^/?#]+)", picked_url)
                     new_row["rt_id"] = m_path.group(1) if m_path else self.rt_id
                     break
-
             if picked_url:
                 try:
                     html = requests.get(picked_url, headers={**self.requests_headers, "Referer": search_url}, timeout=20).text or ""
@@ -140,7 +131,6 @@ class NowPlayingsUpdate(BaseDataflow):
                 except:
                     pass
 
-            print(new_row)
             self.updates.append(new_row)
 
         if self.updates:
