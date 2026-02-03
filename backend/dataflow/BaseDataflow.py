@@ -1,12 +1,11 @@
 from backend.dataflow.utils.SupabaseTables import SupabaseTables
-from backend.dataflow.utils.ScrapingHelpers import ScrapingHelpers
 from backend.dataflow.utils.DataflowHelpers import DataflowHelpers
-from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpTmdb, build_chrome, logSuccessfulRun
+from backend.dataflow.utils.InitializeBaseDataflow import InitializeBaseDataflow, setUpSupabase, setUpTmdb, logSuccessfulRun
 from backend.dataflow.comingsoons.utils.ComingSoonsHelpers import ComingSoonsHelpers
 from backend.dataflow.nowplayings.utils.NowPlayingsHelpers import NowPlayingsHelpers
 
 
-class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, ComingSoonsHelpers, NowPlayingsHelpers, ScrapingHelpers):
+class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, ComingSoonsHelpers, NowPlayingsHelpers):
     MAIN_TABLE_NAME: str = ""
     DUPLICATE_TABLE_NAME: str = ""
     MOVING_TO_TABLE_NAME: str = ""
@@ -19,7 +18,6 @@ class BaseDataflow(InitializeBaseDataflow, DataflowHelpers, SupabaseTables, Comi
 
     def __init__(self, run_id, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.driver = build_chrome(self.HEADLESS)
         self.run_id = run_id
 
         setUpSupabase(self)

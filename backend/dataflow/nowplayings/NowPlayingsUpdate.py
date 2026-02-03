@@ -1,5 +1,6 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
-import requests, re, json, time
+from urllib.parse import quote_plus
+import requests, re, time
 
 
 class NowPlayingsUpdate(BaseDataflow):
@@ -33,7 +34,7 @@ class NowPlayingsUpdate(BaseDataflow):
 
             # Letterboxd
             tmdb_url = f"https://letterboxd.com/tmdb/{self.tmdb_id}/"
-            r0, loc, session, rating_value, rating_count, lb_resolved, film_url = None, None, None, None, None, False, ""
+            r0, loc, session, lb_resolved, film_url = None, None, None, False, ""
 
             for attempt in range(10):
                 if attempt:
@@ -67,20 +68,17 @@ class NowPlayingsUpdate(BaseDataflow):
                         m1 = re.search(r'meta name="twitter:data2" content="([\d.]+) out of 5"', html)
                         if m1:
                             try:
-                                rating_value = round(float(m1.group(1)), 1)
+                                new_row["lbRating"] = round(float(m1.group(1)), 1)
                             except Exception:
-                                rating_value = None
+                                new_row["lbRating"] = self.lbRating
                         m2 = re.search(r'"ratingCount":\s*(\d+)', html)
                         if m2:
                             try:
-                                rating_count = int(m2.group(1))
+                                new_row["lbVotes"] = int(m2.group(1))
                             except Exception:
-                                rating_count = None
+                                new_row["lbVotes"] = self.lbVotes
                     except Exception:
                         pass
-
-            new_row["lbRating"] = rating_value if rating_value is not None else self.lbRating
-            new_row["lbVotes"] = rating_count if rating_count is not None else self.lbVotes
 
             # IMDb
             if new_row.get("imdb_id"):
@@ -90,44 +88,57 @@ class NowPlayingsUpdate(BaseDataflow):
                         html = requests.get(f"https://www.imdb.com/title/{imdb_id}/", headers=self.requests_headers, timeout=20, allow_redirects=True).text
                     except:
                         html = ""
-                    try:
-                        m = re.search(r'"ratingValue"\s*:\s*"?([\d.]+)"?', html or "")
-                        new_row["imdbRating"] = m.group(1) if m else self.imdbRating
-                    except:
-                        new_row["imdbRating"] = self.imdbRating
 
-                    try:
-                        m = re.search(r'"ratingCount"\s*:\s*"?([\d,]+)"?', html or "")
-                        new_row["imdbVotes"] = int(m.group(1).replace(",", "")) if m else self.imdbVotes
-                    except:
-                        new_row["imdbVotes"] = self.imdbVotes
+                    m = re.search(r'"ratingValue"\s*:\s*"?([\d.]+)"?', html or "")
+                    new_row["imdbRating"] = m.group(1) if m else self.imdbRating
+
+                    m = re.search(r'"ratingCount"\s*:\s*"?([\d,]+)"?', html or "")
+                    new_row["imdbVotes"] = int(m.group(1).replace(",", "")) if m else self.imdbVotes
 
             # Rotten Tomatoes
-            self.driver.get(f"https://www.rottentomatoes.com/search?search={new_row['english_title']} {new_row['release_year']}")
-            try:
-                self.driver.get(self.element("/html/body/div[3]/main/div/div/section[1]/div/search-page-result[1]/ul/search-page-media-row[1]/a[1]").get_attribute("href"))
-            except:
-                pass
+            search_url = f"https://www.rottentomatoes.com/search?search={quote_plus(new_row['english_title'])}"
+            search_html = requests.get(search_url, headers=self.requests_headers, timeout=20).text or ""
 
-            try:
-                new_row["rtAudienceRating"] = int(re.sub(r"[^\d]", "", (self.element("/html/body/div[3]/main/div/div[1]/div[2]/div[1]/div[1]/media-scorecard/rt-text[3]").get_attribute("innerHTML") or "").strip()))
-            except:
-                new_row["rtAudienceRating"] = self.rtAudienceRating
+            rows = re.findall(r"<search-page-media-row\b.*?>.*?</search-page-media-row>", search_html, flags=re.S | re.I)
 
-            try:
-                new_row["rtCriticRating"] = int(re.sub(r"[^\d]", "", (self.element("/html/body/div[3]/main/div/div[1]/div[2]/div[1]/div[1]/media-scorecard/rt-text[1]").get_attribute("innerHTML") or "").strip()))
-            except:
-                new_row["rtCriticRating"] = self.rtCriticRating
+            picked_url = None
+            for rt_row in rows:
+                y = re.search(r'release-year="(\d{4})"', rt_row, flags=re.I)
+                if not y:
+                    continue
+                try:
+                    yr = int(y.group(1))
+                except Exception:
+                    continue
+                try:
+                    target_year = int(new_row.get("release_year") or 0)
+                except Exception:
+                    target_year = 0
+                if not target_year or abs(yr - target_year) > 1:
+                    continue
 
-            try:
-                new_row["rtAudienceVotes"] = int((re.search(r"([\d,]+)\s*\+?", (self.element("/html/body/div[3]/main/div/div[1]/div[2]/div[1]/div[1]/media-scorecard/rt-link[2]").text or "")).group(1)).replace(",", ""))
-            except:
-                new_row["rtAudienceVotes"] = self.rtAudienceVotes
+                href = re.search(r'href="(https?://www\.rottentomatoes\.com/m/[^"]+)"', rt_row, flags=re.I)
+                if href:
+                    picked_url = href.group(1)
+                    m_path = re.search(r"rottentomatoes\.com(/m/[^/?#]+)", picked_url)
+                    new_row["rt_id"] = m_path.group(1) if m_path else self.rt_id
+                    break
 
-            try:
-                new_row["rtCriticVotes"] = int((re.search(r"([\d,]+)", (self.element("/html/body/div[3]/main/div/div[1]/div[2]/div[1]/div[1]/media-scorecard/rt-link[1]").text or "")).group(1)).replace(",", ""))
-            except:
-                new_row["rtCriticVotes"] = self.rtCriticVotes
+            if picked_url:
+                try:
+                    html = requests.get(picked_url, headers={**self.requests_headers, "Referer": search_url}, timeout=20).text or ""
+
+                    m_critic_pct = re.search(r'<rt-text[^>]*slot="critics-score"[^>]*>\s*([0-9]{1,3})%\s*</rt-text>', html, flags=re.I)
+                    m_aud_pct = re.search(r'<rt-text[^>]*slot="audience-score"[^>]*>\s*([0-9]{1,3})%\s*</rt-text>', html, flags=re.I)
+                    m_critic_reviews = re.search(r'<rt-link[^>]*slot="critics-reviews"[^>]*>\s*([\d,]+)\s*Reviews\s*</rt-link>', html, flags=re.I)
+                    m_aud_ratings = re.search(r'<rt-link[^>]*slot="audience-reviews"[^>]*>\s*([\d,]+\+?)\s*Ratings\s*</rt-link>', html, flags=re.I)
+
+                    new_row["rtCriticRating"] = int(m_critic_pct.group(1)) if m_critic_pct else self.rtCriticRating
+                    new_row["rtAudienceRating"] = int(m_aud_pct.group(1)) if m_aud_pct else self.rtAudienceRating
+                    new_row["rtCriticVotes"] = int(re.sub(r"[^\d]", "", (m_critic_reviews.group(1) or "").replace(",", "").replace("+", ""))) if m_critic_reviews and re.sub(r"[^\d]", "", (m_critic_reviews.group(1) or "").replace(",", "").replace("+", "")) else self.rtCriticVotes
+                    new_row["rtAudienceVotes"] = int(re.sub(r"[^\d]", "", (m_aud_ratings.group(1) or "").replace(",", "").replace("+", ""))) if m_aud_ratings and re.sub(r"[^\d]", "", (m_aud_ratings.group(1) or "").replace(",", "").replace("+", "")) else self.rtAudienceVotes
+                except:
+                    pass
 
             print(new_row)
             self.updates.append(new_row)
