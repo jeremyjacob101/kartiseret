@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: NowPlayingsUpdate
+URL: https://letterboxd.com/search/tmdb:1312157/
+Exception: NoSuchElementException - Message: no such element: Unable to locate element: {"method":"xpath","selector":"/html/body/div[1]/div/div/section/div[1]/ul/li/article/div[1]/div/a"}
+Call Chain: runners.py:40 > runners.py:19 > BaseDataflow.py:35 > NowPlayingsUpdate.py:36 > ScrapingHelpers.py:11
+Selector: /html/body/div[1]/div/div/section/div[1]/ul/li/article/div[1]/div/a
+Screenshot: backend/utils/log/logger_artifacts/189/NowPlayingsUpdate-ThreadPoolExecutor-0_0-20260203-130301.png
+CSV: 

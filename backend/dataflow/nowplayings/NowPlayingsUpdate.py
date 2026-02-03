@@ -1,5 +1,5 @@
 from backend.dataflow.BaseDataflow import BaseDataflow
-import requests, re
+import requests, re, json, time
 
 
 class NowPlayingsUpdate(BaseDataflow):
@@ -31,18 +31,55 @@ class NowPlayingsUpdate(BaseDataflow):
             new_row["tmdbVotes"] = data["vote_count"] if data.get("vote_count") is not None else self.tmdbVotes
             new_row["lb_id"] = f"tmdb/{self.tmdb_id}"
 
-            # # Letterboxd
-            # self.driver.get(f"https://www.letterboxd.com/{new_row['lb_id']}")
+            # Letterboxd
+            tmdb_url = f"https://letterboxd.com/tmdb/{self.tmdb_id}/"
+            r0, loc, session, rating_value, rating_count = None, None, None, None, None
 
-            # try:
-            #     new_row["lbRating"] = self.element("/html/body/div[2]/div/div[2]/div[2]/aside/section[2]/span/a").text.strip()
-            # except:
-            #     new_row["lbRating"] = self.lbRating
+            for attempt in range(10):
+                if attempt:
+                    time.sleep(2)
+                session = requests.Session()
+                try:
+                    session.get("https://letterboxd.com/", headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari", "Accept-Language": "en-US,en;q=0.9", "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Upgrade-Insecure-Requests": "1"}, timeout=20)
+                except Exception:
+                    pass
+                try:
+                    r0 = session.get(tmdb_url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari", "Accept-Language": "en-US,en;q=0.9", "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Upgrade-Insecure-Requests": "1"}, timeout=20, allow_redirects=False)
+                except Exception:
+                    continue
 
-            # try:
-            #     new_row["lbVotes"] = int(re.search(r"based on\s+([\d,]+)\s+ratings", self.element("/html/body/div[2]/div/div[2]/div[2]/aside/section[2]/span/a").get_attribute("data-original-title") or "").group(1).replace(",", ""))
-            # except:
-            #     new_row["lbVotes"] = self.lbVotes
+                loc = r0.headers.get("Location")
+                if r0.status_code in (301, 302, 303, 307, 308) and loc:
+                    break
+                if r0.status_code == 403:
+                    t = (r0.text or "").lower()
+                    if ("just a moment" in t) or ("cf-challenge" in t) or ("challenge-platform" in t):
+                        continue
+                break
+
+            film_url = loc if (loc and (loc.startswith("http://") or loc.startswith("https://"))) else ("https://letterboxd.com" + loc if loc else "")
+            if (not film_url) or ("/film/" not in film_url):
+                continue
+            try:
+                rf = session.get(film_url, headers={**{"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari", "Accept-Language": "en-US,en;q=0.9", "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Upgrade-Insecure-Requests": "1"}, "Referer": tmdb_url}, timeout=20, allow_redirects=True)
+            except Exception:
+                continue
+
+            html = rf.text or ""
+            m1 = re.search(r'meta name="twitter:data2" content="([\d.]+) out of 5"', html)
+            if m1:
+                try:
+                    rating_value = round(float(m1.group(1)), 1)
+                except Exception:
+                    rating_value = None
+            m2 = re.search(r'"ratingCount":\s*(\d+)', html)
+            if m2:
+                try:
+                    rating_count = int(m2.group(1))
+                except Exception:
+                    rating_count = None
+            new_row["lbRating"] = rating_value if rating_value else self.lbRating
+            new_row["lbVotes"] = rating_count if rating_count else self.lbVotes
 
             # IMDb
             if new_row.get("imdb_id") is not None and new_row.get("imdb_id") != "":
@@ -86,7 +123,6 @@ class NowPlayingsUpdate(BaseDataflow):
             except:
                 new_row["rtCriticVotes"] = self.rtCriticVotes
 
-            print(new_row)
             self.updates.append(new_row)
 
         if self.updates:

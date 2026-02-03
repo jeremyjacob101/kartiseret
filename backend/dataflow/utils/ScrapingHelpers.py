@@ -7,5 +7,5 @@ class ScrapingHelpers:
         try:
             return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)
         except Exception:
-            time.sleep(0.25)
+            time.sleep(0.1)
             return self.driver.find_element(By.XPATH if path.startswith(("/", ".//")) else By.CSS_SELECTOR, path)

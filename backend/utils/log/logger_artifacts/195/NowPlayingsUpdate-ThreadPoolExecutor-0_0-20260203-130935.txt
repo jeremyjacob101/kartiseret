@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: NowPlayingsUpdate
+URL: https://letterboxd.com/search/tmdb:1312157/
+Exception: AttributeError - 'NowPlayingsUpdate' object has no attribute 'sleep'
+Call Chain: runners.py:40 > runners.py:19 > BaseDataflow.py:35 > NowPlayingsUpdate.py:36
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/195/NowPlayingsUpdate-ThreadPoolExecutor-0_0-20260203-130935.png
+CSV: 

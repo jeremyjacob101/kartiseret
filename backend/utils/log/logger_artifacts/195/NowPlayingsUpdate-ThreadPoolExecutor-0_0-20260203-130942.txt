@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: NowPlayingsUpdate
+URL: ?
+Exception: AttributeError - 'NowPlayingsUpdate' object has no attribute 'sleep'
+Call Chain: runners.py:40 > runners.py:19 > BaseDataflow.py:35 > NowPlayingsUpdate.py:36
+Selector: 
+Screenshot: 
+CSV: 
