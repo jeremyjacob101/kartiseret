@@ -33,23 +33,24 @@ class NowPlayingsUpdate(BaseDataflow):
 
             # Letterboxd
             tmdb_url = f"https://letterboxd.com/tmdb/{self.tmdb_id}/"
-            r0, loc, session, rating_value, rating_count = None, None, None, None, None
+            r0, loc, session, rating_value, rating_count, lb_resolved, film_url = None, None, None, None, None, False, ""
 
             for attempt in range(10):
                 if attempt:
                     time.sleep(2)
                 session = requests.Session()
                 try:
-                    session.get("https://letterboxd.com/", headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari", "Accept-Language": "en-US,en;q=0.9", "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Upgrade-Insecure-Requests": "1"}, timeout=20)
+                    session.get("https://letterboxd.com/", headers=self.requests_headers, timeout=20)
                 except Exception:
                     pass
                 try:
-                    r0 = session.get(tmdb_url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari", "Accept-Language": "en-US,en;q=0.9", "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Upgrade-Insecure-Requests": "1"}, timeout=20, allow_redirects=False)
+                    r0 = session.get(tmdb_url, headers=self.requests_headers, timeout=20, allow_redirects=False)
                 except Exception:
                     continue
 
                 loc = r0.headers.get("Location")
                 if r0.status_code in (301, 302, 303, 307, 308) and loc:
+                    lb_resolved = True
                     break
                 if r0.status_code == 403:
                     t = (r0.text or "").lower()
@@ -57,44 +58,49 @@ class NowPlayingsUpdate(BaseDataflow):
                         continue
                 break
 
-            film_url = loc if (loc and (loc.startswith("http://") or loc.startswith("https://"))) else ("https://letterboxd.com" + loc if loc else "")
-            if (not film_url) or ("/film/" not in film_url):
-                continue
-            try:
-                rf = session.get(film_url, headers={**{"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari", "Accept-Language": "en-US,en;q=0.9", "Accept-Encoding": "gzip, deflate", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Upgrade-Insecure-Requests": "1"}, "Referer": tmdb_url}, timeout=20, allow_redirects=True)
-            except Exception:
-                continue
+            if lb_resolved:
+                film_url = loc if (loc and (loc.startswith("http://") or loc.startswith("https://"))) else ("https://letterboxd.com" + loc if loc else "")
+                if film_url and ("/film/" in film_url):
+                    try:
+                        rf = session.get(film_url, headers={**self.requests_headers, "Referer": tmdb_url}, timeout=20, allow_redirects=True)
+                        html = rf.text or ""
+                        m1 = re.search(r'meta name="twitter:data2" content="([\d.]+) out of 5"', html)
+                        if m1:
+                            try:
+                                rating_value = round(float(m1.group(1)), 1)
+                            except Exception:
+                                rating_value = None
+                        m2 = re.search(r'"ratingCount":\s*(\d+)', html)
+                        if m2:
+                            try:
+                                rating_count = int(m2.group(1))
+                            except Exception:
+                                rating_count = None
+                    except Exception:
+                        pass
 
-            html = rf.text or ""
-            m1 = re.search(r'meta name="twitter:data2" content="([\d.]+) out of 5"', html)
-            if m1:
-                try:
-                    rating_value = round(float(m1.group(1)), 1)
-                except Exception:
-                    rating_value = None
-            m2 = re.search(r'"ratingCount":\s*(\d+)', html)
-            if m2:
-                try:
-                    rating_count = int(m2.group(1))
-                except Exception:
-                    rating_count = None
-            new_row["lbRating"] = rating_value if rating_value else self.lbRating
-            new_row["lbVotes"] = rating_count if rating_count else self.lbVotes
+            new_row["lbRating"] = rating_value if rating_value is not None else self.lbRating
+            new_row["lbVotes"] = rating_count if rating_count is not None else self.lbVotes
 
             # IMDb
-            if new_row.get("imdb_id") is not None and new_row.get("imdb_id") != "":
-                self.driver.get(f"https://www.imdb.com/title/{new_row['imdb_id']}")
+            if new_row.get("imdb_id"):
+                imdb_id = new_row["imdb_id"].strip()
+                if imdb_id:
+                    try:
+                        html = requests.get(f"https://www.imdb.com/title/{imdb_id}/", headers=self.requests_headers, timeout=20, allow_redirects=True).text
+                    except:
+                        html = ""
+                    try:
+                        m = re.search(r'"ratingValue"\s*:\s*"?([\d.]+)"?', html or "")
+                        new_row["imdbRating"] = m.group(1) if m else self.imdbRating
+                    except:
+                        new_row["imdbRating"] = self.imdbRating
 
-                try:
-                    new_row["imdbRating"] = self.element("/html/body/div[2]/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[1]/a/span/div/div[2]/div[1]/span[1]").text.strip()
-                except:
-                    new_row["imdbRating"] = self.imdbRating
-
-                try:
-                    t = (self.element("/html/body/div[2]/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[1]/a/span/div/div[2]/div[3]").text or "").strip().upper().replace(",", "")
-                    new_row["imdbVotes"] = int(float(t[:-1]) * (1000 if t.endswith("K") else 1000000 if t.endswith("M") else 1)) if t else self.imdbVotes
-                except:
-                    new_row["imdbVotes"] = self.imdbVotes
+                    try:
+                        m = re.search(r'"ratingCount"\s*:\s*"?([\d,]+)"?', html or "")
+                        new_row["imdbVotes"] = int(m.group(1).replace(",", "")) if m else self.imdbVotes
+                    except:
+                        new_row["imdbVotes"] = self.imdbVotes
 
             # Rotten Tomatoes
             self.driver.get(f"https://www.rottentomatoes.com/search?search={new_row['english_title']} {new_row['release_year']}")
@@ -123,6 +129,7 @@ class NowPlayingsUpdate(BaseDataflow):
             except:
                 new_row["rtCriticVotes"] = self.rtCriticVotes
 
+            print(new_row)
             self.updates.append(new_row)
 
         if self.updates:
