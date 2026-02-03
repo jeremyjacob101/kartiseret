@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/?lang=en_gb#/
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=49541): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/218/YesPlanet-ThreadPoolExecutor-1_4-20260203-182204.png
+CSV: 

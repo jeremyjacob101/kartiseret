@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: RavHen
+URL: https://www.rav-hen.co.il/#/
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=50172): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/218/RavHen-ThreadPoolExecutor-1_1-20260203-182708.png
+CSV: 

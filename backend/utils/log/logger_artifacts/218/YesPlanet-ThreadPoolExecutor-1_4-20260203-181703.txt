@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: YesPlanet
+URL: https://www.planetcinema.co.il/cinemas/ayalon/1025#/buy-tickets-by-cinema?in-cinema=1025&at=2026-02-03&view-mode=list
+Exception: ReadTimeoutError - HTTPConnectionPool(host='localhost', port=65404): Read timed out. (read timeout=120)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:28 > YesPlanet.py:17 > ScrapingHelpers.py:58
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/218/YesPlanet-ThreadPoolExecutor-1_4-20260203-181703.png
+CSV: 

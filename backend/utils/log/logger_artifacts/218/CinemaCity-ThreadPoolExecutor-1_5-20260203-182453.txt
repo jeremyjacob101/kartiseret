@@ -1,0 +1,11 @@
+- - -
+ERROR
+- - -
+Name: CinemaCity
+URL: https://www.cinema-city.co.il/
+Exception: WebDriverException - Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=144.0.7559.110)
+Call Chain: runners.py:40 > runners.py:18 > BaseCinema.py:27 > InitializeBaseCinema.py:17
+Selector: 
+Screenshot: backend/utils/log/logger_artifacts/218/CinemaCity-ThreadPoolExecutor-1_5-20260203-182453.png
+CSV: 
