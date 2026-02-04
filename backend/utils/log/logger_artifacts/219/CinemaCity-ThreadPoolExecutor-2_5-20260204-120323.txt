@@ -1,0 +1,10 @@
+- - -
+ERROR
+- - -
+Name: CinemaCity
+URL: ?
+Exception: InvalidSessionIdException - 13  dyld                                0x0000000193d25d54 start + 7184
+Call Chain: runners.py:18 > BaseCinema.py:28 > CinemaCity.py:106 > ScrapingHelpers.py:77 > ScrapingHelpers.py:19
+Selector: 
+Screenshot: 
+CSV: backend/utils/log/logger_artifacts/219/CinemaCity-ThreadPoolExecutor-2_5-20260204-120323-gathering_info.csv
