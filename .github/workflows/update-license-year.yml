@@ -1,0 +1,89 @@
+name: Update LICENSE year
+
+on:
+  schedule:
+    - cron: "10 0 1 1 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-license:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update LICENSE year (MIT)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ ! -f LICENSE ]; then
+            echo "LICENSE file not found. Nothing to do."
+            exit 0
+          fi
+
+          CURRENT_YEAR="$(date -u +%Y)"
+
+          python3 - <<'PY'
+          import re
+          from datetime import datetime
+          from pathlib import Path
+
+          path = Path("LICENSE")
+          text = path.read_text(encoding="utf-8")
+
+          current_year = str(datetime.utcnow().year)
+
+          pat = re.compile(
+              r'^(Copyright\s+\(c\)\s+)(\d{4})(?:\s*[-–]\s*(\d{4}))?(\s+.+)$',
+              re.MULTILINE
+          )
+
+          m = pat.search(text)
+          if not m:
+              print("No recognizable MIT copyright line found. No changes made.")
+              raise SystemExit(0)
+
+          prefix, start, end, suffix = m.group(1), m.group(2), m.group(3), m.group(4)
+
+          if end is None:
+              if start == current_year:
+                  print("Already current year; no changes needed.")
+                  raise SystemExit(0)
+              new_years = f"{start}-{current_year}"
+          else:
+              if end == current_year:
+                  print("Already current year range; no changes needed.")
+                  raise SystemExit(0)
+              new_years = f"{start}-{current_year}"
+
+          new_line = f"{prefix}{new_years}{suffix}"
+          new_text = pat.sub(new_line, text, count=1)
+
+          if new_text != text:
+              path.write_text(new_text, encoding="utf-8")
+              print(f"Updated LICENSE to: {new_line}")
+          else:
+              print("No changes made.")
+          PY
+
+      - name: Commit and push (if changed)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet -- LICENSE; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add LICENSE
+          git commit -m "chore: update LICENSE year"
+          git push
