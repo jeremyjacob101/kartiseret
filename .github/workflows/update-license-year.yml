@@ -2,7 +2,6 @@ name: Update LICENSE year
 
 on:
   schedule:
-    # Jan 1 at 00:10 UTC
     - cron: "10 0 1 1 *"
   workflow_dispatch:
 
@@ -47,10 +46,6 @@ jobs:
           text = path.read_text(encoding="utf-8")
           current_year = str(datetime.utcnow().year)
 
-          # Matches:
-          # Copyright (c) 2024 Name
-          # Copyright (c) 2024-2025 Name
-          # Copyright (c) 2024–2025 Name (en dash)
           pat = re.compile(
               r'^(Copyright\s+\(c\)\s+)(\d{4})(?:\s*[-–]\s*(\d{4}))?(\s+.+)$',
               re.MULTILINE
