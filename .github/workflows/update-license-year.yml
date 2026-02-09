@@ -2,6 +2,7 @@ name: Update LICENSE year
 
 on:
   schedule:
+    # Jan 1 at 00:10 UTC
     - cron: "10 0 1 1 *"
   workflow_dispatch:
 
@@ -11,33 +12,45 @@ permissions:
 jobs:
   update-license:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Update LICENSE year (MIT)
+      - name: Pick license file
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f LICENSE ]; then
+            echo "LICENSE_FILE=LICENSE" >> "$GITHUB_ENV"
+          elif [ -f LICENSE.md ]; then
+            echo "LICENSE_FILE=LICENSE.md" >> "$GITHUB_ENV"
+          else
+            echo "LICENSE_FILE=" >> "$GITHUB_ENV"
+          fi
+
+      - name: Update license year (MIT)
         shell: bash
         run: |
           set -euo pipefail
 
-          if [ ! -f LICENSE ]; then
-            echo "LICENSE file not found. Nothing to do."
+          if [ -z "${LICENSE_FILE:-}" ]; then
+            echo "No LICENSE or LICENSE.md found. Nothing to do."
             exit 0
           fi
 
-          CURRENT_YEAR="$(date -u +%Y)"
-
           python3 - <<'PY'
-          import re
+          import os, re
           from datetime import datetime
           from pathlib import Path
 
-          path = Path("LICENSE")
+          path = Path(os.environ["LICENSE_FILE"])
           text = path.read_text(encoding="utf-8")
-
           current_year = str(datetime.utcnow().year)
 
+          # Matches:
+          # Copyright (c) 2024 Name
+          # Copyright (c) 2024-2025 Name
+          # Copyright (c) 2024–2025 Name (en dash)
           pat = re.compile(
               r'^(Copyright\s+\(c\)\s+)(\d{4})(?:\s*[-–]\s*(\d{4}))?(\s+.+)$',
               re.MULTILINE
@@ -66,17 +79,24 @@ jobs:
 
           if new_text != text:
               path.write_text(new_text, encoding="utf-8")
-              print(f"Updated LICENSE to: {new_line}")
+              print(f"Updated {path} to: {new_line}")
           else:
               print("No changes made.")
           PY
+        env:
+          LICENSE_FILE: ${{ env.LICENSE_FILE }}
 
       - name: Commit and push (if changed)
         shell: bash
         run: |
           set -euo pipefail
 
-          if git diff --quiet -- LICENSE; then
+          if [ -z "${LICENSE_FILE:-}" ]; then
+            echo "No license file selected. Nothing to commit."
+            exit 0
+          fi
+
+          if git diff --quiet -- "$LICENSE_FILE"; then
             echo "No changes to commit."
             exit 0
           fi
@@ -84,6 +104,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add LICENSE
-          git commit -m "chore: update LICENSE year"
+          git add "$LICENSE_FILE"
+          git commit -m "chore: update license year"
           git push
+        env:
+          LICENSE_FILE: ${{ env.LICENSE_FILE }}
