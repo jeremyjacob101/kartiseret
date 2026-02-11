@@ -6,7 +6,7 @@ from datetime import date, timedelta
 from supabase import create_client
 import os
 
-SHOWTIMES_DAYS_BACK_FROM_TODAY_TO_REMOVE = 3
+SHOWTIMES_DAYS_BACK_FROM_TODAY_TO_REMOVE = 1
 MOVIES_DAYS_BACK_FROM_TODAY_TO_REMOVE = 30
 SOONS_DAYS_BACK_FROM_TODAY_TO_REMOVE = 7
 
@@ -16,12 +16,12 @@ def clear_showtimes(days, movies_days, soons_days):
 
     showtimes_cutoff = (date.today() - timedelta(days=days)).isoformat()
     soons_cutoff = (date.today() - timedelta(days=soons_days)).isoformat()
-    final_movies_cutoff = (date.today() - timedelta(days=movies_days)).isoformat()
+    # final_movies_cutoff = (date.today() - timedelta(days=movies_days)).isoformat()
 
     sb.table("allShowtimes").delete().lt("date_of_showing", showtimes_cutoff).execute()
     sb.table("finalShowtimes").delete().lt("date_of_showing", showtimes_cutoff).execute()
 
-    sb.table("finalMovies").delete().lt("created_at", final_movies_cutoff).execute()
+    # sb.table("finalMovies").delete().lt("created_at", final_movies_cutoff).execute()
 
     sb.table("allSoons").delete().lt("release_date", soons_cutoff).execute()
     sb.table("finalSoons").delete().lt("release_date", soons_cutoff).execute()
